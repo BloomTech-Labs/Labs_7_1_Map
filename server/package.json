@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Lambda-School-Labs/Labs_7_1_Map#readme",
   "devDependencies": {
-    "eslint": "^5.7.0"
+    "eslint": "^5.7.0",
+    "prettier": "1.14.3"
   }
 }
