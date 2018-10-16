@@ -4,7 +4,8 @@
   "description": "The scratch and map server",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watch --verbose",
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,18 @@
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-node": "^7.0.1",
     "prettier": "1.14.3"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cors": "^2.8.4",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "helmet": "^3.14.0",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.3.4",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
   }
 }
