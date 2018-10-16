@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Lambda-School-Labs/Labs_7_1_Map/issues"
   },
-  "homepage": "https://github.com/Lambda-School-Labs/Labs_7_1_Map#readme"
+  "homepage": "https://github.com/Lambda-School-Labs/Labs_7_1_Map#readme",
+  "devDependencies": {
+    "eslint": "^5.7.0"
+  }
 }
