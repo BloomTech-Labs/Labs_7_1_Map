@@ -50,6 +50,9 @@ Back End
 - morgan
 - axios
 - passport
+- passport-local
+- passport-jwt
+- jsonwebtoken
 - dotenv
 
 Dev Dependencies
