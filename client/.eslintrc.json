@@ -2,7 +2,8 @@
   "env": {
     "es6": true,
     "node": true,
-    "jest": true
+    "jest": true,
+    "browser": true
   },
   "plugins": ["react", "prettier"],
   "extends": [
@@ -11,6 +12,7 @@
     "prettier",
     "prettier/react"
   ],
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",
@@ -19,6 +21,7 @@
     }
   },
   "rules": {
+    "strict": 0,
     "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
