@@ -60,3 +60,14 @@ Dev Dependencies
 - eslint-plugin-react (client only)
 - eslint-plugin-node (server only)
 - Prettier
+
+## Contributers
+Engineering Team:
+- Edward Manda
+- David Morales
+- Nalee Riddell
+- Sneha Thadani
+- Nikhil Kamineni
+
+Project Manager
+- Punit Rawal
