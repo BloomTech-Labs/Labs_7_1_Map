@@ -1,24 +1,29 @@
 {
   "env": {
     "es6": true,
-    "mongo": true,
     "node": true,
     "jest": true
   },
-  "plugins": ["prettier"],
+  "plugins": ["react", "prettier"],
   "extends": [
     "eslint:recommended",
-    "plugin:node/recommended",
-    "prettier"
+    "plugin:react/recommended",
+    "prettier",
+    "prettier/react"
   ],
   "parserOptions": {
     "ecmaVersion": 6,
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
   "rules": {
     "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+    "react/jsx-uses-vars": "error",
+    "prettier/prettier": "error"
   }
 }
