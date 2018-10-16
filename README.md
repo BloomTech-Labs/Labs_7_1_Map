@@ -40,7 +40,6 @@ Front End
 - react-router
 - react-redux
 - prop-types
-- jest
 - axios
 
 Back End
@@ -51,7 +50,6 @@ Back End
 - morgan
 - axios
 - passport
-- jest
 - dotenv
 
 Dev Dependencies
@@ -60,6 +58,7 @@ Dev Dependencies
 - eslint-plugin-react (client only)
 - eslint-plugin-node (server only)
 - Prettier
+- Jest
 
 ## Contributers
 Engineering Team:
