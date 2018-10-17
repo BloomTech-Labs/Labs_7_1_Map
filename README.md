@@ -43,6 +43,7 @@ Front End
 - axios
 
 Back End
+- argon2
 - express
 - mongoose
 - cors
@@ -50,6 +51,9 @@ Back End
 - morgan
 - axios
 - passport
+- passport-local
+- passport-jwt
+- jsonwebtoken
 - dotenv
 
 Dev Dependencies

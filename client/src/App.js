@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Settings from './Components/Settings/Settings';
+import Dashboard from './Components/Dashboard/Dashboard.js';
 
 class App extends Component {
   render() {
     return (
-        <div className="App">
-          <Settings />
-        </div>
+      <div className="App">
+        <Dashboard />
+        <Settings />
+      </div>
     );
   }
 }
