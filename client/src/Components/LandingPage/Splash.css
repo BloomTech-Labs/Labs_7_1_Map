@@ -1,0 +1,11 @@
+.Splash-Logo {
+  width: 375px;
+  position: relative;
+  margin-top: 200px;
+}
+
+.Splash-Tagline {
+  color: black;
+  position: relative;
+  margin-top: -100px;
+}
