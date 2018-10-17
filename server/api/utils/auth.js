@@ -8,14 +8,4 @@ module.exports = {
 		const options = { expiresIn: '1d' };
 		return jwt.sign(payload, secret, options);
 	},
-	verify_token: function(req, res, next) {
-		const token = req.headers['x-access-token'];
-		jwt.verify(token, secret, (err, decode) => {
-			if (err) {
-				return res.status(500).json({ token: 'Token is invalid' });
-				req.user = decoded.user;
-				next();
-			}
-		});
-	},
 };
