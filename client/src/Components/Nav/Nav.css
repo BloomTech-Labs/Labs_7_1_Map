@@ -19,12 +19,20 @@
   min-width: 175px;
   cursor: default;
 }
-.Nav .Nav__MenuItems {
+.Nav .Nav__Center {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-around;
   align-items: center;
-  width: 500px;
+  width: 300px;
+  height: 100%;
+}
+.Nav .Nav__Right {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 200px;
   height: 100%;
 }
 .Nav .MenuItem {
@@ -33,9 +41,12 @@
 .Nav .MenuItem:hover {
   color: orangered;
 }
-.Nav .MenuItems__signout {
+.Nav .Center__search {
+  cursor: text;
+}
+.Nav .Right__signout {
   color: orangered;
 }
-.Nav .MenuItems__signout:hover {
+.Nav .Right__signout:hover {
   color: orange;
 }

@@ -20,12 +20,21 @@
     cursor: default;
   }
 
-  .Nav__MenuItems {
+  .Nav__Center {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-around;
     align-items: center;
-    width: 500px;
+    width: 300px;
+    height: 100%;
+  }
+
+  .Nav__Right {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 200px;
     height: 100%;
   }
 
@@ -37,7 +46,11 @@
     }
   }
 
-  .MenuItems__signout {
+  .Center__search {
+    cursor: text;
+  }
+
+  .Right__signout {
     color: orangered;
      &:hover {
        color: orange;

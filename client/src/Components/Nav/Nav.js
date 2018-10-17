@@ -5,11 +5,18 @@ const Nav = () => {
   return (
     <div className="Nav">
       <div className="Nav__title">Scratch-N-Map</div>
-      <div className="Nav__MenuItems">
-        <div className="MenuItem MenuItems__friends">Friends</div>
-        <div className="MenuItem MenuItems__search">Search</div>
-        <div className="MenuItem MenuItems__settings">Settings</div>
-        <div className="MenuItem MenuItems__signout">Sign Out</div>
+
+      <div className="Nav__Center">
+        <div className="MenuItem Center__friends">Friends</div>
+        <input
+          className="MenuItem Center__search"
+          type="search"
+          placeholder="search"
+        />
+      </div>
+      <div className="Nav__Right">
+        <div className="MenuItem Right__settings">Settings</div>
+        <div className="MenuItem Right__signout">Sign Out</div>
       </div>
     </div>
   );
