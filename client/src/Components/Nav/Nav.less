@@ -3,11 +3,11 @@
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  border: 1px dashed red;
-  margin: 0 0 0 30px;
+  margin: 0 0 0 40px;
+  padding-left: 10px;
   width: 90%;
   height: 50px;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(100, 100, 100, 0.4);
   position: absolute;
   top: 10px;
   left: 10px;
@@ -16,8 +16,8 @@
 
   .Nav__title {
     font-size: 25px;
-    border: 1px dashed blue;
     min-width: 175px;
+    cursor: default;
   }
 
   .Nav__MenuItems {
@@ -25,12 +25,22 @@
     flex-flow: row nowrap;
     justify-content: space-around;
     align-items: center;
-    border: 1px dashed green;
     width: 500px;
     height: 100%;
   }
 
-  .MenuLink {
-    border: 1px dashed green;
+  .MenuItem {
+    cursor: pointer;
+
+    &:hover {
+      color: orangered;
+    }
+  }
+
+  .MenuItems__signout {
+    color: orangered;
+     &:hover {
+       color: orange;
+     }
   }
 }
