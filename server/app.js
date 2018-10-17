@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const server = require('./server');
 
-// Connect to the dataase
+// Connect to the database
 (async function connect_db() {
 	try {
 		// connection url, with an object of options as a second parameter
@@ -17,8 +18,6 @@ const mongoose = require('mongoose');
 		console.log(`There was a database connection error: ${err}`);
 	}
 })(); // self executing function
-
-const server = require('./server');
 
 //const port = config.port;
 const port = 8000;
