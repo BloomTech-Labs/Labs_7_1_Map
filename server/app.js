@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 			reconnectTries: 1000000,
 			reconnectInterval: 3000,
 			useNewUrlParser: true,
+			useCreateIndex: true,
 		});
 		console.log('Database connection successful');
 	} catch (err) {
