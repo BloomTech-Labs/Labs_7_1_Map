@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const { make_token } = require('../utils/auth');
 
 // validate the information entered by a new user
 const validate_new_user = ({ username, password, email }) => {
@@ -37,25 +38,11 @@ module.exports = {
 
 	login: async (req, res) => {
 		try {
-			const { username, password } = req.body;
-			res.json({ worked: 'b' });
-			/*
-			// get a user using the username
-			const found = await User.findOne({ username });
-
-			// if a user is found, verify password
-			const valid = await found.check_password(password);
-
-			if (valid) {
-				// logi user in
-				res.json({ login: 'Valid' });
-			} else {
-				res.status(422).json({ error: 'Invalid credentials' });
-            }
-            */
+			// we only reach here because we are authenticated
+			res.status(200).json({ token: make_token(req.user) });
 		} catch (err) {
 			console.log(err);
 			res.status(500).json({ error: 'Internal server error!' });
 		}
-	},
+	}, // login
 }; //module.eports

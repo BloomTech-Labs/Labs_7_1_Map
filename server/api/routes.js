@@ -2,6 +2,10 @@ const { create_user, login } = require('./controllers/user_controller');
 const passport = require('./utils/passport');
 const path = require('path');
 
+// session is false so we can use jwt
+const authenticated = passport.authenticate('local', { session: false });
+const protected = passport.authenticate('jwt', { session: false });
+
 // export the routes
 module.exports = (server) => {
 	// general route
@@ -15,6 +19,9 @@ module.exports = (server) => {
 		});
 	});
 
-	server.route('/api/login').post(passport.authenticate('local', { session: false }), login);
+	server.get('/api/entry', protected, (req, res) => {
+		res.status(200).json({ msg: 'Entry allowed' });
+	});
+	server.route('/api/login').post(authenticated, login);
 	server.route('/api/register').post(create_user);
 };
