@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const argon2 = require('argon2');
 
 const Schema = mongoose.Schema;
+ObjectIdSchema = Schema.ObjectId;
 
 // define a user schema
 const UserSchema = new Schema(
@@ -31,6 +32,14 @@ const UserSchema = new Schema(
 				id: String,
 			},
 		],
+		notes: [
+			{
+				type: ObjectIdSchema,
+				ref: 'Note'
+
+			}
+
+		]
 	},
 	{
 		timestamps: true,
