@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import L from 'leaflet';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import './Map.css';
+import Card from '../CountryCard/Card';
 
 const markerIcon = L.icon({
   iconUrl:
@@ -28,7 +29,7 @@ class MapComponent extends Component {
         />
         <Marker position={position} icon={markerIcon}>
           <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
+            <Card />
           </Popup>
         </Marker>
       </Map>
