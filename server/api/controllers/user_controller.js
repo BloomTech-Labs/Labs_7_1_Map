@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const User = require('../models/user');
 
 // validate the information entered by a new user
@@ -39,7 +38,8 @@ module.exports = {
 	login: async (req, res) => {
 		try {
 			const { username, password } = req.body;
-
+			res.json({ worked: 'b' });
+			/*
 			// get a user using the username
 			const found = await User.findOne({ username });
 
@@ -51,7 +51,8 @@ module.exports = {
 				res.json({ login: 'Valid' });
 			} else {
 				res.status(422).json({ error: 'Invalid credentials' });
-			}
+            }
+            */
 		} catch (err) {
 			console.log(err);
 			res.status(500).json({ error: 'Internal server error!' });
