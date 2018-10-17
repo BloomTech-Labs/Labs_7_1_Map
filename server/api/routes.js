@@ -1,4 +1,4 @@
-const { create_user } = require('./controllers/user_controller');
+const { create_user, login } = require('./controllers/user_controller');
 
 // export the routes
 module.exports = (server) => {
@@ -13,5 +13,6 @@ module.exports = (server) => {
 		});
 	});
 
+	server.route('/api/login').post(login);
 	server.route('/api/register').post(create_user);
 };
