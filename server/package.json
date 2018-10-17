@@ -26,6 +26,7 @@
     "prettier": "1.14.3"
   },
   "dependencies": {
+    "argon2": "^0.19.3",
     "axios": "^0.18.0",
     "cors": "^2.8.4",
     "dotenv": "^6.1.0",

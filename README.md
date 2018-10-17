@@ -43,6 +43,7 @@ Front End
 - axios
 
 Back End
+- argon2
 - express
 - mongoose
 - cors
