@@ -31,6 +31,7 @@ const local_strategy = new LocalStrategy(async function(username, password, done
 		}
 	} catch (err) {
 		console.log(err);
+		return done(null, false, { message: 'Internal Error.' });
 	}
 });
 
@@ -40,19 +41,19 @@ const jwtOptions = {
 	secretOrKey: secret,
 };
 
-const jwt_strategy = new JwtStrategy(jwtOptions, function(payload, done) {
-	User.findById(payload.sub)
-		.select('-password')
-		.then((user) => {
-			if (user) {
-				done(null, user);
-			} else {
-				done(null, false);
-			}
-		})
-		.catch((err) => {
-			return done(err, false);
-		});
+const jwt_strategy = new JwtStrategy(jwtOptions, async function(payload, done) {
+	try {
+		// get a user using the id
+		const found = await User.findById(payload.sub).select('-password');
+		if (found) {
+			done(null, found); // found user
+		} else {
+			done(null, false); // not found
+		}
+	} catch (err) {
+		console.log(err);
+		return done(null, false, { message: 'Internal Error.' });
+	}
 });
 
 passport.use(local_strategy);
