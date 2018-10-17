@@ -1,6 +1,6 @@
 import React from 'react';
 import CountryBorder from '../CountryBorder/CountryBorder';
-import Slider from '../Slider/Slider';
+import StayBay from '../StayBay/StayBay';
 import Note from '../Note/Note';
 import FriendList from '../Friends/FriendList';
 // import ReactModal from 'react-modal';
@@ -10,10 +10,12 @@ import './Card.css';
 const Card = () => {
   return (
     <div className="Card">
-      <img src="#" alt="flag" className="Card_Country-Flag" />
-      <h2 className="Card_Country-Name">Country Name</h2>
+      <div className="Card_Header">
+        <img src="#" alt="flag" className="Header_Country-Flag" />
+        <h2 className="Header_Country-Name">Country Name</h2>
+      </div>
       <CountryBorder />
-      <Slider />
+      <StayBay />
       <Note />
       <FriendList />
     </div>

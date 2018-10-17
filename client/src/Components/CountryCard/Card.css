@@ -1,5 +1,13 @@
 .Card {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  align-items: center;
   height: 400px;
   width: 300px;
   background: beige;
+}
+.Card_Header {
+  display: flex;
+  align-items: center;
 }

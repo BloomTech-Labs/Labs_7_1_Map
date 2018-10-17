@@ -6,7 +6,7 @@ class Note extends Component {
   render() {
     return (
       <div className="Note">
-        <p>Note</p>
+        <textarea className="Note_Create" rows="5" cols="500">Note</textarea>
       </div>
     );
   }

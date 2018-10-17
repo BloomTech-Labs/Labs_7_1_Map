@@ -6,7 +6,7 @@ class FriendList extends Component {
   render() {
     return (
       <div className="FriendList">
-        <p>FriendList</p>
+        <div className="FriendList_Box">FriendList</div>
       </div>
     );
   }
