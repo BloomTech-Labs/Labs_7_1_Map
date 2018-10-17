@@ -10,8 +10,8 @@ import './Card.css';
 const Card = () => {
   return (
     <div className="Card">
-      <img src="#" alt="flag" />
-      <h2>Country Name</h2>
+      <img src="#" alt="flag" className="Card_Country-Flag" />
+      <h2 className="Card_Country-Name">Country Name</h2>
       <CountryBorder />
       <Slider />
       <Note />
