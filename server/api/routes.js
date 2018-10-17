@@ -1,3 +1,5 @@
+const { create_user } = require('./controllers/user_controller');
+
 // export the routes
 module.exports = (server) => {
 	// general route
@@ -10,4 +12,6 @@ module.exports = (server) => {
 			msg: 'API is running....',
 		});
 	});
+
+	server.route('/api/register').post(create_user);
 };
