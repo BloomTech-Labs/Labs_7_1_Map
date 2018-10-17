@@ -1,0 +1,11 @@
+.Footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  background: #ffffff;
+}
+
+.Footer-Copyright {
+  font-size: 1rem;
+  color: black;
+}
