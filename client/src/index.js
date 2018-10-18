@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 // bring in our context provider
 import { AppContextProvider } from './AppContext';
@@ -11,7 +12,9 @@ import 'leaflet/dist/leaflet.css';
 
 ReactDOM.render(
 	<AppContextProvider>
-		<App />
+		<Router>
+			<App />
+		</Router>
 	</AppContextProvider>,
 	document.getElementById('root')
 );

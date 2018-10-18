@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-
+import { AppContextConsumer } from '../../AppContext';
 import './SignIn.css';
 
 const URL = process.env.REACT_APP_LOCAL_BACKEND_URL;
@@ -61,30 +61,34 @@ class SignIn extends Component {
 
 	render() {
 		return (
-			<div className="SignIn">
-				<div className="SignIn__card">
-					<form onSubmit={this.handleSubmit}>
-						<input
-							onChange={this.handleChange}
-							value={this.state.username}
-							name="username"
-							type="text"
-							className="form__input"
-							placeholder="Username"
-						/>
-						<input
-							onChange={this.handleChange}
-							value={this.state.password}
-							name="password"
-							type="password"
-							className="form__input"
-							placeholder="password"
-						/>
-						<button className="form__button">Sign In</button>
-						<span className="danger">{this.state.error ? this.state.error : ''}</span>
-					</form>
-				</div>
-			</div>
+			<AppContextConsumer>
+				{(props) => (
+					<div className="SignIn">
+						<div className="SignIn__card">
+							<form onSubmit={this.handleSubmit}>
+								<input
+									onChange={this.handleChange}
+									value={this.state.username}
+									name="username"
+									type="text"
+									className="form__input"
+									placeholder="Username"
+								/>
+								<input
+									onChange={this.handleChange}
+									value={this.state.password}
+									name="password"
+									type="password"
+									className="form__input"
+									placeholder="password"
+								/>
+								<button className="form__button">Sign In</button>
+								<span className="danger">{this.state.error ? this.state.error : ''}</span>
+							</form>
+						</div>
+					</div>
+				)}
+			</AppContextConsumer>
 		);
 	}
 }
