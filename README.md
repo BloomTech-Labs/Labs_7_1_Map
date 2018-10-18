@@ -53,6 +53,7 @@ Back End
 - passport
 - passport-local
 - passport-jwt
+- passport-facebook
 - jsonwebtoken
 - dotenv
 
