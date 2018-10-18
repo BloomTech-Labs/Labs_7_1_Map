@@ -55,6 +55,7 @@ Back End
 - passport
 - passport-local
 - passport-jwt
+- passport-facebook
 - jsonwebtoken
 - dotenv
 
@@ -76,3 +77,72 @@ Engineering Team:
 
 Project Manager
 - Punit Rawal
+
+## AppContext.js
+The React Context API is initiated here and the provider and consumer are export 
+```js  
+import React, { Component } from 'react';
+
+const AppContext = React.createContext();
+
+export class AppContextProvider extends Component {
+	state = {
+		auth: false,
+		greet: 'hello',
+	};
+
+	render() {
+		return <AppContext.Provider value={{ AppState: this.state }}>{this.props.children}</AppContext.Provider>;
+	}
+}
+
+export const AppContextConsumer = AppContext.Consumer;
+```
+
+
+## index.js
+The Provider is hooked up here
+``` js
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+// bring in our context provider
+import { AppContextProvider } from './AppContext';
+import App from './App';
+
+import './index.css';
+
+ReactDOM.render(
+	<AppContextProvider>
+		<App />
+	</AppContextProvider>,
+	document.getElementById('root')
+);
+```
+
+## Example of a component using the consumer
+The component using a consumer
+``` js
+import React, { Component } from 'react';
+// will allow our component to access the global state of the app
+import { AppContextConsumer } from './AppContext';
+
+import './App.css';
+
+class App extends Component {
+	render() {
+		return (
+			<AppContextConsumer>
+				{(props) => (
+					<div className="App">
+						<Signup />
+						Here is the data from the global {props.AppState.greet}
+					</div>
+				)}
+			</AppContextConsumer>
+		);
+	}
+}
+
+export default App;
+```

@@ -1,10 +1,15 @@
 const mongoose = require('mongoose');
+const server = require('./server');
 
-// Connect to the dataase
+//TODO: fix this
+const DB_URL = process.env.DB_URL || 'mongodb://127.0.0.1:27017/test';
+const DEV = process.env.DEV || true;
+
+// Connect to the database
 (async function connect_db() {
 	try {
 		// connection url, with an object of options as a second parameter
-		await mongoose.connect('mongodb://127.0.0.1:27017/test', {
+		await mongoose.connect(DB_URL, {
 			autoReconnect: true,
 			reconnectTries: 1000000,
 			reconnectInterval: 3000,
@@ -14,11 +19,11 @@ const mongoose = require('mongoose');
 		console.log('Database connection successful');
 	} catch (err) {
 		// catches any databse errors encountered
-		console.log(`There was a database connection error: ${err}`);
+		if (DEV) {
+			console.log(`There was a database connection error: ${err}`);
+		}
 	}
 })(); // self executing function
-
-const server = require('./server');
 
 //const port = config.port;
 const port = 8000;

@@ -1,0 +1,91 @@
+:root {
+	--black: #000000;
+	--darkGrey: #777777;
+	--malachite: #20bf55;
+	--royal: #0b4f6c;
+	--silver: #dddddd;
+	--sky: #01baef;
+	--slate: #eaeaea;
+	--white: #ffffff;
+	--blue: #007bff;
+	--indigo: #6610f2;
+	--purple: #6f42c1;
+	--pink: #e83e8c;
+	--red: #dc3545;
+	--orange: #fd7e14;
+	--yellow: #ffc107;
+	--green: #28a745;
+	--teal: #20c997;
+	--cyan: #17a2b8;
+	--white: #fff;
+	--gray: #6c757d;
+	--gray-dark: #343a40;
+	--primary: #007bff;
+	--secondary: #6c757d;
+	--success: #28a745;
+	--info: #17a2b8;
+	--warning: #ffc107;
+	--danger: #dc3545;
+	--light: #f8f9fa;
+	--dark: #343a40;
+	--breakpoint-xs: 0;
+	--breakpoint-sm: 576px;
+	--breakpoint-md: 768px;
+	--breakpoint-lg: 992px;
+	--breakpoint-xl: 1200px;
+	--font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif,
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	--font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: sans-serif;
+	display: grid;
+	height: 100vh;
+}
+
+a {
+	text-decoration: none;
+}
+
+.danger {
+	color: var(--red);
+}
+
+.bold {
+	font-weight: 700;
+}
+
+.mobile {
+	display: none;
+}
+
+.tablet {
+	display: none;
+}
+
+@media only screen and (max-width: 900px) {
+	.desktop {
+		display: none;
+	}
+
+	.tablet {
+		display: flex;
+	}
+}
+
+@media only screen and (max-width: 740px) {
+	.desktop {
+		display: none;
+	}
+
+	.mobile {
+		display: inline-block;
+	}
+}

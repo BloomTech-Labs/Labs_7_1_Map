@@ -15,12 +15,11 @@ server.use(express.json());
 server.use(morgan('dev'));
 server.use(helmet());
 
-// cross origin request sharing permissions
+//cross origin request sharing permissions
 const corsOptions = {
 	origin: '*',
 	credentials: true,
 };
-
 server.use(cors(corsOptions));
 
 // pass the server to the routes
