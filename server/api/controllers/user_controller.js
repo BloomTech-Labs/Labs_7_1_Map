@@ -30,7 +30,7 @@ module.exports = {
       const created_user = await new_user.save();
 
       // send a successful response back
-      res.status(200).json(created_user);
+      res.status(201).json(created_user);
     } catch (err) {
       console.log(err);
       res.status(500).json({ error: 'failed user creation' });
@@ -49,22 +49,28 @@ module.exports = {
 
   change_password: async (req, res) => {
     try {
-			const { username, new_password } = req.body;
+      const { username, new_password } = req.body;
 
-      // hash new password here instead of schema because
-      // mongoose doesn't support pre update hooks
-			const password_hash = await argon2.hash(new_password);
+      const user = await User.findOne({ username });
 
-      // change user's password
-      // TODO: verify that new password isn't the same as the old?
-      const updated_user = await User.findOneAndUpdate(
-        { username},
-        { password: password_hash },
-        { new: true }
-			);
+			// Check if password is the same as the old
+      if (await user.check_password(new_password)) {
+        res.status(400).json({ error: 'New password is the same as the old!' });
+      } else {
+        // hash new password here instead of schema because
+        // mongoose doesn't support pre update hooks
+        const password_hash = await argon2.hash(new_password);
 
-			// TODO: Remove password field from returned object
-      res.status(200).json({ updated_user });
+        // change user's password
+        const updated_user = await User.findOneAndUpdate(
+          { username },
+          { password: password_hash },
+          { new: true }
+        );
+
+        // TODO: Remove password field from returned object
+        res.status(200).json({ updated_user });
+      }
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: 'Failed to change password!' });
