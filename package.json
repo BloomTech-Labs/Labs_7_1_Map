@@ -1,0 +1,18 @@
+{
+  "name": "scratch-n-map",
+  "version": "0.0.1",
+  "description": "Scratch-N-Map project for Labs 7.1",
+  "main": "./server/app.js",
+  "scripts": {
+    "start": "cd server && npm install && node app.js"
+  },
+  "engines": {
+    "node": "8.12.0",
+    "npm": "6.4.1"
+  },
+  "author": "Scratch-N-Map",
+  "license": "ISC",
+  "devDependencies": {
+    "copy-webpack-plugin": "^4.5.3"
+  }
+ }
