@@ -17,7 +17,6 @@ class MapComponent extends Component {
     lat: 45.512794,
     lng: -122.679565,
     zoom: 5,
-    draggable: false
   };
 
   render() {
@@ -32,7 +31,7 @@ class MapComponent extends Component {
           position={position}
           icon={markerIcon}
           draggable={true}
-          opacity={0.7}
+          opacity={0.8}
         >
           <Popup>
             <Card />

@@ -11,6 +11,7 @@ class Note extends Component {
     return (
       <div className="Note">
         <textarea className="Note_Create" rows="5" cols="500">Note</textarea>
+        <button type="submit" onClick="">Edit</button>
       </div>
     );
   }

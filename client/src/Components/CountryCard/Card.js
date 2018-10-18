@@ -11,7 +11,6 @@ const Card = () => {
   return (
     <div className="Card">
       <div className="Card_Header">
-        <img src="#" alt="flag" className="Header_Country-Flag" />
         <h2 className="Header_Country-Name">Country Name</h2>
       </div>
       <CountryBorder />
