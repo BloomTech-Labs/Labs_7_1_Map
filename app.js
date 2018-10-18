@@ -26,11 +26,11 @@ const DEV = process.env.DEV || true;
 })(); // self executing function
 
 //const port = config.port;
-const port = 8000;
+const PORT = process.env.PORT || 8000;
 server.listen(port, (err) => {
 	if (err) {
 		console.log(`API error: ${err}`);
 		return;
 	}
-	console.log(`API is running on port ${port}`);
+	console.log(`API is running on port ${PORT}`);
 });
