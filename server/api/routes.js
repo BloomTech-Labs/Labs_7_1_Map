@@ -4,7 +4,7 @@ const path = require('path');
 
 // session is false so we can use jwt
 const authenticated = passport.authenticate('local', { session: false });
-const protected = passport.authenticate('jwt', { session: false });
+const protect_middleware = passport.authenticate('jwt', { session: false });
 
 // export the routes
 module.exports = (server) => {
@@ -19,7 +19,7 @@ module.exports = (server) => {
 		});
 	});
 
-	server.get('/api/entry', protected, (req, res) => {
+	server.get('/api/entry', protect_middleware, (req, res) => {
 		res.status(200).json({ msg: 'Entry allowed' });
 	});
 	server.route('/api/login').post(authenticated, login);
