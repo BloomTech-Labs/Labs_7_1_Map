@@ -53,23 +53,21 @@ module.exports = {
 
       const user = await User.findOne({ username });
 
-			// Check if password is the same as the old
+      // Check if password is the same as the old before updating
       if (await user.check_password(new_password)) {
         res.status(400).json({ error: 'New password is the same as the old!' });
       } else {
-        // hash new password here instead of schema because
-        // mongoose doesn't support pre update hooks
+        // hash new password (mongoose doesn't support pre update hooks)
         const password_hash = await argon2.hash(new_password);
 
-        // change user's password
-        const updated_user = await User.findOneAndUpdate(
+        // update password
+        await User.findOneAndUpdate(
           { username },
           { password: password_hash },
           { new: true }
         );
 
-        // TODO: Remove password field from returned object
-        res.status(200).json({ updated_user });
+        res.status(200).json({ message: 'Password was updated successfully!' });
       }
     } catch (err) {
       console.error(err);
