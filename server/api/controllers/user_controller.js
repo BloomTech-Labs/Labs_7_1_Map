@@ -14,6 +14,7 @@ const validate_new_user = ({ username, password, email }) => {
 
 module.exports = {
 	create_user: async (req, res) => {
+		console.log(req.body);
 		const check = validate_new_user(req.body);
 
 		// found an error, terminate
