@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { AppContextConsumer } from '../../AppContext';
-import './SignIn.css';
+import './SignIn.css'
 
 const URL = process.env.REACT_APP_LOCAL_BACKEND_URL;
 
@@ -16,7 +16,6 @@ class SignIn extends Component {
 	handleChange = (e) => {
 		this.setState({
 			[e.target.name]: e.target.value,
-
 			error: '',
 		});
 	};
