@@ -55,9 +55,10 @@ class SignUp extends Component {
 			...this.state,
 		};
 
-		// remove the error object and confirm password
+		// remove the error object, error string and confirm password
 		delete user.errorMessage;
 		delete user.passwordComfirm;
+		delete user.error;
 
 		(async () => {
 			try {

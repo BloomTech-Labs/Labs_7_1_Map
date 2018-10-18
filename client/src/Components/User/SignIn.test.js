@@ -1,5 +1,6 @@
 import React from 'react';
-import Settings from './SignUp';
+import ReactDOM from 'react-dom';
+import Settings from './SignIn';
 
 it('renders without crashing', () => {
 	const div = document.createElement('div');

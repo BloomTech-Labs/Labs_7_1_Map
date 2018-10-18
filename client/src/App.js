@@ -4,7 +4,9 @@ import { AppContextConsumer } from './AppContext';
 import Settings from './Components/Settings/Settings';
 import LandingPage from './Components/LandingPage/LandingPage';
 import Dashboard from './Components/Dashboard/Dashboard.js';
-import Signup from './Components/User/SignUp';
+import SignUp from './Components/User/SignUp';
+import SignIn from './Components/User/SignIn';
+
 import './App.css';
 
 class App extends Component {
@@ -13,7 +15,7 @@ class App extends Component {
 			<AppContextConsumer>
 				{(props) => (
 					<div className="App">
-						<Signup />
+						<SignIn />
 						{/* <LandingPage />
 						<Dashboard />
 						<Settings /> */}
