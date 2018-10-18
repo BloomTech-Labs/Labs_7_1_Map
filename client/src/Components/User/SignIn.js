@@ -74,11 +74,11 @@ class SignIn extends Component {
 						/>
 						<input
 							onChange={this.handleChange}
-							value={this.state.email}
-							name="email"
-							type="email"
+							value={this.state.password}
+							name="password"
+							type="password"
 							className="form__input"
-							placeholder="email"
+							placeholder="password"
 						/>
 						<button className="form__button">Sign In</button>
 						<span className="danger">{this.state.error ? this.state.error : ''}</span>

@@ -16,6 +16,7 @@ class App extends Component {
 				{(props) => (
 					<div className="App">
 						<SignIn />
+						<SignUp />
 						{/* <LandingPage />
 						<Dashboard />
 						<Settings /> */}
