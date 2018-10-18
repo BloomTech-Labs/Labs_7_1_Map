@@ -72,7 +72,7 @@ UserSchema.methods.check_password = async function (entered_password) {
 };
 
 //get all notes for user 
-UserSchema.methods.getNotes = async function () {
+UserSchema.methods.get_notes = async function () {
 	await this.populate('notes');
 }
 
