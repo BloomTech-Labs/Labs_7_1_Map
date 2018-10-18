@@ -1,0 +1,77 @@
+.Nav {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 0 40px;
+  padding-left: 10px;
+  width: 90%;
+  height: 50px;
+  background-color: rgba(100, 100, 100, 0.4);
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  color: white;
+
+  .Nav__title {
+    font-size: 25px;
+    min-width: 175px;
+    cursor: default;
+  }
+
+  .Nav__Center {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 300px;
+    height: 100%;
+  }
+
+  .Nav__Right {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 200px;
+    height: 100%;
+  }
+
+  .MenuItem {
+    cursor: pointer;
+
+    &:hover {
+      color: orangered;
+    }
+  }
+
+  .Center__friends {
+    font-size: 30px;
+    &:hover {
+      outline: 2px solid red;
+    }
+    &:focus {
+      outline: 2px solid green;
+    }
+  }
+
+  .Center__search {
+    cursor: text;
+    font-size: 30px;
+    width: 150px;
+    &:hover {
+      outline: 2px solid red;
+    }
+    &:focus {
+      outline: 2px solid green;
+    }
+  }
+
+  .Right__signout {
+    color: orangered;
+     &:hover {
+       color: orange;
+     }
+  }
+}
