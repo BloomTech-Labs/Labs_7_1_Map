@@ -4,7 +4,7 @@ const path = require('path');
 
 // session is false so we can use jwt
 const authenticate = passport.authenticate('local', { session: false });
-const facebook_authintication = passport.authenticate('local', {
+const facebook_authintication = passport.authenticate('facebook', {
 	successRedirect: '/',
 	failureRedirect: '/login'
 })
