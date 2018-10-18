@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const argon2 = require('argon2');
 
+const DEV = process.env.DEV || true;
+
 const Schema = mongoose.Schema;
 
 // define a user schema
@@ -38,21 +40,25 @@ const UserSchema = new Schema(
 );
 
 // hash password
-UserSchema.pre('save', async function(next) {
+UserSchema.pre('save', async function (next) {
 	try {
 		this.password = await argon2.hash(this.password);
 		next();
 	} catch (err) {
-		console.log(err);
+		if (Dev) {
+			console.log(err);
+		}
 	}
 });
 
 // check password
-UserSchema.methods.check_password = async function(entered_password) {
+UserSchema.methods.check_password = async function (entered_password) {
 	try {
 		return await argon2.verify(this.password, entered_password);
 	} catch (err) {
-		console.log(err);
+		if (DEV) {
+			console.log(err);
+		}
 	}
 };
 
