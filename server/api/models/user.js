@@ -4,6 +4,7 @@ const argon2 = require('argon2');
 const DEV = process.env.DEV || true;
 
 const Schema = mongoose.Schema;
+const ObjectIdSchema = Schema.Types.ObjectId;
 
 // define a user schema
 const UserSchema = new Schema(
@@ -33,6 +34,14 @@ const UserSchema = new Schema(
 				id: String,
 			},
 		],
+		notes: [
+			{
+				type: ObjectIdSchema,
+				ref: 'Note'
+
+			}
+
+		]
 	},
 	{
 		timestamps: true,
@@ -61,6 +70,11 @@ UserSchema.methods.check_password = async function (entered_password) {
 		}
 	}
 };
+
+//get all notes for user 
+UserSchema.methods.get_notes = async function () {
+	await this.populate('notes');
+}
 
 // export the user schema
 module.exports = mongoose.model('User', UserSchema);
