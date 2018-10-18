@@ -27,7 +27,7 @@ const DEV = process.env.DEV || true;
 
 //const port = config.port;
 const PORT = process.env.PORT || 8000;
-server.listen(port, (err) => {
+server.listen(PORT, (err) => {
 	if (err) {
 		console.log(`API error: ${err}`);
 		return;
