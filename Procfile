@@ -1,2 +1,2 @@
 
-web: cd server && gunicorn app.wsgi
+web: node app.js
