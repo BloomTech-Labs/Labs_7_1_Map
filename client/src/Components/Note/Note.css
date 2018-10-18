@@ -1,0 +1,10 @@
+.Note {
+  background: beige;
+  border: 1px solid black;
+  width: 100%;
+}
+.Note_Create {
+  width: 100%;
+  box-sizing: border-box;
+  resize: none;
+}
