@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
+
+// will allow our component to access the global state of the app
+import { AppContextConsumer } from '../../AppContext';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
 import './SignUp.css';
 
-const URL = process.env.REACT_APP_URL;
-
+//const URL = process.env.REACT_APP_URL;
+const URL = 'http://localhost:8000';
 class SignUp extends Component {
 	state = {
 		username: '',
 		password: '',
+		email: '',
+		firstname: '',
+		lastname: '',
 		passwordComfirm: '',
 		errorMessage: '',
 	};
@@ -39,20 +45,23 @@ class SignUp extends Component {
 			} else {
 				// ready to sign up
 				const user = {
-					username: this.state.username,
-					password: this.state.password,
+					...this.state,
 				};
 
 				axios
 					.post(`${URL}/api/register/`, user)
 					.then((response) => {
+						console.log(response);
 						// set the token to local storage
-						localStorage.setItem('jwt_token', response.data.token);
+						//localStorage.setItem('jwt_token', response.data.token);
 
 						// reset the fields
 						this.setState({
 							username: '',
 							password: '',
+							email: '',
+							firstname: '',
+							lastname: '',
 							passwordComfirm: '',
 							errorMessage: '',
 						});
@@ -73,41 +82,54 @@ class SignUp extends Component {
 
 	render() {
 		return (
-			<div className="SignUp">
-				<div className="SignUp__card">
-					<form onSubmit={this.handleSubmit}>
-						<input
-							onChange={this.handleChange}
-							value={this.state.username}
-							name="username"
-							type="text"
-							className="form__input"
-							placeholder="Username"
-						/>
+			<AppContextConsumer>
+				{(props) => (
+					<div className="SignUp">
+						<div className="SignUp__card">
+							<form onSubmit={this.handleSubmit}>
+								<input
+									onChange={this.handleChange}
+									value={this.state.username}
+									name="username"
+									type="text"
+									className="form__input"
+									placeholder="Username"
+								/>
 
-						<input
-							onChange={this.handleChange}
-							value={this.state.password}
-							name="password"
-							type="password"
-							className="form__input"
-							placeholder="password"
-						/>
+								<input
+									onChange={this.handleChange}
+									value={this.state.email}
+									name="email"
+									type="text"
+									className="form__input"
+									placeholder="email"
+								/>
 
-						<input
-							onChange={this.handleChange}
-							value={this.state.passwordComfirm}
-							name="passwordComfirm"
-							type="password"
-							className="form__input"
-							placeholder="confirm password"
-						/>
+								<input
+									onChange={this.handleChange}
+									value={this.state.password}
+									name="password"
+									type="password"
+									className="form__input"
+									placeholder="password"
+								/>
 
-						<button className="form__button">Sign Up</button>
-						<div className="danger">{this.state.errorMessage ? this.state.errorMessage : ''}</div>
-					</form>
-				</div>
-			</div>
+								<input
+									onChange={this.handleChange}
+									value={this.state.passwordComfirm}
+									name="passwordComfirm"
+									type="password"
+									className="form__input"
+									placeholder="confirm password"
+								/>
+
+								<button className="form__button">Sign Up</button>
+								<div className="danger">{this.state.errorMessage ? this.state.errorMessage : ''}</div>
+							</form>
+						</div>
+					</div>
+				)}
+			</AppContextConsumer>
 		);
 	}
 }

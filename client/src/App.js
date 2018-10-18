@@ -13,9 +13,11 @@ class App extends Component {
 			<AppContextConsumer>
 				{(props) => (
 					<div className="App">
-						<LandingPage />
+						<Signup />
+						Here is the data from the global {props.AppState.greet}
+						{/* <LandingPage />
 						<Dashboard />
-						<Settings />
+						<Settings /> */}
 					</div>
 				)}
 			</AppContextConsumer>
