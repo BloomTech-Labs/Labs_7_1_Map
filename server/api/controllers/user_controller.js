@@ -53,4 +53,19 @@ module.exports = {
 			res.status(500).json({ error: 'Internal server error!' });
 		}
 	}, // login
+
+	facebook_login: async (req, res) => {
+		res.json({ facebook: "We in facebook now" })
+		/*
+		try {
+			// we only reach here because we are authenticated
+			res.status(200).json({ jwt_token: make_token(req.user) });
+		} catch (err) {
+			if (DEV) {
+				console.log(err);
+			}
+			res.status(500).json({ error: 'Internal server error!' });
+		}
+		*/
+	}, // facebook-login
 }; //module.eports

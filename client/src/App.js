@@ -12,26 +12,23 @@ import SignIn from './Components/User/SignIn';
 import './App.css';
 
 class App extends Component {
-
-	render() {
-		return (
-			<AppContextConsumer>
-				{(props) => (
-					<div className="App">
-						<Switch>
-							<Route exact path="/" component={LandingPage} />
-							<Route path="/signin" component={SignIn} />
-							<Route path="/signup" component={SignUp} />
-							<Route path="/dashboard" component={Dashboard} />
-							<Route path="/settings" component={Settings} />
-						</Switch>
-					</div>
-				)}
-			</AppContextConsumer>
-		);
-	}
-
-
+  render() {
+    return (
+      <AppContextConsumer>
+        {props => (
+          <div className="App">
+            <Switch>
+              <Route exact path="/" component={LandingPage} />
+              <Route path="/signin" component={SignIn} />
+              <Route path="/signup" component={SignUp} />
+              <Route path="/dashboard" component={Dashboard} />
+              <Route path="/settings" component={Settings} />
+            </Switch>
+          </div>
+        )}
+      </AppContextConsumer>
+    );
+  }
 }
 
 export default App;
