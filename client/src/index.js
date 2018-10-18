@@ -1,11 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+// bring in our context provider
+import { AppContextProvider } from './AppContext';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+
+import './index.css';
 import 'leaflet/dist/leaflet.css';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+	<AppContextProvider>
+		<Router>
+			<App />
+		</Router>
+	</AppContextProvider>,
+	document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -1,17 +1,18 @@
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
+require('dotenv').config();
 
+const LocalStrategy = require('passport-local').Strategy;
 const { ExtractJwt } = require('passport-jwt');
 const JwtStrategy = require('passport-jwt').Strategy;
-
-require('dotenv').config();
+//const OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
 
 const User = require('../models/user');
 
 const secret = process.env.SECRET || 'No secret set';
+const DEV = process.env.DEV || true;
 
 // local strategy
-const local_strategy = new LocalStrategy(async function(username, password, done) {
+const local_strategy = new LocalStrategy(async function (username, password, done) {
 	try {
 		// get a user using the username
 		const found = await User.findOne({ username });
@@ -30,10 +31,13 @@ const local_strategy = new LocalStrategy(async function(username, password, done
 			return done(null, false, { message: 'Incorrect credentials.' });
 		}
 	} catch (err) {
-		console.log(err);
+		if (DEV) {
+			console.log(err);
+		}
 		return done(null, false, { message: 'Internal Error.' });
 	}
-});
+});// end of local stragey
+passport.use(local_strategy); // using local strategy
 
 // Jwt strategy
 const jwtOptions = {
@@ -41,7 +45,7 @@ const jwtOptions = {
 	secretOrKey: secret,
 };
 
-const jwt_strategy = new JwtStrategy(jwtOptions, async function(payload, done) {
+const jwt_strategy = new JwtStrategy(jwtOptions, async function (payload, done) {
 	try {
 		// get a user using the id
 		const found = await User.findById(payload.sub).select('-password');
@@ -51,12 +55,29 @@ const jwt_strategy = new JwtStrategy(jwtOptions, async function(payload, done) {
 			done(null, false); // not found
 		}
 	} catch (err) {
-		console.log(err);
+		if (DEV) {
+			console.log(err);
+		}
 		return done(null, false, { message: 'Internal Error.' });
 	}
-});
+});// end of jwt strategy
+passport.use(jwt_strategy); // using the jwt strategy
 
-passport.use(local_strategy);
-passport.use(jwt_strategy);
 
+// facebook strategy
+/*
+passport.use('provider', new OAuth2Strategy({
+	authorizationURL: 'https://www.provider.com/oauth2/authorize',
+	tokenURL: 'https://www.provider.com/oauth2/token',
+	clientID: '123-456-789',
+	clientSecret: 'shhh-its-a-secret'
+    callbackURL: 'https://www.example.com/auth/provider/callback'
+},
+	function (accessToken, refreshToken, profile, done) {
+		User.findOrCreate(..., function (err, user) {
+			done(err, user);
+		});
+	}
+)); // using the facebook strategy
+*/
 module.exports = passport;

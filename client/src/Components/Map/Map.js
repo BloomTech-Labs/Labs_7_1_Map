@@ -12,11 +12,20 @@ const markerIcon = L.icon({
   popupAnchor: [13, -4]
 });
 
+const mapTilesUrls = {
+  standard: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  light:
+    'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', // light cartodb tile
+  dark:
+    'https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png' // dark cartodb tile
+};
+
 class MapComponent extends Component {
   state = {
     lat: 45.512794,
     lng: -122.679565,
     zoom: 5,
+    mapTile: mapTilesUrls.dark
   };
 
   render() {
@@ -25,7 +34,7 @@ class MapComponent extends Component {
       <Map center={position} zoom={this.state.zoom} className="MapComponent">
         <TileLayer
           attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url={this.state.mapTile}
         />
         <Marker
           position={position}
