@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import './SignUp.css';
 
-const URL = process.env.REACT_APP_LOCAL_BACKEND_URL;
+const URL = process.env.REACT_APP_LOCAL_BACKEND_URL || "http://127.0.0.1:8000";;
 
 class SignUp extends Component {
 	state = {
