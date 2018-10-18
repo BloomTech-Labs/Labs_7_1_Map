@@ -8,6 +8,7 @@ import Signup from './Components/User/SignUp';
 import './App.css';
 
 class App extends Component {
+
 	render() {
 		return (
 			<AppContextConsumer>
@@ -23,6 +24,8 @@ class App extends Component {
 			</AppContextConsumer>
 		);
 	}
+
+
 }
 
 export default App;
