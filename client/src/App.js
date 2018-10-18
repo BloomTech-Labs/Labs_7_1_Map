@@ -14,7 +14,6 @@ class App extends Component {
 				{(props) => (
 					<div className="App">
 						<Signup />
-						Here is the data from the global {props.AppState.greet}
 						{/* <LandingPage />
 						<Dashboard />
 						<Settings /> */}

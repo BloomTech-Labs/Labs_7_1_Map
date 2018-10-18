@@ -14,7 +14,6 @@ const validate_new_user = ({ username, password, email }) => {
 
 module.exports = {
 	create_user: async (req, res) => {
-		console.log(req.body);
 		const check = validate_new_user(req.body);
 
 		// found an error, terminate
@@ -29,8 +28,10 @@ module.exports = {
 
 			const created_user = await new_user.save();
 
-			// send a successful response back
-			res.status(200).json(created_user);
+			// user creation was successful, send a jwt_token back
+			res
+				.status(200)
+				.json({ jwt_token: make_token(created_user), user: { id: created_user._id, username: created_user.username } }); //TODO: what user information to send
 		} catch (err) {
 			console.log(err);
 			res.status(500).json({ error: 'failed user creation' });
@@ -40,7 +41,7 @@ module.exports = {
 	login: async (req, res) => {
 		try {
 			// we only reach here because we are authenticated
-			res.status(200).json({ token: make_token(req.user) });
+			res.status(200).json({ jwt_token: make_token(req.user) });
 		} catch (err) {
 			console.log(err);
 			res.status(500).json({ error: 'Internal server error!' });
