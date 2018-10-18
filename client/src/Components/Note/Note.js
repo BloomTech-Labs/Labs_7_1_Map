@@ -4,14 +4,20 @@ import './Note.css';
 
 class Note extends Component {
   state = {
-    note: ""
+    note: ''
   };
 
   render() {
     return (
       <div className="Note">
-        <textarea className="Note_Create" rows="5" cols="500">Note</textarea>
-        <button type="submit" onClick="">Edit</button>
+        <textarea
+          input="text"
+          className="Note_Create"
+          rows="5"
+          placeholder="Enter travel tip"
+          maxlength="250"
+        />
+        <button type="button">Edit</button>
       </div>
     );
   }
