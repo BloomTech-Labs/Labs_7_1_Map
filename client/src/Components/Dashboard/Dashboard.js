@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import Map from '../Map/Map';
+import Nav from '../Nav/Nav';
 import './Dashboard.css';
 
 class Dashboard extends Component {
   render() {
     return (
       <div className="Dashboard">
-        Welcome!
+        <Nav />
         <Map />
       </div>
     );
