@@ -23,20 +23,18 @@ class LogInBay extends React.Component {
   render() {
     return (
       <div className="LogInBay">
-        <button
-          type="button"
-          className="LogInBay-LogIn"
-          onClick={this.handleOpenModal}
-        >
-          Log In
-        </button>
-        <button
-          type="button"
-          className="LogInBay-SignUp"
-          onClick={this.handleOpenModal}
-        >
-          Sign Up
-        </button>
+        <Link to="/signin">
+          <button type="button" className="LogInBay-LogIn">
+            {/*onClick={this.handleOpenModal}*/}
+            Log In
+          </button>
+        </Link>
+        <Link to="/signup">
+          <button type="button" className="LogInBay-SignUp">
+            {/*onClick={this.handleOpenModal}*/}
+            Sign Up
+          </button>
+        </Link>
         <ReactModal
           isOpen={this.state.showModal}
           contentLabel="Example Text"
