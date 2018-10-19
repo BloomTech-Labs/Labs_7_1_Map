@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+
 import PropTypes from 'prop-types';
 import { AppContextConsumer } from '../../AppContext';
 import './SignIn.css';
@@ -12,8 +12,7 @@ const URL =
 class SignIn extends Component {
   state = {
     username: '',
-    password: '',
-    error: ''
+    password: ''
   };
 
   handleChange = e => {
@@ -23,50 +22,22 @@ class SignIn extends Component {
     });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e, login) => {
     e.preventDefault();
 
     const user = {
       username: this.state.username,
       password: this.state.password
     };
-
-    (async () => {
-      try {
-        const response = await axios.post(`${URL}/login`, user);
-
-        const data = response.data;
-
-        if (data.jwt_token) {
-          // set the token to local storage
-          localStorage.setItem('jwt_token', data.jwt_token);
-
-          // reset the fields
-          this.setState({
-            username: '',
-            password: '',
-            error: ''
-          });
-        } else {
-          this.setState({ error: 'Unexpected error!' });
-          return; // terminate the process
-        }
-      } catch (err) {
-        if (process.env.REACT_APP_DEV) {
-          console.log(err);
-        }
-        this.setState({ error: 'Unexpected error!' });
-        return; // terminate the process
-      }
-    })(); // self executing function
+    login(user);
   };
   render() {
     return (
       <AppContextConsumer>
-        {props => (
+        {({ handleSignIn, AppState: { error } }) => (
           <div className="SignIn">
             <div className="SignIn__card">
-              <form onSubmit={this.handleSubmit}>
+              <form onSubmit={e => this.handleSubmit(e, handleSignIn)}>
                 <input
                   onChange={this.handleChange}
                   value={this.state.username}
@@ -84,10 +55,8 @@ class SignIn extends Component {
                   placeholder="password"
                 />
 
-                <button className="form__button">Sign In Test</button>
-                <span className="danger">
-                  {this.state.error ? this.state.error : ''}
-                </span>
+                <button className="form__button">Sign In</button>
+                <span className="danger">{error ? error : ''}</span>
               </form>
             </div>
           </div>
