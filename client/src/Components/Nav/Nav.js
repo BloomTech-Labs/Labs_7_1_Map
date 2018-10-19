@@ -10,6 +10,10 @@ const friendsDummyData = [
   'Friend 4'
 ];
 
+const signout = () => {
+  localStorage.removeItem('jwt_token');
+  window.location.replace('/');
+};
 const Nav = () => {
   return (
     <div className="Nav">
@@ -42,7 +46,9 @@ const Nav = () => {
         <Link to="/settings" className="Right__settings MenuItem">
           Settings
         </Link>
-        <div className="Right__signout MenuItem">Sign Out</div>
+        <div className="Right__signout MenuItem" onClick={signout}>
+          Sign Out
+        </div>
       </div>
     </div>
   );

@@ -21,8 +21,7 @@ class SignIn extends Component {
     // For now, having a token is enough
     if (token) {
       //redirect
-      this.props.history.push('/dashboard');
-      window.location.reload();
+      window.location.replace('/dashboard');
     }
   }
 

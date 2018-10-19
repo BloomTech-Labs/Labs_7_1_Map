@@ -18,7 +18,15 @@ class SignUp extends Component {
     errorMessage: {},
     error: ''
   };
-
+  componentDidMount() {
+    const token = localStorage.getItem('jwt_token');
+    // TODO: Implementation of a verify token, how and when??
+    // For now, having a token is enough
+    if (token) {
+      //redirect
+      window.location.replace('/dashboard');
+    }
+  }
   handleChange = e => {
     const errors = { ...this.state.errorMessage };
 
@@ -97,7 +105,7 @@ class SignUp extends Component {
       }
     })(); // self executing function
   };
-  
+
   render() {
     const {
       username: usernameError,
@@ -143,7 +151,7 @@ class SignUp extends Component {
               className="form__input"
               placeholder="confirm password"
             />
-           
+
             <button className="form__button">Sign Up</button>
             <span className="danger">
               {this.state.error ? this.state.error : ''}
