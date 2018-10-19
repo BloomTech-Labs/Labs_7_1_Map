@@ -84,7 +84,7 @@ class SignIn extends Component {
                   placeholder="password"
                 />
 
-                <button className="form__button">Sign In</button>
+                <button className="form__button">Sign In Test</button>
                 <span className="danger">
                   {this.state.error ? this.state.error : ''}
                 </span>
