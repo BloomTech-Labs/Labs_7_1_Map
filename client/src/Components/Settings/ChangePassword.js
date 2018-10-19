@@ -7,15 +7,14 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 class ChangePassword extends Component {
   state = {
+    show: false,
     currentPassword: '',
     newPassword: '',
     confirmNewPassword: ''
   };
 
   toggleShow = () => {
-    console.log('bang');
     this.setState({ show: !this.state.show });
-    console.log(this.state);
   };
 
   handleChange = event => {
