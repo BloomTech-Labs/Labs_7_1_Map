@@ -26,7 +26,7 @@ module.exports = {
     }
 
     try {
-      //create a new user
+      // create a new user
       const new_user = new User(req.body);
 
       const created_user = await new_user.save();
@@ -35,23 +35,19 @@ module.exports = {
       res.status(200).json({
         jwt_token: make_token(created_user),
         user: { id: created_user._id, username: created_user.username }
-      }); //TODO: what user information to send
+      });
     } catch (err) {
-      if (DEV) {
-        console.log(err);
-      }
+      if (DEV) console.log(err);
       res.status(500).json({ error: 'failed user creation' });
     }
-  }, //create_user
+  }, // create_user
 
   login: async (req, res) => {
     try {
       // we only reach here because we are authenticated
       res.status(200).json({ jwt_token: make_token(req.user) });
     } catch (err) {
-      if (DEV) {
-        console.log(err);
-      }
+      if (DEV) console.log(err);
       res.status(500).json({ error: 'Internal server error!' });
     }
   }, // login
@@ -94,7 +90,7 @@ module.exports = {
         res.status(200).json({ message: 'Password was updated successfully!' });
       }
     } catch (err) {
-      console.error(err);
+      if (DEV) console.log(err);
       res.status(500).json({ error: 'Failed to change password!' });
     }
   }, // change_password
@@ -103,18 +99,18 @@ module.exports = {
     try {
       const { username, new_email } = req.body;
 
-      // update emaiil
+      // update email
       await User.findOneAndUpdate(
         { username },
         { email: new_email },
         { new: true }
       );
 
-      res.status(200).json({ message: 'Password was updated successfully!' });
+      res.status(200).json({ message: 'Email was updated successfully!' });
     } catch (err) {
-      console.error(err);
+      if (DEV) console.log(err);
       res.status(500).json({ error: 'Failed to change email!' });
     }
   } // change_email
 
-}; //module.eports
+}; // module.eports
