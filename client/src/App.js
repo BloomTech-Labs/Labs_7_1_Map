@@ -8,6 +8,7 @@ import Settings from './Components/Settings/Settings';
 import Dashboard from './Components/Dashboard/Dashboard.js';
 import SignUp from './Components/User/SignUp';
 import SignIn from './Components/User/SignIn';
+import Footer from './Components/Footer/Footer';
 
 import './App.css';
 
@@ -24,6 +25,7 @@ class App extends Component {
               {/* <Route path="/dashboard" component={Dashboard} /> */}
               <Route path="/settings" component={Settings} />
             </Switch>
+            <Footer />
           </div>
         )}
       </AppContextConsumer>
