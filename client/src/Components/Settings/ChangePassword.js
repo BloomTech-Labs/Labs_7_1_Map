@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+
+import './ChangePassword.css';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -27,11 +29,11 @@ class ChangePassword extends Component {
     const { currentPassword, newPassword, confirmNewPassword } = this.state;
 
     // Error handling
-    if (!currentPassword) return console.error('Enter your current password!');
+    if (!currentPassword) return console.error('Enter your current password!'); // eslint-disable-line
     if (newPassword !== confirmNewPassword)
-      return console.error('Passwords do not match!');
+      return console.error('Passwords do not match!'); // eslint-disable-line
     if (newPassword.length < 6)
-      return console.error('Password needs to be at least 6 characters!');
+      return console.error('Password needs to be at least 6 characters!'); // eslint-disable-line
 
     const url = `${BACKEND_URL}/api/change_password`;
     const body = {
@@ -56,40 +58,41 @@ class ChangePassword extends Component {
 
   render() {
     return (
-      <form
-        onSubmit={this.handleSubmit}
-        className="Settings__ChangePassword"
-      >
-        <label htmlFor="currentPassword">
-          Current Password
+      <form onSubmit={this.handleSubmit} className="Settings__ChangePassword">
+        <div className="ChangePassword__currentPassword">
+          <h5>Current Password</h5>
           <input
             type="text"
             name="currentPassword"
             placeholder="Current password"
             onChange={e => this.handleChange(e)}
           />
-        </label>
+        </div>
 
-        <label htmlFor="newPassword">
-          New Password
+        <div className="ChangePassword__newPassword">
+          <h5>New Password</h5>
           <input
             type="text"
             name="newPassword"
             placeholder="New password"
             onChange={e => this.handleChange(e)}
           />
-        </label>
+        </div>
 
-        <label htmlFor="confirmNewPassword">
-          Confirm New password
+        <div className="ChangePassword__confirmNewPassword">
+          <h5>Confirm New password</h5>
           <input
             type="text"
             name="confirmNewPassword"
             placeholder="Confirm new password"
             onChange={e => this.handleChange(e)}
           />
-        </label>
-        <input type="submit" placeholder="Submit" />
+        </div>
+        <input
+          type="submit"
+          placeholder="Submit"
+          className="ChangePassword__submit"
+        />
       </form>
     );
   }
