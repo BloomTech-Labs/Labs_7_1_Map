@@ -21,6 +21,7 @@ class Preferences extends Component {
   render() {
     return (
       <div className="Settings__Preferences">
+        <h4>Preferences</h4>
         <div className="Preferences__theme">
           <h5>Theme</h5>
           <select className="theme" name="Theme" onChange={this.handleChange}>

@@ -29,6 +29,7 @@ class ChangeEmail extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit} className="Settings__ChangeEmail">
+        <h4>Change Email...</h4>
         <div className="ChangeEmail__newEmail">
           <h5>New Email</h5>
           <input

@@ -12,6 +12,12 @@ class ChangePassword extends Component {
     confirmNewPassword: ''
   };
 
+  toggleShow = () => {
+    console.log('bang');
+    this.setState({ show: !this.state.show });
+    console.log(this.state);
+  };
+
   handleChange = event => {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -58,42 +64,50 @@ class ChangePassword extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} className="Settings__ChangePassword">
-        <div className="ChangePassword__currentPassword">
-          <h5>Current Password</h5>
-          <input
-            type="text"
-            name="currentPassword"
-            placeholder="Current password"
-            onChange={e => this.handleChange(e)}
-          />
-        </div>
+      <div className="ChangePassword">
+        <h4 onClick={() => this.toggleShow()}>Change Password...</h4>
+        {this.state.show && (
+          <form
+            onSubmit={this.handleSubmit}
+            className="Settings__ChangePassword"
+          >
+            <div className="ChangePassword__currentPassword">
+              <div>Current Password</div>
+              <input
+                type="text"
+                name="currentPassword"
+                placeholder="Current password"
+                onChange={e => this.handleChange(e)}
+              />
+            </div>
 
-        <div className="ChangePassword__newPassword">
-          <h5>New Password</h5>
-          <input
-            type="text"
-            name="newPassword"
-            placeholder="New password"
-            onChange={e => this.handleChange(e)}
-          />
-        </div>
+            <div className="ChangePassword__newPassword">
+              <h5>New Password</h5>
+              <input
+                type="text"
+                name="newPassword"
+                placeholder="New password"
+                onChange={e => this.handleChange(e)}
+              />
+            </div>
 
-        <div className="ChangePassword__confirmNewPassword">
-          <h5>Confirm New password</h5>
-          <input
-            type="text"
-            name="confirmNewPassword"
-            placeholder="Confirm new password"
-            onChange={e => this.handleChange(e)}
-          />
-        </div>
-        <input
-          type="submit"
-          placeholder="Submit"
-          className="ChangePassword__submit"
-        />
-      </form>
+            <div className="ChangePassword__confirmNewPassword">
+              <h5>Confirm New password</h5>
+              <input
+                type="text"
+                name="confirmNewPassword"
+                placeholder="Confirm new password"
+                onChange={e => this.handleChange(e)}
+              />
+            </div>
+            <input
+              type="submit"
+              placeholder="Submit"
+              className="ChangePassword__submit"
+            />
+          </form>
+        )}
+      </div>
     );
   }
 }
