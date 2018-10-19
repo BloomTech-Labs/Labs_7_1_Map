@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-
 import PropTypes from 'prop-types';
-import { AppContextConsumer } from '../../AppContext';
-import './SignIn.css';
 
-//const URL = process.env.REACT_APP_LOCAL_BACKEND_URL || 'http://127.0.0.1:8000/api';
-const URL =
-  process.env.REACT_APP_REMOTE_BACKEND_URL ||
-  'https://scratch-n-map.herokuapp.com/api';
+import { AppContextConsumer } from '../../AppContext';
+
+import './SignIn.css';
 
 class SignIn extends Component {
   state = {
@@ -43,7 +39,7 @@ class SignIn extends Component {
   render() {
     return (
       <AppContextConsumer>
-        {({ Authenticated, handleSignIn, AppState: { error } }) => (
+        {({ handleSignIn, AppState: { error } }) => (
           <div className="SignIn">
             <div className="SignIn__card">
               <form onSubmit={e => this.handleSubmit(e, handleSignIn)}>
