@@ -21,7 +21,7 @@ class ChangePassword extends Component {
     });
   };
 
-  handleSubmitPassword = async e => {
+  handleSubmit = async e => {
     e.preventDefault();
 
     const { currentPassword, newPassword, confirmNewPassword } = this.state;
@@ -45,6 +45,7 @@ class ChangePassword extends Component {
     };
 
     console.log(url, body, options);
+    // TODO: Enable this once SignIn form is complete
     // try {
     //   const updatedUser = await axios.post(url, body, options);
     //   console.log('Password updated successfully', updatedUser);
@@ -56,7 +57,7 @@ class ChangePassword extends Component {
   render() {
     return (
       <form
-        onSubmit={this.handleSubmitPassword}
+        onSubmit={this.handleSubmit}
         className="Settings__ChangePassword"
       >
         <label htmlFor="currentPassword">
