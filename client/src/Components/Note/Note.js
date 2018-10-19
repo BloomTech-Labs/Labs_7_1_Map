@@ -5,72 +5,95 @@ import './Note.css';
 
 class Note extends Component {
   state = {
-    note: '',
+    editnote: '',
+    viewnote: '',
     messagebox: '',
-    messageboxcolor: ''
+    messageboxcolor: '',
+    editview: 'false'
   };
 
   //this happens when something changes on the form
   onChangeNote = event => {
-    this.setState({ note: event.target.value });
+    this.setState({ editnote: event.target.value });
   };
 
   //when submit button is clicked
   submitChecker = event => {
     event.preventDefault();
-    if (this.state.note !== '') {
+    if (this.state.editnote !== '') {
       this.onSubmitSuccess(event);
     } else {
       this.onSubmitFailure();
     }
   };
 
+  messageResetTimer = () => {
+    setTimeout(() => {
+      this.setState({ messagebox: '' });
+    }, 3500);
+  };
+
   //when submit checker says no
   onSubmitFailure = () => {
-    console.log('Please fill out your note before submitting!');
+    this.setState({ messageboxcolor: 'red' });
     this.setState({
       messagebox: 'Please fill out your note before submitting!'
     });
-    this.setState({ messageboxcolor: 'red' });
+    this.messageResetTimer();
   };
 
   //when submit checker says yes
   onSubmitSuccess = () => {
     const noteSubmission = {
-      text: this.state.note
+      text: this.state.editnote
     };
     //put axios here
     console.log(noteSubmission);
     this.setState({
-      messagebox: 'Good Note!',
-      messageboxcolor: 'green'
+      editview: 'false'
     });
   };
 
+  editviewToggle = () => {
+    this.setState({editview: 'true' });
+  };
+
   render() {
-    return (
-      <div className="Note">
-        <form onSubmit={this.submitChecker}>
-          <textarea
-            input="text"
-            className="Note_Create"
-            rows="5"
-            placeholder="About your travels!"
-            maxLength="250"
-            onChange={this.onChangeNote}
-            value={this.state.note}
-          />
-          <button type="submit">Submit</button>
-        </form>
-        <button type="button">Edit</button>
-        <div
-          className='messagebox'
-          style={{ color: this.state.messageboxcolor }}
-        >
-          {this.state.messagebox}
+    if (this.state.editview === 'true') {
+      return (
+        <div className="Edit_Note">
+          <form onSubmit={this.submitChecker}>
+            <textarea
+              input="text"
+              className="Note_Create"
+              rows="5"
+              placeholder="About your travels!"
+              maxLength="250"
+              onChange={this.onChangeNote}
+              value={this.state.editnote}
+            />
+            <button type="submit">Submit</button>
+          </form>
+          <div
+            className="messagebox"
+            style={{ color: this.state.messageboxcolor }}
+          >
+            {this.state.messagebox}
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else
+      return (
+        <div className="View_Note">
+          <p>Your Note:</p>
+          <p>{this.state.editnote}</p>
+          <button type="button"
+            onClick={this.editviewToggle}
+          >
+            Edit
+          </button>
+        </div>
+      );
   }
 }
 
