@@ -16,6 +16,9 @@ export class AppContextProvider extends Component {
     authenticated: false,
     error: ''
   };
+  componentDidMount() {
+    console.log('THE begining');
+  }
   login = user => {
     (async () => {
       try {
