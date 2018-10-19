@@ -3,27 +3,32 @@ import React, { Component } from 'react';
 import './VisitBay.css';
 
 class VisitBay extends Component {
-  state = {
+  constructor(props) {
+    super();
+    this.state = {};
 
+    this.changeColor = this.changeColor.bind(this);
   }
 
-  // onClick() {
-  //   this.
-  // }
+  changeColor(e) {
+    e.preventDefault();
+    this.setState()
+    console.log('Color Changed');
+  }
 
   render() {
     return (
       <div className="VisitBay">
-        <button type="button" onClick={''} className="VisitBay_Wishlist">
+        <button type="button" onClick={this.changeColor} className="VisitBay_Wishlist">
           Wishlist
         </button>
-        <button type="button" onClick={''} className="VisitBay_Transited">
+        <button type="button" onClick={this.changeColor} className="VisitBay_Transited">
           Transited
         </button>
-        <button type="button" onClick={''} className="VisitBay_Visited">
+        <button type="button" onClick={this.changeColor} className="VisitBay_Visited">
           Visited
         </button>
-        <button type="button" onClick={''} className="VisitBay_Lived">
+        <button type="button" onClick={this.changeColor} className="VisitBay_Lived">
           Lived
         </button>
       </div>
