@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import { AppContextConsumer } from '../../AppContext';
 import './SignIn.css';
 
-const URL = process.env.REACT_APP_LOCAL_BACKEND_URL || 'http://127.0.0.1:8000';
+//const URL = process.env.REACT_APP_LOCAL_BACKEND_URL || 'http://127.0.0.1:8000/api';
+const URL =
+  process.env.REACT_APP_REMOTE_BACKEND_URL ||
+  'https://scratch-n-map.herokuapp.com/api';
 
 class SignIn extends Component {
   state = {
@@ -30,7 +33,7 @@ class SignIn extends Component {
 
     (async () => {
       try {
-        const response = await axios.post(`${URL}/api/login/`, user);
+        const response = await axios.post(`${URL}/login`, user);
 
         const data = response.data;
 
@@ -57,7 +60,6 @@ class SignIn extends Component {
       }
     })(); // self executing function
   };
-
   render() {
     return (
       <AppContextConsumer>
@@ -81,6 +83,7 @@ class SignIn extends Component {
                   className="form__input"
                   placeholder="password"
                 />
+
                 <button className="form__button">Sign In</button>
                 <span className="danger">
                   {this.state.error ? this.state.error : ''}

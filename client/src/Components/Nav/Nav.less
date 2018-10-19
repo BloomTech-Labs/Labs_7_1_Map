@@ -1,77 +1,59 @@
 .Nav {
   display: flex;
-  flex-flow: row nowrap;
+  flex-wrap: no-wrap;
   justify-content: space-between;
   align-items: center;
-  margin: 0 0 0 40px;
-  padding-left: 10px;
-  width: 90%;
-  height: 50px;
-  background-color: rgba(100, 100, 100, 0.4);
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 10;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  background-color: rgba(0, 0, 0, 1);
   color: white;
-
   .Nav__title {
-    font-size: 25px;
-    min-width: 175px;
-    cursor: default;
+    font-size: 1.5rem;
+    min-width: 164px;
+    color: white;
+    &:hover {
+      color: var(--blue);
+      cursor: pointer;
+    }
   }
 
   .Nav__Center {
     display: flex;
-    flex-flow: row nowrap;
+    flex-wrap: nowrap;
     justify-content: space-around;
     align-items: center;
-    width: 300px;
-    height: 100%;
+    width: 400px;
+
+    .Center__friends {
+      font-size: 1.5rem;
+    }
+
+    .Center__search {
+      cursor: text;
+      font-size: 30px;
+      width: 150px;
+    }
   }
 
   .Nav__Right {
     display: flex;
-    flex-flow: row nowrap;
+    flex-wrap: nowrap;
     justify-content: space-around;
-    align-items: center;
     width: 200px;
-    height: 100%;
-  }
-
-  .MenuItem {
-    cursor: pointer;
-
-    &:hover {
-      color: orangered;
+    .Right__signout {
+      // parent css goes here
+      &:hover {
+        color: var(--blue);
+        cursor: pointer;
+      }
     }
-  }
 
-  .Center__friends {
-    font-size: 30px;
-    &:hover {
-      outline: 2px solid red;
+    .MenuItem {
+      color: white;
+      &:hover {
+        color: var(--blue);
+        cursor: pointer;
+      }
     }
-    &:focus {
-      outline: 2px solid green;
-    }
-  }
-
-  .Center__search {
-    cursor: text;
-    font-size: 30px;
-    width: 150px;
-    &:hover {
-      outline: 2px solid red;
-    }
-    &:focus {
-      outline: 2px solid green;
-    }
-  }
-
-  .Right__signout {
-    color: orangered;
-     &:hover {
-       color: orange;
-     }
   }
 }

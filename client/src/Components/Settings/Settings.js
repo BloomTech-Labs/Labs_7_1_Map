@@ -1,8 +1,8 @@
 import React from 'react';
+import Auth from '../Auth/Auth';
 
 const InputField = props => {
   const { onChange, label, name, type, value } = props;
-  console.log('here');
   return (
     <>
       <label>
@@ -40,6 +40,7 @@ class Settings extends React.Component {
   }
 
   render() {
+    console.log(this.props, 'HEHEHEHEHEHE');
     return (
       <form>
         <InputField
@@ -80,4 +81,4 @@ class Settings extends React.Component {
   }
 }
 
-export default Settings;
+export default Auth(Settings);

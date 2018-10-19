@@ -1,69 +1,51 @@
 .Nav {
   display: flex;
-  flex-flow: row nowrap;
+  flex-wrap: no-wrap;
   justify-content: space-between;
   align-items: center;
-  margin: 0 0 0 40px;
-  padding-left: 10px;
-  width: 90%;
-  height: 50px;
-  background-color: rgba(100, 100, 100, 0.4);
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 10;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  background-color: #000000;
   color: white;
 }
 .Nav .Nav__title {
-  font-size: 25px;
-  min-width: 175px;
-  cursor: default;
+  font-size: 1.5rem;
+  min-width: 164px;
+  color: white;
+}
+.Nav .Nav__title:hover {
+  color: var(--blue);
+  cursor: pointer;
 }
 .Nav .Nav__Center {
   display: flex;
-  flex-flow: row nowrap;
+  flex-wrap: nowrap;
   justify-content: space-around;
   align-items: center;
-  width: 300px;
-  height: 100%;
+  width: 400px;
 }
-.Nav .Nav__Right {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-around;
-  align-items: center;
-  width: 200px;
-  height: 100%;
+.Nav .Nav__Center .Center__friends {
+  font-size: 1.5rem;
 }
-.Nav .MenuItem {
-  cursor: pointer;
-}
-.Nav .MenuItem:hover {
-  color: orangered;
-}
-.Nav .Center__friends {
-  font-size: 30px;
-}
-.Nav .Center__friends:hover {
-  outline: 2px solid red;
-}
-.Nav .Center__friends:focus {
-  outline: 2px solid green;
-}
-.Nav .Center__search {
+.Nav .Nav__Center .Center__search {
   cursor: text;
   font-size: 30px;
   width: 150px;
 }
-.Nav .Center__search:hover {
-  outline: 2px solid red;
+.Nav .Nav__Right {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  width: 200px;
 }
-.Nav .Center__search:focus {
-  outline: 2px solid green;
+.Nav .Nav__Right .Right__signout:hover {
+  color: var(--blue);
+  cursor: pointer;
 }
-.Nav .Right__signout {
-  color: orangered;
+.Nav .Nav__Right .MenuItem {
+  color: white;
 }
-.Nav .Right__signout:hover {
-  color: orange;
+.Nav .Nav__Right .MenuItem:hover {
+  color: var(--blue);
+  cursor: pointer;
 }
