@@ -10,7 +10,6 @@ import SignUp from './Components/User/SignUp';
 import SignIn from './Components/User/SignIn';
 
 import './App.css';
-import LandingPage from './Components/LandingPage/LandingPage';
 
 class App extends Component {
   render() {
