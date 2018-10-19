@@ -1,22 +1,26 @@
 import React from 'react';
 
-// import './VisitBay.css';
+import './StayButtons.css';
 
 const StayButtons = props => {
   const onChange = props.onChange;
-  
+
   return (
-    <div className="VisitBay">
-      <button type="button" onClick={onChange} className="VisitBay_Wishlist">
+    <div className="StayButtons">
+      <button type="button" onClick={onChange} className="StayButtons_Wishlist">
         Wishlist
       </button>
-      <button type="button" onClick={onChange} className="VisitBay_Transited">
+      <button
+        type="button"
+        onClick={onChange}
+        className="StayButtons_Transited"
+      >
         Transited
       </button>
-      <button type="button" onClick={onChange} className="VisitBay_Visited">
+      <button type="button" onClick={onChange} className="StayButtons_Visited">
         Visited
       </button>
-      <button type="button" onClick={onChange} className="VisitBay_Lived">
+      <button type="button" onClick={onChange} className="StayButtons_Lived">
         Lived
       </button>
     </div>
