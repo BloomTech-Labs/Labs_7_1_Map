@@ -1,12 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 
+import ChangeEmail from './ChangeEmail';
+
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 class Settings extends React.Component {
   state = {
     currentPassword: '',
-    newEmail: '',
     newPassword: '',
     confirmNewPassword: '',
     autoScratch: false
@@ -51,11 +52,6 @@ class Settings extends React.Component {
     }
   };
 
-  handleSubmitEmail = async e => {
-    e.preventDefault();
-    console.log(this.state.newEmail);
-  };
-
   validateForm() {
     if (!this.state['email'] || this.state['email'].length === 0) {
       console.error('Form not validated');
@@ -65,35 +61,8 @@ class Settings extends React.Component {
   render() {
     return (
       <div className="Settings">
-        {/* Change email form*/}
-        <form
-          onSubmit={this.handleSubmitEmail}
-          className="Settings__ChangePassword"
-        >
-          <label htmlFor="currentPassword">
-            Current Password
-            <input
-              type="text"
-              name="currentPassword"
-              placeholder="Current password"
-              onChange={e => this.handleChange(e)}
-            />
-          </label>
-
-          <label htmlFor="newEmail">
-            Update Email
-            <input
-              type="text"
-              name="newEmail"
-              placeholder="New email"
-              onChange={e => this.handleChange(e)}
-            />
-          </label>
-
-          <input type="submit" placeholder="Submit" />
-        </form>
-
-        {/* Change password form*/}
+        <ChangeEmail />
+        {/*Change password form*/}
         <form
           onSubmit={this.handleSubmitPassword}
           className="Settings__ChangePassword"
@@ -130,7 +99,7 @@ class Settings extends React.Component {
           <input type="submit" placeholder="Submit" />
         </form>
 
-        {/* App preferences*/}
+        {/*Preferences*/}
         <div>
           <label>
             Theme
