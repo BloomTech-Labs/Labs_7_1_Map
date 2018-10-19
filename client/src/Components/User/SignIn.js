@@ -15,10 +15,20 @@ class SignIn extends Component {
     password: ''
   };
 
+  componentDidMount() {
+    const token = localStorage.getItem('jwt_token');
+    // TODO: Implementation of a verify token, how and when??
+    // For now, having a token is enough
+    if (token) {
+      //redirect
+      this.props.history.push('/dashboard');
+      window.location.reload();
+    }
+  }
+
   handleChange = e => {
     this.setState({
-      [e.target.name]: e.target.value,
-      error: ''
+      [e.target.name]: e.target.value
     });
   };
 
@@ -34,7 +44,7 @@ class SignIn extends Component {
   render() {
     return (
       <AppContextConsumer>
-        {({ handleSignIn, AppState: { error } }) => (
+        {({ Authenticated, handleSignIn, AppState: { error } }) => (
           <div className="SignIn">
             <div className="SignIn__card">
               <form onSubmit={e => this.handleSubmit(e, handleSignIn)}>
@@ -54,7 +64,6 @@ class SignIn extends Component {
                   className="form__input"
                   placeholder="password"
                 />
-
                 <button className="form__button">Sign In</button>
                 <span className="danger">{error ? error : ''}</span>
               </form>

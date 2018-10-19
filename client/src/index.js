@@ -11,12 +11,12 @@ import './index.css';
 import 'leaflet/dist/leaflet.css';
 
 ReactDOM.render(
-	<AppContextProvider>
-		<Router>
-			<App />
-		</Router>
-	</AppContextProvider>,
-	document.getElementById('root')
+  <AppContextProvider>
+    <Router>
+      <App />
+    </Router>
+  </AppContextProvider>,
+  document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

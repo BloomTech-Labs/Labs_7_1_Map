@@ -27,17 +27,21 @@ export class AppContextProvider extends Component {
 
           // reset the fields
           this.setState({
+            authenticated: true,
             error: ''
           });
+          window.location.reload();
         } else {
-          this.setState({ error: 'Unexpected error!' });
+          this.setState({
+            error: 'Incorrect login credentials!'
+          });
           return; // terminate the process
         }
       } catch (err) {
         if (process.env.REACT_APP_DEV) {
           console.log(err);
         }
-        this.setState({ error: 'Unexpected error!' });
+        this.setState({ error: 'Incorrect login credentials!' });
         return; // terminate the process
       }
     })(); // self executing function
