@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import './ChangeEmail.css';
+
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 class ChangeEmail extends Component {
@@ -9,14 +11,14 @@ class ChangeEmail extends Component {
     newEmail: ''
   };
 
-  handleSubmit= async e => {
+  handleSubmit = async e => {
     e.preventDefault();
     // TODO: Make axios call to backend
     console.log(this.state);
   };
 
-  handleChange = event => {
-    const { name, value } = event.target
+  handleChange = e => {
+    const { name, value } = e.target;
     console.log(name, value);
 
     this.setState({
@@ -26,33 +28,32 @@ class ChangeEmail extends Component {
 
   render() {
     return (
-      <form
-        onSubmit={this.handleSubmit}
-        className="Settings__ChangeEmail"
-      >
-
-        <label htmlFor="newEmail">
-          New Email
+      <form onSubmit={this.handleSubmit} className="Settings__ChangeEmail">
+        <div className="ChangeEmail__newEmail">
+          <h5>New Email</h5>
           <input
             type="text"
             name="newEmail"
             placeholder="New Email"
             onChange={e => this.handleChange(e)}
           />
-        </label>
+        </div>
 
-        <label htmlFor="currentPassword">
-          Current Password
+        <div className="ChangeEmail__currentPassword">
+          <h5>Current Password</h5>
           <input
             type="text"
             name="currentPassword"
             placeholder="Current Password"
             onChange={e => this.handleChange(e)}
           />
-        </label>
+        </div>
 
-        <input type="submit" placeholder="Submit" />
-
+        <input
+          className="ChangeEmail__submit"
+          type="submit"
+          placeholder="Submit"
+        />
       </form>
     );
   }

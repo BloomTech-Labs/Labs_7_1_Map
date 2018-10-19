@@ -1,0 +1,17 @@
+.Settings__ChangeEmail {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding: 20px;
+}
+.Settings__ChangeEmail div {
+  margin: 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+.Settings__ChangeEmail .ChangeEmail__submit {
+  width: 100px;
+  margin: 10px;
+}
