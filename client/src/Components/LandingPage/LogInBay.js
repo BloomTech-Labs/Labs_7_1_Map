@@ -41,7 +41,7 @@ class LogInBay extends React.Component {
   render() {
     return (
       <AppContextConsumer>
-        {({ handleSignIn }) => (
+        {({ handleSignIn, handleSignUp }) => (
           <div className="LogInBay">
             <form className="LogInForm" onSubmit={handleSignIn}>
               Sign In
@@ -71,11 +71,18 @@ class LogInBay extends React.Component {
               shouldCloseOnOverlayClick={true}
             >
               <p>Sign Up</p>
-              <form style={{ display: 'flex', flexFlow: 'column nowrap' }}>
-                <input type="text" placeholder="Username" />
-                <input type="text" placeholder="Email" />
-                <input type="text" placeholder="Password" />
-                <input type="text" placeholder="Confirm Password" />
+              <form
+                onSubmit={handleSignUp}
+                style={{ display: 'flex', flexFlow: 'column nowrap' }}
+              >
+                <input type="text" placeholder="Username" name="username" />
+                <input type="text" placeholder="Email" name="email" />
+                <input type="text" placeholder="Password" name="password" />
+                <input
+                  type="text"
+                  placeholder="Confirm Password"
+                  name="confirmPassword"
+                />
                 <input type="submit" />
               </form>
               <button onClick={this.handleCloseModal}>Close Modal</button>

@@ -19,14 +19,28 @@ export class AppContextProvider extends Component {
       password: e.target.password.value
     };
     const response = await axios.post(`${BACKEND_URL}/login`, body);
-    await localStorage.setItem('token', response.data.jwt_token);
-    // await this.props.updateUserData(response.data.user);
+    localStorage.setItem('token', response.data.jwt_token);
     this.setState({ authenticated: true, user: response.data.user });
   };
 
   handleSignOut = () => {
     this.setState({ authenticated: false, user: {} });
     localStorage.removeItem('token');
+  };
+
+  handleSignUp = async e => {
+    e.preventDefault();
+
+    // TODO: Error handling
+    const body = {
+      username: e.target.username.value,
+      password: e.target.password.value,
+      email: e.target.email.value
+    };
+
+    const response = await axios.post(`${BACKEND_URL}/register`, body);
+    localStorage.setItem('token', response.data.jwt_token);
+    this.setState({ authenticated: true, user: response.data.user });
   };
 
   render() {
@@ -36,7 +50,8 @@ export class AppContextProvider extends Component {
           AppState: this.state,
           authenticated: this.state.authenticated,
           handleSignIn: this.handleSignIn,
-          handleSignOut: this.handleSignOut
+          handleSignOut: this.handleSignOut,
+          handleSignUp: this.handleSignUp
         }}
       >
         {this.props.children}
