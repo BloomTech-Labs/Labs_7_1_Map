@@ -4,43 +4,42 @@ import React, { Component } from 'react';
 import Slider from 'rc-slider';
 import './BorderBay.css';
 
-const style = {
-  float: 'left',
-  width: 160,
-  height: 400,
-  marginBottom: 160,
-  marginLeft: 50
-};
-const parentStyle = { overflow: 'hidden' };
-
 const marks = {
-  '-10': '-10°C',
-  0: <strong>0°C</strong>,
-  26: '26°C',
-  37: '37°C',
-  50: '50°C',
+  0: 'No Interest',
+  25: {
+    style: {
+      color: 'pink'
+    },
+    label: 'Wishlist'
+  },
+  50: {
+    style: {
+      color: 'yellow'
+    },
+    label: 'Transited'
+  },
+  75: {
+    style: {
+      color: 'green'
+    },
+    label: 'Visited'
+  },
   100: {
     style: {
-      color: 'red'
+      color: 'blue'
     },
-    label: <strong>100°C</strong>
+    label: 'Lived'
   }
 };
 
 class BorderBay extends Component {
   render() {
     return (
-      <div className="Country_Border" style={parentStyle}>
-        <div style={style}>
-          <Slider
-            vertical
-            min={-10}
-            marks={marks}
-            included={false}
-            defaultValue={20}
-          />
-        </div>
+      <div className="Country_Border">
         <p className="Country_Border-Border">Border</p>
+        <div className="Country_Border-Slider">
+          <Slider min={-10} marks={marks} included={false} defaultValue={20} />
+        </div>
       </div>
     );
   }

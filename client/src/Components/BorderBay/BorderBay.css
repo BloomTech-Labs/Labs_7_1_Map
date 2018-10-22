@@ -1,5 +1,6 @@
 .Country_Border {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   width: 100%;
   border: 1px solid black;
@@ -8,4 +9,8 @@
   text-align: center;
   width: 50%;
   border: 1px solid black;
+}
+.Country_Border .Country_Border-Slider {
+  width: 100%;
+  height: 60px;
 }
