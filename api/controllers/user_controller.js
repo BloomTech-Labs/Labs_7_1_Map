@@ -45,7 +45,8 @@ module.exports = {
   login: async (req, res) => {
     try {
       // we only reach here because we are authenticated
-      res.status(200).json({ jwt_token: make_token(req.user) });
+      const user = req.user
+      res.status(200).json({ jwt_token: make_token(req.user), user });
     } catch (err) {
       if (DEV) console.log(err);
       res.status(500).json({ error: 'Internal server error!' });
