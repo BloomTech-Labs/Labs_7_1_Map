@@ -41,7 +41,7 @@ class Note extends Component {
   onSubmitFailure = () => {
     this.setState({ messageboxcolor: 'red' });
     this.setState({
-      messagebox: 'Please fill out your note before submitting!'
+      messagebox: 'Please fill out your note before you submit!'
     });
     this.messageResetTimer();
   };
