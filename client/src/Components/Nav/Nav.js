@@ -19,7 +19,9 @@ const Nav = props => {
         <select name="My Travels" id="" className="MenuItem Center__friends">
           {friendsDummyData.map((friend, i) => {
             return i === 0 ? (
-              <option value="My Travels">My Travels</option>
+              <option value="My Travels" key={i}>
+                My Travels
+              </option>
             ) : (
               <option value={friend} key={i}>
                 {friend}
