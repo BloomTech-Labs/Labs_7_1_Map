@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactModal from 'react-modal';
-import axios from 'axios';
 import { AppContextConsumer } from '../../AppContext';
 
 import './LogInBay.css';
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 // ReactModal.setAppElement('div');
 
