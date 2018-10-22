@@ -3,17 +3,18 @@
   flex-flow: column nowrap;
   align-items: center;
   width: 300px;
-  height: 100%;
+  height: auto;
   padding: 20px;
-  background-color: gray;
-  position: absolute;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  position: fixed;
   z-index: 11;
-  top: 0;
-  left: -300px;
+  top: 100px;
+  right: -300px;
   animation: Settings 0.5s forwards;
 }
 @keyframes Settings {
   100% {
-    left: 0;
+    right: 0;
   }
 }
