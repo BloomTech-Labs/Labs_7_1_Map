@@ -3,7 +3,7 @@ import React from 'react';
 import './StayButtons.css';
 
 const StayButtons = props => {
-  const onChange = props.onChange;
+  const onChange = props.color;
 
   return (
     <div className="StayButtons">

@@ -3,14 +3,6 @@
   flex-flow: column;
   justify-content: space-around;
   align-items: center;
-  height: 425px;
+  height: 400px;
   width: 100%;
-}
-.Card_Header {
-  border: 1px solid black;
-  width: 100%;
-  background: beige;
-}
-.Header_Country-Name {
-  text-align: center;
 }

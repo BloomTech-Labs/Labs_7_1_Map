@@ -17,7 +17,7 @@ class VisitBay extends Component {
   render() {
     return (
       <div className="VisitBay">
-        <StayButtons onChange={this.changeColor} />
+        <StayButtons color={this.changeColor} />
       </div>
     );
   }
