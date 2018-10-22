@@ -36,6 +36,7 @@ class LogInBay extends React.Component {
       password: e.target.password.value
     };
     const response = await axios.post(`${BACKEND_URL}/login`, body);
+    await localStorage.setItem('token', response.data.jwt_token);
     await this.props.updateUserData(response.data.user);
   };
 

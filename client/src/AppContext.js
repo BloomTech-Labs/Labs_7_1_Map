@@ -15,6 +15,7 @@ export class AppContextProvider extends Component {
 
   clearUserData = () => {
     this.setState({ authenticated: false, user: {} });
+    localStorage.removeItem('token');
   };
 
   render() {
