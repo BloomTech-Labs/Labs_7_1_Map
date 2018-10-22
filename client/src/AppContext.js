@@ -3,20 +3,34 @@ import React, { Component } from 'react';
 const AppContext = React.createContext();
 
 export class AppContextProvider extends Component {
-	state = { authenticated: false };
+  state = {
+    test: 'Hello!',
+    authenticated: false,
+    user: {}
+  };
 
-	render() {
-		return (
-			<AppContext.Provider
-				value={{
-					AppState: this.state,
-					authenticated: this.state.authenticated,
-				}}
-			>
-				{this.props.children}
-			</AppContext.Provider>
-		);
-	}
+  updateUserData = () => {
+    this.setState({ authenticated: true });
+  };
+
+  clearUserData = () => {
+    this.setState({ authenticated: false, user: {} });
+  };
+
+  render() {
+    return (
+      <AppContext.Provider
+        value={{
+          AppState: this.state,
+          authenticated: this.state.authenticated,
+          updateUserData: this.updateUserData,
+          clearUserData: this.clearUserData
+        }}
+      >
+        {this.props.children}
+      </AppContext.Provider>
+    );
+  }
 }
 
 export const AppContextConsumer = AppContext.Consumer;

@@ -1,12 +1,18 @@
-.Landing-Page {
+.LandingPage {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
   width: 100%;
   height: 100vh;
-  background-image: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.6) 0%,
-      rgba(0, 0, 0, 0.6) 100%
-    ),
-    url('../../Map Overhead.jpg');
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.6) 100%), url('../../Map Overhead.jpg');
   background-position: center;
   background-size: cover;
+}
+.LandingPage .LandingPage__Logo {
+  height: 180px;
+  width: 500px;
+}
+.LandingPage .LandingPage__Tagline {
+  color: white;
+  margin: 50px;
 }
