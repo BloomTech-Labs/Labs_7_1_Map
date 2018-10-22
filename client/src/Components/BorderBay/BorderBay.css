@@ -1,0 +1,11 @@
+.Country_Border {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  border: 1px solid black;
+}
+.Country_Border .Country_Border-Border {
+  text-align: center;
+  width: 50%;
+  border: 1px solid black;
+}

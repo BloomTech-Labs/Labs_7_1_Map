@@ -1,7 +1,7 @@
 import React from 'react';
 import CardHeader from './CardHeader';
-import CountryBorder from '../CountryBorder/CountryBorder';
-import VisitBay from '../VisitBay/VisitBay';
+import BorderBay from '../BorderBay/BorderBay';
+// import VisitBay from '../VisitBay/VisitBay';
 import Note from '../Note/Note';
 import FriendList from '../Friends/FriendList';
 
@@ -11,8 +11,8 @@ const Card = () => {
   return (
     <div className="Card">
       <CardHeader />
-      <CountryBorder />
-      <VisitBay />
+      <BorderBay />
+      {/* <VisitBay /> */}
       <Note />
       <FriendList />
     </div>
