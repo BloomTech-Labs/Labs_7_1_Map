@@ -1,8 +1,11 @@
 import React from 'react';
+
+import { AppContextConsumer } from '../../AppContext';
 import CountryBorder from '../CountryBorder/CountryBorder';
 import VisitedBay from '../VisitedBay/VisitedBay';
 import Note from '../Note/Note';
 import FriendList from '../Friends/FriendList';
+
 // import ReactModal from 'react-modal';
 
 import './Card.css';
@@ -15,7 +18,11 @@ const Card = () => {
       </div>
       <CountryBorder />
       <VisitedBay />
-      <Note />
+      <AppContextConsumer>
+        {value => {
+          return <Note user={value.AppState.user} />;
+        }}
+      </AppContextConsumer>
       <FriendList />
     </div>
   );

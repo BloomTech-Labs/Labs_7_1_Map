@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 
 import './Note.css';
 
 class Note extends Component {
-  state = {
-    editnote: '',
-    viewnote: '',
-    messagebox: '',
-    messageboxcolor: '',
-    editview: 'false'
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      editnote: '',
+      viewnote: '',
+      messagebox: '',
+      messageboxcolor: '',
+      editview: 'false',
+      user: this.props.user
+    };
+  }
 
   //this happens when something changes on the form
   onChangeNote = event => {
@@ -47,7 +51,27 @@ class Note extends Component {
     const noteSubmission = {
       text: this.state.editnote
     };
-    //put axios here
+    axios
+      .post('http://localhost:27017', noteSubmission)
+      .then(res => {
+        if (res.status !== 201) {
+          this.setState({
+            messagebox: 'Uh oh! Something went wrong, please try again later.'
+          });
+          this.messageResetTimer();
+        } else {
+          this.setState({
+            messageboxcolor: 'green',
+            messagebox: 'Successfully Saved!'
+          });
+        }
+      })
+      .catch(err => {
+        this.setState({
+          messagebox:
+            'Sorry, there seems to a problem with the server, please try again later!'
+        });
+      });
     console.log(noteSubmission);
     this.setState({
       editview: 'false'
@@ -55,10 +79,11 @@ class Note extends Component {
   };
 
   editviewToggle = () => {
-    this.setState({editview: 'true' });
+    this.setState({ editview: 'true' });
   };
 
   render() {
+    const username = this.state.user;
     if (this.state.editview === 'true') {
       return (
         <div className="Edit_Note">
@@ -67,7 +92,9 @@ class Note extends Component {
               input="text"
               className="Note_Create"
               rows="5"
-              placeholder="About your travels!"
+              placeholder={
+                username + ', what are your thoughts about this place?'
+              }
               maxLength="250"
               onChange={this.onChangeNote}
               value={this.state.editnote}
@@ -85,11 +112,9 @@ class Note extends Component {
     } else
       return (
         <div className="View_Note">
-          <p>Your Note:</p>
+          <p>{username + 's note:'}</p>
           <p>{this.state.editnote}</p>
-          <button type="button"
-            onClick={this.editviewToggle}
-          >
+          <button type="button" onClick={this.editviewToggle}>
             Edit
           </button>
         </div>
