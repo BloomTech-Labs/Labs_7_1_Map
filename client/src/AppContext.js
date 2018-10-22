@@ -9,8 +9,8 @@ export class AppContextProvider extends Component {
     user: {}
   };
 
-  updateUserData = () => {
-    this.setState({ authenticated: true });
+  updateUserData = user => {
+    this.setState({ authenticated: true, user });
   };
 
   clearUserData = () => {

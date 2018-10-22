@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactModal from 'react-modal';
+import axios from 'axios';
 
 import './LogInBay.css';
 
-// ReactModal.setAppElement('#SignUpModal');
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-const customStyles = {
+// ReactModal.setAppElement('div');
+
+const SignUpModalStyles = {
   content: {
     display: 'flex',
     flexFlow: 'column nowrap',
@@ -26,10 +29,18 @@ class LogInBay extends React.Component {
     showModal: false
   };
 
-  handleLogin = e => {
+  handleLogin = async e => {
     e.preventDefault();
-    this.props.updateUserData();
-    console.log(this.props);
+    const body = {
+      username: e.target.username.value,
+      password: e.target.password.value
+    };
+    const response = await axios.post(`${BACKEND_URL}/login`, body);
+    await this.props.updateUserData(response.data.user);
+  };
+
+  handleSignUp = e => {
+    e.preventDefault();
   };
 
   handleOpenModal = () => {
@@ -43,28 +54,30 @@ class LogInBay extends React.Component {
   render() {
     return (
       <div className="LogInBay">
-        <form className="LoginForm" onSubmit={this.handleLogin}>
-          Login
-          <input type="text" placeholder="Username" />
-          <input type="text" placeholder="Password" />
+        <form className="LogInForm" onSubmit={this.handleLogin}>
+          Sign In
+          <input type="text" placeholder="Username" name="username" />
+          <input type="text" placeholder="Password" name="password" />
           <input type="submit" />
         </form>
+        <br />
+        <p> - or -</p>
         <button
           type="button"
-          className="LogInBay-SignUp"
+          className="LogInBay__SignUpButton"
           onClick={this.handleOpenModal}
         >
           Sign Up
         </button>
         <ReactModal
           id="SignUpModal"
-          style={customStyles}
+          style={SignUpModalStyles}
           isOpen={this.state.showModal}
           contentLabel="Example Text"
           onRequestClose={this.handleCloseModal}
           shouldCloseOnOverlayClick={true}
         >
-          <p>Modal text!</p>
+          <p>Sign Up</p>
           <form style={{ display: 'flex', flexFlow: 'column nowrap' }}>
             <input type="text" placeholder="Username" />
             <input type="text" placeholder="Email" />

@@ -1,4 +1,5 @@
 .LandingPage {
+  color: white;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -13,6 +14,5 @@
   width: 500px;
 }
 .LandingPage .LandingPage__Tagline {
-  color: white;
   margin: 50px;
 }

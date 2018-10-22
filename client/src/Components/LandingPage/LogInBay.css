@@ -1,16 +1,22 @@
 .LogInBay {
+  padding: 20px;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   border: 2px dotted red;
 }
-.LogInBay .LoginForm {
+.LogInBay .LogInForm {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  height: 200px;
+  height: 100px;
   width: 200px;
 }
-.LogInBay .LogIn {
-  margin: 25px 20px 0;
+.LogInBay .LogInForm input {
+  margin: 5px;
+}
+.LogInBay .LogInBay__SignUpButton {
+  height: 30px;
+  width: 60px;
+  margin-top: 25px;
 }
