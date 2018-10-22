@@ -7,7 +7,7 @@ const StayButtons = props => {
 
   return (
     <div className="StayButtons">
-      <button type="button" onClick={onChange} className="StayButtons_Wishlist">
+      <button style={{countryBorder: props.countryBorder}} type="button" onClick={onChange} className="StayButtons_Wishlist">
         Wishlist
       </button>
       <button

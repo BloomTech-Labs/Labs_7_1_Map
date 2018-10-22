@@ -10,7 +10,7 @@ class VisitBay extends Component {
   }
 
   changeColor(e) {
-    e.preventDefault();
+    // e.preventDefault();
     console.log('Color Changed');
   }
 
