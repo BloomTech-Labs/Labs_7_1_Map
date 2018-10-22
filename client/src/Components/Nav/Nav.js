@@ -9,7 +9,7 @@ const friendsDummyData = [
   'Friend 4'
 ];
 
-const Nav = () => {
+const Nav = props => {
   return (
     <div className="Nav">
       <div className="Nav__title">Scratch-N-Map</div>
@@ -19,7 +19,9 @@ const Nav = () => {
         <select name="My Travels" id="" className="MenuItem Center__friends">
           {friendsDummyData.map((friend, i) => {
             return i === 0 ? (
-              <option value="My Travels">My Travels</option>
+              <option value="My Travels" key={i}>
+                My Travels
+              </option>
             ) : (
               <option value={friend} key={i}>
                 {friend}
@@ -34,7 +36,12 @@ const Nav = () => {
         />
       </div>
       <div className="Nav__Right">
-        <div className="MenuItem Right__settings">Settings</div>
+        <div
+          className="MenuItem Right__settings"
+          onClick={() => props.toggleSettings()}
+        >
+          Settings
+        </div>
         <div className="MenuItem Right__signout">Sign Out</div>
       </div>
     </div>
