@@ -18,13 +18,6 @@ class App extends Component {
         {props => (
           <div className="App">
             {props.AppState.authenticated ? <Dashboard /> : <LandingPage />}
-            {/*<Switch>
-                <Route exact path="/" component={Dashboard} />
-                <Route path="/signin" component={SignIn} />
-                <Route path="/signup" component={SignUp} />
-                <Route path="/dashboard" component={Dashboard} />
-                <Route path="/settings" component={Settings} />
-              </Switch>*/}
           </div>
         )}
       </AppContextConsumer>

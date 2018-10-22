@@ -13,7 +13,7 @@ const friendsDummyData = [
 const Nav = props => {
   return (
     <AppContextConsumer>
-      {({ clearUserData }) => (
+      {({ handleSignOut }) => (
         <div className="Nav">
           <div className="Nav__title">Scratch-N-Map</div>
 
@@ -49,7 +49,7 @@ const Nav = props => {
             >
               Settings
             </div>
-            <div className="MenuItem Right__signout" onClick={clearUserData}>
+            <div className="MenuItem Right__signout" onClick={handleSignOut}>
               Sign Out
             </div>
           </div>
