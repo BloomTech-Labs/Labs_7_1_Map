@@ -4,7 +4,7 @@ const ObjectIdSchema = Schema.Types.ObjectId;
 
 const NoteSchema = new Schema(
   {
-    text: string,
+    text: String,
     user: {
       type: ObjectIdSchema,
       ref: 'User'
