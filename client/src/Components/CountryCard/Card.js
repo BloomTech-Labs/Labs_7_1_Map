@@ -23,9 +23,9 @@ const Card = () => {
           return <Note user={value.AppState.user} />;
         }}
       </AppContextConsumer>
+      <CardHeader />
+      <BorderBay />
       <FriendList />
-    <CardHeader />
-    <BorderBay />
     </div>
   );
 };
