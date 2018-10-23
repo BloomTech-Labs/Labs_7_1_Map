@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
 import './Note.css';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 class Note extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editnote: '',
-      viewnote: '',
-      messagebox: '',
-      messageboxcolor: '',
-      editview: 'false',
-      user: this.props.user
-    };
-  }
+  state = {
+    editnote: '',
+    viewnote: '',
+    messagebox: '',
+    messageboxcolor: '',
+    editview: 'false',
+    user: { username: '' }
+  };
+
+  componentDidMount = () => {
+    this.setState({
+      user: { username: 'todo: get user from context' }
+    });
+  };
 
   //this happens when something changes on the form
   onChangeNote = event => {
@@ -53,19 +57,19 @@ class Note extends Component {
       user: this.state.user
     };
     try {
-      let response = await axios.post('http://localhost:8000', noteSubmission);
+      let response = await axios.post(`${BACKEND_URL}/notes`, noteSubmission);
       let status = await response.status();
-      if (status !== 201) {
+      if (status !== 201 || status !== 200) {
         this.setState({
           messagebox: 'Uh oh! Something went wrong, please try again later.'
         });
         this.messageResetTimer();
       } else {
-        this.setState({
-          messageboxcolor: 'green',
-          messagebox: 'Successfully Saved!'
-        });
-        this.messageResetTimer();
+        // this.setState({
+        //   messageboxcolor: 'green',
+        //   messagebox: 'Successfully Saved!'
+        // });
+        // this.messageResetTimer();
         this.setState({
           editview: 'false'
         });
@@ -83,10 +87,10 @@ class Note extends Component {
   };
 
   render() {
-    const username = this.state.user;
+    const { username } = this.state.user;
     if (this.state.editview === 'true') {
       return (
-        <div className="Edit_Note">
+        <div className="Edit-Note">
           <form onSubmit={this.submitChecker}>
             <textarea
               input="text"
