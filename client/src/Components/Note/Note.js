@@ -47,36 +47,35 @@ class Note extends Component {
   };
 
   //when submit checker says yes
-  onSubmitSuccess = () => {
+  onSubmitSuccess = async () => {
     const noteSubmission = {
       text: this.state.editnote,
       user: this.state.user
     };
-    axios
-      .post('http://localhost:8000', noteSubmission)
-      .then(res => {
-        if (res.status !== 201) {
-          this.setState({
-            messagebox: 'Uh oh! Something went wrong, please try again later.'
-          });
-          this.messageResetTimer();
-        } else {
-          this.setState({
-            messageboxcolor: 'green',
-            messagebox: 'Successfully Saved!'
-          });
-          this.messageResetTimer();
-          this.setState({
-            editview: 'false'
-          });
-        }
-      })
-      .catch(() => {
+    try {
+      let response = await axios.post('http://localhost:8000', noteSubmission);
+      let status = await response.status();
+      if (status !== 201) {
         this.setState({
-          messagebox:
-            'Sorry, there seems to a problem with the server, please try again later!'
+          messagebox: 'Uh oh! Something went wrong, please try again later.'
         });
+        this.messageResetTimer();
+      } else {
+        this.setState({
+          messageboxcolor: 'green',
+          messagebox: 'Successfully Saved!'
+        });
+        this.messageResetTimer();
+        this.setState({
+          editview: 'false'
+        });
+      }
+    } catch (err) {
+      this.setState({
+        messagebox:
+          'Sorry, there seems to a problem with the server, please try again later!'
       });
+    }
   };
 
   editviewToggle = () => {
