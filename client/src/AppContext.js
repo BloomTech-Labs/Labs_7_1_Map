@@ -12,7 +12,8 @@ export class AppContextProvider extends Component {
 
     test: 'Hello!',
     authenticated: false,
-    user: {}
+    user: {},
+    friends: []
   };
 
   handleSignIn = async e => {
