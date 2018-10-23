@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 
 import './ChangeEmail.css';
 
-// const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 class ChangeEmail extends Component {
   state = {
@@ -16,15 +16,41 @@ class ChangeEmail extends Component {
     this.setState({ show: !this.state.show });
   };
 
+  // handleSubmit for ChangeEmail
   handleSubmit = async e => {
     e.preventDefault();
-    // TODO: Make axios call to backend
-    console.log(this.state);
-  };
+    // TODO: Error handling
+    const { currentPassword, newEmail } = this.state;
+
+    try {
+      const token = localStorage.getItem('token');
+
+      const body = {
+        username: this.props.user.username,
+        password: currentPassword,
+        new_email: newEmail
+      };
+
+      const options = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+      const response = await axios.post(
+        `${BACKEND_URL}/change_email`,
+        body,
+        options
+      );
+      // TODO: Notify user of success or failure
+      console.log('Email updated sucessfully!', response.data);
+      this.setState({ currentPassword: '', newEmail: '', show: false });
+    } catch (err) {
+      console.error('Error updating email!', err);
+    }
+  }; // handleSubmit
 
   handleChange = e => {
     const { name, value } = e.target;
-    console.log(name, value);
 
     this.setState({
       [name]: value
@@ -43,6 +69,7 @@ class ChangeEmail extends Component {
                 type="text"
                 name="newEmail"
                 placeholder="New Email"
+                value={this.state.newEmail}
                 onChange={e => this.handleChange(e)}
               />
             </div>
@@ -50,9 +77,10 @@ class ChangeEmail extends Component {
             <div className="ChangeEmail__currentPassword">
               <h5>Current Password</h5>
               <input
-                type="text"
+                type="password"
                 name="currentPassword"
                 placeholder="Current Password"
+                value={this.state.currentPassword}
                 onChange={e => this.handleChange(e)}
               />
             </div>
@@ -67,6 +95,6 @@ class ChangeEmail extends Component {
       </div>
     );
   }
-}
+} // ChangeEmail component
 
 export default ChangeEmail;
