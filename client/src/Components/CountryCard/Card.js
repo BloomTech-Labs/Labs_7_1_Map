@@ -25,7 +25,11 @@ const Card = () => {
       </AppContextConsumer>
       <CardHeader />
       <BorderBay />
-      <FriendList />
+      <AppContextConsumer>
+        {value => {
+          return <FriendList user={value.AppState.friends} />;
+        }}
+      </AppContextConsumer>
     </div>
   );
 };
