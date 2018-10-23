@@ -87,9 +87,12 @@ class Note extends Component {
   };
 
   render() {
+    //TODO: fix the className to Note and make the logic work
+ 
     const { username } = this.state.user;
     if (this.state.editview === 'true') {
       return (
+     
         <div className="Edit-Note">
           <form onSubmit={this.submitChecker}>
             <textarea
@@ -123,6 +126,7 @@ class Note extends Component {
           </button>
         </div>
       );
+
   }
 }
 

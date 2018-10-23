@@ -17,8 +17,8 @@ server.use(helmet());
 
 //cross origin request sharing permissions
 const corsOptions = {
-	origin: '*',
-	credentials: true,
+  origin: '*',
+  credentials: true
 };
 server.use(cors(corsOptions));
 

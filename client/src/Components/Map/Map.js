@@ -14,11 +14,15 @@ const markerIcon = L.icon({
 
 const mapTilesUrls = {
   standard: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  toner: 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
   light:
     'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', // light cartodb tile
   dark:
     'https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png' // dark cartodb tile
 };
+const corner1 = L.latLng(90, -180);
+const corner2 = L.latLng(-90, 180);
+const bounds = L.latLngBounds(corner1, corner2);
 
 class MapComponent extends Component {
   state = {
@@ -31,7 +35,13 @@ class MapComponent extends Component {
   render() {
     const position = [this.state.lat, this.state.lng];
     return (
-      <Map center={position} zoom={this.state.zoom} className="MapComponent">
+      <Map
+        center={position}
+        zoom={this.state.zoom}
+        className="MapComponent"
+        minZoom={1.5}
+        maxBounds={bounds}
+      >
         <TileLayer
           attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
           url={this.state.mapTile}
@@ -42,7 +52,7 @@ class MapComponent extends Component {
           draggable={true}
           opacity={0.8}
         >
-          <Popup>
+          <Popup className="Map_Component-Card">
             <Card />
           </Popup>
         </Marker>

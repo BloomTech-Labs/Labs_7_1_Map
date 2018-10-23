@@ -1,0 +1,29 @@
+.ChangeEmail {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin: 20px;
+}
+.ChangeEmail h4 {
+  cursor: pointer;
+}
+.ChangeEmail h4:hover {
+  color: maroon;
+}
+.ChangeEmail .Settings__ChangeEmail {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding: 20px;
+}
+.ChangeEmail .Settings__ChangeEmail div {
+  margin: 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+.ChangeEmail .Settings__ChangeEmail .ChangeEmail__submit {
+  width: 100px;
+  margin: 10px;
+}

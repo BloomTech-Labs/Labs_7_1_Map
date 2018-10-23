@@ -1,0 +1,15 @@
+.Settings__Preferences {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding: 20px;
+}
+.Settings__Preferences div {
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Settings__Preferences div h5 {
+  margin-right: 10px;
+}
