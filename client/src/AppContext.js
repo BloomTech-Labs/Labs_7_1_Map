@@ -3,8 +3,10 @@ import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
+// new context
 const AppContext = React.createContext();
 
+// provider component
 export class AppContextProvider extends Component {
   state = {
     test: 'Hello!',

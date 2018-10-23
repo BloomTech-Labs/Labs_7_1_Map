@@ -1,7 +1,7 @@
 import React from 'react';
 
 import LogInBay from './LogInBay';
-import Footer from './Footer';
+import Footer from '../Footer/Footer';
 
 import Logo from '../../logo.png';
 import './LandingPage.css';

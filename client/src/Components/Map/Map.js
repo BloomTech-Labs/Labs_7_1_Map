@@ -52,7 +52,7 @@ class MapComponent extends Component {
           draggable={true}
           opacity={0.8}
         >
-          <Popup>
+          <Popup className="Map_Component-Card">
             <Card />
           </Popup>
         </Marker>
