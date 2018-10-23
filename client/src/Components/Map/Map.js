@@ -4,6 +4,7 @@ import { Map, TileLayer, Marker, Popup, GeoJSON } from 'react-leaflet';
 import './Map.css';
 import Card from '../CountryCard/Card';
 import geojson from './countries.geo.json';
+import wc from 'which-country';
 
 const markerIcon = L.icon({
   iconUrl:
@@ -41,9 +42,10 @@ class MapComponent extends Component {
   // }
 
   handleClick = e => {
-    console.log(e.latlng);
-    console.log('Map was clicked');
+    // console.log(e.latlng);
+    // console.log('Map was clicked');
     this.setState({ ...e.latlng });
+    console.log(wc([this.state.lng, this.state.lat]));
     console.log(this.state);
   };
 
