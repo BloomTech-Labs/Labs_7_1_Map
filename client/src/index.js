@@ -11,7 +11,9 @@ import 'leaflet/dist/leaflet.css';
 
 ReactDOM.render(
   <AppContextProvider>
+
     <App />
+
   </AppContextProvider>,
   document.getElementById('root')
 );

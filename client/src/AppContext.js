@@ -9,6 +9,7 @@ const AppContext = React.createContext();
 // provider component
 export class AppContextProvider extends Component {
   state = {
+
     test: 'Hello!',
     authenticated: false,
     user: {}
@@ -43,6 +44,7 @@ export class AppContextProvider extends Component {
     const response = await axios.post(`${BACKEND_URL}/register`, body);
     localStorage.setItem('token', response.data.jwt_token);
     this.setState({ authenticated: true, user: response.data.user });
+
   };
 
   render() {
@@ -51,9 +53,11 @@ export class AppContextProvider extends Component {
         value={{
           AppState: this.state,
           authenticated: this.state.authenticated,
+
           handleSignIn: this.handleSignIn,
           handleSignOut: this.handleSignOut,
           handleSignUp: this.handleSignUp
+
         }}
       >
         {this.props.children}
