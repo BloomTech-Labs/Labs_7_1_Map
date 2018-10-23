@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import L from 'leaflet';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Map, TileLayer, Marker, Popup, GeoJSON } from 'react-leaflet';
 import './Map.css';
 import Card from '../CountryCard/Card';
+import geojson from './countries.geo.json';
 
 const markerIcon = L.icon({
   iconUrl:
@@ -32,13 +33,17 @@ class MapComponent extends Component {
     lat: 45.512794,
     lng: -122.679565,
     zoom: 5,
-    mapTile: mapTilesUrls.terrain
+    mapTile: mapTilesUrls.watercolor
   };
+
+  // componentDidMount() {
+  //   console.log(geojson);
+  // }
 
   handleClick = e => {
     console.log(e.latlng);
     console.log('Map was clicked');
-    this.setState({...e.latlng});
+    this.setState({ ...e.latlng });
     console.log(this.state);
   };
 
@@ -57,6 +62,7 @@ class MapComponent extends Component {
           attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
           url={this.state.mapTile}
         />
+        <GeoJSON data={geojson}/>
         <Marker
           position={position}
           icon={markerIcon}
