@@ -49,10 +49,11 @@ class Note extends Component {
   //when submit checker says yes
   onSubmitSuccess = () => {
     const noteSubmission = {
-      text: this.state.editnote
+      text: this.state.editnote,
+      user: this.state.user
     };
     axios
-      .post('http://localhost:27017', noteSubmission)
+      .post('http://localhost:8000', noteSubmission)
       .then(res => {
         if (res.status !== 201) {
           this.setState({
@@ -64,18 +65,18 @@ class Note extends Component {
             messageboxcolor: 'green',
             messagebox: 'Successfully Saved!'
           });
+          this.messageResetTimer();
+          this.setState({
+            editview: 'false'
+          });
         }
       })
-      .catch(err => {
+      .catch(() => {
         this.setState({
           messagebox:
             'Sorry, there seems to a problem with the server, please try again later!'
         });
       });
-    console.log(noteSubmission);
-    this.setState({
-      editview: 'false'
-    });
   };
 
   editviewToggle = () => {
