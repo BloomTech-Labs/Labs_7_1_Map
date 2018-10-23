@@ -12,10 +12,6 @@ class ChangeEmail extends Component {
     newEmail: ''
   };
 
-  componentDidMount() {
-    console.log(this.props);
-  }
-
   toggleShow = () => {
     this.setState({ show: !this.state.show });
   };
@@ -100,6 +96,6 @@ class ChangeEmail extends Component {
       </div>
     );
   }
-}
+} // ChangeEmail component
 
 export default ChangeEmail;
