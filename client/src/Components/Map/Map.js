@@ -15,6 +15,9 @@ const markerIcon = L.icon({
 const mapTilesUrls = {
   standard: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   toner: 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
+  terrain: 'https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png',
+  watercolor:
+    'https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png',
   light:
     'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', // light cartodb tile
   dark:
@@ -29,7 +32,7 @@ class MapComponent extends Component {
     lat: 45.512794,
     lng: -122.679565,
     zoom: 5,
-    mapTile: mapTilesUrls.dark
+    mapTile: mapTilesUrls.terrain
   };
 
   render() {
