@@ -35,6 +35,13 @@ class MapComponent extends Component {
     mapTile: mapTilesUrls.terrain
   };
 
+  handleClick = e => {
+    console.log(e.latlng);
+    console.log('Map was clicked');
+    this.setState({...e.latlng});
+    console.log(this.state);
+  };
+
   render() {
     const position = [this.state.lat, this.state.lng];
     return (
@@ -44,6 +51,7 @@ class MapComponent extends Component {
         className="MapComponent"
         minZoom={1.5}
         maxBounds={bounds}
+        onClick={this.handleClick}
       >
         <TileLayer
           attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
