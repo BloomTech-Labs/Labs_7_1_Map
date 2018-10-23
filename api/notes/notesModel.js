@@ -22,4 +22,5 @@ NoteSchema.methods.saveNote = async () => {
   user.notes.push(this._id);
   await user.save();
 };
+
 module.exports = mongoose.model('Note', NoteSchema);
