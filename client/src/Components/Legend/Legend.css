@@ -1,0 +1,36 @@
+.Legend {
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.1);
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  z-index: 11;
+  height: auto;
+  width: auto;
+  padding: 20px;
+}
+.Legend .Legend__showFriends {
+  margin: 0 0 20px 10px;
+}
+.Legend li {
+  display: flex;
+  margin: 10px;
+  list-style: none;
+}
+.Legend li .Legend__swatch {
+  height: 15px;
+  width: 15px;
+  margin-right: 10px;
+}
+.Legend li .Visited {
+  background-color: red;
+}
+.Legend li .LivedIn {
+  background-color: blue;
+}
+.Legend li .Wishlist {
+  background-color: green;
+}
+.Legend li .Home {
+  background-color: yellow;
+}

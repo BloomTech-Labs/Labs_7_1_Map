@@ -15,7 +15,7 @@ class Note extends Component {
           className="Note_Create"
           rows="5"
           placeholder="Enter travel tip"
-          maxlength="150"
+          maxLength="150"
         />
         <button type="button">Edit</button>
       </div>

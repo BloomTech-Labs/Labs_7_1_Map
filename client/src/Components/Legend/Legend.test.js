@@ -1,15 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Nav from './Nav';
-import { AppContextProvider } from '../../AppContext';
+import Legend from './Legend';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(
-    <AppContextProvider>
-      <Nav />
-    </AppContextProvider>,
-    div
-  );
+  ReactDOM.render(<Legend />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
