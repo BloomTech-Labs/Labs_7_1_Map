@@ -11,9 +11,9 @@ class App extends Component {
   render() {
     return (
       <AppContextConsumer>
-        {props => (
+        {value => (
           <div className="App">
-            {props.AppState.authenticated ? <Dashboard /> : <LandingPage />}
+            {value.AppState.authenticated ? <Dashboard /> : <LandingPage />}
           </div>
         )}
       </AppContextConsumer>
