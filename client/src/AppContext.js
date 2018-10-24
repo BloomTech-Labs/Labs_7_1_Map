@@ -9,11 +9,18 @@ const AppContext = React.createContext();
 // provider component
 export class AppContextProvider extends Component {
   state = {
-
     test: 'Hello!',
     authenticated: false,
     user: {},
-    friends: [{ name: 'nalee' }, { name: 'jon' }, { name: 'thrun' }, { name: 'sdf' }, { name: 'sdfasf' }, { name: 'werwer' }, { name: 'werwer' }]
+    friends: [
+      { name: 'nalee' },
+      { name: 'jon' },
+      { name: 'thrun' },
+      { name: 'sdf' },
+      { name: 'sdfasf' },
+      { name: 'werwer' },
+      { name: 'werwer' }
+    ]
   };
 
   handleSignIn = async e => {
@@ -45,7 +52,6 @@ export class AppContextProvider extends Component {
     const response = await axios.post(`${BACKEND_URL}/register`, body);
     localStorage.setItem('token', response.data.jwt_token);
     this.setState({ authenticated: true, user: response.data.user });
-
   };
 
   render() {
@@ -58,7 +64,6 @@ export class AppContextProvider extends Component {
           handleSignIn: this.handleSignIn,
           handleSignOut: this.handleSignOut,
           handleSignUp: this.handleSignUp
-
         }}
       >
         {this.props.children}

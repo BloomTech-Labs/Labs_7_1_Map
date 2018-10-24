@@ -12,7 +12,9 @@ class FriendList extends Component {
       <div className="FriendList">
         <div className="FriendList_List">
           {this.props.friends.map(function(object, index) {
-            return <div key={index}>{object.name}</div>;
+            if (index <= 5) {
+              return <div key={index}>{object.name}</div>;
+            }
           })}
         </div>
       </div>
