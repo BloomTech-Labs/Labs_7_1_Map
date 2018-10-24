@@ -51,70 +51,118 @@ describe('User', () => {
         const response = await request(server)
           .post('/api/register')
           .send(user);
+
         expect(response.status).toBe(400);
       });
+
       it('detects undefined password', async () => {
         const user = { username: 'Pikachu', email: 'pika@gmail.com' };
         const response = await request(server)
           .post('/api/register')
           .send(user);
+
         expect(response.status).toBe(400);
       });
+
       it('detects undefined username', async () => {
         const user = { password: 'pasdfsadfasdfsdf', email: 'pika@gmail.com' };
         const response = await request(server)
           .post('/api/register')
           .send(user);
+
         expect(response.status).toBe(400);
       });
+
       it('detects undefined username', async () => {
         const user = { username: 'Pikachu', password: 'pasdfsadfasdfsdf' };
         const response = await request(server)
           .post('/api/register')
           .send(user);
+
         expect(response.status).toBe(400);
       });
-      //need to work on test below, once deletion is implemented can test each one
-      it('rejects non-unique username/email', async () => {
-        const user = {
+
+      it('rejects non-unique username', async () => {
+        const user1 = {
           username: 'Pikachu',
           password: 'pasdfsadfasdfsdf',
           email: 'pika@gmail.com'
         };
+
+        const user2 = {
+          username: 'Pikachu',
+          password: 'khlfahkldas',
+          email: 'pika@me.com'
+        };
+
         const response1 = await request(server)
           .post('/api/register')
-          .send(user);
+          .send(user1);
+
         const response2 = await request(server)
           .post('/api/register')
-          .send(user);
+          .send(user2);
+
         expect(response1.status).toBe(200);
         expect(response2.status).toBe(500);
       });
-      it('successfully creates new user (will fail after ran > 1, need delete request)', async () => {
+
+      it('rejects non-unique email', async () => {
+        const user1 = {
+          username: 'Frodo',
+          password: 'pasdfsadfasdfsdf',
+          email: 'lotr@gmail.com'
+        };
+
+        const user2 = {
+          username: 'Gandalf',
+          password: 'kljdaljkgsd',
+          email: 'lotr@gmail.com'
+        };
+
+        const response1 = await request(server)
+          .post('/api/register')
+          .send(user1);
+
+        const response2 = await request(server)
+          .post('/api/register')
+          .send(user2);
+
+        expect(response1.status).toBe(200);
+        expect(response2.status).toBe(500);
+      });
+
+      it('successfully creates new user', async () => {
         const user = {
           username: 'patrick',
           password: 'pasdfsadfasdfsdf',
           email: 'patrick@gmail.com'
         };
+
         const response = await request(server)
           .post('/api/register')
           .send(user);
+
         expect(response.status).toBe(200);
       });
     });
+
     describe('login', () => {
       it('authorization success', async () => {
         const user = { username: 'patrick', password: 'pasdfsadfasdfsdf' };
         const response = await request(server)
           .post('/api/login')
           .send(user);
+
         expect(response.status).toBe(200);
       });
+
       it('authorization fail', async () => {
         const user = { username: 'patrick', password: 'pasdfsadfassdf' };
         const response = await request(server)
           .post('/api/login')
           .send(user);
+
         expect(response.status).toBe(401);
       });
     });
