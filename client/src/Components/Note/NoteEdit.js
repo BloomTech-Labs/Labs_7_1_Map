@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 
 export default class NoteEdit extends Component {
-  state = {
-    editnote: ''
-  };
   render() {
     const { username } = this.props.user;
     //pass in this.props. submitchecker and user, onchangenote, messageboxcolor, messagebox
@@ -19,7 +16,7 @@ export default class NoteEdit extends Component {
             }
             maxLength="250"
             onChange={this.props.onChangeNote}
-            value={this.state.editnote}
+            value={this.props.editnote}
           />
           <button type="submit">Submit</button>
         </form>

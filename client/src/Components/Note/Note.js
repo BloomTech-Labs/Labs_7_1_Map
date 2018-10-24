@@ -83,6 +83,7 @@ class Note extends Component {
         messagebox:
           'Sorry, there seems to a problem with the server, please try again later!'
       });
+      this.messageResetTimer();
     }
   };
 
@@ -102,6 +103,7 @@ class Note extends Component {
           onChangeNote={this.onChangeNote}
           messageboxcolor={this.state.messageboxcolor}
           messagebox={this.state.messagebox}
+          editnote={this.state.editnote}
         />
       );
     } else
