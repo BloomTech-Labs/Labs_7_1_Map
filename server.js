@@ -5,7 +5,7 @@ const cors = require('cors');
 
 // bring in the routes
 const routes = require('./api/routes');
-const notesRouter = require('./api/notes/notesRoutes');
+const notesRoutes = require('./api/notes/notesRoutes');
 
 // create a server
 const server = express();
@@ -23,6 +23,7 @@ const corsOptions = {
 };
 
 server.use(cors(corsOptions));
+server.use('/api/notes/notesRoutes', notesRoutes);
 
 // pass the server to the routes
 routes(server);

@@ -33,6 +33,10 @@ module.exports = server => {
     res.status(200).json({ msg: 'Entry allowed' });
   });
 
+  server.get('/api/notes', (req, res) => {
+    res.status(200).json('API IS LIT');
+});
+
   server.route('/api/login').post(authenticate, login);
   server.route('/api/facebook-login').post(facebook_login);
   server.route('/api/register').post(create_user);

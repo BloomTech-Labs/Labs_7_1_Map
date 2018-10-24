@@ -20,7 +20,7 @@ const DEV = process.env.DEV || true;
     );
     console.log('Database connection successful');
   } catch (err) {
-    // catches any databse errors encountered
+    // catches any database errors encountered
     if (DEV) {
       console.log(`There was a database connection error: ${err}`);
     }
