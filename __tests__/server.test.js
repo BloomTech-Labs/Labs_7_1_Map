@@ -81,10 +81,14 @@ describe('User', () => {
           password: 'pasdfsadfasdfsdf',
           email: 'pika@gmail.com'
         };
-        const response = await request(server)
+        const response1 = await request(server)
           .post('/api/register')
           .send(user);
-        expect(response.status).toBe(500);
+        const response2 = await request(server)
+          .post('/api/register')
+          .send(user);
+        expect(response1.status).toBe(200);
+        expect(response2.status).toBe(500);
       });
       it('successfully creates new user (will fail after ran > 1, need delete request)', async () => {
         const user = {
