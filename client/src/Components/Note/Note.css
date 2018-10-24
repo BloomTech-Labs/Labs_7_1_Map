@@ -40,3 +40,11 @@
   font-size: 10px;
   margin-left: 12px;
 }
+.View-Note {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+  cursor: pointer;
+  height: 200px;
+}

@@ -5,12 +5,10 @@ export default class componentName extends Component {
   render() {
     const { username } = this.props.user;
     return (
-      <div className="View-Note">
-        <p>{username + 's note:'}</p>
+      <div className="View-Note" onClick={this.props.editviewToggle}>
+        <p>{'Note by: ' + username}</p>
         <p>{this.props.editnote}</p>
-        <button type="button" onClick={this.props.editviewToggle}>
-          Edit
-        </button>
+        <p> {'click to edit'} </p>
       </div>
     );
   }
