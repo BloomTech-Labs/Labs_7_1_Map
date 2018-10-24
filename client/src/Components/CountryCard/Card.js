@@ -7,6 +7,9 @@ import FriendList from '../Friends/FriendList';
 
 import './Card.css';
 
+
+const names = [{ name: 'nalee' }, { name: 'jon' }, { name: 'thrun' }];
+
 const Card = () => {
   return (
     <div className="Card">
@@ -17,7 +20,15 @@ const Card = () => {
           return <Note user={value.AppState.user} />;
         }}
       </AppContextConsumer>
-      <FriendList />
+      <CardHeader />
+      <BorderBay />
+      <AppContextConsumer>
+        {value => {
+          return <FriendList friends={value.AppState.friends} />;
+        }}
+      </AppContextConsumer>
+      {/* <FriendList friends={names} /> */}
+      {/* // return (<FriendList friendslist={value.AppState.friends} /> */}
     </div>
   );
 };
