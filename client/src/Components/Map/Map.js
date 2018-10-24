@@ -52,17 +52,15 @@ class MapComponent extends Component {
     lat: 45.512794,
     lng: -122.679565,
     zoom: 5,
-    mapTile: mapTilesUrls.watercolor,
+    mapTile: mapTilesUrls.toner,
     countryHover: null,
     countryClicked: null
   };
 
   handleClick = e => {
+    console.log(e);
     const country = wc([e.latlng.lng, e.latlng.lat]);
-    const countryJSON = getCountryShape(country);
     this.setState({ ...e.latlng, countryClicked: country });
-    console.log('Map was clicked');
-    console.log('CLICK:', this.state);
   };
 
   handleMove = e => {
@@ -70,8 +68,6 @@ class MapComponent extends Component {
     if (this.state.countryHover !== country) {
       this.setState({ countryHover: country });
     }
-    // console.log('MOUSE: ', country);
-    // console.log('STATE: ', this.state.countryHover);
   };
 
   render() {
@@ -90,12 +86,31 @@ class MapComponent extends Component {
           attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
           url={this.state.mapTile}
         />
-        {this.state.countryClicked === 'USA' && (
-          <GeoJSON data={getCountryShape('USA')} style={styleClicked} />
-        )}
-        {this.state.countryHover === 'CAN' && (
-          <GeoJSON data={getCountryShape('CAN')} style={styleHover} />
-        )}
+
+        {geojson.features.map(feature => {
+          return (
+            this.state.countryClicked === feature.id && (
+              <GeoJSON
+                key={feature.id}
+                data={getCountryShape(feature.id)}
+                style={styleClicked}
+              />
+            )
+          );
+        })}
+
+        {geojson.features.map(feature => {
+          return (
+            this.state.countryHover === feature.id && (
+              <GeoJSON
+                key={feature.id}
+                data={getCountryShape(feature.id)}
+                style={styleHover}
+              />
+            )
+          );
+        })}
+
         <Marker
           position={position}
           icon={markerIcon}
