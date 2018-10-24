@@ -77,4 +77,18 @@ router.route('/:id').put((req, res) => {
   }
 });
 
+router.route('/:id').delete((req, res) => {
+  const { id } = req.params;
+  const query = Notes.findByIdAndRemove(id)
+    .then(note => {
+      if (!note) {
+        res.status(400).json({ message: 'Note does not exist' });
+      }
+      res.status(204).json({ message: 'Note successfully deleted' });
+    })
+    .catch(err => {
+      res.status(500).json({ errorMessage: 'The note could not be removed' });
+    });
+});
+
 module.exports = router;
