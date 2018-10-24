@@ -1,28 +1,26 @@
 .Edit-Note {
   background: beige;
-  border: 1px solid black;
   width: 100%;
   display: flex;
   flex-direction: column;
 }
 .Edit-Note .Edit-Note__Form {
   width: 100%;
-  border: 1px solid red;
   margin-bottom: 60px;
 }
 .Edit-Note .Edit-Note__Form .Form__Top {
-  border: 1px solid green;
   width: 100%;
 }
 .Edit-Note .Edit-Note__Form .Form__Top .Top__Text-Create {
   width: 100%;
-  height: 70%;
+  height: 75%;
   padding: 12px 20px;
   box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 4px;
   background-color: #f8f8f8;
   resize: none;
+  margin-top: 10px;
 }
 .Edit-Note .Edit-Note__Form .Form__Bottom {
   margin-top: 2px;
@@ -41,6 +39,7 @@
   margin-left: 12px;
 }
 .View-Note {
+  background: beige;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
