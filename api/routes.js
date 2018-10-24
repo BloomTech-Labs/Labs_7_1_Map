@@ -3,7 +3,8 @@ const {
   login,
   change_password,
   change_email,
-  facebook_login
+  facebook_login,
+  get_user
 } = require('./controllers/user_controller');
 const passport = require('./utils/passport');
 const path = require('path');
@@ -38,4 +39,5 @@ module.exports = server => {
   server.route('/api/register').post(create_user);
   server.route('/api/change_password').post(protected_route, change_password);
   server.route('/api/change_email').post(protected_route, change_email);
+  server.route('/api/get_user/:id').get(get_user);
 };
