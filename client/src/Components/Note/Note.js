@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+
+import NoteEdit from './NoteEdit';
+import NoteView from './NoteView';
+
 import './Note.css';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -79,6 +83,7 @@ class Note extends Component {
         messagebox:
           'Sorry, there seems to a problem with the server, please try again later!'
       });
+      this.messageResetTimer();
     }
   };
 
@@ -86,48 +91,29 @@ class Note extends Component {
     this.setState({ editview: 'true' });
   };
 
+  //pass in this.props. submitchecker and user, onchangenote, messageboxcolor, messagebox
+
   render() {
-    //TODO: fix the className to Note and make the logic work
- 
-    const { username } = this.state.user;
     if (this.state.editview === 'true') {
       return (
-     
-        <div className="Edit-Note">
-          <form onSubmit={this.submitChecker}>
-            <textarea
-              input="text"
-              className="Note_Create"
-              rows="5"
-              placeholder={
-                username + ', what are your thoughts about this place?'
-              }
-              maxLength="250"
-              onChange={this.onChangeNote}
-              value={this.state.editnote}
-            />
-            <button type="submit">Submit</button>
-          </form>
-          <div
-            className="messagebox"
-            style={{ color: this.state.messageboxcolor }}
-          >
-            {this.state.messagebox}
-          </div>
-        </div>
+        <NoteEdit
+          submitChecker={this.submitChecker}
+          user={this.state.user}
+          onChangeNote={this.onChangeNote}
+          messageboxcolor={this.state.messageboxcolor}
+          messagebox={this.state.messagebox}
+          editnote={this.state.editnote}
+        />
       );
     } else
       return (
-        <div className="View_Note">
-          <p>{username + 's note:'}</p>
-          <p>{this.state.editnote}</p>
-          <button type="button" onClick={this.editviewToggle}>
-            Edit
-          </button>
-        </div>
+        <NoteView
+          user={this.state.user}
+          editnote={this.state.editnote}
+          editviewToggle={this.editviewToggle}
+        />
       );
-
   }
 }
-
+//user editnote editviewToggle
 export default Note;

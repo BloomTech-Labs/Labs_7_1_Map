@@ -360,3 +360,4 @@ $RECYCLE.BIN/
 local_data
 
 .env
+.tern-port
