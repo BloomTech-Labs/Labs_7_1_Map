@@ -3,8 +3,11 @@ const MongodbMemoryServer = require('mongodb-memory-server').MongoMemoryServer;
 const request = require('supertest');
 const server = require('../server');
 const { make_token } = require('../api/utils/auth');
+const http = require('http');
 
+const PORT = 9000;
 const mongod = new MongodbMemoryServer();
+const testServer = http.createServer(server);
 
 describe('User', () => {
   const testuser = {
@@ -25,6 +28,14 @@ describe('User', () => {
   afterAll(async () => {
     await mongoose.disconnect();
     mongod.stop();
+  });
+
+  beforeEach(() => {
+    testServer.listen(PORT);
+  });
+
+  afterEach(() => {
+    testServer.close();
   });
 
   //need to add tests to add checking for 0 character values
