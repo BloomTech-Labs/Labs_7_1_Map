@@ -6,25 +6,25 @@ import './BorderBay.css';
 
 const marks = {
   0: 'No Interest',
-  25: {
+  1: {
     style: {
       color: 'pink'
     },
     label: 'Wishlist'
   },
-  50: {
+  2: {
     style: {
       color: 'yellow'
     },
     label: 'Transited'
   },
-  75: {
+  3: {
     style: {
       color: 'green'
     },
     label: 'Visited'
   },
-  100: {
+  4: {
     style: {
       color: 'blue'
     },
@@ -41,6 +41,10 @@ class BorderBay extends Component {
     value: [0, 25, 50, 75, 100]
   };
 
+  sliderHandler(e) {
+    this.setState = { value: e.target.value };
+  }
+
   render() {
     return (
       <div className="Country_Border">
@@ -48,11 +52,12 @@ class BorderBay extends Component {
         <div className="Country_Border-Slider">
           <Slider
             min={0}
+            max={4}
             marks={marks}
             step={null}
             onChange={log}
             defaultValue={0}
-            value={this.state.value}
+            value={0}
           />
         </div>
       </div>
