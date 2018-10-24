@@ -112,4 +112,4 @@ module.exports = {
       res.status(500).json({ error: 'Failed to change email!' });
     }
   } // change_email
-}; // module.eports
+}; // module.exports
