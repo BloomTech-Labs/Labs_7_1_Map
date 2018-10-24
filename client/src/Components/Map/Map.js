@@ -18,8 +18,7 @@ const mapTilesUrls = {
   standard: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   toner: 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
   terrain: 'https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png',
-  watercolor:
-    'https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png',
+  watercolor: 'http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg',
   light:
     'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', // light cartodb tile
   dark:
@@ -29,24 +28,50 @@ const corner1 = L.latLng(90, -180);
 const corner2 = L.latLng(-90, 180);
 const bounds = L.latLngBounds(corner1, corner2);
 
+function getCountryShape(country) {
+  return geojson.features.find(feature => feature.id === country);
+}
+
+const styleClicked = {
+  stroke: true,
+  opacity: 0.6,
+  fill: true,
+  fillColor: '#FF3333',
+  fillOpacity: 0.2
+};
+
+const styleHover = {
+  stroke: false,
+  fill: true,
+  fillColor: '#3333FF',
+  fillOpacity: 0.2
+};
+
 class MapComponent extends Component {
   state = {
     lat: 45.512794,
     lng: -122.679565,
     zoom: 5,
-    mapTile: mapTilesUrls.watercolor
+    mapTile: mapTilesUrls.watercolor,
+    countryHover: null,
+    countryClicked: null
   };
 
-  // componentDidMount() {
-  //   console.log(geojson);
-  // }
-
   handleClick = e => {
-    // console.log(e.latlng);
-    // console.log('Map was clicked');
-    this.setState({ ...e.latlng });
-    console.log(wc([this.state.lng, this.state.lat]));
-    console.log(this.state);
+    const country = wc([e.latlng.lng, e.latlng.lat]);
+    const countryJSON = getCountryShape(country);
+    this.setState({ ...e.latlng, countryClicked: country });
+    console.log('Map was clicked');
+    console.log('CLICK:', this.state);
+  };
+
+  handleMove = e => {
+    const country = wc([e.latlng.lng, e.latlng.lat]);
+    if (this.state.countryHover !== country) {
+      this.setState({ countryHover: country });
+    }
+    // console.log('MOUSE: ', country);
+    // console.log('STATE: ', this.state.countryHover);
   };
 
   render() {
@@ -59,12 +84,18 @@ class MapComponent extends Component {
         minZoom={1.5}
         maxBounds={bounds}
         onClick={this.handleClick}
+        onMouseMove={this.handleMove}
       >
         <TileLayer
           attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
           url={this.state.mapTile}
         />
-        <GeoJSON data={geojson}/>
+        {this.state.countryClicked === 'USA' && (
+          <GeoJSON data={getCountryShape('USA')} style={styleClicked} />
+        )}
+        {this.state.countryHover === 'CAN' && (
+          <GeoJSON data={getCountryShape('CAN')} style={styleHover} />
+        )}
         <Marker
           position={position}
           icon={markerIcon}
