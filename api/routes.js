@@ -39,5 +39,5 @@ module.exports = server => {
   server.route('/api/register').post(create_user);
   server.route('/api/change_password').post(protected_route, change_password);
   server.route('/api/change_email').post(protected_route, change_email);
-  server.route('/api/get_user/:id').get(get_user);
+  server.route('/api/get_user/:id').get(protected_route, get_user);
 };
