@@ -1,11 +1,42 @@
-.Note {
+.Edit-Note {
   background: beige;
   border: 1px solid black;
   width: 100%;
-}
-
-.Note_Create {
-  width: 100%;
-  box-sizing: border-box;
-  resize: none;
+  display: flex;
+  flex-direction: column;
+  .Edit-Note__Form {
+    width: 100%;
+    border: 1px solid red;
+    margin-bottom: 60px;
+    .Form__Top {
+      border: 1px solid green;
+      width: 100%;
+      .Top__Text-Create {
+          width: 100%;
+          height: 70%;
+          padding: 12px 20px;
+          box-sizing: border-box;
+          border: 2px solid #ccc;
+          border-radius: 4px;
+          background-color: #f8f8f8;
+          resize: none;
+    } 
+    }
+    .Form__Bottom {
+      margin-top: 2px;
+      display: flex;
+      height: 30%;
+      button {
+        height: 30px;
+      }
+      .Edit-Note__Messagebox {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        margin-left: 12px;
+       }
+    }
+  }
 }

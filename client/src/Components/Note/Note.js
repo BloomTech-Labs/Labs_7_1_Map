@@ -94,7 +94,6 @@ class Note extends Component {
   //pass in this.props. submitchecker and user, onchangenote, messageboxcolor, messagebox
 
   render() {
-    //TODO: fix the className to Note and make the logic work
     if (this.state.editview === 'true') {
       return (
         <NoteEdit
