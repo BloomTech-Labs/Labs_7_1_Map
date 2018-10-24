@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { AppContextConsumer } from '../../AppContext';
 import ChangeEmail from './ChangeEmail';
 import ChangePassword from './ChangePassword';
 import Preferences from './Preferences';
@@ -14,12 +15,16 @@ class Settings extends Component {
 
   render() {
     return (
-      <div className="Settings">
-        <h1>Settings</h1>
-        <Preferences />
-        <ChangeEmail />
-        <ChangePassword />
-      </div>
+      <AppContextConsumer>
+        {({ AppState }) => (
+          <div className="Settings">
+            <h1>Settings</h1>
+            <Preferences user={AppState.user} />
+            <ChangeEmail user={AppState.user} />
+            <ChangePassword user={AppState.user} />
+          </div>
+        )}
+      </AppContextConsumer>
     );
   }
 }

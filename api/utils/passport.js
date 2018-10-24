@@ -25,12 +25,9 @@ const local_strategy = new LocalStrategy(async function(
       const valid = await found.check_password(password);
       if (valid) {
         // authenticated, so pass on some of the user fields
-        return done(null, {
-          _id: found._id,
-          username: found.username,
-          email: found.email,
-          social: found.social
-        });
+
+        return done(null, found);
+
       } else {
         // wrong password
         return done(null, false, { message: 'Incorrect credentials.' });

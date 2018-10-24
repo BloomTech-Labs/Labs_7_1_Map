@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 // bring in our context provider
 import { AppContextProvider } from './AppContext';
@@ -11,12 +10,12 @@ import './index.css';
 import 'leaflet/dist/leaflet.css';
 
 ReactDOM.render(
-	<AppContextProvider>
-		<Router>
-			<App />
-		</Router>
-	</AppContextProvider>,
-	document.getElementById('root')
+  <AppContextProvider>
+
+    <App />
+
+  </AppContextProvider>,
+  document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

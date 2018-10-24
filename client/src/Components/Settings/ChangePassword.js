@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 
 import './ChangePassword.css';
 
@@ -17,11 +17,8 @@ class ChangePassword extends Component {
     this.setState({ show: !this.state.show });
   };
 
-  handleChange = event => {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-    console.log(name, value);
+  handleChange = e => {
+    const { name, value } = e.target;
 
     this.setState({
       [name]: value
@@ -34,31 +31,37 @@ class ChangePassword extends Component {
     const { currentPassword, newPassword, confirmNewPassword } = this.state;
 
     // Error handling
+    // TODO: Notify user of errors
     if (!currentPassword) return console.error('Enter your current password!'); // eslint-disable-line
     if (newPassword !== confirmNewPassword)
       return console.error('Passwords do not match!'); // eslint-disable-line
     if (newPassword.length < 6)
       return console.error('Password needs to be at least 6 characters!'); // eslint-disable-line
 
-    const url = `${BACKEND_URL}/api/change_password`;
-    const body = {
-      // TODO: pull username from global state
-      username: 'username',
-      password: currentPassword,
-      new_password: newPassword
-    };
-    const options = {
-      headers: { Authorization: `Bearer ${localStorage.getItem('jwt_token')}` }
-    };
+    try {
+      const url = `${BACKEND_URL}/change_password`;
+      const body = {
+        username: this.props.user.username,
+        password: currentPassword,
+        new_password: newPassword
+      };
+      const token = localStorage.getItem('token');
+      const options = {
+        headers: { Authorization: `Bearer ${token}` }
+      };
 
-    console.log(url, body, options);
-    // TODO: Enable this once SignIn form is complete
-    // try {
-    //   const updatedUser = await axios.post(url, body, options);
-    //   console.log('Password updated successfully', updatedUser);
-    // } catch (err) {
-    //   console.error('Error changing your password', err);
-    // }
+      const response = await axios.post(url, body, options);
+      this.setState({
+        currentPassword: '',
+        newPassword: '',
+        confirmNewPassword: '',
+        show: false
+      });
+      console.log('Password updated successfully', response.data);
+    } catch (err) {
+      // TODO: Notify user of errors
+      console.error('Error changing your password', err);
+    }
   };
 
   render() {
@@ -73,9 +76,10 @@ class ChangePassword extends Component {
             <div className="ChangePassword__currentPassword">
               <div>Current Password</div>
               <input
-                type="text"
+                type="password"
                 name="currentPassword"
                 placeholder="Current password"
+                value={this.state.currentPassword}
                 onChange={e => this.handleChange(e)}
               />
             </div>
@@ -83,9 +87,10 @@ class ChangePassword extends Component {
             <div className="ChangePassword__newPassword">
               <h5>New Password</h5>
               <input
-                type="text"
+                type="password"
                 name="newPassword"
                 placeholder="New password"
+                value={this.state.newPassword}
                 onChange={e => this.handleChange(e)}
               />
             </div>
@@ -93,9 +98,10 @@ class ChangePassword extends Component {
             <div className="ChangePassword__confirmNewPassword">
               <h5>Confirm New password</h5>
               <input
-                type="text"
+                type="password"
                 name="confirmNewPassword"
                 placeholder="Confirm new password"
+                value={this.state.confirmNewPassword}
                 onChange={e => this.handleChange(e)}
               />
             </div>

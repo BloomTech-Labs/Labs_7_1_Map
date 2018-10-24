@@ -1,15 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Nav from './Nav';
-import { AppContextProvider } from '../../AppContext';
+import ChangePassword from './ChangePassword';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(
-    <AppContextProvider>
-      <Nav />
-    </AppContextProvider>,
-    div
-  );
+  ReactDOM.render(<ChangePassword />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
