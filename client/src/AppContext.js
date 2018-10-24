@@ -13,7 +13,7 @@ export class AppContextProvider extends Component {
     test: 'Hello!',
     authenticated: false,
     user: {},
-    friends: []
+    friends: [{ name: 'nalee' }, { name: 'jon' }, { name: 'thrun' }]
   };
 
   handleSignIn = async e => {

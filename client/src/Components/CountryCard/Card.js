@@ -11,6 +11,9 @@ import BorderBay from '../BorderBay/BorderBay';
 
 import './Card.css';
 
+
+const names = [{ name: 'nalee' }, { name: 'jon' }, { name: 'thrun' }];
+
 const Card = () => {
   return (
     <div className="Card">
@@ -27,9 +30,11 @@ const Card = () => {
       <BorderBay />
       <AppContextConsumer>
         {value => {
-          return <FriendList user={value.AppState.friends} />;
+          return <FriendList friends={value.AppState.friends} />;
         }}
       </AppContextConsumer>
+      {/* <FriendList friends={names} /> */}
+      {/* // return (<FriendList friendslist={value.AppState.friends} /> */}
     </div>
   );
 };
