@@ -154,7 +154,12 @@ describe('User', () => {
           .post('/api/login')
           .send(user);
 
+        console.log(response.body)
         expect(response.status).toBe(200);
+        expect(response.body.user).toBeDefined();
+        expect(response.body.user._id).toBeDefined();
+        expect(response.body.user.username).toBeDefined();
+        expect(response.body.jwt_token).toBeDefined();
       });
 
       it('authorization fail', async () => {
@@ -167,4 +172,7 @@ describe('User', () => {
       });
     });
   });
+  describe('GET routes', () => {
+
+  })
 });
