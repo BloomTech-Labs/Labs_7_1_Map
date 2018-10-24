@@ -11,11 +11,9 @@ class FriendList extends Component {
     return (
       <div className="FriendList">
         <div className="FriendList_List">
-          <ul>
-            {this.props.friends.map(function(object, index) {
-              return <li key={index}>{object.name}</li>;
-            })}
-          </ul>
+          {this.props.friends.map(function(object, index) {
+            return <div key={index}>{object.name}</div>;
+          })}
         </div>
       </div>
     );
