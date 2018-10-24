@@ -5,6 +5,7 @@ const cors = require('cors');
 
 // bring in the routes
 const routes = require('./api/routes');
+const notesRouter = require('./api/notes/notesRoutes');
 
 // create a server
 const server = express();
@@ -17,9 +18,10 @@ server.use(helmet());
 
 //cross origin request sharing permissions
 const corsOptions = {
-	origin: '*',
-	credentials: true,
+  origin: '*',
+  credentials: true
 };
+
 server.use(cors(corsOptions));
 
 // pass the server to the routes

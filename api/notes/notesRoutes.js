@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Notes = require('./notesModel');
 
+// Get all notes
 router.route('/').get((req, res) => {
   const query = Notes.find();
 
@@ -15,6 +16,7 @@ router.route('/').get((req, res) => {
     });
 });
 
+// Get note by Id
 router.route('/:id').get((req, res) => {
   const { id } = req.params;
   const query = Notes.findById(id);
@@ -31,6 +33,7 @@ router.route('/:id').get((req, res) => {
     });
 });
 
+// Post note to database
 router.route('/').post((req, res) => {
   if (!req.body.text) {
     res.status(400).json({ errorMessage: 'Please provide text for the note' });
@@ -50,6 +53,7 @@ router.route('/').post((req, res) => {
   }
 });
 
+// Update a note by Id
 router.route('/:id').put((req, res) => {
   const { id } = req.params;
   const update = req.body;
@@ -77,6 +81,7 @@ router.route('/:id').put((req, res) => {
   }
 });
 
+// Delete a note by Id
 router.route('/:id').delete((req, res) => {
   const { id } = req.params;
   const query = Notes.findByIdAndRemove(id)
