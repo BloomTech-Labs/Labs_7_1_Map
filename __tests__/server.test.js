@@ -73,7 +73,7 @@ describe('User', () => {
         expect(response.status).toBe(400);
       });
 
-      it('detects undefined username', async () => {
+      it('detects undefined email', async () => {
         const user = { username: 'Pikachu', password: 'pasdfsadfasdfsdf' };
         const response = await request(server)
           .post('/api/register')
