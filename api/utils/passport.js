@@ -9,14 +9,10 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const User = require('../models/user');
 
 const secret = process.env.SECRET || 'No secret set';
-const DEV = process.env.DEV || true;
+const DEV = process.env.DEV || null;
 
 // local strategy
-const local_strategy = new LocalStrategy(async function(
-  username,
-  password,
-  done
-) {
+const local_strategy = new LocalStrategy(async (username, password, done) => {
   try {
     // get a user using the username
     const found = await User.findOne({ username });
@@ -37,9 +33,7 @@ const local_strategy = new LocalStrategy(async function(
       return done(null, false, { message: 'Incorrect credentials.' });
     }
   } catch (err) {
-    if (DEV) {
-      console.log(err);
-    }
+    if (DEV) console.log(err);
     return done(null, false, { message: 'Internal Error.' });
   }
 }); // end of local stragey
@@ -51,7 +45,7 @@ const jwtOptions = {
   secretOrKey: secret
 };
 
-const jwt_strategy = new JwtStrategy(jwtOptions, async function(payload, done) {
+const jwt_strategy = new JwtStrategy(jwtOptions, async (payload, done) => {
   try {
     // get a user using the id
     const found = await User.findById(payload.sub).select('-password');
@@ -61,9 +55,7 @@ const jwt_strategy = new JwtStrategy(jwtOptions, async function(payload, done) {
       done(null, false); // not found
     }
   } catch (err) {
-    if (DEV) {
-      console.log(err);
-    }
+    if (DEV) console.log(err);
     return done(null, false, { message: 'Internal Error.' });
   }
 }); // end of jwt strategy

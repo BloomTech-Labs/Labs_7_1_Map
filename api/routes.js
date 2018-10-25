@@ -3,7 +3,8 @@ const {
   login,
   change_password,
   change_email,
-  facebook_login
+  facebook_login,
+  get_user
 } = require('./controllers/user_controller');
 const {
   getNotes,
@@ -48,6 +49,7 @@ module.exports = server => {
   server.route('/api/change_password').post(protected_route, change_password);
   server.route('/api/change_email').post(protected_route, change_email);
 
+
   // Notes Routes
   server.get('/api/note', (req, res) => {
     res.status(200).json('Note API IS LIT');
@@ -62,4 +64,7 @@ module.exports = server => {
     .get(getNoteById)
     .put(updateNote);
   // .destroy(deleteNote);
+
+  server.route('/api/get_user/:id').get(protected_route, get_user);
+
 };

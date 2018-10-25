@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { AppContextConsumer } from '../../AppContext';
 import CountryBorder from '../CountryBorder/CountryBorder';
 import Note from '../Note/Note';
@@ -7,9 +6,9 @@ import FriendList from '../Friends/FriendList';
 import CardHeader from './CardHeader';
 import BorderBay from '../BorderBay/BorderBay';
 
-// import ReactModal from 'react-modal';
-
 import './Card.css';
+
+const names = [{ name: 'nalee' }, { name: 'jon' }, { name: 'thrun' }];
 
 const Card = () => {
   return (
@@ -25,7 +24,11 @@ const Card = () => {
       </AppContextConsumer>
       <CardHeader />
       <BorderBay />
-      <FriendList />
+      <AppContextConsumer>
+        {value => {
+          return <FriendList friends={value.AppState.friends} />;
+        }}
+      </AppContextConsumer>
     </div>
   );
 };

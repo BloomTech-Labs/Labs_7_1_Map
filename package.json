@@ -34,6 +34,7 @@
     "express": "^4.16.4",
     "helmet": "^3.14.0",
     "jsonwebtoken": "^8.3.0",
+    "mongodb-memory-server": "^2.6.0",
     "mongoose": "^5.3.4",
     "morgan": "^1.9.1",
     "node-gyp": "^3.8.0",
@@ -41,5 +42,11 @@
     "passport-facebook": "^2.1.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules",
+      "<rootDir>/client"
+    ]
   }
 }
