@@ -13,7 +13,7 @@ class App extends Component {
       <AppContextConsumer>
         {value => (
           <div className="App">
-            {value.AppState.authenticated ? <Dashboard /> : <LandingPage />}
+            {value.AppState.authenticated ? <Dashboard /> : <Dashboard />}
           </div>
         )}
       </AppContextConsumer>
