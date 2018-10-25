@@ -2,6 +2,42 @@
 // const router = express.Router();
 const Notes = require('./models/notesModel');
 
+//Middleware to Handle Errors 
+const awaitErrorHandlerFactory = middleware => {
+  return async (req, res, next) => {
+    try {
+      await middleware(req, res, next);
+    } catch (err) {
+      next(err);
+    }
+  };
+};
+ 
+/* GET todo listing. */
+router.get('/', function(req, res, next) {
+ 
+});
+ 
+ 
+/* POST todo. */
+router.post('/', function(req, res, next) {
+ 
+});
+ 
+ 
+/* update todo. */
+router.put('/:id', function(req, res, next) {
+ 
+});
+ 
+ 
+/* GET todo listing. */
+router.delete('/:id', function(req, res, next) {
+ 
+});
+ 
+module.exports = router;
+
 module.exports = {
   // Get all notes
   // getNoteById: async(req, res) => {
