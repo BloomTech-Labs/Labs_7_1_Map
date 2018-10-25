@@ -51,8 +51,18 @@ const styleHover = {
 };
 
 // Helper function that takes in a country code and returns a geoJSON object
-function getCountryShape(country) {
-  return geojson.features.find(feature => feature.id === country);
+function getCountryShape(countryCode) {
+  return geojson.features.find(feature => feature.id === countryCode);
+}
+
+// Helper function to get country code from string i.e. 'canada' -> 'CAN'
+function getCountryCode(countryString) {
+  const countryFeature = geojson.features.find(
+    feature =>
+      feature.properties.name.toLowerCase() === countryString.toLowerCase()
+  );
+  if (!countryFeature) console.log('There is no country by that name');
+  return countryFeature ? countryFeature.id : null;
 }
 
 // Main Map component
@@ -60,11 +70,26 @@ class MapComponent extends Component {
   state = {
     lat: 45.512794,
     lng: -122.679565,
-    zoom: 5,
-    mapTile: mapTilesUrls.toner,
+    zoom: 2,
+    mapTile: mapTilesUrls.dark,
     countryHover: null,
-    countryClicked: null
+    countryClicked: null // Change to countrySelected perhaps (since it's being set when a country is searched)?
   };
+
+  // Used to check when a new search was made from SearchCountry in Dashboard
+  // TODO:
+  // Refactor to avoid using componentWillReceiveProps (deprecated).
+  // Will probably need to use either componentDidUpdate or getDerivedStateFromProps
+  async componentWillReceiveProps() {
+    // For some weird reason country search is only registered after second form submission unless this async console.log is here
+    await console.log('PROPS RECEIVED: ', this.props);
+    const countrySearch = this.props.searchCountry;
+
+    if (countrySearch) {
+      const countryCode = getCountryCode(countrySearch);
+      if (countryCode) this.setState({ countryClicked: countryCode });
+    }
+  }
 
   handleClick = e => {
     // Get the country code of the location clicked on

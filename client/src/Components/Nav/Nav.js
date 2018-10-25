@@ -36,11 +36,6 @@ const Nav = props => {
                 );
               })}
             </select>
-            <input
-              className="MenuItem Center__search"
-              type="search"
-              placeholder="search"
-            />
           </div>
           <div className="Nav__Right">
             <div
