@@ -69,6 +69,7 @@ class MapComponent extends Component {
   handleClick = e => {
     // Get the country code of the location clicked on
     const country = wc([e.latlng.lng, e.latlng.lat]);
+    console.log("hehehehehh")
 
     this.setState({ ...e.latlng, countryClicked: country });
   };

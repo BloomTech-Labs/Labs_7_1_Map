@@ -22,6 +22,16 @@ export class AppContextProvider extends Component {
       { name: 'werwer' }
     ]
   };
+  componentDidMount() {
+    const token = localStorage.getItem('token');
+
+    // TODO verify token OR get_user pick a strategy
+    if (token) {
+      // get use
+      //this.setState({ authenticated: true, user: response.data.user });
+      this.setState({ authenticated: true });
+    }
+  }
 
   handleSignIn = async e => {
     e.preventDefault();
