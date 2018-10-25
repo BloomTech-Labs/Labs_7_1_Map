@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Slider from 'rc-slider/lib/Slider';
+import geojson from '../Map/countries.geo.json';
 
 import './BorderBay.css';
 import 'rc-slider/assets/index.css';
@@ -37,10 +38,18 @@ function log(value) {
 }
 
 export default class BorderBay extends Component {
+  state = {
+    border: {geojson}
+  }
+
+  getBorderById(border) {
+    this.setState({ border: border.id.geometry })
+  }
+
   render() {
     return (
       <div className="Country_Border">
-        <p className="Country_Border-Border">Border</p>
+        <p className="Country_Border-Border">{this.getBorderById}</p>
         <div className="Country_Border-Slider">
           <p className="Slide-Tag">Level of Stay</p>
           <Slider
