@@ -27,13 +27,13 @@ export class AppContextProvider extends Component {
     ]
   };
 
+  //add long lat below
   handleUpdateUserPosition = (long, lat) => {
     this.setState({
       userPosition: {
         longitude: long, latitude: lat
       }
     })
-    console.log('updated provider state with user position!');
   }
 
   handleSignIn = async e => {

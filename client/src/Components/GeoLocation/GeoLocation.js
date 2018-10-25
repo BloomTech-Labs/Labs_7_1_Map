@@ -2,28 +2,21 @@ import React, { Component } from 'react';
 import geolocation from 'geolocation';
 
 export default class GeoLocation extends Component {
-  state = {
-      longitude: '',
-      latitude: ''
-  };
 
   //checks if browser has ability to geolocate
   componentDidMount = () => {
     if ('geolocation' in navigator) {
-      this.hasGeolocation();
+      this.hasGeolocation(this.providerUpdate);
     } else {
       this.noGeolocation();
     }
   };
 
   //calls getcurrentposition, to find where user is located, sets state
-  hasGeolocation = () => {
+  hasGeolocation = (cb) => {
     console.log('has geolocation!');
     navigator.geolocation.getCurrentPosition( position => {
-      this.setState({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      });
+    cb(position.coords.longitude, position.coords.latitude)
     });
   };
 
@@ -31,12 +24,8 @@ export default class GeoLocation extends Component {
     console.log('no geolocation!');
   };
 
-  componentUpdate = () => {
-
-  }
-
-  providerUpdate = () => {
-      this.props.update(this.state.longitude, this.state.latitude);
+  providerUpdate = (long, lat) => {
+      this.props.update(long, lat);
   }
 
   render() {
