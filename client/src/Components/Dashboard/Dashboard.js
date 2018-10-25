@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { AppContextConsumer } from '../../AppContext';
+
 import Map from '../Map/Map';
 import Nav from '../Nav/Nav';
 import Legend from '../Legend/Legend';
@@ -26,12 +28,19 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="Dashboard">
-        <Nav toggleSettings={this.toggleSettings} />
+        <Nav 
+          toggleSettings={this.toggleSettings}
+        />
         <Legend />
         <SearchCountry
           handleSearchSubmit={this.handleSearchSubmit}
         />
-        <Map searchCountry={this.state.searchCountry} />
+        <AppContextConsumer>
+        {value => {
+          return <Map userPosition={value.AppState.UserPosition} update={value.updateUserPosition} searchCountry={this.state.searchCountry} />;
+        }}
+        </AppContextConsumer>
+      
         {this.state.showingSettings && (
           <Settings onClick={this.toggleSettings} />
         )}
