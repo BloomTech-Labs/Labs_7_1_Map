@@ -9,10 +9,18 @@ import './Dashboard.css';
 class Dashboard extends Component {
   state = {
     showingSettings: false,
+    searchCountry: ''
   };
 
   toggleSettings = () => {
     this.setState({ showingSettings: !this.state.showingSettings });
+  };
+
+  handleSearchSubmit = async e => {
+    e.preventDefault();
+    const searchQuery = e.target.search.value;
+    await this.setState({ searchCountry: searchQuery });
+    console.log(this.state);
   };
 
   render() {
@@ -20,10 +28,11 @@ class Dashboard extends Component {
       <div className="Dashboard">
         <Nav toggleSettings={this.toggleSettings} />
         <Legend />
-        <form className="SearchCountry">
+        <form className="SearchCountry" onSubmit={this.handleSearchSubmit}>
           <input
             className="MenuItem Center__search"
             type="search"
+            name="search"
             placeholder="Search Countries..."
           />
           <input type="submit" />
