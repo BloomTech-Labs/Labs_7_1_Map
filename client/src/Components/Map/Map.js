@@ -97,7 +97,7 @@ class MapComponent extends Component {
       this.setState({
         lat: position.coords.latitude,
         lng: position.coords.longitude,
-        zoom: 4,
+        zoom: 2,
         countryClicked: country,
         countryInfo: info
       });
