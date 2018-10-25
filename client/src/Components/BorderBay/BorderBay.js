@@ -39,21 +39,20 @@ function log(value) {
 
 export default class BorderBay extends Component {
   state = {
-    border: {geojson}
-  }
+    border: geojson.features
+  };
 
   getBorderById(border) {
-    this.setState({ border: border.id.geometry })
+    this.setState({ border: border.id.geometry });
   }
 
   render() {
     return (
       <div className="Country_Border">
-        <p className="Country_Border-Border">{this.getBorderById}</p>
+        <p className="Country_Border-Border">{''}</p>
         <div className="Country_Border-Slider">
-          <p className="Slide-Tag">Level of Stay</p>
+          <p className="Slider-Tag">Level of Stay</p>
           <Slider
-            className="Slider1"
             min={0}
             max={4}
             marks={marks}
