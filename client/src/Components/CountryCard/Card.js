@@ -7,7 +7,7 @@ import FriendList from '../Friends/FriendList';
 
 import './Card.css';
 
-const names = [{ name: 'nalee' }, { name: 'jon' }, { name: 'thrun' }];
+// const names = [{ name: 'nalee' }, { name: 'jon' }, { name: 'thrun' }];
 
 const Card = () => {
   return (
