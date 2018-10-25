@@ -3,6 +3,7 @@ import Map from '../Map/Map';
 import Nav from '../Nav/Nav';
 import Legend from '../Legend/Legend';
 import Settings from '../Settings/Settings';
+import SearchCountry from '../SearchCountry/SearchCountry';
 
 import './Dashboard.css';
 
@@ -28,15 +29,7 @@ class Dashboard extends Component {
       <div className="Dashboard">
         <Nav toggleSettings={this.toggleSettings} />
         <Legend />
-        <form className="SearchCountry" onSubmit={this.handleSearchSubmit}>
-          <input
-            className="MenuItem Center__search"
-            type="search"
-            name="search"
-            placeholder="Search Countries..."
-          />
-          <input type="submit" />
-        </form>
+        <SearchCountry handleSearchSubmit={this.handleSearchSubmit} />
         <Map />
         {this.state.showingSettings && (
           <Settings onClick={this.toggleSettings} />
