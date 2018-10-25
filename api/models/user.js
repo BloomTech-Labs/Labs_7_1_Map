@@ -55,7 +55,6 @@ UserSchema.pre('save', async function(next) {
     if (Dev) {
       console.log(err);
     }
-
   }
 });
 
@@ -64,11 +63,10 @@ UserSchema.methods.check_password = async function(entered_password) {
   try {
     return await argon2.verify(this.password, entered_password);
   } catch (err) {
-
     if (DEV) {
       console.log(err);
     }
-
+  }
 };
 
 //get all notes for user
