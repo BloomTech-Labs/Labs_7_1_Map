@@ -30,7 +30,7 @@ class Dashboard extends Component {
         <Nav toggleSettings={this.toggleSettings} />
         <Legend />
         <SearchCountry handleSearchSubmit={this.handleSearchSubmit} />
-        <Map />
+        <Map searchCountry={this.state.searchCountry} />
         {this.state.showingSettings && (
           <Settings onClick={this.toggleSettings} />
         )}

@@ -51,8 +51,17 @@ const styleHover = {
 };
 
 // Helper function that takes in a country code and returns a geoJSON object
-function getCountryShape(country) {
-  return geojson.features.find(feature => feature.id === country);
+function getCountryShape(countryCode) {
+  return geojson.features.find(feature => feature.id === countryCode);
+}
+
+// Helper function to get country code from string i.e. 'canada' -> 'CAN'
+function getCountryCode(countryString) {
+  const countryFeature = geojson.features.find(
+    feature =>
+      feature.properties.name.toLowerCase() === countryString.toLowerCase()
+  );
+  return countryFeature.id;
 }
 
 // Main Map component
@@ -63,8 +72,22 @@ class MapComponent extends Component {
     zoom: 5,
     mapTile: mapTilesUrls.dark,
     countryHover: null,
-    countryClicked: null
+    countryClicked: null // Change to countrySelected perhaps?
   };
+
+  // Used to check when a new search was made from SearchCountry in Dashboard
+  // TODO:
+  // Refactor to avoid using componentWillReceiveProps (deprecated).
+  // Will probably need to use either componentDidUpdate or getDerivedStateFromProps
+  componentWillReceiveProps() {
+    console.log('PROPS RECEIVED: ', this.props);
+    const countrySearch = this.props.searchCountry;
+
+    if (countrySearch) {
+      const countryCode = getCountryCode(countrySearch);
+      console.log(countryCode);
+    }
+  }
 
   handleClick = e => {
     // Get the country code of the location clicked on
