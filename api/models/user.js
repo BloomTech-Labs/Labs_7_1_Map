@@ -43,12 +43,6 @@ const UserSchema = new Schema(
         provider: String,
         id: String
       }
-    ],
-    notes: [
-      {
-        type: ObjectIdSchema,
-        ref: 'Note'
-      }
     ]
   },
   {
