@@ -1,8 +1,8 @@
-// const express = require('express');
-// const router = express.Router();
-const Notes = require('./models/notesModel');
+const express = require('express');
+const router = express.Router();
+const notesModel = require('./models/notesModel');
 
-//Middleware to Handle Errors 
+//Middleware to Handle Errors
 const awaitErrorHandlerFactory = middleware => {
   return async (req, res, next) => {
     try {
@@ -12,30 +12,46 @@ const awaitErrorHandlerFactory = middleware => {
     }
   };
 };
- 
+
 /* GET todo listing. */
-router.get('/', function(req, res, next) {
- 
-});
- 
- 
+router.get(
+  '/api/notes',
+  awaitErrorHandlerFactory(async (req, res, next) => {
+    const note = await notesModels.NoteSchema.findAll({});
+    return res.json({
+      error: false,
+      data: note
+    });
+  })
+);
+
 /* POST todo. */
-router.post('/', function(req, res, next) {
- 
-});
- 
- 
+router.post(
+  '/api/notes',
+  awaitErrorHandlerFactory(async (req, res, next) => {
+    const { text } = req.body;
+    const note = notesModel.NoteSchema.save({
+      text: text,
+      user: {
+        type: ObjectIdSchema,
+        ref: 'User'
+      },
+      timestamps: timestamps
+    });
+    return res.status(201).json({
+      error: false,
+      data: note,
+      message: 'Country note has been created.'
+    });
+  })
+);
+
 /* update todo. */
-router.put('/:id', function(req, res, next) {
- 
-});
- 
- 
+router.put('/api/note/:id', function(req, res, next) {});
+
 /* GET todo listing. */
-router.delete('/:id', function(req, res, next) {
- 
-});
- 
+router.delete('/:id', function(req, res, next) {});
+
 module.exports = router;
 
 module.exports = {

@@ -23,20 +23,24 @@ module.exports = server => {
     res.sendFile(path.join(__dirname + '/utils/landing.html'));
   });
 
+  // API Route
   server.get('/api', (req, res) => {
     res.status(200).json({
       msg: 'API is running....'
     });
   });
 
+  // User Login Route
   server.get('/api/entry', protected_route, (req, res) => {
     res.status(200).json({ msg: 'Entry allowed' });
   });
 
+  // Notes Route
   server.get('/api/notes', (req, res) => {
     res.status(200).json('API IS LIT');
 });
 
+  // Possible Facebook Authentication???
   server.route('/api/login').post(authenticate, login);
   server.route('/api/facebook-login').post(facebook_login);
   server.route('/api/register').post(create_user);
