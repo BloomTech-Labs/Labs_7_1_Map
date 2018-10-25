@@ -6,7 +6,7 @@ const {
   facebook_login
 } = require('./controllers/user_controller');
 const {
-  getNoteById,
+  getNotes,
   postNote,
   updateNote,
   deleteNote
@@ -48,13 +48,13 @@ module.exports = server => {
   server.route('/api/change_email').post(protected_route, change_email);
 
   // Notes Routes
-  server.get('/api/notes', (req, res) => {
+  server.get('/api/note', (req, res) => {
     res.status(200).json('Note API IS LIT');
   });
 
   server
-    .route('/api/notes/note')
-    .get(getNoteById)
+    .route('/api/notes')
+    .get(getNotes)
     .post(postNote);
   server
     .route('/api/notes/:id')

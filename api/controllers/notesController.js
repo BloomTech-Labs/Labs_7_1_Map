@@ -2,9 +2,9 @@ const Note = require('../models/notesModel');
 
 module.exports = {
   // Get Notes
-  getNoteById: async (req, res, next) => {
+  getNotes: async (req, res, next) => {
     try {
-      const note = await Note.find({});
+      const note = await Note.find();
       res.status(200).json(note);
     } catch (err) {
       next(err);
@@ -25,11 +25,10 @@ module.exports = {
   // Update Note
   updateNote: async (req, res, next) => {
     try {
-      const noteId = req.params.id;
-      const { text } = req.body;
-
-      Note.put({ text: text }, { where: { id: noteId } });
-      return res.status(201).json();
+      const { noteId } = req.params;
+      const updateNote = req.body;
+      const updated = await Note.findByIdAndUpdate(noteId, updateNote);
+      return res.status(200).json(updated);
     } catch (err) {
       next(err);
     }
