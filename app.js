@@ -6,19 +6,18 @@ const PORT = process.env.PORT || 8000;
 const DB_URL = process.env.DB_URL || 'mongodb://127.0.0.1:27017/scratchnmap';
 
 // Connect to the database
-(async function connect_db() {
-  try {
-    // connection url, with an object of options as a second parameter
-    await mongoose.connect(
-      DB_URL,
-      {
-        autoReconnect: true,
-        reconnectTries: 1000000,
-        reconnectInterval: 3000,
-        useNewUrlParser: true,
-        useCreateIndex: true
-      }
-    );
+try {
+  // connection url, with an object of options as a second parameter
+  mongoose.connect(
+    DB_URL,
+    {
+      autoReconnect: true,
+      reconnectTries: 1000000,
+      reconnectInterval: 3000,
+      useNewUrlParser: true,
+      useCreateIndex: true
+    }
+  );
   console.log('\n\u2705 Database connection successful\n');
 } catch (err) {
   // catches any databse errors encountered
