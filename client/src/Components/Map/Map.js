@@ -77,6 +77,38 @@ class MapComponent extends Component {
     countryClicked: null // Change to countrySelected perhaps (since it's being set when a country is searched)?
   };
 
+  //start--handling user location
+  //checks if browser has ability to geolocate
+  componentDidMount = () => {
+    if ('geolocation' in navigator) {
+      this.hasGeolocation(this.providerUpdate);
+    } else {
+      this.noGeolocation();
+    }
+  };
+
+  //calls getcurrentposition, to find where user is located, sets state
+  hasGeolocation = (cb) => {
+    navigator.geolocation.getCurrentPosition( position => {
+    cb(position.coords.longitude, position.coords.latitude);
+    this.setState({
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+      zoom: 6
+    })
+    });
+  };
+
+  noGeolocation = () => {
+    console.log('no geolocation!');
+  };
+
+  providerUpdate = (long, lat) => {
+      this.props.update(long, lat);
+  }
+
+  //end--handling-userlocation
+
   // Used to check when a new search was made from SearchCountry in Dashboard
   // TODO:
   // Refactor to avoid using componentWillReceiveProps (deprecated).

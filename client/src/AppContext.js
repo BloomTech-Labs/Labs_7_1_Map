@@ -12,6 +12,10 @@ export class AppContextProvider extends Component {
     test: 'Hello!',
     authenticated: false,
     user: {},
+    userPosition: {
+      longitude: '',
+      latitude: ''
+    },
     friends: [
       { name: 'nalee' },
       { name: 'jon' },
@@ -31,6 +35,16 @@ export class AppContextProvider extends Component {
       //this.setState({ authenticated: true, user: response.data.user });
       this.setState({ authenticated: true });
     }
+  }
+
+  //add long lat below
+  handleUpdateUserPosition = (long, lat) => {
+    this.setState({
+      userPosition: {
+        longitude: long, latitude: lat
+      }
+    });
+    console.log('setting state', this.state.userPosition)
   }
 
   handleSignIn = async e => {
@@ -69,6 +83,8 @@ export class AppContextProvider extends Component {
       <AppContext.Provider
         value={{
           AppState: this.state,
+          updateUserPosition: this.handleUpdateUserPosition,
+
           authenticated: this.state.authenticated,
 
           handleSignIn: this.handleSignIn,
