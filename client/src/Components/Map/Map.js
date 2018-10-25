@@ -82,7 +82,8 @@ class MapComponent extends Component {
     cb(position.coords.longitude, position.coords.latitude);
     this.setState({
       lat: position.coords.latitude,
-      lng: position.coords.longitude
+      lng: position.coords.longitude,
+      zoom: 6
     })
     });
   };
