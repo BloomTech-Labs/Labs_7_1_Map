@@ -20,6 +20,7 @@ const corsOptions = {
   origin: '*',
   credentials: true
 };
+
 server.use(cors(corsOptions));
 
 // pass the server to the routes

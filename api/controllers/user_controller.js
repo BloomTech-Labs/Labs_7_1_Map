@@ -112,6 +112,19 @@ module.exports = {
       if (DEV) console.log(err);
       res.status(500).json({ error: 'Failed to change email!' });
     }
-  } // change_email
 
+  }, // change_email
+
+  get_user: async (req, res) => {
+    try {
+      const id = req.params.id
+      if (!id) res.status(400).json({ error: 'ID is a required parameter' })
+      const foundUser = await User.findById(id);
+      res.status(200).json(foundUser);
+    } catch (err) {
+      if (DEV) console.log(err)
+      res.status(500).json({ error: 'Failed to get user!' })
+    }
+  }
 }; // module.eports
+

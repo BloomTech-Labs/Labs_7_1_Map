@@ -23,7 +23,7 @@ export class AppContextProvider extends Component {
       { name: 'sdf' },
       { name: 'sdfasf' },
       { name: 'werwer' },
-      { name: 'werwer' }
+      { name: 'wootie' }
     ]
   };
 
