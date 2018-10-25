@@ -7,9 +7,10 @@ const {
 } = require('./controllers/user_controller');
 const {
   getNotes,
+  getNoteById,
   postNote,
-  updateNote,
-  deleteNote
+  updateNote
+  // deleteNote
 } = require('./controllers/notesController');
 const passport = require('./utils/passport');
 const path = require('path');
@@ -58,6 +59,7 @@ module.exports = server => {
     .post(postNote);
   server
     .route('/api/notes/:id')
-    .put(updateNote)
-    .delete(deleteNote);
+    .get(getNoteById)
+    .put(updateNote);
+  // .destroy(deleteNote);
 };

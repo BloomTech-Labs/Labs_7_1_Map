@@ -11,6 +11,15 @@ module.exports = {
     }
   },
 
+  getNoteById: async (req, res, next) => {
+    try {
+      const note = await Note.findOneAndUpdate();
+      return res.status(200).json(note);
+    } catch (err) {
+      next(err);
+    }
+  },
+
   // Post Note
   postNote: async (req, res, next) => {
     try {
@@ -27,26 +36,26 @@ module.exports = {
     try {
       const { noteId } = req.params;
       const updateNote = req.body;
-      const updated = await Note.findByIdAndUpdate(noteId, updateNote);
+      const updated = await Note.findOneAndUpdate(noteId, updateNote);
       return res.status(200).json(updated);
     } catch (err) {
       next(err);
     }
-  },
-
-  // Delete Note
-  deleteNote: async (req, res, next) => {
-    try {
-      const noteId = req.params.id;
-
-      Note.NoteSchema.destroy({
-        where: {
-          id: noteId
-        }
-      });
-      return res.status(201).json(note);
-    } catch (err) {
-      next(err);
-    }
   }
+
+  // // Delete Note
+  // deleteNote: async (req, res, next) => {
+  //   try {
+  //     const noteId = req.params.id;
+
+  //     Note.NoteSchema.destroy({
+  //       where: {
+  //         id: noteId
+  //       }
+  //     });
+  //     return res.status(201).json(note);
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // }
 };
