@@ -7,10 +7,11 @@ import FriendList from '../Friends/FriendList';
 
 import './Card.css';
 
-const Card = () => {
+const Card = ({ info: { name, emoji } }) => {
+  console.log('HDHDHD', name);
   return (
     <div className="Card">
-      <CardHeader />
+      <CardHeader name={name} flag={emoji} />
       <BorderBay />
       <AppContextConsumer>
         {value => {
