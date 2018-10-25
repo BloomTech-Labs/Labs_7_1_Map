@@ -3,6 +3,7 @@ require('dotenv').config();
 const secret = process.env.SECRET || 'No secret set';
 
 module.exports = {
+
   make_token: user => {
     const payload = {
       sub: user._id,

@@ -6,12 +6,19 @@ const {
   facebook_login,
   get_user
 } = require('./controllers/user_controller');
+const {
+  getNotes,
+  getNoteById,
+  postNote,
+  updateNote
+  // deleteNote
+} = require('./controllers/notesController');
 const passport = require('./utils/passport');
 const path = require('path');
 
 // session is false so we can use jwt
 const authenticate = passport.authenticate('local', { session: false });
-const facebook_authintication = passport.authenticate('facebook', {
+const facebook_authentication = passport.authenticate('facebook', {
   successRedirect: '/',
   failureRedirect: '/login'
 });
@@ -19,17 +26,19 @@ const protected_route = passport.authenticate('jwt', { session: false });
 
 // export the routes
 module.exports = server => {
-  // general route
+  // General Route
   server.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/utils/landing.html'));
   });
 
+  // API Route
   server.get('/api', (req, res) => {
     res.status(200).json({
       msg: 'API is running....'
     });
   });
 
+  // User Login Routes
   server.get('/api/entry', protected_route, (req, res) => {
     res.status(200).json({ msg: 'Entry allowed' });
   });
@@ -39,5 +48,23 @@ module.exports = server => {
   server.route('/api/register').post(create_user);
   server.route('/api/change_password').post(protected_route, change_password);
   server.route('/api/change_email').post(protected_route, change_email);
+
+
+  // Notes Routes
+  server.get('/api/note', (req, res) => {
+    res.status(200).json('Note API IS LIT');
+  });
+
+  server
+    .route('/api/notes')
+    .get(getNotes)
+    .post(postNote);
+  server
+    .route('/api/notes/:id')
+    .get(getNoteById)
+    .put(updateNote);
+  // .destroy(deleteNote);
+
   server.route('/api/get_user/:id').get(protected_route, get_user);
+
 };

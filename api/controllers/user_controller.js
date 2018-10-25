@@ -112,6 +112,7 @@ module.exports = {
       if (DEV) console.log(err);
       res.status(500).json({ error: 'Failed to change email!' });
     }
+
   }, // change_email
 
   get_user: async (req, res) => {
@@ -126,3 +127,4 @@ module.exports = {
     }
   }
 }; // module.eports
+
