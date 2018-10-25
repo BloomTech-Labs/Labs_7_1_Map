@@ -1,10 +1,10 @@
-const { NoteSchema } = require('./models/notesModel');
+const Note = require('../models/notesModel');
 
 module.exports = {
   // Get Notes
-  getNote: async (req, res, next) => {
+  getNoteById: async (req, res, next) => {
     try {
-      const note = await Note.find({ _id });
+      const note = await Note.find({});
       res.status(200).json(note);
     } catch (err) {
       next(err);
@@ -28,8 +28,8 @@ module.exports = {
       const noteId = req.params.id;
       const { text } = req.body;
 
-      Note.NoteSchema.update({ text: text }, { where: { id: noteId } });
-      return res.status(201).json(note);
+      Note.put({ text: text }, { where: { id: noteId } });
+      return res.status(201).json();
     } catch (err) {
       next(err);
     }

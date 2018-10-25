@@ -6,7 +6,7 @@ const {
   facebook_login
 } = require('./controllers/user_controller');
 const {
-  getNote,
+  getNoteById,
   postNote,
   updateNote,
   deleteNote
@@ -24,7 +24,7 @@ const protected_route = passport.authenticate('jwt', { session: false });
 
 // export the routes
 module.exports = server => {
-  // general route
+  // General Route
   server.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/utils/landing.html'));
   });
@@ -36,7 +36,7 @@ module.exports = server => {
     });
   });
 
-  // User Login Route
+  // User Login Routes
   server.get('/api/entry', protected_route, (req, res) => {
     res.status(200).json({ msg: 'Entry allowed' });
   });
@@ -47,17 +47,17 @@ module.exports = server => {
   server.route('/api/change_password').post(protected_route, change_password);
   server.route('/api/change_email').post(protected_route, change_email);
 
-  // Notes Route
+  // Notes Routes
   server.get('/api/notes', (req, res) => {
-    res.status(200).json('API IS LIT');
+    res.status(200).json('Note API IS LIT');
   });
 
   server
-    .route('/api/notes')
-    .get(Notes.getNote)
-    .post(Notes.postNote);
+    .route('/api/notes/note')
+    .get(getNoteById)
+    .post(postNote);
   server
     .route('/api/notes/:id')
-    .update(Notes.updateNote)
-    .delete(Notes.deleteNote);
+    .put(updateNote)
+    .delete(deleteNote);
 };
