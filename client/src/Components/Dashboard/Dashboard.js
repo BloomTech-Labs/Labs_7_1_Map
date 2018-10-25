@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { AppContextConsumer } from '../../AppContext';
+
 import Map from '../Map/Map';
 import Nav from '../Nav/Nav';
 import Legend from '../Legend/Legend';
@@ -25,7 +27,12 @@ class Dashboard extends Component {
         {this.state.showingSettings && (
           <Settings onClick={this.toggleSettings} />
         )}
-        <GeoLocation />
+
+        <AppContextConsumer>
+        {value => {
+          return <GeoLocation update={value.updateUserPosition} />;
+        }}
+      </AppContextConsumer>
       </div>
     );
   }

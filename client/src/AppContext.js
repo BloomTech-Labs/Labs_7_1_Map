@@ -12,6 +12,10 @@ export class AppContextProvider extends Component {
     test: 'Hello!',
     authenticated: false,
     user: {},
+    userPosition: {
+      longitude: '',
+      latitude: ''
+    },
     friends: [
       { name: 'nalee' },
       { name: 'jon' },
@@ -22,6 +26,15 @@ export class AppContextProvider extends Component {
       { name: 'werwer' }
     ]
   };
+
+  handleUpdateUserPosition = (long, lat) => {
+    this.setState({
+      userPosition: {
+        longitude: long, latitude: lat
+      }
+    })
+    console.log('updated provider state with user position!');
+  }
 
   handleSignIn = async e => {
     e.preventDefault();
@@ -59,6 +72,8 @@ export class AppContextProvider extends Component {
       <AppContext.Provider
         value={{
           AppState: this.state,
+          updateUserPosition: this.handleUpdateUserPosition,
+
           authenticated: this.state.authenticated,
 
           handleSignIn: this.handleSignIn,

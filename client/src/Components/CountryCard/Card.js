@@ -12,8 +12,6 @@ import BorderBay from '../BorderBay/BorderBay';
 import './Card.css';
 
 
-const names = [{ name: 'nalee' }, { name: 'jon' }, { name: 'thrun' }];
-
 const Card = () => {
   return (
     <div className="Card">

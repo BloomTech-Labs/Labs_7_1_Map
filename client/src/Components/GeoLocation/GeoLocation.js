@@ -31,6 +31,14 @@ export default class GeoLocation extends Component {
     console.log('no geolocation!');
   };
 
+  componentUpdate = () => {
+
+  }
+
+  providerUpdate = () => {
+      this.props.update(this.state.longitude, this.state.latitude);
+  }
+
   render() {
     return <div />;
   }
