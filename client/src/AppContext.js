@@ -33,7 +33,8 @@ export class AppContextProvider extends Component {
       userPosition: {
         longitude: long, latitude: lat
       }
-    })
+    });
+    console.log('setting state', this.state.userPosition)
   }
 
   handleSignIn = async e => {
