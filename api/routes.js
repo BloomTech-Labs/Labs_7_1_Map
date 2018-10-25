@@ -5,6 +5,12 @@ const {
   change_email,
   facebook_login
 } = require('./controllers/user_controller');
+const {
+  getNote,
+  postNote,
+  updateNote,
+  deleteNote
+} = require('./controllers/notesController');
 const passport = require('./utils/passport');
 const path = require('path');
 
@@ -35,15 +41,23 @@ module.exports = server => {
     res.status(200).json({ msg: 'Entry allowed' });
   });
 
-  // Notes Route
-  server.get('/api/notes', (req, res) => {
-    res.status(200).json('API IS LIT');
-});
-
-  // Possible Facebook Authentication???
   server.route('/api/login').post(authenticate, login);
   server.route('/api/facebook-login').post(facebook_login);
   server.route('/api/register').post(create_user);
   server.route('/api/change_password').post(protected_route, change_password);
   server.route('/api/change_email').post(protected_route, change_email);
+
+  // Notes Route
+  server.get('/api/notes', (req, res) => {
+    res.status(200).json('API IS LIT');
+  });
+
+  server
+    .route('/api/notes')
+    .get(Notes.getNote)
+    .post(Notes.postNote);
+  server
+    .route('/api/notes/:id')
+    .update(Notes.updateNote)
+    .delete(Notes.deleteNote);
 };
