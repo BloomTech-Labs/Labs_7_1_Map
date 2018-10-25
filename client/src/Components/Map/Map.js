@@ -61,7 +61,7 @@ class MapComponent extends Component {
     lat: 45.512794,
     lng: -122.679565,
     zoom: 5,
-    mapTile: mapTilesUrls.toner,
+    mapTile: mapTilesUrls.dark,
     countryHover: null,
     countryClicked: null
   };

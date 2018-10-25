@@ -8,7 +8,7 @@ import './Dashboard.css';
 
 class Dashboard extends Component {
   state = {
-    showingSettings: false
+    showingSettings: false,
   };
 
   toggleSettings = () => {
@@ -20,6 +20,14 @@ class Dashboard extends Component {
       <div className="Dashboard">
         <Nav toggleSettings={this.toggleSettings} />
         <Legend />
+        <form className="SearchCountry">
+          <input
+            className="MenuItem Center__search"
+            type="search"
+            placeholder="Search Countries..."
+          />
+          <input type="submit" />
+        </form>
         <Map />
         {this.state.showingSettings && (
           <Settings onClick={this.toggleSettings} />
