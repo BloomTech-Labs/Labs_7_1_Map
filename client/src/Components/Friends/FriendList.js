@@ -11,7 +11,7 @@ class FriendList extends Component {
     return (
       <div className="FriendList">
         <div className="FriendList_List">
-          {this.props.friends.map(function(object, index) {
+          {this.props.friends.forEach(function(object, index) {
             if (index <= 5) {
               return <div key={index}>{object.name}</div>;
             }
