@@ -12,11 +12,7 @@ const secret = process.env.SECRET || 'No secret set';
 const DEV = process.env.DEV || null;
 
 // local strategy
-const local_strategy = new LocalStrategy(async function(
-  username,
-  password,
-  done
-) {
+const local_strategy = new LocalStrategy(async (username, password, done) => {
   try {
     // get a user using the username
     const found = await User.findOne({ username });
@@ -47,7 +43,7 @@ const jwtOptions = {
   secretOrKey: secret
 };
 
-const jwt_strategy = new JwtStrategy(jwtOptions, async function(payload, done) {
+const jwt_strategy = new JwtStrategy(jwtOptions, async (payload, done) => {
   try {
     // get a user using the id
     const found = await User.findById(payload.sub).select('-password');
