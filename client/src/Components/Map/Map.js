@@ -56,12 +56,12 @@ function getCountryShape(countryCode) {
 }
 
 // Helper function to get country code from string i.e. 'canada' -> 'CAN'
-function getCountryCode(countryString) {
-  const countryFeature = geojson.features.find(
+async function getCountryCode(countryString) {
+  const countryFeature = await geojson.features.find(
     feature =>
       feature.properties.name.toLowerCase() === countryString.toLowerCase()
   );
-  return countryFeature.id;
+  return countryFeature ? countryFeature.id : null;
 }
 
 // Main Map component
@@ -79,13 +79,13 @@ class MapComponent extends Component {
   // TODO:
   // Refactor to avoid using componentWillReceiveProps (deprecated).
   // Will probably need to use either componentDidUpdate or getDerivedStateFromProps
-  componentWillReceiveProps() {
-    console.log('PROPS RECEIVED: ', this.props);
+  async componentWillReceiveProps() {
+    await console.log('PROPS RECEIVED: ', this.props);
     const countrySearch = this.props.searchCountry;
 
     if (countrySearch) {
-      const countryCode = getCountryCode(countrySearch);
-      console.log(countryCode);
+      const countryCode = await getCountryCode(countrySearch);
+      await console.log(countryCode);
     }
   }
 

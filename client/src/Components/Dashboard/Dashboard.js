@@ -21,7 +21,7 @@ class Dashboard extends Component {
     e.preventDefault();
     const searchQuery = e.target.search.value;
     await this.setState({ searchCountry: searchQuery });
-    console.log(this.state);
+    console.log('handleSearchSubmit: ', searchQuery);
   };
 
   render() {
@@ -29,7 +29,9 @@ class Dashboard extends Component {
       <div className="Dashboard">
         <Nav toggleSettings={this.toggleSettings} />
         <Legend />
-        <SearchCountry handleSearchSubmit={this.handleSearchSubmit} />
+        <SearchCountry
+          handleSearchSubmit={this.handleSearchSubmit}
+        />
         <Map searchCountry={this.state.searchCountry} />
         {this.state.showingSettings && (
           <Settings onClick={this.toggleSettings} />
