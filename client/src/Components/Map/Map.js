@@ -5,8 +5,8 @@ import './Map.css';
 import Card from '../CountryCard/Card';
 import geojson from './countries.geo.json';
 import wc from 'which-country';
+import world from 'country-data';
 
-console.log(wc);
 // Marker (workaround for an issue with react-leaflet)
 //TODO: Change to custom icon
 const markerIcon = L.icon({
@@ -95,7 +95,8 @@ class MapComponent extends Component {
   handleClick = e => {
     // Get the country code of the location clicked on
     const country = wc([e.latlng.lng, e.latlng.lat]);
-    console.log(country);
+
+    console.log(world.countries[country]);
 
     this.setState({ ...e.latlng, countryClicked: country });
   };
