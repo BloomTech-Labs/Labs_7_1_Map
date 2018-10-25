@@ -17,11 +17,10 @@ class Dashboard extends Component {
     this.setState({ showingSettings: !this.state.showingSettings });
   };
 
-  handleSearchSubmit = async e => {
+  handleSearchSubmit = e => {
     e.preventDefault();
     const searchQuery = e.target.search.value;
-    await this.setState({ searchCountry: searchQuery });
-    console.log('handleSearchSubmit: ', searchQuery);
+    this.setState({ searchCountry: searchQuery });
   };
 
   render() {
