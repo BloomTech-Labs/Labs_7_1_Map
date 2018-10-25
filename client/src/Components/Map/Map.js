@@ -74,7 +74,8 @@ class MapComponent extends Component {
     zoom: 2,
     mapTile: mapTilesUrls.dark,
     countryHover: null,
-    countryClicked: null // Change to countrySelected perhaps (since it's being set when a country is searched)?
+    countryClicked: null, // Change to countrySelected perhaps (since it's being set when a country is searched)?
+    countryInfo: {}
   };
 
   //start--handling user location
@@ -88,14 +89,18 @@ class MapComponent extends Component {
   };
 
   //calls getcurrentposition, to find where user is located, sets state
-  hasGeolocation = (cb) => {
-    navigator.geolocation.getCurrentPosition( position => {
-    cb(position.coords.longitude, position.coords.latitude);
-    this.setState({
-      lat: position.coords.latitude,
-      lng: position.coords.longitude,
-      zoom: 6
-    })
+  hasGeolocation = cb => {
+    navigator.geolocation.getCurrentPosition(position => {
+      cb(position.coords.longitude, position.coords.latitude);
+      const country = wc([this.state.lng, this.state.lat]);
+      const info = world.countries[country];
+      this.setState({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+        zoom: 4,
+        countryClicked: country,
+        countryInfo: info
+      });
     });
   };
 
@@ -104,8 +109,8 @@ class MapComponent extends Component {
   };
 
   providerUpdate = (long, lat) => {
-      this.props.update(long, lat);
-  }
+    this.props.update(long, lat);
+  };
 
   //end--handling-userlocation
 
@@ -127,10 +132,10 @@ class MapComponent extends Component {
   handleClick = e => {
     // Get the country code of the location clicked on
     const country = wc([e.latlng.lng, e.latlng.lat]);
+    const info = world.countries[country];
+    console.log(info);
 
-    console.log(world.countries[country]);
-
-    this.setState({ ...e.latlng, countryClicked: country });
+    this.setState({ ...e.latlng, countryClicked: country, countryInfo: info });
   };
 
   handleMove = e => {
@@ -138,18 +143,21 @@ class MapComponent extends Component {
     const country = wc([e.latlng.lng, e.latlng.lat]);
 
     // Only set state if user mouses over a different country
-    if (this.state.countryHover !== country)
+    if (this.state.countryHover !== country) {
       this.setState({ countryHover: country });
+    }
   };
 
   render() {
     const position = [this.state.lat, this.state.lng];
+
+    console.log(this.state.countryInfo);
     return (
       <Map
         center={position}
         zoom={this.state.zoom}
         className="MapComponent"
-        minZoom={1.5}
+        minZoom={2}
         maxZoom={10}
         maxBounds={bounds}
         onClick={this.handleClick}
@@ -195,7 +203,7 @@ class MapComponent extends Component {
           opacity={0.8}
         >
           <Popup className="Map_Component-Card">
-            <Card />
+            <Card info={this.state.countryInfo} />
           </Popup>
         </Marker>
       </Map>
