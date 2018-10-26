@@ -134,8 +134,10 @@ class MapComponent extends Component {
   handleClick = e => {
     // Get the country code of the location clicked on
     const country = wc([e.latlng.lng, e.latlng.lat]);
-    const info = world.countries[country];
-    console.log(info);
+    const info = world.countries[country] || {
+      name: 'at the coean',
+      emoji: ''
+    };
 
     this.setState({ ...e.latlng, countryClicked: country, countryInfo: info });
   };
