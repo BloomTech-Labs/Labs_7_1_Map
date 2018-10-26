@@ -43,12 +43,10 @@ class Dashboard extends Component {
           }}
         </AppContextConsumer>
 
-        {/* {this.state.showingSettings && ( */}
         <Settings
           onClick={this.toggleSettings}
           showingSettings={this.state.showingSettings}
         />
-        {/* )} */}
       </div>
     );
   }
