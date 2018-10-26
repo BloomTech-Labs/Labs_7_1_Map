@@ -2,11 +2,11 @@ import React from 'react';
 
 import './CardHeader.css';
 
-const CardHeader = ({ flag, name }) => {
+const CardHeader = props => {
   return (
     <div className="Card_Header">
       <h2 className="Header_Country-Name">
-        {flag} {name}
+        {props.flag} {props.name}
       </h2>
     </div>
   );

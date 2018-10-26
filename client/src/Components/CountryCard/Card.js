@@ -8,13 +8,13 @@ import FriendList from '../Friends/FriendList';
 import './Card.css';
 
 const Card = props => {
-  const data = props.data;
+  const border = props.border;
   const { name, emoji } = props.info;
 
   return (
     <div className="Card">
       <CardHeader name={name} flag={emoji} />
-      <BorderBay data={data} />
+      <BorderBay border={border} />
       <AppContextConsumer>
         {value => {
           return <Note user={value.AppState.user} />;

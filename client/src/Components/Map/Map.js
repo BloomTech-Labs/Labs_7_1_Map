@@ -75,7 +75,8 @@ class MapComponent extends Component {
     mapTile: mapTilesUrls.dark,
     countryHover: null,
     countryClicked: null, // Change to countrySelected perhaps (since it's being set when a country is searched)?
-    countryInfo: {}
+    countryInfo: {},
+    countryBorder: {}
   };
 
   //start--handling user location
@@ -95,13 +96,15 @@ class MapComponent extends Component {
 
       const country = wc([this.state.lng, this.state.lat]);
       const info = world.countries[country];
+      const border = geojson.features.properties[country];
 
       this.setState({
         lat: position.coords.latitude,
         lng: position.coords.longitude,
         zoom: 2,
         countryClicked: country,
-        countryInfo: info
+        countryInfo: info,
+        countryBorder: border
       });
     });
   };
@@ -135,11 +138,17 @@ class MapComponent extends Component {
     // Get the country code of the location clicked on
     const country = wc([e.latlng.lng, e.latlng.lat]);
     const info = world.countries[country] || {
-      name: 'at the ocean',
+      name: 'Ocean',
       emoji: ''
     };
+    const border = geojson.geometry;
 
-    this.setState({ ...e.latlng, countryClicked: country, countryInfo: info });
+    this.setState({
+      ...e.latlng,
+      countryClicked: country,
+      countryInfo: info,
+      countryBorder: border
+    });
   };
 
   handleMove = e => {
@@ -154,8 +163,8 @@ class MapComponent extends Component {
 
   render() {
     const position = [this.state.lat, this.state.lng];
-
     console.log(this.state.countryInfo);
+
     return (
       <Map
         center={position}
@@ -207,7 +216,10 @@ class MapComponent extends Component {
           opacity={0.8}
         >
           <Popup className="Map_Component-Card">
-            <Card data={getCountryShape} info={this.state.countryInfo} />
+            <Card
+              border={this.state.countryBorder}
+              info={this.state.countryInfo}
+            />
           </Popup>
         </Marker>
       </Map>

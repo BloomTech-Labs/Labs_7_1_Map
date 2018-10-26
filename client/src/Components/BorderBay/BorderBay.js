@@ -37,9 +37,11 @@ function log(value) {
 }
 
 const BorderBay = props => {
+    const border = props.border;
+
     return (
       <div className="Country_Border">
-        <div className="Country_Border-Border">{props.getCountryShape}</div>
+        <div className="Country_Border-Border">{border}</div>
         <div className="Country_Border-Slider">
           <span className="Slider-Tag">Level of Stay</span>
           <Slider
