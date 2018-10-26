@@ -43,7 +43,7 @@ const styleClicked = {
   fillOpacity: 0.2
 };
 
-// Styles for the highlight of a hoverd over country
+// Styles for the highlight of a hovered over country
 const styleHover = {
   stroke: false,
   fill: true,
@@ -82,9 +82,9 @@ class MapComponent extends Component {
   //checks if browser has ability to geolocate
   componentDidMount = () => {
     if ('geolocation' in navigator) {
-      this.hasGeolocation(this.providerUpdate);
+      this.hasGeolocation(this.providerUpdate); //geolocation is in the browser
     } else {
-      this.noGeolocation();
+      this.noGeolocation(); //browser is not compatible
     }
   };
 
@@ -92,6 +92,7 @@ class MapComponent extends Component {
   hasGeolocation = cb => {
     navigator.geolocation.getCurrentPosition(position => {
       cb(position.coords.longitude, position.coords.latitude);
+      //this basically gets position of client and runs this.providerUpdate to update context
 
       const country = wc([this.state.lng, this.state.lat]);
       const info = world.countries[country];
@@ -111,7 +112,7 @@ class MapComponent extends Component {
   };
 
   providerUpdate = (long, lat) => {
-    this.props.update(long, lat);
+    this.props.updateUserPosition(long, lat);
   };
 
   //end--handling-userlocation
@@ -131,6 +132,11 @@ class MapComponent extends Component {
     }
   }
 
+  //updates context
+  updateCurrentCountry = (name, code) => {
+    this.props.updateCurrentCountry(name, code);
+  };
+
   handleClick = e => {
     // Get the country code of the location clicked on
     const country = wc([e.latlng.lng, e.latlng.lat]);
@@ -138,8 +144,12 @@ class MapComponent extends Component {
       name: 'at the ocean',
       emoji: ''
     };
-
     this.setState({ ...e.latlng, countryClicked: country, countryInfo: info });
+    //below we call updateCurrentCountry to update the state of the context to show the current country clicked
+    this.updateCurrentCountry(
+      this.state.countryClicked,
+      this.state.countryInfo.alpha3
+    );
   };
 
   handleMove = e => {
@@ -152,9 +162,13 @@ class MapComponent extends Component {
     }
   };
 
+  handleZoomend = e => {
+    const newZoomLevel = e.target._zoom;
+    this.setState({ zoom: newZoomLevel });
+  };
+
   render() {
     const position = [this.state.lat, this.state.lng];
-
     console.log(this.state.countryInfo);
     return (
       <Map
@@ -162,10 +176,11 @@ class MapComponent extends Component {
         zoom={this.state.zoom}
         className="MapComponent"
         minZoom={2}
-        maxZoom={10}
+        maxZoom={12}
         maxBounds={bounds}
         onClick={this.handleClick}
         onMouseMove={this.handleMove}
+        onZoomend={this.handleZoomend}
       >
         <TileLayer
           attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"

@@ -10,11 +10,13 @@
   position: fixed;
   z-index: 11;
   top: 100px;
-  right: -300px;
-  animation: Settings 0.5s forwards;
+  animation: Settings 0.5s all;
+  transition-property: all;
+  transition-duration: 0.8s;
 }
-@keyframes Settings {
-  100% {
-    right: 0;
-  }
+.Settings-closed {
+  right: -300px;
+}
+.Settings-open {
+  right: 0px;
 }
