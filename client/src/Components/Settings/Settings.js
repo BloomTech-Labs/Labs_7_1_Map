@@ -17,7 +17,13 @@ class Settings extends Component {
     return (
       <AppContextConsumer>
         {({ AppState }) => (
-          <div className="Settings">
+          <div
+            className={
+              this.props.showingSettings
+                ? 'Settings Settings-open'
+                : 'Settings Settings-closed'
+            }
+          >
             <h1>Settings</h1>
             <Preferences user={AppState.user} />
             <ChangeEmail user={AppState.user} />
