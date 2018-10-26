@@ -5,7 +5,10 @@ import './BorderBay.css';
 import 'nouislider/distribute/nouislider.css';
 
 const marks = {
-  0: 'Uninterested',
+  0: {
+    styles: 'red'
+  },
+  label: 'Uninterested',
   1: 'Wishlist',
   2: 'Transited',
   3: 'Visited',
@@ -18,7 +21,7 @@ export default class BorderBay extends Component {
       <div className="Country_Border">
         <p className="Country_Border-Border">Border</p>
         <div className="Country_Border-Slider">
-          <p className="Slide-Tag">Level of Stay</p>
+          <p className="Slider-Tag">Level of Stay</p>
           <Nouislider
             start={0}
             step={1}

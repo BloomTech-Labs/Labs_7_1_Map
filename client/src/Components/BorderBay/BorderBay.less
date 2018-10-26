@@ -1,23 +1,26 @@
 .Country_Border {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
   width: 100%;
+  height: 625px;
   border: 1px solid black;
-  // overflow: hidden;
 
   .Country_Border-Border {
-    text-align: center;
-    width: 50%;
+    height: 135px;
+    width: 70%;
+    margin: 15px;
     border: 1px solid black;
   }
   .Country_Border-Slider {
+    width: 200px;
     position: relative;
     z-index: 10;
 
-    .Slider1 {
-      position: relative;
-      z-index: 100;
+    .Slider-Tag {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 7px;
     }
   }
 }
