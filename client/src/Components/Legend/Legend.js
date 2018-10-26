@@ -5,7 +5,15 @@ const Legend = () => {
   return (
     <div className="Legend">
       <ul>
-        <input type="checkbox" className="Legend__showFriends" /> Show Friends
+        {/* <input type="checkbox" className="Legend__showFriends" /> Show Friends */}
+        <li>
+          <div className="Legend__swatch NoInterest" />
+          No Interest
+        </li>
+        <li>
+          <div className="Legend__swatch Wishlist" />
+          Wishlist
+        </li>
         <li>
           <div className="Legend__swatch Visited" />
           Visited
@@ -13,10 +21,6 @@ const Legend = () => {
         <li>
           <div className="Legend__swatch LivedIn" />
           Lived In
-        </li>
-        <li>
-          <div className="Legend__swatch Wishlist" />
-          Wishlist
         </li>
         <li>
           <div className="Legend__swatch Home" />
