@@ -59,6 +59,7 @@ export class AppContextProvider extends Component {
         name: name, code: code
       }
     });
+    console.log(this.state.name, this.state.code);
   };
 
   handleSignIn = async e => {
