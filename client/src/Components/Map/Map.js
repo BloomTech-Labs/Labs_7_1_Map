@@ -96,7 +96,7 @@ class MapComponent extends Component {
 
       const country = wc([this.state.lng, this.state.lat]);
       const info = world.countries[country];
-      const border = geojson.features.properties[country];
+      const border = geojson.features.geometry;
 
       this.setState({
         lat: position.coords.latitude,
