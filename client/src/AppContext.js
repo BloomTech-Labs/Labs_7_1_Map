@@ -18,7 +18,7 @@ export class AppContextProvider extends Component {
     },
     currentCountry: {
       code: '',
-      name: ''
+      info: {}
     },
     friends: [
       { name: 'nalee' },
@@ -52,12 +52,9 @@ export class AppContextProvider extends Component {
   };
 
   //to update state: currentCountry (last clicked), called in Map.js
-  handleUpdateCurrentCountry = (name, code) => {
+  handleUpdateCurrentCountry = (code, info) => {
     this.setState({
-      currentCountry: {
-        name: name,
-        code: code
-      }
+      currentCountry: { code, info }
     });
   };
 

@@ -116,11 +116,14 @@ class MapComponent extends Component {
       emoji: ''
     };
 
-    this.setState({ ...e.latlng, countryClicked: countryCode, countryInfo: info });
+    // The lat/lng in local state is only used by the marker.
+    // Since we are moving to a panel/modal this can be removed once marker is not needed
+    // this.setState({ ...e.latlng });
+
     //below we call updateCurrentCountry to update the state of the context to show the current country clicked
     this.updateCurrentCountry(
-      this.state.countryInfo.name,
-      countryCode
+      countryCode,
+      info
     );
   };
 
