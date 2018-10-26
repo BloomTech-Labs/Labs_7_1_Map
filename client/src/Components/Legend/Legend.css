@@ -22,15 +22,18 @@
   width: 15px;
   margin-right: 10px;
 }
+.Legend li .NoInterest {
+  background-color: gray;
+}
+.Legend li .Wishlist {
+  background-color: purple;
+}
 .Legend li .Visited {
   background-color: red;
 }
 .Legend li .LivedIn {
   background-color: blue;
 }
-.Legend li .Wishlist {
-  background-color: green;
-}
 .Legend li .Home {
-  background-color: yellow;
+  background-color: green;
 }
