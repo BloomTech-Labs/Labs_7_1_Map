@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import world from 'country-data';
-import { getCountryCode } from '../../utils.js';
+import { getCountryCodeFromName } from '../../utils.js';
 
 class SearchCountry extends Component {
   state = {
@@ -14,7 +14,7 @@ class SearchCountry extends Component {
 
   handleSearchSubmit = e => {
     e.preventDefault();
-    const countryCode = getCountryCode(e.target.search.value);
+    const countryCode = getCountryCodeFromName(e.target.search.value);
     const countryInfo = world.countries[countryCode];
     this.props.updateCurrentCountry(countryCode, countryInfo);
   };
