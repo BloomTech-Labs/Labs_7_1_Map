@@ -8,7 +8,7 @@ import FriendList from '../Friends/FriendList';
 import './Card.css';
 
 const Card = props => {
-  const data = props.getCountryShape;
+  const data = props.data;
   const { name, emoji } = props.info;
 
   return (
