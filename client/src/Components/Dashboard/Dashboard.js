@@ -36,8 +36,9 @@ class Dashboard extends Component {
             return (
               <Map
                 userPosition={value.AppState.UserPosition}
-                update={value.updateUserPosition}
+                updateUserPosition={value.updateUserPosition}
                 searchCountry={this.state.searchCountry}
+                updateCurrentCountry={value.updateCurrentCountry}
               />
             );
           }}

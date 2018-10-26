@@ -16,6 +16,10 @@ export class AppContextProvider extends Component {
       longitude: '',
       latitude: ''
     },
+    currentCountry: {
+      code: '',
+      name: ''
+    },
     friends: [
       { name: 'nalee' },
       { name: 'jon' },
@@ -37,15 +41,25 @@ export class AppContextProvider extends Component {
     }
   }
 
-  //add long lat below
+  //to update state: userPosition, used in Map.js
   handleUpdateUserPosition = (long, lat) => {
     this.setState({
       userPosition: {
-        longitude: long, latitude: lat
+        longitude: long,
+        latitude: lat
       }
     });
-    console.log('setting state', this.state.userPosition)
-  }
+  };
+
+  //to update state: currentCountry (last clicked), called in Map.js
+  handleUpdateCurrentCountry = (name, code) => {
+    this.setState({
+      currentCountry: {
+        name: name,
+        code: code
+      }
+    });
+  };
 
   handleSignIn = async e => {
     e.preventDefault();
@@ -84,9 +98,8 @@ export class AppContextProvider extends Component {
         value={{
           AppState: this.state,
           updateUserPosition: this.handleUpdateUserPosition,
-
+          updateCurrentCountry: this.handleUpdateCurrentCountry,
           authenticated: this.state.authenticated,
-
           handleSignIn: this.handleSignIn,
           handleSignOut: this.handleSignOut,
           handleSignUp: this.handleSignUp
