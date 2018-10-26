@@ -111,7 +111,7 @@ class MapComponent extends Component {
   };
 
   providerUpdate = (long, lat) => {
-    this.props.update(long, lat);
+    this.props.updateUserPosition(long, lat);
   };
 
   //end--handling-userlocation
@@ -131,6 +131,11 @@ class MapComponent extends Component {
     }
   }
 
+  //updates context
+  updateCurrentCountry = (name, code) => {
+    this.props.updateCurrentCountry(name, code);
+  };
+
   handleClick = e => {
     // Get the country code of the location clicked on
     const country = wc([e.latlng.lng, e.latlng.lat]);
@@ -138,8 +143,11 @@ class MapComponent extends Component {
       name: 'at the ocean',
       emoji: ''
     };
-
     this.setState({ ...e.latlng, countryClicked: country, countryInfo: info });
+    this.updateCurrentCountry(
+      this.state.countryClicked,
+      this.state.countryInfo.alpha3
+    );
   };
 
   handleMove = e => {
@@ -154,7 +162,6 @@ class MapComponent extends Component {
 
   render() {
     const position = [this.state.lat, this.state.lng];
-
     console.log(this.state.countryInfo);
     return (
       <Map

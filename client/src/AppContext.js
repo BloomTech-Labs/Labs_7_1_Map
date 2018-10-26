@@ -19,7 +19,7 @@ export class AppContextProvider extends Component {
     currentCountry: {
       code: '',
       name: ''
-    }
+    },
     friends: [
       { name: 'nalee' },
       { name: 'jon' },
@@ -38,7 +38,6 @@ export class AppContextProvider extends Component {
       // get use
       //this.setState({ authenticated: true, user: response.data.user });
       this.setState({ authenticated: true });
-      console.log(this.state.currentCountry);
     }
   }
 
@@ -50,7 +49,7 @@ export class AppContextProvider extends Component {
       }
     });
     console.log('setting state', this.state.userPosition)
-  }
+  };
 
   //since we have two updaters it would probably make sense to refactor them into 
   //1 general one in the future
@@ -60,7 +59,7 @@ export class AppContextProvider extends Component {
         name: name, code: code
       }
     });
-  }
+  };
 
   handleSignIn = async e => {
     e.preventDefault();
@@ -99,9 +98,8 @@ export class AppContextProvider extends Component {
         value={{
           AppState: this.state,
           updateUserPosition: this.handleUpdateUserPosition,
-
+          updateCurrentCountry: this.handleUpdateCurrentCountry,
           authenticated: this.state.authenticated,
-
           handleSignIn: this.handleSignIn,
           handleSignOut: this.handleSignOut,
           handleSignUp: this.handleSignUp
