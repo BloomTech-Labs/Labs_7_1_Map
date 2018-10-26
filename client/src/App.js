@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 // will allow our component to access the global state of the app
 import { AppContextConsumer } from './AppContext';
-// import LandingPage from './Components/LandingPage/LandingPage';
+import LandingPage from './Components/LandingPage/LandingPage';
 import Dashboard from './Components/Dashboard/Dashboard.js';
 
 import './App.css';
@@ -13,7 +13,7 @@ class App extends Component {
       <AppContextConsumer>
         {value => (
           <div className="App">
-            {value.AppState.authenticated ? <Dashboard /> : <Dashboard />}
+            {value.AppState.authenticated ? <Dashboard /> : <LandingPage />}
           </div>
         )}
       </AppContextConsumer>
