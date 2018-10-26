@@ -82,9 +82,9 @@ class MapComponent extends Component {
   //checks if browser has ability to geolocate
   componentDidMount = () => {
     if ('geolocation' in navigator) {
-      this.hasGeolocation(this.providerUpdate);
+      this.hasGeolocation(this.providerUpdate); //geolocation is in the browser
     } else {
-      this.noGeolocation();
+      this.noGeolocation(); //browser is not compatible
     }
   };
 
@@ -92,6 +92,7 @@ class MapComponent extends Component {
   hasGeolocation = cb => {
     navigator.geolocation.getCurrentPosition(position => {
       cb(position.coords.longitude, position.coords.latitude);
+      //this basically gets position of client and runs this.providerUpdate to update context
 
       const country = wc([this.state.lng, this.state.lat]);
       const info = world.countries[country];
@@ -144,6 +145,7 @@ class MapComponent extends Component {
       emoji: ''
     };
     this.setState({ ...e.latlng, countryClicked: country, countryInfo: info });
+    //below we call updateCurrentCountry to update the state of the context to show the current country clicked
     this.updateCurrentCountry(
       this.state.countryClicked,
       this.state.countryInfo.alpha3

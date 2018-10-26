@@ -41,7 +41,7 @@ export class AppContextProvider extends Component {
     }
   }
 
-  //add long lat below
+  //to update state: userPosition, used in Map.js
   handleUpdateUserPosition = (long, lat) => {
     this.setState({
       userPosition: {
@@ -51,8 +51,7 @@ export class AppContextProvider extends Component {
     });
   };
 
-  //since we have two updaters it would probably make sense to refactor them into
-  //1 general one in the future
+  //to update state: currentCountry (last clicked), called in Map.js
   handleUpdateCurrentCountry = (name, code) => {
     this.setState({
       currentCountry: {
