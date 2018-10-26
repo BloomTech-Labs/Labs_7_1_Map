@@ -37,17 +37,18 @@ const bounds = L.latLngBounds(corner1, corner2);
 // Styles for the highlight of a clicked on country
 const styleClicked = {
   stroke: true,
-  opacity: 0.6,
+  color: 'gold',
+  opacity: 1,
   fill: true,
-  fillColor: '#FF3333',
-  fillOpacity: 0.2
+  fillColor: 'gold',
+  fillOpacity: 0
 };
 
 // Styles for the highlight of a hovered over country
 const styleHover = {
   stroke: false,
   fill: true,
-  fillColor: '#3333FF',
+  fillColor: '#777777',
   fillOpacity: 0.2
 };
 
@@ -121,34 +122,37 @@ class MapComponent extends Component {
   // TODO:
   // Refactor to avoid using componentWillReceiveProps (deprecated).
   // Will probably need to use either componentDidUpdate or getDerivedStateFromProps
-  async componentWillReceiveProps() {
-    // For some weird reason country search is only registered after second form submission unless this async console.log is here
-    await console.log('PROPS RECEIVED: ', this.props);
-    const countrySearch = this.props.searchCountry;
+  // async componentWillReceiveProps() {
+  //   // For some weird reason country search is only registered after second form submission unless this async console.log is here
+  //   await console.log('PROPS RECEIVED: ', this.props);
+  //   const countrySearch = this.props.searchCountry;
 
-    if (countrySearch) {
-      const countryCode = getCountryCode(countrySearch);
-      if (countryCode) this.setState({ countryClicked: countryCode });
-    }
-  }
+  //   if (countrySearch) {
+  //     const countryCode = getCountryCode(countrySearch);
+  //     if (countryCode) this.setState({ countryClicked: countryCode });
+  //   }
+  // }
 
   //updates context
   updateCurrentCountry = (name, code) => {
     this.props.updateCurrentCountry(name, code);
   };
 
-  handleClick = e => {
+  handleClick = async e => {
+    console.log(this.props.currentCountry.code)
     // Get the country code of the location clicked on
-    const country = wc([e.latlng.lng, e.latlng.lat]);
-    const info = world.countries[country] || {
+    const countryCode = await wc([e.latlng.lng, e.latlng.lat]);
+    console.log(countryCode)
+    const info = world.countries[countryCode] || {
       name: 'at the ocean',
       emoji: ''
     };
-    this.setState({ ...e.latlng, countryClicked: country, countryInfo: info });
+    this.setState({ ...e.latlng, countryClicked: countryCode, countryInfo: info });
     //below we call updateCurrentCountry to update the state of the context to show the current country clicked
     this.updateCurrentCountry(
-      this.state.countryClicked,
-      this.state.countryInfo.alpha3
+      // this.state.countryClicked,
+      this.state.countryInfo.name,
+      countryCode
     );
   };
 
@@ -169,7 +173,6 @@ class MapComponent extends Component {
 
   render() {
     const position = [this.state.lat, this.state.lng];
-    console.log(this.state.countryInfo);
     return (
       <Map
         center={position}
@@ -192,7 +195,8 @@ class MapComponent extends Component {
         {geojson.features.map(
           feature =>
             // Layer is only rendered if the clicked on country ID is the same
-            this.state.countryClicked === feature.id && (
+          // this.state.countryClicked === feature.id && (
+            this.props.currentCountry.code === feature.id && (
               <GeoJSON
                 key={feature.id}
                 data={getCountryShape(feature.id)}
