@@ -26,14 +26,29 @@ export class AppContextProvider extends Component {
       { name: 'wootie' }
     ]
   };
-  componentDidMount() {
+  async componentDidMount() {
     const token = localStorage.getItem('token');
 
-    // TODO verify token OR get_user pick a strategy
     if (token) {
-      // get use
-      //this.setState({ authenticated: true, user: response.data.user });
-      this.setState({ authenticated: true });
+      const user = JSON.parse(localStorage.getItem('user'));
+      const requestOptions = { headers: { Authorization: `Bearer ${token}` } };
+
+      // get the user
+      const response = await axios.get(
+        `${BACKEND_URL}/get_user/${user.id}`,
+        requestOptions
+      );
+
+      if (response.status === 200) {
+        this.setState({
+          authenticated: true,
+          user: response.data.user
+        });
+      } else {
+        // delete the tokens from the browser
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+      }
     }
   }
 
@@ -41,11 +56,12 @@ export class AppContextProvider extends Component {
   handleUpdateUserPosition = (long, lat) => {
     this.setState({
       userPosition: {
-        longitude: long, latitude: lat
+        longitude: long,
+        latitude: lat
       }
     });
-    console.log('setting state', this.state.userPosition)
-  }
+    console.log('setting state', this.state.userPosition);
+  };
 
   handleSignIn = async e => {
     e.preventDefault();
@@ -54,7 +70,10 @@ export class AppContextProvider extends Component {
       password: e.target.password.value
     };
     const response = await axios.post(`${BACKEND_URL}/login`, body);
+    const user = JSON.stringify(response.data.user);
+
     localStorage.setItem('token', response.data.jwt_token);
+    localStorage.setItem('user', user);
     this.setState({ authenticated: true, user: response.data.user });
   };
 
@@ -74,7 +93,9 @@ export class AppContextProvider extends Component {
     };
 
     const response = await axios.post(`${BACKEND_URL}/register`, body);
+    const user = JSON.stringify(response.data.user);
     localStorage.setItem('token', response.data.jwt_token);
+    localStorage.setItem('user', user);
     this.setState({ authenticated: true, user: response.data.user });
   };
 
