@@ -16,6 +16,10 @@ export class AppContextProvider extends Component {
       longitude: '',
       latitude: ''
     },
+    currentCountry: {
+      code: '',
+      name: ''
+    }
     friends: [
       { name: 'nalee' },
       { name: 'jon' },
@@ -34,6 +38,7 @@ export class AppContextProvider extends Component {
       // get use
       //this.setState({ authenticated: true, user: response.data.user });
       this.setState({ authenticated: true });
+      console.log(this.state.currentCountry);
     }
   }
 

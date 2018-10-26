@@ -43,7 +43,7 @@ const styleClicked = {
   fillOpacity: 0.2
 };
 
-// Styles for the highlight of a hoverd over country
+// Styles for the highlight of a hovered over country
 const styleHover = {
   stroke: false,
   fill: true,
