@@ -6,7 +6,7 @@ import Card from '../CountryCard/Card';
 import geojson from './countries.geo.json';
 import wc from 'which-country';
 import world from 'country-data';
-import { getCountryCode, getCountryShape } from '../../utils.js';
+import { getCountryCode, getCountryShape, getCountryInfoFromCode } from '../../utils.js';
 
 // Marker (workaround for an issue with react-leaflet)
 //TODO: Change to custom icon
@@ -69,61 +69,49 @@ class MapComponent extends Component {
   //checks if browser has ability to geolocate
   componentDidMount = () => {
     if ('geolocation' in navigator) {
-      this.hasGeolocation(this.providerUpdate); //geolocation is in the browser
+      this.hasGeolocation(); //geolocation is in the browser
     } else {
-      this.noGeolocation(); //browser is not compatible
+      console.log('No geolocation!')
     }
   };
 
   //calls getcurrentposition, to find where user is located, sets state
-  hasGeolocation = cb => {
+  hasGeolocation = () => {
     navigator.geolocation.getCurrentPosition(position => {
-      cb(position.coords.longitude, position.coords.latitude);
+      this.props.updateUserPosition(position.coords.longitude, position.coords.latitude);
       //this basically gets position of client and runs this.providerUpdate to update context
 
-      const country = wc([this.state.lng, this.state.lat]);
-      const info = world.countries[country];
+      const countryCode = wc([this.state.lng, this.state.lat]);
+      const countryInfo = getCountryInfoFromCode(countryCode);
 
+      // This should eventually get replaced (pull the marker's location from AppContext instead)
       this.setState({
         lat: position.coords.latitude,
         lng: position.coords.longitude,
         zoom: 2,
-        countryClicked: country,
-        countryInfo: info
+        countryClicked: countryCode
       });
     });
   };
-
-  noGeolocation = () => {
-    console.log('no geolocation!');
-  };
-
-  providerUpdate = (long, lat) => {
-    this.props.updateUserPosition(long, lat);
-  };
   //end--handling-userlocation
-
-  //updates context
-  updateCurrentCountry = (name, code) => {
-    this.props.updateCurrentCountry(name, code);
-  };
 
   handleClick = async e => {
     // Get the country code of the location clicked on
     const countryCode = await wc([e.latlng.lng, e.latlng.lat]);
-    const info = world.countries[countryCode] || {
-      name: 'at the ocean',
-      emoji: ''
-    };
+    const countryInfo = getCountryInfoFromCode(countryCode)
+    // const info = world.countries[countryCode] || {
+    //   name: 'at the ocean',
+    //   emoji: ''
+    // };
 
-    // The lat/lng in local state is only used by the marker.
-    // Since we are moving to a panel/modal this can be removed once marker is not needed
-    // this.setState({ ...e.latlng });
+    // This can be removed once popup is not needed since
+    // the lat/lng in local state isn't required by anything else.
+    this.setState({ ...e.latlng });
 
-    //below we call updateCurrentCountry to update the state of the context to show the current country clicked
-    this.updateCurrentCountry(
+    // Update AppContext with the info of the currently selected country
+    this.props.updateCurrentCountry(
       countryCode,
-      info
+      countryInfo
     );
   };
 

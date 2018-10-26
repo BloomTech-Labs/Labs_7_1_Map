@@ -16,7 +16,7 @@ class SearchCountry extends Component {
     e.preventDefault();
     const countryCode = getCountryCode(e.target.search.value);
     const countryInfo = world.countries[countryCode];
-    this.props.updateCurrentCountry(countryInfo.name, countryCode);
+    this.props.updateCurrentCountry(countryCode, countryInfo);
   };
 
   render() {

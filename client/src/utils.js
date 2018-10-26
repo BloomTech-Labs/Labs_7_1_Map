@@ -1,4 +1,5 @@
 import geojson from './Components/Map/countries.geo.json';
+import world from 'country-data';
 
 // Helper function that takes in a country code and returns a geoJSON object
 export function getCountryShape(countryCode) {
@@ -13,4 +14,13 @@ export function getCountryCode(countryString) {
   );
   if (!countryFeature) console.log('There is no country by that name');
   return countryFeature ? countryFeature.id : null;
+}
+
+export function getCountryInfoFromCode(countryCode) {
+  return (
+    world.countries[countryCode] || {
+      name: 'No country found!',
+      emoji: ''
+    }
+  );
 }
