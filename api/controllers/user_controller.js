@@ -15,58 +15,25 @@ const validate_new_user = ({ username, password, email }) => {
   return {}; // no error, so return an empty object
 }; // end of error checks
 
+// put the methods in alphabetical order
 module.exports = {
-  create_user: async (req, res) => {
-    const check = validate_new_user(req.body);
-
-    // found an error, terminate
-    if (check.error !== undefined) {
-      res.status(400).json(check);
-      return;
-    }
-
+  change_email: async (req, res) => {
     try {
-      // create a new user
-      const new_user = new User(req.body);
+      const { username, new_email } = req.body;
 
-      const created_user = await new_user.save();
+      // update email
+      await User.findOneAndUpdate(
+        { username },
+        { email: new_email },
+        { new: true }
+      );
 
-      // user creation was successful, send a jwt_token back
-      res.status(200).json({
-        jwt_token: make_token(created_user),
-        user: { id: created_user._id, username: created_user.username }
-      });
+      res.status(200).json({ message: 'Email was updated successfully!' });
     } catch (err) {
       if (DEV) console.log(err);
-      res.status(500).json({ error: 'failed user creation' });
+      res.status(500).json({ error: 'Failed to change email!' });
     }
-  }, // create_user
-
-  login: async (req, res) => {
-    try {
-      // we only reach here because we are authenticated
-      const user = req.user;
-      res.status(200).json({ jwt_token: make_token(req.user), user });
-    } catch (err) {
-      if (DEV) console.log(err);
-      res.status(500).json({ error: 'Internal server error!' });
-    }
-  }, // login
-
-  facebook_login: async (req, res) => {
-    /*
-    res.json({ facebook: 'We in facebook now' });
-    try {
-      // we only reach here because we are authenticated
-      res.status(200).json({ jwt_token: make_token(req.user) });
-    } catch (err) {
-      if (DEV) {
-        console.log(err);
-      }
-      res.status(500).json({ error: 'Internal server error!' });
-    }
-    */
-  }, // facebook_login
+  }, // change_email
 
   change_password: async (req, res) => {
     try {
@@ -96,33 +63,68 @@ module.exports = {
     }
   }, // change_password
 
-  change_email: async (req, res) => {
+  create_user: async (req, res) => {
+    const check = validate_new_user(req.body);
+
+    // found an error, terminate
+    if (check.error !== undefined) {
+      res.status(400).json(check);
+      return;
+    }
+
     try {
-      const { username, new_email } = req.body;
+      // create a new user
+      const new_user = new User(req.body);
 
-      // update email
-      await User.findOneAndUpdate(
-        { username },
-        { email: new_email },
-        { new: true }
-      );
+      const created_user = await new_user.save();
 
-      res.status(200).json({ message: 'Email was updated successfully!' });
+      // user creation was successful, send a jwt_token back
+      res.status(200).json({
+        jwt_token: make_token(created_user),
+        user: { id: created_user._id, username: created_user.username }
+      });
     } catch (err) {
       if (DEV) console.log(err);
-      res.status(500).json({ error: 'Failed to change email!' });
+      res.status(500).json({ error: 'failed user creation' });
     }
-  }, // change_email
+  }, // create_user
+
+  facebook_login: async (req, res) => {
+    /*
+    res.json({ facebook: 'We in facebook now' });
+    try {
+      // we only reach here because we are authenticated
+      res.status(200).json({ jwt_token: make_token(req.user) });
+    } catch (err) {
+      if (DEV) {
+        console.log(err);
+      }
+      res.status(500).json({ error: 'Internal server error!' });
+    }
+    */
+  }, // facebook_login
 
   get_user: async (req, res) => {
     try {
       const id = req.params.id;
       if (!id) res.status(400).json({ error: 'ID is a required parameter' });
       const foundUser = await User.findById(id);
+      const user = { id: req.user._id, username: req.user.username }; // add the things you need to send
       res.status(200).json(foundUser);
     } catch (err) {
       if (DEV) console.log(err);
       res.status(500).json({ error: 'Failed to get user!' });
     }
-  }
+  },
+
+  login: async (req, res) => {
+    try {
+      // we only reach here because we are authenticated
+      const user = { id: req.user._id, username: req.user.username }; // add the things you need to send
+      res.status(200).json({ jwt_token: make_token(req.user), user });
+    } catch (err) {
+      if (DEV) console.log(err);
+      res.status(500).json({ error: 'Internal server error!' });
+    }
+  } // login
 }; // module.eports
