@@ -4,18 +4,13 @@ import Nouislider from 'nouislider-react';
 import './BorderBay.css';
 import 'nouislider/distribute/nouislider.css';
 
-const marks = {
-  0: {
-    styles: 'red'
-  },
-  label: 'Uninterested',
-  1: 'Wishlist',
-  2: 'Transited',
-  3: 'Visited',
-  4: 'Lived'
-};
+const stayValue = ['Uninterested', 'Wishlist', 'Transited', 'Visited', 'Lived'];
 
 export default class BorderBay extends Component {
+  state = {
+    values: ''
+  };
+
   render() {
     return (
       <div className="Country_Border">
@@ -23,14 +18,25 @@ export default class BorderBay extends Component {
         <div className="Country_Border-Slider">
           <p className="Slider-Tag">Level of Stay</p>
           <Nouislider
+            start={[0]}
+            pips={{ mode: 'count', values: 5 }}
+            clickablePips
+            range={{
+              min: 0,
+              max: 5
+            }}
+          />
+
+          {/* <Nouislider
+            key={item}
+            id={item}
             start={0}
             step={1}
             range={{ min: 0, max: 4 }}
-            pip={{ mode: 'count', values: marks }}
+            pip={{ mode: 'count', values: 5 }}
             clickablePips={true}
-            connect={true}
             tooltip={[{ 0: 'Wishlist', 2: 'Visited' }]}
-          />
+          /> */}
         </div>
       </div>
     );
