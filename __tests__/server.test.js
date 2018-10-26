@@ -156,7 +156,7 @@ describe('User', () => {
 
         expect(response.status).toBe(200);
         expect(response.body.user).toBeDefined();
-        expect(response.body.user._id).toBeDefined();
+        expect(response.body.user.id).toBeDefined();
         expect(response.body.user.username).toBeDefined();
         expect(response.body.jwt_token).toBeDefined();
       });
