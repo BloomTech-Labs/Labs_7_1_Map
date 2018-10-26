@@ -28,22 +28,29 @@ const UserSchema = new Schema(
     },
     firstname: String,
     lastname: String,
-    countries: {
-      country_code: String,
-      name: String,
-      postion: {
-        longitude: Number,
-        latitude: Number
-      },
-      status: String,
-      notes: String
-    },
-    social: [
+    countries: [
       {
-        provider: String,
-        id: String
+        country_code: {
+          type: String,
+          required: true
+        },
+        name: {
+          type: String,
+          required: true
+        },
+        status_code: {
+          type: Number,
+          default: 0
+        }, //0, 1, 2, 3, 4
+        notes: String
       }
     ]
+    // social: [
+    //   {
+    //     provider: String,
+    //     id: String
+    //   }
+    // ]
   },
   {
     timestamps: true
