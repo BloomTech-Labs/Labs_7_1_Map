@@ -52,6 +52,16 @@ export class AppContextProvider extends Component {
     console.log('setting state', this.state.userPosition)
   }
 
+  //since we have two updaters it would probably make sense to refactor them into 
+  //1 general one in the future
+  handleUpdateCurrentCountry = (name, code) => {
+    this.setState({
+      currentCountry: {
+        name: name, code: code
+      }
+    });
+  }
+
   handleSignIn = async e => {
     e.preventDefault();
     const body = {
