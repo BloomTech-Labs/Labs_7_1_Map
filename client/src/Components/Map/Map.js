@@ -92,8 +92,10 @@ class MapComponent extends Component {
   hasGeolocation = cb => {
     navigator.geolocation.getCurrentPosition(position => {
       cb(position.coords.longitude, position.coords.latitude);
+
       const country = wc([this.state.lng, this.state.lat]);
       const info = world.countries[country];
+
       this.setState({
         lat: position.coords.latitude,
         lng: position.coords.longitude,
