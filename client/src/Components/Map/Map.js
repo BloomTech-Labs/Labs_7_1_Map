@@ -135,7 +135,7 @@ class MapComponent extends Component {
     // Get the country code of the location clicked on
     const country = wc([e.latlng.lng, e.latlng.lat]);
     const info = world.countries[country] || {
-      name: 'at the coean',
+      name: 'at the oc"ean',
       emoji: ''
     };
 
