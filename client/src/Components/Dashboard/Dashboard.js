@@ -30,7 +30,14 @@ class Dashboard extends Component {
       <div className="Dashboard">
         <Nav toggleSettings={this.toggleSettings} />
         <Legend />
-        <SearchCountry handleSearchSubmit={this.handleSearchSubmit} />
+        <AppContextConsumer>
+          {value => (
+            <SearchCountry
+              updateCurrentCountry={value.updateCurrentCountry}
+              handleSearchSubmit={this.handleSearchSubmit}
+            />
+          )}
+        </AppContextConsumer>
         <AppContextConsumer>
           {value => {
             return (
@@ -39,6 +46,7 @@ class Dashboard extends Component {
                 updateUserPosition={value.updateUserPosition}
                 searchCountry={this.state.searchCountry}
                 updateCurrentCountry={value.updateCurrentCountry}
+                currentCountry={value.AppState.currentCountry}
               />
             );
           }}

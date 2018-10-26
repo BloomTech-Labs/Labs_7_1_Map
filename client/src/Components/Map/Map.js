@@ -5,8 +5,12 @@ import './Map.css';
 import Card from '../CountryCard/Card';
 import geojson from './countries.geo.json';
 import wc from 'which-country';
-import world from 'country-data';
+import {
+  getCountryShapeFromCode,
+  getCountryInfoFromCode
+} from '../../utils.js';
 
+/* LEAFLET MAP SETUP START */
 // Marker (workaround for an issue with react-leaflet)
 //TODO: Change to custom icon
 const markerIcon = L.icon({
@@ -37,119 +41,72 @@ const bounds = L.latLngBounds(corner1, corner2);
 // Styles for the highlight of a clicked on country
 const styleClicked = {
   stroke: true,
-  opacity: 0.6,
+  color: 'gold',
+  opacity: 1,
   fill: true,
-  fillColor: '#FF3333',
-  fillOpacity: 0.2
+  fillColor: 'gold',
+  fillOpacity: 0
 };
 
 // Styles for the highlight of a hovered over country
 const styleHover = {
   stroke: false,
   fill: true,
-  fillColor: '#3333FF',
-  fillOpacity: 0.2
+  fillColor: 'gold',
+  fillOpacity: 0.3
 };
+/* LEAFLET MAP SETUP END */
 
-// Helper function that takes in a country code and returns a geoJSON object
-function getCountryShape(countryCode) {
-  return geojson.features.find(feature => feature.id === countryCode);
-}
-
-// Helper function to get country code from string i.e. 'canada' -> 'CAN'
-function getCountryCode(countryString) {
-  const countryFeature = geojson.features.find(
-    feature =>
-      feature.properties.name.toLowerCase() === countryString.toLowerCase()
-  );
-  if (!countryFeature) console.log('There is no country by that name');
-  return countryFeature ? countryFeature.id : null;
-}
-
-// Main Map component
+/* MAIN MAP COMPONENT START */
 class MapComponent extends Component {
   state = {
     lat: 45.512794,
     lng: -122.679565,
     zoom: 2,
     mapTile: mapTilesUrls.dark,
-    countryHover: null,
-    countryClicked: null, // Change to countrySelected perhaps (since it's being set when a country is searched)?
-    countryInfo: {}
+    countryHover: null
   };
 
   //start--handling user location
   //checks if browser has ability to geolocate
   componentDidMount = () => {
     if ('geolocation' in navigator) {
-      this.hasGeolocation(this.providerUpdate); //geolocation is in the browser
+      this.hasGeolocation(); //geolocation is in the browser
     } else {
-      this.noGeolocation(); //browser is not compatible
+      console.log('No geolocation!');
     }
   };
 
-  //calls getcurrentposition, to find where user is located, sets state
-  hasGeolocation = cb => {
+  // Calls getCurrentPosition to find where the user is located and sets state
+  hasGeolocation = () => {
+    // Uses the browsers built-in method to get a user's location
     navigator.geolocation.getCurrentPosition(position => {
-      cb(position.coords.longitude, position.coords.latitude);
-      //this basically gets position of client and runs this.providerUpdate to update context
+      this.props.updateUserPosition(
+        position.coords.longitude,
+        position.coords.latitude
+      );
 
-      const country = wc([this.state.lng, this.state.lat]);
-      const info = world.countries[country];
-
+      // This should eventually get replaced (pull the marker's location from AppContext instead)
       this.setState({
         lat: position.coords.latitude,
         lng: position.coords.longitude,
-        zoom: 2,
-        countryClicked: country,
-        countryInfo: info
+        zoom: 2
       });
     });
   };
-
-  noGeolocation = () => {
-    console.log('no geolocation!');
-  };
-
-  providerUpdate = (long, lat) => {
-    this.props.updateUserPosition(long, lat);
-  };
-
   //end--handling-userlocation
 
-  // Used to check when a new search was made from SearchCountry in Dashboard
-  // TODO:
-  // Refactor to avoid using componentWillReceiveProps (deprecated).
-  // Will probably need to use either componentDidUpdate or getDerivedStateFromProps
-  async componentWillReceiveProps() {
-    // For some weird reason country search is only registered after second form submission unless this async console.log is here
-    await console.log('PROPS RECEIVED: ', this.props);
-    const countrySearch = this.props.searchCountry;
-
-    if (countrySearch) {
-      const countryCode = getCountryCode(countrySearch);
-      if (countryCode) this.setState({ countryClicked: countryCode });
-    }
-  }
-
-  //updates context
-  updateCurrentCountry = (name, code) => {
-    this.props.updateCurrentCountry(name, code);
-  };
-
-  handleClick = e => {
+  handleClick = async e => {
     // Get the country code of the location clicked on
-    const country = wc([e.latlng.lng, e.latlng.lat]);
-    const info = world.countries[country] || {
-      name: 'at the ocean',
-      emoji: ''
-    };
-    this.setState({ ...e.latlng, countryClicked: country, countryInfo: info });
-    //below we call updateCurrentCountry to update the state of the context to show the current country clicked
-    this.updateCurrentCountry(
-      this.state.countryClicked,
-      this.state.countryInfo.alpha3
-    );
+    const countryCode = await wc([e.latlng.lng, e.latlng.lat]);
+    const countryInfo = getCountryInfoFromCode(countryCode);
+
+    // This can be removed once popup is not needed since
+    // the lat/lng in local state isn't required by anything else.
+    this.setState({ ...e.latlng });
+
+    // Update AppContext with the info of the currently selected country
+    this.props.updateCurrentCountry(countryCode, countryInfo);
   };
 
   handleMove = e => {
@@ -169,7 +126,6 @@ class MapComponent extends Component {
 
   render() {
     const position = [this.state.lat, this.state.lng];
-    console.log(this.state.countryInfo);
     return (
       <Map
         center={position}
@@ -189,17 +145,18 @@ class MapComponent extends Component {
 
         {/* Layers that will be active when a country is CLICKED */}
         {/* Produces a layer for each country in the geojson file */}
-        {geojson.features.map(
-          feature =>
-            // Layer is only rendered if the clicked on country ID is the same
-            this.state.countryClicked === feature.id && (
-              <GeoJSON
-                key={feature.id}
-                data={getCountryShape(feature.id)}
-                style={styleClicked}
-              />
-            )
-        )}
+        {this.props.currentCountry &&
+          geojson.features.map(
+            feature =>
+              // Layer is only rendered if the clicked on country ID is the same
+              this.props.currentCountry.code === feature.id && (
+                <GeoJSON
+                  key={feature.id}
+                  data={getCountryShapeFromCode(feature.id)}
+                  style={styleClicked}
+                />
+              )
+          )}
 
         {/* Layers that will be active when a country is HOVERED */}
         {/* Produces a layer for each country in the geojson file */}
@@ -209,7 +166,7 @@ class MapComponent extends Component {
             this.state.countryHover === feature.id && (
               <GeoJSON
                 key={feature.id}
-                data={getCountryShape(feature.id)}
+                data={getCountryShapeFromCode(feature.id)}
                 style={styleHover}
               />
             )
@@ -222,12 +179,15 @@ class MapComponent extends Component {
           opacity={0.8}
         >
           <Popup className="Map_Component-Card">
-            <Card info={this.state.countryInfo} />
+            {this.props.currentCountry && (
+              <Card info={this.props.currentCountry.info} />
+            )}
           </Popup>
         </Marker>
       </Map>
     );
   }
-} // MapComponent
+}
+/* MAIN MAP COMPONENT END */
 
 export default MapComponent;

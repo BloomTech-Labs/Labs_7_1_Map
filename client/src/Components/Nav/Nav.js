@@ -18,7 +18,6 @@ const Nav = props => {
           <div className="Nav__title">Scratch-N-Map</div>
 
           <div className="Nav__Center">
-            {/* <div className="MenuItem Center__friends">Friends</div> */}
             <select
               name="My Travels"
               id=""
