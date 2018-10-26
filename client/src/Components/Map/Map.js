@@ -6,6 +6,7 @@ import Card from '../CountryCard/Card';
 import geojson from './countries.geo.json';
 import wc from 'which-country';
 import world from 'country-data';
+import { getCountryCode, getCountryShape } from '../../utils.js';
 
 // Marker (workaround for an issue with react-leaflet)
 //TODO: Change to custom icon
@@ -51,21 +52,6 @@ const styleHover = {
   fillColor: 'gold',
   fillOpacity: 0.3
 };
-
-// Helper function that takes in a country code and returns a geoJSON object
-function getCountryShape(countryCode) {
-  return geojson.features.find(feature => feature.id === countryCode);
-}
-
-// Helper function to get country code from string i.e. 'canada' -> 'CAN'
-function getCountryCode(countryString) {
-  const countryFeature = geojson.features.find(
-    feature =>
-      feature.properties.name.toLowerCase() === countryString.toLowerCase()
-  );
-  if (!countryFeature) console.log('There is no country by that name');
-  return countryFeature ? countryFeature.id : null;
-}
 
 // Main Map component
 class MapComponent extends Component {
