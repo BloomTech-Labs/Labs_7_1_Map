@@ -7,11 +7,13 @@ import FriendList from '../Friends/FriendList';
 
 import './Card.css';
 
-const Card = () => {
+const Card = props => {
+  const data = props.getCountryShape;
+
   return (
     <div className="Card">
       <CardHeader />
-      <BorderBay />
+      <BorderBay data={data} />
       <AppContextConsumer>
         {value => {
           return <Note user={value.AppState.user} />;

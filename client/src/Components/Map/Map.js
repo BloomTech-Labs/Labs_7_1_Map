@@ -135,7 +135,7 @@ class MapComponent extends Component {
           opacity={0.8}
         >
           <Popup className="Map_Component-Card">
-            <Card />
+            <Card data={getCountryShape}/>
           </Popup>
         </Marker>
       </Map>

@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Slider from 'rc-slider/lib/Slider';
-import geojson from '../Map/countries.geo.json';
 
 import './BorderBay.css';
 import 'rc-slider/assets/index.css';
@@ -37,19 +36,10 @@ function log(value) {
   console.log(value); //eslint-disable-line
 }
 
-export default class BorderBay extends Component {
-  state = {
-    border: geojson.features
-  };
-
-  getBorderById(border) {
-    this.setState({ border: border.id.geometry });
-  }
-
-  render() {
+const BorderBay = props => {
     return (
       <div className="Country_Border">
-        <p className="Country_Border-Border">{''}</p>
+        <div className="Country_Border-Border">{props.getCountryShape}</div>
         <div className="Country_Border-Slider">
           <p className="Slider-Tag">Level of Stay</p>
           <Slider
@@ -64,5 +54,6 @@ export default class BorderBay extends Component {
         </div>
       </div>
     );
-  }
 }
+
+export default BorderBay;
