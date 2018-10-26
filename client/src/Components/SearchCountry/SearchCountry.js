@@ -1,16 +1,6 @@
 import React, { Component } from 'react';
-import geojson from '../Map/countries.geo.json';
 import world from 'country-data';
-
-// Helper function to get country code from string i.e. 'canada' -> 'CAN'
-function getCountryCode(countryString) {
-  const countryFeature = geojson.features.find(
-    feature =>
-      feature.properties.name.toLowerCase() === countryString.toLowerCase()
-  );
-  if (!countryFeature) console.log('There is no country by that name');
-  return countryFeature ? countryFeature.id : null;
-}
+import { getCountryCode } from '../../utils.js';
 
 class SearchCountry extends Component {
   state = {
@@ -25,10 +15,8 @@ class SearchCountry extends Component {
   handleSearchSubmit = e => {
     e.preventDefault();
     const countryCode = getCountryCode(e.target.search.value);
-    const countryInfo = world.countries[countryCode]
-    console.log(countryInfo)
-    // this.setState({ searchCountry: searchQuery });
-    this.props.updateCurrentCountry(countryInfo.name, countryCode)
+    const countryInfo = world.countries[countryCode];
+    this.props.updateCurrentCountry(countryInfo.name, countryCode);
   };
 
   render() {

@@ -48,8 +48,8 @@ const styleClicked = {
 const styleHover = {
   stroke: false,
   fill: true,
-  fillColor: '#777777',
-  fillOpacity: 0.2
+  fillColor: 'gold',
+  fillOpacity: 0.3
 };
 
 // Helper function that takes in a country code and returns a geoJSON object
@@ -115,23 +115,7 @@ class MapComponent extends Component {
   providerUpdate = (long, lat) => {
     this.props.updateUserPosition(long, lat);
   };
-
   //end--handling-userlocation
-
-  // Used to check when a new search was made from SearchCountry in Dashboard
-  // TODO:
-  // Refactor to avoid using componentWillReceiveProps (deprecated).
-  // Will probably need to use either componentDidUpdate or getDerivedStateFromProps
-  // async componentWillReceiveProps() {
-  //   // For some weird reason country search is only registered after second form submission unless this async console.log is here
-  //   await console.log('PROPS RECEIVED: ', this.props);
-  //   const countrySearch = this.props.searchCountry;
-
-  //   if (countrySearch) {
-  //     const countryCode = getCountryCode(countrySearch);
-  //     if (countryCode) this.setState({ countryClicked: countryCode });
-  //   }
-  // }
 
   //updates context
   updateCurrentCountry = (name, code) => {
@@ -139,18 +123,16 @@ class MapComponent extends Component {
   };
 
   handleClick = async e => {
-    console.log(this.props.currentCountry.code)
     // Get the country code of the location clicked on
     const countryCode = await wc([e.latlng.lng, e.latlng.lat]);
-    console.log(countryCode)
     const info = world.countries[countryCode] || {
       name: 'at the ocean',
       emoji: ''
     };
+
     this.setState({ ...e.latlng, countryClicked: countryCode, countryInfo: info });
     //below we call updateCurrentCountry to update the state of the context to show the current country clicked
     this.updateCurrentCountry(
-      // this.state.countryClicked,
       this.state.countryInfo.name,
       countryCode
     );
@@ -195,7 +177,6 @@ class MapComponent extends Component {
         {geojson.features.map(
           feature =>
             // Layer is only rendered if the clicked on country ID is the same
-          // this.state.countryClicked === feature.id && (
             this.props.currentCountry.code === feature.id && (
               <GeoJSON
                 key={feature.id}
