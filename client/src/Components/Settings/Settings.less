@@ -10,12 +10,24 @@
   position: fixed;
   z-index: 11;
   top: 100px;
-  right: -300px;
-  animation: Settings 0.5s forwards;
+  // right: 0px;
+  animation: Settings 0.5s all;
+  // transition: transform 500ms ease-in-out;
+  transition-property: all;
+  transition-duration: 0.8s;
+  // transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 
-  @keyframes Settings {
-    100% {
-      right: 0;
-    }
-  }
+  // @keyframes Settings {
+  //   100% {
+  //     right: 0;
+  //   }
+  // }
+}
+
+.Settings-closed {
+  right: -300px;
+}
+
+.Settings-open {
+  right: 0px;
 }

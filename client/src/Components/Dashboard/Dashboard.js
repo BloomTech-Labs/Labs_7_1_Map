@@ -28,22 +28,26 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="Dashboard">
-        <Nav 
-          toggleSettings={this.toggleSettings}
-        />
+        <Nav toggleSettings={this.toggleSettings} />
         <Legend />
-        <SearchCountry
-          handleSearchSubmit={this.handleSearchSubmit}
-        />
+        <SearchCountry handleSearchSubmit={this.handleSearchSubmit} />
         <AppContextConsumer>
-        {value => {
-          return <Map userPosition={value.AppState.UserPosition} update={value.updateUserPosition} searchCountry={this.state.searchCountry} />;
-        }}
+          {value => {
+            return (
+              <Map
+                userPosition={value.AppState.UserPosition}
+                updateUserPosition={value.updateUserPosition}
+                searchCountry={this.state.searchCountry}
+                updateCurrentCountry={value.updateCurrentCountry}
+              />
+            );
+          }}
         </AppContextConsumer>
-      
-        {this.state.showingSettings && (
-          <Settings onClick={this.toggleSettings} />
-        )}
+
+        <Settings
+          onClick={this.toggleSettings}
+          showingSettings={this.state.showingSettings}
+        />
       </div>
     );
   }
