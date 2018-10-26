@@ -37,9 +37,9 @@ export class AppContextProvider extends Component {
   };
   async componentDidMount() {
     const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
 
-    if (token) {
-      const user = JSON.parse(localStorage.getItem('user'));
+    if (token && user) {
       const requestOptions = { headers: { Authorization: `Bearer ${token}` } };
 
       // get the user
@@ -56,6 +56,8 @@ export class AppContextProvider extends Component {
       } else {
         clearLocalstorage();
       }
+    } else {
+      clearLocalstorage();
     }
   }
 
@@ -67,7 +69,6 @@ export class AppContextProvider extends Component {
         latitude: lat
       }
     });
-
   };
 
   //to update state: currentCountry (last clicked), called in Map.js
@@ -78,7 +79,6 @@ export class AppContextProvider extends Component {
         code: code
       }
     });
-
   };
 
   handleSignIn = async e => {
