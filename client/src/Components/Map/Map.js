@@ -152,6 +152,11 @@ class MapComponent extends Component {
     }
   };
 
+  handleZoomend = e => {
+    const newZoomLevel = e.target._zoom;
+    this.setState({ zoom: newZoomLevel });
+  };
+
   render() {
     const position = [this.state.lat, this.state.lng];
 
@@ -162,10 +167,11 @@ class MapComponent extends Component {
         zoom={this.state.zoom}
         className="MapComponent"
         minZoom={2}
-        maxZoom={10}
+        maxZoom={12}
         maxBounds={bounds}
         onClick={this.handleClick}
         onMouseMove={this.handleMove}
+        onZoomend={this.handleZoomend}
       >
         <TileLayer
           attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
