@@ -5,6 +5,11 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 // new context
 const AppContext = React.createContext();
+const clearLocalstorage = () => {
+  // delete the tokens from the browser
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+};
 
 // provider component
 export class AppContextProvider extends Component {
@@ -30,14 +35,29 @@ export class AppContextProvider extends Component {
       { name: 'wootie' }
     ]
   };
-  componentDidMount() {
+  async componentDidMount() {
     const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
 
-    // TODO verify token OR get_user pick a strategy
-    if (token) {
-      // get use
-      //this.setState({ authenticated: true, user: response.data.user });
-      this.setState({ authenticated: true });
+    if (token && user) {
+      const requestOptions = { headers: { Authorization: `Bearer ${token}` } };
+
+      // get the user
+      const response = await axios.get(
+        `${BACKEND_URL}/get_user/${user.id}`,
+        requestOptions
+      );
+
+      if (response.status === 200) {
+        this.setState({
+          authenticated: true,
+          user: response.data.user
+        });
+      } else {
+        clearLocalstorage();
+      }
+    } else {
+      clearLocalstorage();
     }
   }
 
@@ -65,13 +85,16 @@ export class AppContextProvider extends Component {
       password: e.target.password.value
     };
     const response = await axios.post(`${BACKEND_URL}/login`, body);
+    const user = JSON.stringify(response.data.user);
+
     localStorage.setItem('token', response.data.jwt_token);
+    localStorage.setItem('user', user);
     this.setState({ authenticated: true, user: response.data.user });
   };
 
   handleSignOut = () => {
     this.setState({ authenticated: false, user: {} });
-    localStorage.removeItem('token');
+    clearLocalstorage();
   };
 
   handleSignUp = async e => {
@@ -85,7 +108,9 @@ export class AppContextProvider extends Component {
     };
 
     const response = await axios.post(`${BACKEND_URL}/register`, body);
+    const user = JSON.stringify(response.data.user);
     localStorage.setItem('token', response.data.jwt_token);
+    localStorage.setItem('user', user);
     this.setState({ authenticated: true, user: response.data.user });
   };
 
