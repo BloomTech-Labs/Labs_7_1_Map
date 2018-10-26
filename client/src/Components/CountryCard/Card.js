@@ -9,10 +9,11 @@ import './Card.css';
 
 const Card = props => {
   const data = props.getCountryShape;
+  const { name, emoji } = props.info;
 
   return (
     <div className="Card">
-      <CardHeader />
+      <CardHeader name={name} flag={emoji} />
       <BorderBay data={data} />
       <AppContextConsumer>
         {value => {

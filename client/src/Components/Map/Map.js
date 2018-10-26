@@ -5,6 +5,7 @@ import './Map.css';
 import Card from '../CountryCard/Card';
 import geojson from './countries.geo.json';
 import wc from 'which-country';
+import world from 'country-data';
 
 // Marker (workaround for an issue with react-leaflet)
 //TODO: Change to custom icon
@@ -51,8 +52,18 @@ const styleHover = {
 };
 
 // Helper function that takes in a country code and returns a geoJSON object
-function getCountryShape(country) {
-  return geojson.features.find(feature => feature.id === country);
+function getCountryShape(countryCode) {
+  return geojson.features.find(feature => feature.id === countryCode);
+}
+
+// Helper function to get country code from string i.e. 'canada' -> 'CAN'
+function getCountryCode(countryString) {
+  const countryFeature = geojson.features.find(
+    feature =>
+      feature.properties.name.toLowerCase() === countryString.toLowerCase()
+  );
+  if (!countryFeature) console.log('There is no country by that name');
+  return countryFeature ? countryFeature.id : null;
 }
 
 // Main Map component
@@ -60,17 +71,75 @@ class MapComponent extends Component {
   state = {
     lat: 45.512794,
     lng: -122.679565,
-    zoom: 5,
-    mapTile: mapTilesUrls.toner,
+    zoom: 2,
+    mapTile: mapTilesUrls.dark,
     countryHover: null,
-    countryClicked: null
+    countryClicked: null, // Change to countrySelected perhaps (since it's being set when a country is searched)?
+    countryInfo: {}
   };
+
+  //start--handling user location
+  //checks if browser has ability to geolocate
+  componentDidMount = () => {
+    if ('geolocation' in navigator) {
+      this.hasGeolocation(this.providerUpdate);
+    } else {
+      this.noGeolocation();
+    }
+  };
+
+  //calls getcurrentposition, to find where user is located, sets state
+  hasGeolocation = cb => {
+    navigator.geolocation.getCurrentPosition(position => {
+      cb(position.coords.longitude, position.coords.latitude);
+
+      const country = wc([this.state.lng, this.state.lat]);
+      const info = world.countries[country];
+
+      this.setState({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+        zoom: 2,
+        countryClicked: country,
+        countryInfo: info
+      });
+    });
+  };
+
+  noGeolocation = () => {
+    console.log('no geolocation!');
+  };
+
+  providerUpdate = (long, lat) => {
+    this.props.update(long, lat);
+  };
+
+  //end--handling-userlocation
+
+  // Used to check when a new search was made from SearchCountry in Dashboard
+  // TODO:
+  // Refactor to avoid using componentWillReceiveProps (deprecated).
+  // Will probably need to use either componentDidUpdate or getDerivedStateFromProps
+  async componentWillReceiveProps() {
+    // For some weird reason country search is only registered after second form submission unless this async console.log is here
+    await console.log('PROPS RECEIVED: ', this.props);
+    const countrySearch = this.props.searchCountry;
+
+    if (countrySearch) {
+      const countryCode = getCountryCode(countrySearch);
+      if (countryCode) this.setState({ countryClicked: countryCode });
+    }
+  }
 
   handleClick = e => {
     // Get the country code of the location clicked on
     const country = wc([e.latlng.lng, e.latlng.lat]);
+    const info = world.countries[country] || {
+      name: 'at the ocean',
+      emoji: ''
+    };
 
-    this.setState({ ...e.latlng, countryClicked: country });
+    this.setState({ ...e.latlng, countryClicked: country, countryInfo: info });
   };
 
   handleMove = e => {
@@ -78,18 +147,21 @@ class MapComponent extends Component {
     const country = wc([e.latlng.lng, e.latlng.lat]);
 
     // Only set state if user mouses over a different country
-    if (this.state.countryHover !== country)
+    if (this.state.countryHover !== country) {
       this.setState({ countryHover: country });
+    }
   };
 
   render() {
     const position = [this.state.lat, this.state.lng];
+
+    console.log(this.state.countryInfo);
     return (
       <Map
         center={position}
         zoom={this.state.zoom}
         className="MapComponent"
-        minZoom={1.5}
+        minZoom={2}
         maxZoom={10}
         maxBounds={bounds}
         onClick={this.handleClick}
@@ -135,7 +207,7 @@ class MapComponent extends Component {
           opacity={0.8}
         >
           <Popup className="Map_Component-Card">
-            <Card data={getCountryShape}/>
+            <Card data={getCountryShape} info={this.state.countryInfo} />
           </Popup>
         </Marker>
       </Map>

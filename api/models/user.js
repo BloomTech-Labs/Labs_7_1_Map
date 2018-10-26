@@ -28,18 +28,29 @@ const UserSchema = new Schema(
     },
     firstname: String,
     lastname: String,
-    social: [
+    countries: [
       {
-        provider: String,
-        id: String
-      }
-    ],
-    notes: [
-      {
-        type: ObjectIdSchema,
-        ref: 'Note'
+        country_code: {
+          type: String,
+          required: true
+        },
+        name: {
+          type: String,
+          required: true
+        },
+        status_code: {
+          type: Number,
+          default: 0
+        }, //0, 1, 2, 3, 4
+        notes: String
       }
     ]
+    // social: [
+    //   {
+    //     provider: String,
+    //     id: String
+    //   }
+    // ]
   },
   {
     timestamps: true
