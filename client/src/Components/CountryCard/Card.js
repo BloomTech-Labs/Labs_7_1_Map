@@ -8,7 +8,6 @@ import FriendList from '../Friends/FriendList';
 import './Card.css';
 
 const Card = ({ info: { name, emoji } }) => {
-  console.log('HDHDHD', name);
   return (
     <div className="Card">
       <CardHeader name={name} flag={emoji} />
@@ -20,7 +19,7 @@ const Card = ({ info: { name, emoji } }) => {
       </AppContextConsumer>
       <AppContextConsumer>
         {value => {
-          return <FriendList friends={value.AppState.friends} />;
+          return <FriendList user={value.AppState.user} />;
         }}
       </AppContextConsumer>
     </div>
