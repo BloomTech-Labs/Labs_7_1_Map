@@ -23,6 +23,9 @@ const corsOptions = {
 
 server.use(cors(corsOptions));
 
+// Serve up static client files (in `/client/build` folder) at root endpoint
+server.use(express.static(path.join(__dirname, 'client/build')));
+
 // pass the server to the routes
 routes(server);
 
