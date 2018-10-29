@@ -1,8 +1,9 @@
 # Scratch-N-Map
 
 (Lambda Labs 7.1)
+ - Live site: https://scratch-n-map.herokuapp.com/ 
 
-Wireframes: https://balsamiq.cloud/snv27r3/pdmo5as/rFFE9
+- Wireframes: https://balsamiq.cloud/snv27r3/pdmo5as/rFFE9
 
 ## Code style
 
@@ -81,7 +82,8 @@ Project Manager
 
 - Punit Rawal
 
-## AppContext.js usage
+## Context API Usage
+### AppContext.js usage
 
 The React Context API is initiated here and the provider and consumer are export
 
@@ -108,8 +110,7 @@ export class AppContextProvider extends Component {
 export const AppContextConsumer = AppContext.Consumer;
 ```
 
-## index.js
-
+### index.js
 The Provider is hooked up here
 
 ```js
@@ -130,8 +131,7 @@ ReactDOM.render(
 );
 ```
 
-## Example of a component using the consumer
-
+### Example of a component using the consumer 
 The component using a consumer
 
 ```js
@@ -158,3 +158,21 @@ class App extends Component {
 
 export default App;
 ```
+
+## Deployment
+Front and back end is deployed on Heroku. Deploying is as simple as running `git push heroku master`, assuming you are logged in with the right credentials.
+
+Steps:
+1. Login to Heroku with the command `heroku login` while in the project folder. You should then be prompted to enter the login credentials.
+
+1. Make sure you have the master branch checked out (`git checkout master`)
+
+1. Make sure the master branch is up-to-date by running `git pull` and ensure the branch runs fine locally and passes all tests
+
+1. Deploy the master branch by running `git push heroku master`
+
+1. If you need to deploy a branch other than the master, you can do so with the command `git push heroku <branch-name>:master`. 
+E.g. if you want to deploy a branch named 'deployment' to heroku:
+  ```shell
+  $ git push heroku deployment:master
+  ```
