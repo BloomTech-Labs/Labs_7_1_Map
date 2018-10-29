@@ -9,7 +9,7 @@ const Legend = () => {
       <AppContextConsumer>
         {value => (
           <React.Fragment>
-            {value.AppState.countryPanelIsOpen ? (
+            {value && value.AppState.countryPanelIsOpen ? (
               <CountryPanel />
             ) : (
               <ul>
