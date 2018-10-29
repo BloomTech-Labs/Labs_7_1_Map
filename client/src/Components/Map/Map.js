@@ -60,41 +60,10 @@ const styleHover = {
 /* MAIN MAP COMPONENT START */
 class MapComponent extends Component {
   state = {
-    lat: 45.512794,
-    lng: -122.679565,
     zoom: 2,
     mapTile: mapTilesUrls.dark,
     countryHover: null
   };
-
-  //start--handling user location
-  //checks if browser has ability to geolocate
-  componentDidMount = () => {
-    if ('geolocation' in navigator) {
-      this.hasGeolocation(); //geolocation is in the browser
-    } else {
-      console.log('No geolocation!');
-    }
-  };
-
-  // Calls getCurrentPosition to find where the user is located and sets state
-  hasGeolocation = () => {
-    // Uses the browsers built-in method to get a user's location
-    navigator.geolocation.getCurrentPosition(position => {
-      this.props.updateUserPosition(
-        position.coords.longitude,
-        position.coords.latitude
-      );
-
-      // This should eventually get replaced (pull the marker's location from AppContext instead)
-      this.setState({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-        zoom: 2
-      });
-    });
-  };
-  //end--handling-userlocation
 
   handleClick = async e => {
     // Get the country code of the location clicked on
@@ -125,7 +94,9 @@ class MapComponent extends Component {
   };
 
   render() {
-    const position = [this.state.lat, this.state.lng];
+    const position = this.props.userPosition
+      ? [this.props.userPosition.lat, this.props.userPosition.lng]
+      : [0, 0];
     return (
       <Map
         center={position}
@@ -171,19 +142,20 @@ class MapComponent extends Component {
               />
             )
         )}
-
-        <Marker
-          position={position}
-          icon={markerIcon}
-          draggable={true}
-          opacity={0.8}
-        >
-          <Popup className="Map_Component-Card">
-            {this.props.currentCountry && (
-              <Card info={this.props.currentCountry.info} />
-            )}
-          </Popup>
-        </Marker>
+        {this.props.userPosition && (
+          <Marker
+            position={position}
+            icon={markerIcon}
+            opacity={0.8}
+            className="userPosition"
+          >
+            <Popup className="Map_Component-Card">
+              {this.props.currentCountry && (
+                <Card info={this.props.currentCountry.info} />
+              )}
+            </Popup>
+          </Marker>
+        )}
       </Map>
     );
   }
