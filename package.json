@@ -51,5 +51,9 @@
       "<rootDir>/node_modules",
       "<rootDir>/client"
     ]
+  },
+  "engines": {
+    "node": "10.12.x",
+    "npm": "6.4.x"
   }
 }
