@@ -27,15 +27,8 @@ const protected_route = passport.authenticate('jwt', { session: false });
 // export the routes
 module.exports = server => {
   // General Route
-  server.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname + '/utils/landing.html'));
-  });
-
-  // API Route
   server.get('/api', (req, res) => {
-    res.status(200).json({
-      msg: 'API is running....'
-    });
+    res.sendFile(path.join(__dirname + '/utils/landing.html'));
   });
 
   // User Login Routes
