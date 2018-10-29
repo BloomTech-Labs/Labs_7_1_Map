@@ -10,6 +10,7 @@ const LandingPage = () => {
   return (
     <div className="LandingPage">
       <img src={Logo} alt="logo" className="LandingPage__Logo" />
+
       <h3 className="LandingPage__Tagline">
         Scratch the Itch to Track Your Trips
       </h3>
