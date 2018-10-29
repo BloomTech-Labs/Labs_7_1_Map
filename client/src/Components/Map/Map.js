@@ -99,6 +99,7 @@ class MapComponent extends Component {
   handleClick = async e => {
     // Get the country code of the location clicked on
     const countryCode = await wc([e.latlng.lng, e.latlng.lat]);
+
     const countryInfo = getCountryInfoFromCode(countryCode);
 
     // This can be removed once popup is not needed since
@@ -179,9 +180,7 @@ class MapComponent extends Component {
           opacity={0.8}
         >
           <Popup className="Map_Component-Card">
-            {this.props.currentCountry && (
-              <Card info={this.props.currentCountry.info} />
-            )}
+            {this.props.currentCountry && <Card />}
           </Popup>
         </Marker>
       </Map>

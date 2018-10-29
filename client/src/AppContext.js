@@ -25,6 +25,7 @@ export class AppContextProvider extends Component {
       code: '',
       info: {}
     },
+    countryPanelIsOpen: false,
     friends: [
       { name: 'nalee' },
       { name: 'jon' },
@@ -77,13 +78,19 @@ export class AppContextProvider extends Component {
       }
     });
   };
+  updateCountryPanel() {
+    console.log('HELLO WOrld', this.state.currentCountry);
+  }
 
   //to update state: currentCountry (last clicked), called in Map.js
   handleUpdateCurrentCountry = (code, info) => {
-    console.log('EDWARDRDRDRDz');
     this.setState({
-      currentCountry: { code, info }
+      currentCountry: { code, info },
+      countryPanelIsOpen: true
     });
+
+    // update the panel with current country
+    this.updateCountryPanel();
   };
 
   handleSignIn = async e => {
