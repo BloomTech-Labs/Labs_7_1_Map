@@ -18,10 +18,10 @@ export class AppContextProvider extends Component {
     },
     currentCountry: {
       code: '',
-      info: {},
-    countryPanelIsOpen: false,
-
-  }};
+      info: {}
+    },
+    countryPanelIsOpen: false
+  };
 
   async componentDidMount() {
     // Check if a user is already logged in
