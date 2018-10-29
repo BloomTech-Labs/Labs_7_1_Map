@@ -36,28 +36,35 @@ export class AppContextProvider extends Component {
     ]
   };
   async componentDidMount() {
-    const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user'));
+    try {
+      const token = localStorage.getItem('token');
+      const user = await JSON.parse(localStorage.getItem('user'));
 
-    if (token && user) {
-      const requestOptions = { headers: { Authorization: `Bearer ${token}` } };
+      if (token && user) {
+        const requestOptions = {
+          headers: { Authorization: `Bearer ${token}` }
+        };
 
-      // get the user
-      const response = await axios.get(
-        `${BACKEND_URL}/get_user/${user.id}`,
-        requestOptions
-      );
+        // get the user
+        const response = await axios.get(
+          `${BACKEND_URL}/get_user/${user.id}`,
+          requestOptions
+        );
 
-      if (response.status === 200) {
-        this.setState({
-          authenticated: true,
-          user: response.data.user
-        });
+        if (response.status === 200) {
+          this.setState({
+            authenticated: true,
+            user: response.data.user
+          });
+        } else {
+          clearLocalstorage(); // response was not 200
+        }
       } else {
-        clearLocalstorage();
+        clearLocalstorage(); // token or user not in localstorage
       }
-    } else {
-      clearLocalstorage();
+    } catch (e) {
+      //failed async
+      clearLocalstorage(); // error encountered
     }
   }
 
@@ -73,6 +80,7 @@ export class AppContextProvider extends Component {
 
   //to update state: currentCountry (last clicked), called in Map.js
   handleUpdateCurrentCountry = (code, info) => {
+    console.log('EDWARDRDRDRDz');
     this.setState({
       currentCountry: { code, info }
     });
@@ -84,12 +92,15 @@ export class AppContextProvider extends Component {
       username: e.target.username.value,
       password: e.target.password.value
     };
-    const response = await axios.post(`${BACKEND_URL}/login`, body);
-    const user = JSON.stringify(response.data.user);
-
-    localStorage.setItem('token', response.data.jwt_token);
-    localStorage.setItem('user', user);
-    this.setState({ authenticated: true, user: response.data.user });
+    try {
+      const response = await axios.post(`${BACKEND_URL}/login`, body);
+      const user = await JSON.stringify(response.data.user);
+      localStorage.setItem('token', response.data.jwt_token);
+      localStorage.setItem('user', user);
+      this.setState({ authenticated: true, user: response.data.user });
+    } catch (e) {
+      // failed async
+    }
   };
 
   handleSignOut = () => {
