@@ -1,6 +1,5 @@
 import React from 'react';
 import { AppContextConsumer } from '../../AppContext';
-import CardHeader from './CardHeader';
 import BorderBay from '../BorderBay/BorderBay';
 import Note from '../Note/Note';
 import FriendList from '../Friends/FriendList';
@@ -14,7 +13,10 @@ const Card = () => {
         {value => (
           <React.Fragment>
             <div className="Card_Header">
-              <h2 className="Header_Country-Name">Country name</h2>
+              <div className="Header_Country-Name">
+                <span>{value.AppState.currentCountry.info.emoji}</span>
+                <span>{value.AppState.currentCountry.info.name}</span>
+              </div>
             </div>
             <BorderBay />
             <Note user={value.AppState.user} />
