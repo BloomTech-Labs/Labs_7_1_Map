@@ -55,14 +55,12 @@ export class AppContextProvider extends Component {
       // failed async
       clearLocalstorage(); // error encountered
     }
-    if ('geolocation' in navigator) {
-      this.hasGeolocation(); //geolocation is in the browser
-    } else {
-      console.log('No geolocation!');
-    }
+
+    // Ask for user location if browser is compatible
+    if ('geolocation' in navigator) this.hasGeolocation();
   } // componentDidMount
 
-  // Calls getCurrentPosition to find where the user is located and sets state
+
   hasGeolocation = () => {
     // Browsers built-in method to get a user's location
     navigator.geolocation.getCurrentPosition(position => {

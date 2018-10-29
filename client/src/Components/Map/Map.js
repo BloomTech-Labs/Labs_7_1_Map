@@ -94,7 +94,9 @@ class MapComponent extends Component {
   };
 
   render() {
-    const position = [this.props.userPosition.lat, this.props.userPosition.lng];
+    const position = this.props.userPosition
+      ? [this.props.userPosition.lat, this.props.userPosition.lng]
+      : [0, 0];
     return (
       <Map
         center={position}
@@ -140,19 +142,20 @@ class MapComponent extends Component {
               />
             )
         )}
-
-        <Marker
-          position={position}
-          icon={markerIcon}
-          opacity={0.8}
-          className="userPosition"
-        >
-          <Popup className="Map_Component-Card">
-            {this.props.currentCountry && (
-              <Card info={this.props.currentCountry.info} />
-            )}
-          </Popup>
-        </Marker>
+        {this.props.userPosition && (
+          <Marker
+            position={position}
+            icon={markerIcon}
+            opacity={0.8}
+            className="userPosition"
+          >
+            <Popup className="Map_Component-Card">
+              {this.props.currentCountry && (
+                <Card info={this.props.currentCountry.info} />
+              )}
+            </Popup>
+          </Marker>
+        )}
       </Map>
     );
   }
