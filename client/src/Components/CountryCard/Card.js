@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { AppContextConsumer } from '../../AppContext';
 import BorderBay from '../BorderBay/BorderBay';
 import Note from '../Note/Note';
@@ -16,6 +18,11 @@ const Card = () => {
               <div className="Header_Country-Name">
                 <span>{value.AppState.currentCountry.info.emoji}</span>
                 <span>{value.AppState.currentCountry.info.name}</span>
+                <FontAwesomeIcon
+                  className="closeCountryPanelIcon"
+                  onClick={value.toggleCountryPanel}
+                  icon="times"
+                />
               </div>
             </div>
             <BorderBay />

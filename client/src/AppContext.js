@@ -132,6 +132,10 @@ export class AppContextProvider extends Component {
     this.setState({ authenticated: true, user: response.data.user });
   };
 
+  toggleCountryPanel = () => {
+    this.setState({ countryPanelIsOpen: !this.state.countryPanelIsOpen });
+  };
+
   render() {
     return (
       <AppContext.Provider
@@ -142,7 +146,8 @@ export class AppContextProvider extends Component {
           authenticated: this.state.authenticated,
           handleSignIn: this.handleSignIn,
           handleSignOut: this.handleSignOut,
-          handleSignUp: this.handleSignUp
+          handleSignUp: this.handleSignUp,
+          toggleCountryPanel: this.toggleCountryPanel
         }}
       >
         {this.props.children}

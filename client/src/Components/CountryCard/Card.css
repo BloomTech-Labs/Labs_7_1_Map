@@ -20,3 +20,11 @@
 .Card .Card_Header .Header_Country-Name span {
   margin-right: 0.5rem;
 }
+.Card .Card_Header .Header_Country-Name .closeCountryPanelIcon {
+  position: absolute;
+  right: 1.5rem;
+}
+.Card .Card_Header .Header_Country-Name .closeCountryPanelIcon:hover {
+  cursor: pointer;
+  color: red;
+}
