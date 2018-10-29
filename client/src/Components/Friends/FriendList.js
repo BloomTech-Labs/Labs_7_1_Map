@@ -6,8 +6,8 @@ const FriendList = props => {
   return (
     <div className="FriendList">
       <div className="FriendList_List">
-        {props.user &&
-          props.friends.map((object, index) => (
+        {props.user.social &&
+          props.user.social.map((object, index) => (
             <div key={index}>{object.name}</div>
           ))}
       </div>
