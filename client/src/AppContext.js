@@ -19,8 +19,8 @@ export class AppContextProvider extends Component {
     currentCountry: {
       code: '',
       info: {}
-    countryPanelIsOpen: false,
-
+    },
+    countryPanelIsOpen: false
   };
 
   async componentDidMount() {
