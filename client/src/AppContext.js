@@ -14,12 +14,11 @@ const clearLocalstorage = () => {
 // provider component
 export class AppContextProvider extends Component {
   state = {
-    test: 'Hello!',
     authenticated: false,
     user: {},
     userPosition: {
-      longitude: '',
-      latitude: ''
+      lat: 22.28552,
+      lng: 114.15769
     },
     currentCountry: {
       code: '',
@@ -60,15 +59,28 @@ export class AppContextProvider extends Component {
       // failed async
       clearLocalstorage(); // error encountered
     }
-  }
+    if ('geolocation' in navigator) {
+      this.hasGeolocation(); //geolocation is in the browser
+    } else {
+      console.log('No geolocation!');
+    }
+  } // componentDidMount
+
+  // Calls getCurrentPosition to find where the user is located and sets state
+  hasGeolocation = () => {
+    // Browsers built-in method to get a user's location
+    navigator.geolocation.getCurrentPosition(position => {
+      this.updateUserPosition(
+        position.coords.latitude,
+        position.coords.longitude
+      );
+    });
+  };
 
   // Update the user's geolocation position
-  handleUpdateUserPosition = (long, lat) => {
+  updateUserPosition = (lat, lng) => {
     this.setState({
-      userPosition: {
-        longitude: long,
-        latitude: lat
-      }
+      userPosition: { lng, lat }
     });
   };
 
