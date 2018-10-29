@@ -43,7 +43,7 @@ class LogInBay extends React.Component {
             <form className="LogInForm" onSubmit={handleSignIn}>
               Sign In
               <input type="text" placeholder="Username" name="username" />
-              <input type="text" placeholder="Password" name="password" />
+              <input type="password" placeholder="Password" name="password" />
               <input type="submit" />
             </form>
 
@@ -73,10 +73,10 @@ class LogInBay extends React.Component {
                 style={{ display: 'flex', flexFlow: 'column nowrap' }}
               >
                 <input type="text" placeholder="Username" name="username" />
-                <input type="text" placeholder="Email" name="email" />
-                <input type="text" placeholder="Password" name="password" />
+                <input type="email" placeholder="Email" name="email" />
+                <input type="password" placeholder="Password" name="password" />
                 <input
-                  type="text"
+                  type="password"
                   placeholder="Confirm Password"
                   name="confirmPassword"
                 />
