@@ -9,30 +9,23 @@ import FriendList from '../Friends/FriendList';
 import './Card.css';
 
 const Card = () => {
-  return (
-    <div className="Card">
+  return <div className="Card">
       <AppContextConsumer>
-        {value => (
-          <React.Fragment>
+        {value => <React.Fragment>
             <div className="Card_Header">
               <div className="Header_Country-Name">
                 <span>{value.AppState.currentCountry.info.emoji}</span>
                 <span>{value.AppState.currentCountry.info.name}</span>
-                <FontAwesomeIcon
-                  className="closeCountryPanelIcon"
-                  onClick={value.toggleCountryPanel}
-                  icon="times"
-                />
+                
               </div>
+          <FontAwesomeIcon className="closeCountryPanelIcon" onClick={value.toggleCountryPanel} icon="times" />
             </div>
             <BorderBay />
             <Note user={value.AppState.user} />
             <FriendList friends={value.AppState.friends} />
-          </React.Fragment>
-        )}
+          </React.Fragment>}
       </AppContextConsumer>
-    </div>
-  );
+    </div>;
 };
 
 export default Card;
