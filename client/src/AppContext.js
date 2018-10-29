@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { clearLocalstorage } from './utils.js';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 // new context
 const AppContext = React.createContext();
-const clearLocalstorage = () => {
-  // delete the tokens from the browser
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
-};
 
 // provider component
 export class AppContextProvider extends Component {
