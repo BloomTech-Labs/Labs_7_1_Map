@@ -19,7 +19,8 @@ export class AppContextProvider extends Component {
     currentCountry: {
       code: '',
       info: {}
-    }
+    countryPanelIsOpen: false,
+
   };
 
   async componentDidMount() {
@@ -77,12 +78,19 @@ export class AppContextProvider extends Component {
       userPosition: { lng, lat }
     });
   };
+  updateCountryPanel() {
+    console.log('HELLO WOrld', this.state.currentCountry);
+  }
 
   // Update state with currently selected country, called in Map.js
   handleUpdateCurrentCountry = (code, info) => {
     this.setState({
-      currentCountry: { code, info }
+      currentCountry: { code, info },
+      countryPanelIsOpen: true
     });
+
+    // update the panel with current country
+    this.updateCountryPanel();
   };
 
   handleSignIn = async e => {
@@ -124,6 +132,10 @@ export class AppContextProvider extends Component {
     this.setState({ authenticated: true, user: response.data.user });
   };
 
+  toggleCountryPanel = () => {
+    this.setState({ countryPanelIsOpen: !this.state.countryPanelIsOpen });
+  };
+
   render() {
     return (
       <AppContext.Provider
@@ -134,7 +146,8 @@ export class AppContextProvider extends Component {
           authenticated: this.state.authenticated,
           handleSignIn: this.handleSignIn,
           handleSignOut: this.handleSignOut,
-          handleSignUp: this.handleSignUp
+          handleSignUp: this.handleSignUp,
+          toggleCountryPanel: this.toggleCountryPanel
         }}
       >
         {this.props.children}
