@@ -1,43 +1,32 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { clearLocalstorage } from './utils.js';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 // new context
 const AppContext = React.createContext();
-const clearLocalstorage = () => {
-  // delete the tokens from the browser
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
-};
 
 // provider component
 export class AppContextProvider extends Component {
   state = {
-    test: 'Hello!',
     authenticated: false,
     user: {},
     userPosition: {
-      longitude: '',
-      latitude: ''
+      lat: 22.28552,
+      lng: 114.15769
     },
     currentCountry: {
       code: '',
       info: {}
-    },
     countryPanelIsOpen: false,
-    friends: [
-      { name: 'nalee' },
-      { name: 'jon' },
-      { name: 'thrun' },
-      { name: 'sdf' },
-      { name: 'sdfasf' },
-      { name: 'werwer' },
-      { name: 'wootie' }
-    ]
+
   };
+
   async componentDidMount() {
+    // Check if a user is already logged in
     try {
+      // Retrieve token and user stored in local storage
       const token = localStorage.getItem('token');
       const user = await JSON.parse(localStorage.getItem('user'));
 
@@ -46,7 +35,7 @@ export class AppContextProvider extends Component {
           headers: { Authorization: `Bearer ${token}` }
         };
 
-        // get the user
+        // Get the user info from DB
         const response = await axios.get(
           `${BACKEND_URL}/get_user/${user.id}`,
           requestOptions
@@ -64,25 +53,36 @@ export class AppContextProvider extends Component {
         clearLocalstorage(); // token or user not in localstorage
       }
     } catch (e) {
-      //failed async
+      // failed async
       clearLocalstorage(); // error encountered
     }
-  }
 
-  //to update state: userPosition, used in Map.js
-  handleUpdateUserPosition = (long, lat) => {
+    // Ask for user location if browser is compatible
+    if ('geolocation' in navigator) this.hasGeolocation();
+  } // componentDidMount
+
+
+  hasGeolocation = () => {
+    // Browsers built-in method to get a user's location
+    navigator.geolocation.getCurrentPosition(position => {
+      this.updateUserPosition(
+        position.coords.latitude,
+        position.coords.longitude
+      );
+    });
+  };
+
+  // Update the user's geolocation position
+  updateUserPosition = (lat, lng) => {
     this.setState({
-      userPosition: {
-        longitude: long,
-        latitude: lat
-      }
+      userPosition: { lng, lat }
     });
   };
   updateCountryPanel() {
     console.log('HELLO WOrld', this.state.currentCountry);
   }
 
-  //to update state: currentCountry (last clicked), called in Map.js
+  // Update state with currently selected country, called in Map.js
   handleUpdateCurrentCountry = (code, info) => {
     this.setState({
       currentCountry: { code, info },

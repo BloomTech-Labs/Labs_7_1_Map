@@ -8,6 +8,7 @@ import FriendList from '../Friends/FriendList';
 
 import './Card.css';
 
+
 const Card = () => {
   return <div className="Card">
       <AppContextConsumer>
@@ -24,6 +25,7 @@ const Card = () => {
             <Note user={value.AppState.user} />
             <FriendList friends={value.AppState.friends} />
           </React.Fragment>}
+
       </AppContextConsumer>
     </div>;
 };
