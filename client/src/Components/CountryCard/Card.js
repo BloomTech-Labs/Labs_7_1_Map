@@ -10,17 +10,17 @@ import './Card.css';
 const Card = () => {
   return (
     <div className="Card">
-      <CardHeader />
-      <BorderBay />
       <AppContextConsumer>
-        {value => {
-          return <Note user={value.AppState.user} />;
-        }}
-      </AppContextConsumer>
-      <AppContextConsumer>
-        {value => {
-          return <FriendList friends={value.AppState.friends} />;
-        }}
+        {value => (
+          <React.Fragment>
+            <div className="Card_Header">
+              <h2 className="Header_Country-Name">Country name</h2>
+            </div>
+            <BorderBay />
+            <Note user={value.AppState.user} />
+            <FriendList friends={value.AppState.friends} />
+          </React.Fragment>
+        )}
       </AppContextConsumer>
     </div>
   );
