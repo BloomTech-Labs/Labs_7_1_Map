@@ -24,19 +24,13 @@ export class AppContextProvider extends Component {
     currentCountry: {
       code: '',
       info: {}
-    },
-    friends: [
-      { name: 'nalee' },
-      { name: 'jon' },
-      { name: 'thrun' },
-      { name: 'sdf' },
-      { name: 'sdfasf' },
-      { name: 'werwer' },
-      { name: 'wootie' }
-    ]
+    }
   };
+
   async componentDidMount() {
+    // Check if a user is already logged in
     try {
+      // Retrieve token and user stored in local storage
       const token = localStorage.getItem('token');
       const user = await JSON.parse(localStorage.getItem('user'));
 
@@ -45,7 +39,7 @@ export class AppContextProvider extends Component {
           headers: { Authorization: `Bearer ${token}` }
         };
 
-        // get the user
+        // Get the user info from DB
         const response = await axios.get(
           `${BACKEND_URL}/get_user/${user.id}`,
           requestOptions
@@ -63,12 +57,12 @@ export class AppContextProvider extends Component {
         clearLocalstorage(); // token or user not in localstorage
       }
     } catch (e) {
-      //failed async
+      // failed async
       clearLocalstorage(); // error encountered
     }
   }
 
-  //to update state: userPosition, used in Map.js
+  // Update the user's geolocation position
   handleUpdateUserPosition = (long, lat) => {
     this.setState({
       userPosition: {
@@ -78,9 +72,8 @@ export class AppContextProvider extends Component {
     });
   };
 
-  //to update state: currentCountry (last clicked), called in Map.js
+  // Update state with currently selected country, called in Map.js
   handleUpdateCurrentCountry = (code, info) => {
-    console.log('EDWARDRDRDRDz');
     this.setState({
       currentCountry: { code, info }
     });
