@@ -1,11 +1,12 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "The scratch and map server",
-  "main": "server.js",
+  "description": "Scratch-N-Map",
+  "main": "app.js",
   "scripts": {
     "test": "jest --watch --verbose",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "heroku-postbuild": "cd client && yarn install && yarn run build && cd .."
   },
   "repository": {
     "type": "git",
