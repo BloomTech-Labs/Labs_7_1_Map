@@ -39,11 +39,12 @@ export class AppContextProvider extends Component {
           `${BACKEND_URL}/get_user/${user.id}`,
           requestOptions
         );
+        console.log(response);
 
         if (response.status === 200) {
           this.setState({
             authenticated: true,
-            user: response.data.user
+            user: { ...response.data }
           });
         } else {
           clearLocalstorage(); // response was not 200
@@ -59,7 +60,6 @@ export class AppContextProvider extends Component {
     // Ask for user location if browser is compatible
     if ('geolocation' in navigator) this.hasGeolocation();
   } // componentDidMount
-
 
   hasGeolocation = () => {
     // Browsers built-in method to get a user's location

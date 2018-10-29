@@ -149,11 +149,11 @@ class MapComponent extends Component {
             opacity={0.8}
             className="userPosition"
           >
-            <Popup className="Map_Component-Card">
-              {this.props.currentCountry && (
-                <Card info={this.props.currentCountry.info} />
-              )}
-            </Popup>
+            {/* <Popup className="Map_Component-Card"> */}
+            {/*   {this.props.currentCountry && ( */}
+            {/*     <Card info={this.props.currentCountry.info} /> */}
+            {/*   )} */}
+            {/* </Popup> */}
           </Marker>
         )}
       </Map>
