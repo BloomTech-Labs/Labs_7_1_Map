@@ -11,46 +11,46 @@ const styleSelected = {
 const styleOther = {
   stroke: true,
   color: 'gray',
-  opacity: 1,
+  opacity: 0.2,
   fill: true,
   fillColor: 'gray',
-  fillOpacity: 0
+  fillOpacity: 0.3
 };
 
 const styleWishlist = {
   stroke: true,
   color: 'purple',
-  opacity: 1,
+  opacity: 0.2,
   fill: true,
   fillColor: 'purple',
-  fillOpacity: 0
+  fillOpacity: 0.3
 };
 
 const styleVisited = {
   stroke: true,
   color: 'red',
-  opacity: 1,
+  opacity: 0.2,
   fill: true,
   fillColor: 'red',
-  fillOpacity: 0
+  fillOpacity: 0.3
 };
 
 const styleLivedIn = {
   stroke: true,
   color: 'blue',
-  opacity: 1,
+  opacity: 0.2,
   fill: true,
   fillColor: 'blue',
-  fillOpacity: 0
+  fillOpacity: 0.3
 };
 
 const styleHome = {
   stroke: true,
   color: 'green',
-  opacity: 1,
+  opacity: 0.2,
   fill: true,
   fillColor: 'green',
-  fillOpacity: 0
+  fillOpacity: 0.3
 };
 
 const countryStatusStyles = {
