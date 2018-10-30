@@ -1,4 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
+// import geojson2svg from 'geojson-to-svg';
+import geojson from '../Map/countries.geo.json';
+import { getCountryShapeFromCode } from '../../utils.js';
 import Slider from 'rc-slider/lib/Slider';
 
 import './BorderBay.css';
@@ -12,28 +15,48 @@ const marks = {
   4: { style: { color: 'blue' }, label: 'Lived' }
 };
 
+// geojson2svg()
+//   // .projection(function(coord) {
+//   //   return [coord[0] + 1, coord[1] + 1];
+//   // })
+//   .data({
+//     type: 'Feature',
+//     geometry: {
+//       type: 'Polygon || MultiPolygon',
+//       coordinates: []
+//     }
+//   })
+//   .render();
+
 const log = value => {
   console.log(value); //eslint-disable-line
 };
 
-export default class BorderBay extends Component {
-  render() {
-    return (
-      <div className="Country_Border">
-        <p className="Country_Border-Border">Border</p>
-        <div className="Country_Border-Slider">
-          <p className="Slide-Tag">Level of Stay</p>
-          <Slider
-            className="Slider1"
-            min={0}
-            max={4}
-            marks={marks}
-            step={null}
-            onChange={log}
-            defaultValue={0}
-          />
-        </div>
+const BorderBay = () => {
+  const coordinates = geojson;
+  const border = geojson.features[coordinates].geometry;
+
+  return (
+    <div className="Country_Border">
+      <p className="Country_Border-Border">
+        {geojson.features.map(feature => (
+          <div key={feature.id} data={getCountryShapeFromCode(feature.id)} />
+        ))}
+      </p>
+      <div className="Country_Border-Slider">
+        <p className="Slide-Tag">Level of Stay</p>
+        <Slider
+          className="Slider1"
+          min={0}
+          max={4}
+          marks={marks}
+          step={null}
+          onChange={log}
+          defaultValue={0}
+        />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default BorderBay;

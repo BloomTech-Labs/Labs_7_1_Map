@@ -9,7 +9,6 @@ import {
   getCountryShapeFromCode,
   getCountryInfoFromCode
 } from '../../utils.js';
-import geojson2svg, {Renderer} from 'geojson-to-svg';
 
 /* LEAFLET MAP SETUP START */
 // Marker (workaround for an issue with react-leaflet)
