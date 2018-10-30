@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import L from 'leaflet';
 import { Map, TileLayer, Marker, Popup, GeoJSON } from 'react-leaflet';
 import './Map.css';
-import Card from '../CountryCard/Card';
 import geojson from './countries.geo.json';
 import wc from 'which-country';
 import {
@@ -139,11 +138,9 @@ class MapComponent extends Component {
                 country.country_code
               );
               // TODO: get style for corresponding status code
-              const style = countryStatusStyles[country.status_code]
+              const style = countryStatusStyles[country.status_code];
               // render geojson layer
-              return (
-                <GeoJSON key={i} data={countryShape} style={style} />
-              );
+              return <GeoJSON key={i} data={countryShape} style={style} />;
             })
           : null}
 
