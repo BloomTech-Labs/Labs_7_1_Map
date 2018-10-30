@@ -39,12 +39,57 @@ const corner2 = L.latLng(-90, 180);
 const bounds = L.latLngBounds(corner1, corner2);
 
 // Styles for the highlight of a clicked on country
-const styleClicked = {
+const styleSelected = {
   stroke: true,
   color: 'gold',
   opacity: 1,
   fill: true,
   fillColor: 'gold',
+  fillOpacity: 0
+};
+
+const styleOther = {
+  stroke: true,
+  color: 'gray',
+  opacity: 1,
+  fill: true,
+  fillColor: 'gray',
+  fillOpacity: 0
+};
+
+const styleWishlist = {
+  stroke: true,
+  color: 'purple',
+  opacity: 1,
+  fill: true,
+  fillColor: 'purple',
+  fillOpacity: 0
+};
+
+const styleVisited = {
+  stroke: true,
+  color: 'red',
+  opacity: 1,
+  fill: true,
+  fillColor: 'red',
+  fillOpacity: 0
+};
+
+const styleLivedIn = {
+  stroke: true,
+  color: 'blue',
+  opacity: 1,
+  fill: true,
+  fillColor: 'blue',
+  fillOpacity: 0
+};
+
+const styleHome = {
+  stroke: true,
+  color: 'green',
+  opacity: 1,
+  fill: true,
+  fillColor: 'green',
   fillOpacity: 0
 };
 
@@ -64,9 +109,9 @@ class MapComponent extends Component {
     mapTile: mapTilesUrls.dark,
     countryHover: null
   };
-  
+
   componentDidMount() {
-    console.log(this.props.user);
+    console.log(this.props.user.countries);
   }
 
   handleClick = async e => {
@@ -129,7 +174,7 @@ class MapComponent extends Component {
                 <GeoJSON
                   key={feature.id}
                   data={getCountryShapeFromCode(feature.id)}
-                  style={styleClicked}
+                  style={styleSelected}
                 />
               )
           )}
@@ -148,21 +193,25 @@ class MapComponent extends Component {
             )
         )}
 
+        {this.props.user.countries &&
+          this.props.user.countries.map((country, i) => {
+            // get countries geojson shape
+            const countryShape = getCountryShapeFromCode(country.country_code);
+            // TODO: get style for corresponding status code
+            // render geojson layer
+            return (
+              <GeoJSON key={i} data={countryShape} style={styleSelected} />
+            );
+          })}
+
         {this.props.userPosition && (
           <Marker
             position={position}
             icon={markerIcon}
             opacity={0.8}
             className="userPosition"
-          >
-            {/* <Popup className="Map_Component-Card"> */}
-            {/*   {this.props.currentCountry && ( */}
-            {/*     <Card info={this.props.currentCountry.info} /> */}
-            {/*   )} */}
-            {/* </Popup> */}
-          </Marker>
+          />
         )}
-
       </Map>
     );
   }

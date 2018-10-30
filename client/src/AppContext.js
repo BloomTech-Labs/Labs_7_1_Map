@@ -40,7 +40,6 @@ export class AppContextProvider extends Component {
           `${BACKEND_URL}/get_user/${user.id}`,
           requestOptions
         );
-        console.log(response);
 
         if (response.status === 200) {
           this.setState({
