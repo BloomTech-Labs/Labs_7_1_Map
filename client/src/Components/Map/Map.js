@@ -110,10 +110,6 @@ class MapComponent extends Component {
     countryHover: null
   };
 
-  componentDidMount() {
-    console.log(this.props.user.countries);
-  }
-
   handleClick = async e => {
     // Get the country code of the location clicked on
     const countryCode = await wc([e.latlng.lng, e.latlng.lat]);
@@ -193,16 +189,19 @@ class MapComponent extends Component {
             )
         )}
 
-        {this.props.user.countries &&
-          this.props.user.countries.map((country, i) => {
-            // get countries geojson shape
-            const countryShape = getCountryShapeFromCode(country.country_code);
-            // TODO: get style for corresponding status code
-            // render geojson layer
-            return (
-              <GeoJSON key={i} data={countryShape} style={styleSelected} />
-            );
-          })}
+        {this.props.user && this.props.user.countries
+          ? this.props.user.countries.map((country, i) => {
+              // get countries geojson shape
+              const countryShape = getCountryShapeFromCode(
+                country.country_code
+              );
+              // TODO: get style for corresponding status code
+              // render geojson layer
+              return (
+                <GeoJSON key={i} data={countryShape} style={styleSelected} />
+              );
+            })
+          : null}
 
         {this.props.userPosition && (
           <Marker
