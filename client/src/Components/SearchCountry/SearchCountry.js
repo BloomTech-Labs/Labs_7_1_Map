@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import FuzzySearch from 'react-fuzzy';
 import world from 'country-data';
 import { getCountryCodeFromName } from '../../utils.js';
 
@@ -22,14 +23,20 @@ class SearchCountry extends Component {
   render() {
     return (
       <form className="SearchCountry" onSubmit={this.handleSearchSubmit}>
-        <input
+        <FuzzySearch
+          list={world}
+          keys={['author', 'title']}
+          width={430}
+          onSelect={action('selected')}
+        />
+        {/* <input
           className="MenuItem Center__search"
           type="search"
           name="search"
           value={this.formValue}
           placeholder="Search Countries..."
           onChange={e => this.handleSearchChange(e)}
-        />
+        /> */}
         <input type="submit" />
       </form>
     );
