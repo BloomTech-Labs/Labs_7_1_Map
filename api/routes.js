@@ -13,6 +13,12 @@ const {
   updateNote
   // deleteNote
 } = require('./controllers/notesController');
+
+//below handles the status change of country
+const {
+  handle_status
+} = require('./controllers/statusController');
+
 const passport = require('./utils/passport');
 const path = require('path');
 
@@ -49,7 +55,6 @@ module.exports = server => {
   server.route('/api/change_password').post(protected_route, change_password);
   server.route('/api/change_email').post(protected_route, change_email);
 
-
   // Notes Routes
   server.get('/api/note', (req, res) => {
     res.status(200).json('Note API IS LIT');
@@ -64,6 +69,9 @@ module.exports = server => {
     .get(getNoteById)
     .put(updateNote);
   // .destroy(deleteNote);
+
+    // Country Status Route
+    server.route('/api/country_status').post(handle_status);
 
   server.route('/api/get_user/:id').get(protected_route, get_user);
 
