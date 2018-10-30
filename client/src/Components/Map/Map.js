@@ -64,6 +64,10 @@ class MapComponent extends Component {
     mapTile: mapTilesUrls.dark,
     countryHover: null
   };
+  
+  componentDidMount() {
+    console.log(this.props.user);
+  }
 
   handleClick = async e => {
     // Get the country code of the location clicked on
