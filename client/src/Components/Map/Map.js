@@ -9,6 +9,11 @@ import {
   getCountryShapeFromCode,
   getCountryInfoFromCode
 } from '../../utils.js';
+import {
+  styleSelected,
+  styleHover,
+  countryStatusStyles
+} from './countryStyles.js';
 
 /* LEAFLET MAP SETUP START */
 // Marker (workaround for an issue with react-leaflet)
@@ -37,24 +42,6 @@ const mapTilesUrls = {
 const corner1 = L.latLng(90, -180);
 const corner2 = L.latLng(-90, 180);
 const bounds = L.latLngBounds(corner1, corner2);
-
-// Styles for the highlight of a clicked on country
-const styleClicked = {
-  stroke: true,
-  color: 'gold',
-  opacity: 1,
-  fill: true,
-  fillColor: 'gold',
-  fillOpacity: 0
-};
-
-// Styles for the highlight of a hovered over country
-const styleHover = {
-  stroke: false,
-  fill: true,
-  fillColor: 'gold',
-  fillOpacity: 0.3
-};
 /* LEAFLET MAP SETUP END */
 
 /* MAIN MAP COMPONENT START */
@@ -125,7 +112,7 @@ class MapComponent extends Component {
                 <GeoJSON
                   key={feature.id}
                   data={getCountryShapeFromCode(feature.id)}
-                  style={styleClicked}
+                  style={styleSelected}
                 />
               )
           )}
@@ -144,21 +131,30 @@ class MapComponent extends Component {
             )
         )}
 
+        {/* Render a layer for each country in the user object */}
+        {this.props.user && this.props.user.countries
+          ? this.props.user.countries.map((country, i) => {
+              // get countries geojson shape
+              const countryShape = getCountryShapeFromCode(
+                country.country_code
+              );
+              // TODO: get style for corresponding status code
+              const style = countryStatusStyles[country.status_code]
+              // render geojson layer
+              return (
+                <GeoJSON key={i} data={countryShape} style={style} />
+              );
+            })
+          : null}
+
         {this.props.userPosition && (
           <Marker
             position={position}
             icon={markerIcon}
             opacity={0.8}
             className="userPosition"
-          >
-            {/* <Popup className="Map_Component-Card"> */}
-            {/*   {this.props.currentCountry && ( */}
-            {/*     <Card info={this.props.currentCountry.info} /> */}
-            {/*   )} */}
-            {/* </Popup> */}
-          </Marker>
+          />
         )}
-
       </Map>
     );
   }

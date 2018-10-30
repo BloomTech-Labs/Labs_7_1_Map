@@ -40,7 +40,6 @@ export class AppContextProvider extends Component {
           `${BACKEND_URL}/get_user/${user.id}`,
           requestOptions
         );
-        console.log(response);
 
         if (response.status === 200) {
           this.setState({
@@ -104,7 +103,7 @@ export class AppContextProvider extends Component {
       const user = await JSON.stringify(response.data.user);
       localStorage.setItem('token', response.data.jwt_token);
       localStorage.setItem('user', user);
-      this.setState({ authenticated: true, user: response.data.user });
+      this.setState({ authenticated: true, user: { ...response.data.user } });
     } catch (e) {
       // failed async
     }

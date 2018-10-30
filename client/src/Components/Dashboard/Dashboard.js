@@ -47,6 +47,7 @@ class Dashboard extends Component {
                 searchCountry={this.state.searchCountry}
                 updateCurrentCountry={value.updateCurrentCountry}
                 currentCountry={value.AppState.currentCountry}
+                user={value.AppState.user}
               />
             );
           }}
