@@ -192,6 +192,8 @@ describe('User', () => {
       expect(newUser).toBeDefined();
       expect(jwt_token).toBeDefined();
       expect(getUser.body._id).toBe(user.id);
+      expect(getUser.body.countries).toBeDefined();
+      expect(getUser.body.preferences).toBeDefined();
       expect(getUser.body.username).toBe('getuser1');
       expect(getUser.body.email).toBe('getuser1@test.com');
     });
