@@ -8,7 +8,16 @@ const styleSelected = {
   fillOpacity: 0
 };
 
-const styleOther = {
+// Styles for the highlight of a hovered over country
+const styleHover = {
+  stroke: false,
+  fill: true,
+  fillColor: 'gold',
+  fillOpacity: 0.3
+};
+
+// Styles for country based on status_code
+const styleOther = { // status_code: 0
   stroke: true,
   color: 'gray',
   opacity: 0.2,
@@ -17,7 +26,7 @@ const styleOther = {
   fillOpacity: 0.3
 };
 
-const styleWishlist = {
+const styleWishlist = { // status_code: 1
   stroke: true,
   color: 'purple',
   opacity: 0.2,
@@ -26,7 +35,7 @@ const styleWishlist = {
   fillOpacity: 0.3
 };
 
-const styleVisited = {
+const styleVisited = { // status_code: 2
   stroke: true,
   color: 'red',
   opacity: 0.2,
@@ -35,7 +44,7 @@ const styleVisited = {
   fillOpacity: 0.3
 };
 
-const styleLivedIn = {
+const styleLivedIn = { // status_code: 3
   stroke: true,
   color: 'blue',
   opacity: 0.2,
@@ -44,7 +53,7 @@ const styleLivedIn = {
   fillOpacity: 0.3
 };
 
-const styleHome = {
+const styleHome = { // status_code: 4
   stroke: true,
   color: 'green',
   opacity: 0.2,
@@ -53,6 +62,9 @@ const styleHome = {
   fillOpacity: 0.3
 };
 
+
+// Export country status styles as an object so they can be 
+// easily used in Map components render function
 const countryStatusStyles = {
   0: styleOther,
   1: styleWishlist,
@@ -61,13 +73,6 @@ const countryStatusStyles = {
   4: styleHome
 };
 
-// Styles for the highlight of a hovered over country
-const styleHover = {
-  stroke: false,
-  fill: true,
-  fillColor: 'gold',
-  fillOpacity: 0.3
-};
 
 module.exports = {
   styleSelected,
