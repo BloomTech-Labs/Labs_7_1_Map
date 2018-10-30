@@ -1,7 +1,7 @@
 import React from 'react';
 // import geojson2svg from 'geojson-to-svg';
-import geojson from '../Map/countries.geo.json';
-import { getCountryShapeFromCode } from '../../utils.js';
+// import geojson from '../Map/countries.geo.json';
+import { getCountryBorderFromCoord } from '../../utils.js';
 import Slider from 'rc-slider/lib/Slider';
 
 import './BorderBay.css';
@@ -16,9 +16,9 @@ const marks = {
 };
 
 // geojson2svg()
-//   // .projection(function(coord) {
-//   //   return [coord[0] + 1, coord[1] + 1];
-//   // })
+//   .projection(function(coord) {
+//     return [coord[0] + 1, coord[1] + 1];
+//   })
 //   .data({
 //     type: 'Feature',
 //     geometry: {
@@ -33,16 +33,11 @@ const log = value => {
 };
 
 const BorderBay = () => {
-  const coordinates = geojson;
-  const border = geojson.features[coordinates].geometry;
-
   return (
     <div className="Country_Border">
-      <p className="Country_Border-Border">
-        {geojson.features.map(feature => (
-          <div key={feature.id} data={getCountryShapeFromCode(feature.id)} />
-        ))}
-      </p>
+      <canvas className="Country_Border-Border">
+        {getCountryBorderFromCoord}
+      </canvas>
       <div className="Country_Border-Slider">
         <p className="Slide-Tag">Level of Stay</p>
         <Slider

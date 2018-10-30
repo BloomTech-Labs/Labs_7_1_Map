@@ -15,6 +15,11 @@ export function getCountryCodeFromName(countryName) {
   return countryFeature ? countryFeature.id : null;
 }
 
+// Function to render border using coordinates
+export function getCountryBorderFromCoord(countryCoord) {
+  return geojson.features.find(coord => coord.geometry === countryCoord);
+}
+
 export function getCountryInfoFromCode(countryCode) {
   return (
     world.countries[countryCode] || {
