@@ -48,10 +48,12 @@ const UserSchema = new Schema(
     preferences: {
       theme: {
         type: String,
+        required: true,
         default: 'dark'
       },
       autoscratch: {
         type: Boolean,
+        required: true,
         default: false
       }
     }
@@ -88,11 +90,6 @@ UserSchema.methods.check_password = async function(entered_password) {
       console.log(err);
     }
   }
-};
-
-//get all notes for user
-UserSchema.methods.get_notes = async function() {
-  await this.populate('notes');
 };
 
 // export the user schema

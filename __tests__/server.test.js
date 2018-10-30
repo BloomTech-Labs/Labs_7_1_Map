@@ -171,6 +171,7 @@ describe('User', () => {
       });
     });
   });
+
   describe('GET routes', () => {
     it('get_user retrieves a user with a valid token', async () => {
       const testUserInfo = {
@@ -183,7 +184,6 @@ describe('User', () => {
         .send(testUserInfo);
       const { jwt_token, user } = newUser.body;
 
-      console.log(user)
       const getUser = await request(server)
         .get(`/api/get_user/${user.id}`)
         .set('Authorization', `Bearer ${jwt_token}`);
@@ -243,4 +243,36 @@ describe('User', () => {
       expect(getUser.body.email).toBeUndefined();
     });
   });
+
+  describe('PUT routes', () => {
+    it('update_preferences updates user correctly', async () => {
+      const testUserInfo = {
+        username: 'updatepreferences1',
+        password: '123456',
+        email: 'update_preferences1@test.com'
+      }
+
+      const newUser = await request(server).post(`/api/register`).send(testUserInfo)
+
+      expect(newUser.status).toBe(200);
+      console.log(newUser.body)
+
+      const updatedPreferences = {
+        username: 'updatepreferences1',
+        preferences: {
+          theme: 'light',
+          autoscratch: false
+        }
+      }
+
+      const response = await request(server).put(`/api/update_preferences`).send(updatedPreferences)
+      console.log(response.body)
+      expect(response.status).toBe(200);
+      expect(response.body).toBeDefined();
+      expect(response.body.username).toBeDefined();
+      expect(response.body.preferences).toBeDefined();
+      expect(response.body.preferences.theme).toBe('light');
+      expect(response.body.preferences.autoscratch).toBe(false);
+    })
+  })
 });

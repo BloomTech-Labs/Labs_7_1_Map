@@ -37,7 +37,7 @@ module.exports = server => {
   // Update settings
   server.route('/api/change_password').put(protected_route, change_password);
   server.route('/api/change_email').put(protected_route, change_email);
-  server.route('/api/update_preferences').put(protected_route, update_preferences)
+  server.route('/api/update_preferences').put(update_preferences)
 
   server.route('/api/get_user/:id').get(protected_route, get_user);
 

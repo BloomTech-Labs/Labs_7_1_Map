@@ -141,7 +141,7 @@ module.exports = {
         { preferences },
         { new: true }
       );
-
+      console.log(updatedUser);
       res.status(200).json(updatedUser);
     } catch (err) {
       if (DEV) console.log(err);
