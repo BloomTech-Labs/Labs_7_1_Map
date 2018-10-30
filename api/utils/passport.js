@@ -1,10 +1,15 @@
 const passport = require('passport');
 require('dotenv').config();
 
+// local
 const LocalStrategy = require('passport-local').Strategy;
+
+// jwt
 const { ExtractJwt } = require('passport-jwt');
 const JwtStrategy = require('passport-jwt').Strategy;
-//const OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
+
+// facebook
+const FacebookStrategy = require('passport-facebook').Strategy;
 
 const User = require('../models/user');
 
@@ -23,7 +28,6 @@ const local_strategy = new LocalStrategy(async (username, password, done) => {
         // authenticated, so pass on some of the user fields
 
         return done(null, found);
-
       } else {
         // wrong password
         return done(null, false, { message: 'Incorrect credentials.' });
@@ -62,19 +66,45 @@ const jwt_strategy = new JwtStrategy(jwtOptions, async (payload, done) => {
 passport.use(jwt_strategy); // using the jwt strategy
 
 // facebook strategy
-/*
-passport.use('provider', new OAuth2Strategy({
-	authorizationURL: 'https://www.provider.com/oauth2/authorize',
-	tokenURL: 'https://www.provider.com/oauth2/token',
-	clientID: '123-456-789',
-	clientSecret: 'shhh-its-a-secret'
-    callbackURL: 'https://www.example.com/auth/provider/callback'
-},
-	function (accessToken, refreshToken, profile, done) {
-		User.findOrCreate(..., function (err, user) {
-			done(err, user);
-		});
-	}
-)); // using the facebook strategy
-*/
+// load the credentials
+const FACEBOOK_APP_ID = '320480212099454';
+const FACE_APP_SECRET = 'd461bbe6b5905474ab5f46e346be0b93';
+const CALLBACK_URL = 'http://localhost:8000/api/facebook-success';
+
+// define the options object using the credentials object
+const FACEBOOK_OPTIONS = {
+  clientID: FACEBOOK_APP_ID,
+  clientSecret: FACE_APP_SECRET,
+  callbackURL: CALLBACK_URL,
+  profileFields: ['emails', 'name', 'user_friends']
+};
+
+// define a call function
+const FACEBOOK_CALLBACK = function(accessToken, refreshToken, profile, done) {
+  /*
+  User.findOrCreate(..., function (err, user) {
+    if (err) { return done(err); }
+    done(null, user);
+  });
+  */
+  /*
+  console.log('HERERE');
+  console.log('one');
+  console.log(accessToken);
+  console.log('two');
+  console.log(refreshToken);
+  console.log('trhee');
+  console.log(profile);
+  */
+  console.log('HELLLLLLLO');
+};
+
+// feed the strategy with options and callback function
+const facebook_strategy = new FacebookStrategy(
+  FACEBOOK_OPTIONS,
+  FACEBOOK_CALLBACK
+);
+// use the facebook_strategy
+passport.use(facebook_strategy);
+
 module.exports = passport;

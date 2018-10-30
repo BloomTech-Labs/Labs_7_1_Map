@@ -19,8 +19,8 @@ const path = require('path');
 // session is false so we can use jwt
 const authenticate = passport.authenticate('local', { session: false });
 const facebook_authentication = passport.authenticate('facebook', {
-  successRedirect: '/',
-  failureRedirect: '/login'
+  successRedirect: '/api/facebook-success',
+  failureRedirect: '/api/login-failure'
 });
 const protected_route = passport.authenticate('jwt', { session: false });
 
@@ -36,12 +36,17 @@ module.exports = server => {
     res.status(200).json({ msg: 'Entry allowed' });
   });
 
+  // test route
+  server.get('/api/login-failure', (req, res) => {
+    res.status(400).json({ msg: 'Failed to login in' });
+  });
+
   server.route('/api/login').post(authenticate, login);
-  server.route('/api/facebook-login').post(facebook_login);
+  server.route('/api/facebook-login').get(facebook_authentication);
+  server.route('/api/facebook-success').get(facebook_login);
   server.route('/api/register').post(create_user);
   server.route('/api/change_password').post(protected_route, change_password);
   server.route('/api/change_email').post(protected_route, change_email);
-
 
   // Notes Routes
   server.get('/api/note', (req, res) => {
@@ -59,5 +64,4 @@ module.exports = server => {
   // .destroy(deleteNote);
 
   server.route('/api/get_user/:id').get(protected_route, get_user);
-
 };

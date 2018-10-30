@@ -102,6 +102,7 @@ module.exports = {
       res.status(500).json({ error: 'Internal server error!' });
     }
     */
+    res.status(200).json({ msg: 'Worked!' });
   }, // facebook_login
 
   get_user: async (req, res) => {
@@ -120,7 +121,11 @@ module.exports = {
   login: async (req, res) => {
     try {
       // we only reach here because we are authenticated
-      const user = { id: req.user.id, username: req.user.username, countries: req.user.countries }; // add the things you need to send
+      const user = {
+        id: req.user.id,
+        username: req.user.username,
+        countries: req.user.countries
+      }; // add the things you need to send
       res.status(200).json({ jwt_token: make_token(req.user), user });
     } catch (err) {
       if (DEV) console.log(err);
