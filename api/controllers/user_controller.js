@@ -134,18 +134,20 @@ module.exports = {
 
   update_preferences: async (req, res) => {
     try {
-      // find user and update preferences object
+      // req.body.preferences should be an object with properties for each setting
+      //  e.g. { theme: 'light', autoscratch: true }
       const { username, preferences } = req.body;
+
       const updatedUser = await User.findOneAndUpdate(
         { username },
         { preferences },
         { new: true }
       );
-      console.log(updatedUser);
+
       res.status(200).json(updatedUser);
     } catch (err) {
       if (DEV) console.log(err);
       res.status(500).json({ error: 'Failed to update preferences' });
     }
-  }
+  } // update_preferences
 }; // module.exports
