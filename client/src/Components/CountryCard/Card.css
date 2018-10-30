@@ -27,6 +27,7 @@
 }
 .Card .Card_Header .Header_Country-Name .closeCountryPanelIcon {
   /* css for this */
+  border: 3px solid red;
 }
 .Card .Card_Header .Header_Country-Name .closeCountryPanelIcon:hover {
   cursor: pointer;
