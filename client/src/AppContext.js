@@ -81,6 +81,11 @@ export class AppContextProvider extends Component {
     console.log('HELLO WOrld', this.state.currentCountry);
   }
 
+  handleUpdatePreferences = (state) => {
+    // e.preventDefault();
+    console.log(state);
+  }
+
   // Update state with currently selected country, called in Map.js
   handleUpdateCurrentCountry = (code, info) => {
     this.setState({
@@ -146,6 +151,7 @@ export class AppContextProvider extends Component {
           handleSignIn: this.handleSignIn,
           handleSignOut: this.handleSignOut,
           handleSignUp: this.handleSignUp,
+          handleUpdatePreferences: this.handleUpdatePreferences,
           toggleCountryPanel: this.toggleCountryPanel
         }}
       >
