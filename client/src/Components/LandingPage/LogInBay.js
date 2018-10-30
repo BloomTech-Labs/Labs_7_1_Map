@@ -20,7 +20,7 @@ const SignUpModalStyles = {
   }
 };
 
-ReactModal.setAppElement('div');
+ReactModal.setAppElement(document.getElementById('App'));
 
 class LogInBay extends React.Component {
   state = {
