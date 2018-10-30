@@ -9,6 +9,11 @@ import {
   getCountryShapeFromCode,
   getCountryInfoFromCode
 } from '../../utils.js';
+import {
+  styleSelected,
+  styleHover,
+  countryStatusStyles
+} from './countryStyles.js';
 
 /* LEAFLET MAP SETUP START */
 // Marker (workaround for an issue with react-leaflet)
@@ -37,69 +42,6 @@ const mapTilesUrls = {
 const corner1 = L.latLng(90, -180);
 const corner2 = L.latLng(-90, 180);
 const bounds = L.latLngBounds(corner1, corner2);
-
-// Styles for the highlight of a clicked on country
-const styleSelected = {
-  stroke: true,
-  color: 'gold',
-  opacity: 1,
-  fill: true,
-  fillColor: 'gold',
-  fillOpacity: 0
-};
-
-const styleOther = {
-  stroke: true,
-  color: 'gray',
-  opacity: 1,
-  fill: true,
-  fillColor: 'gray',
-  fillOpacity: 0
-};
-
-const styleWishlist = {
-  stroke: true,
-  color: 'purple',
-  opacity: 1,
-  fill: true,
-  fillColor: 'purple',
-  fillOpacity: 0
-};
-
-const styleVisited = {
-  stroke: true,
-  color: 'red',
-  opacity: 1,
-  fill: true,
-  fillColor: 'red',
-  fillOpacity: 0
-};
-
-const styleLivedIn = {
-  stroke: true,
-  color: 'blue',
-  opacity: 1,
-  fill: true,
-  fillColor: 'blue',
-  fillOpacity: 0
-};
-
-const styleHome = {
-  stroke: true,
-  color: 'green',
-  opacity: 1,
-  fill: true,
-  fillColor: 'green',
-  fillOpacity: 0
-};
-
-// Styles for the highlight of a hovered over country
-const styleHover = {
-  stroke: false,
-  fill: true,
-  fillColor: 'gold',
-  fillOpacity: 0.3
-};
 /* LEAFLET MAP SETUP END */
 
 /* MAIN MAP COMPONENT START */
