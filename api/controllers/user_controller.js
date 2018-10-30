@@ -148,4 +148,4 @@ module.exports = {
       res.status(500).json({ error: 'Failed to update preferences' });
     }
   }
-}; // module.eports
+}; // module.exports

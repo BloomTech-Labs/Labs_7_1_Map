@@ -36,7 +36,7 @@ class ChangeEmail extends Component {
           Authorization: `Bearer ${token}`
         }
       };
-      const response = await axios.post(
+      const response = await axios.put(
         `${BACKEND_URL}/change_email`,
         body,
         options

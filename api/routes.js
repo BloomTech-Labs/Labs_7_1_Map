@@ -33,9 +33,11 @@ module.exports = server => {
   server.route('/api/login').post(authenticate, login);
   server.route('/api/facebook-login').post(facebook_login);
   server.route('/api/register').post(create_user);
-  server.route('/api/change_password').post(protected_route, change_password);
-  server.route('/api/change_email').post(protected_route, change_email);
-  server.route('/api/update_preferences').post(protected_route, update_preferences)
+
+  // Update settings
+  server.route('/api/change_password').put(protected_route, change_password);
+  server.route('/api/change_email').put(protected_route, change_email);
+  server.route('/api/update_preferences').put(protected_route, update_preferences)
 
   server.route('/api/get_user/:id').get(protected_route, get_user);
 
