@@ -1,42 +1,32 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { clearLocalstorage } from './utils.js';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 // new context
 const AppContext = React.createContext();
-const clearLocalstorage = () => {
-  // delete the tokens from the browser
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
-};
 
 // provider component
 export class AppContextProvider extends Component {
   state = {
-    test: 'Hello!',
     authenticated: false,
     user: {},
     userPosition: {
-      longitude: '',
-      latitude: ''
+      lat: 22.28552,
+      lng: 114.15769
     },
     currentCountry: {
       code: '',
       info: {}
     },
-    friends: [
-      { name: 'nalee' },
-      { name: 'jon' },
-      { name: 'thrun' },
-      { name: 'sdf' },
-      { name: 'sdfasf' },
-      { name: 'werwer' },
-      { name: 'wootie' }
-    ]
+    countryPanelIsOpen: false
   };
+
   async componentDidMount() {
+    // Check if a user is already logged in
     try {
+      // Retrieve token and user stored in local storage
       const token = localStorage.getItem('token');
       const user = await JSON.parse(localStorage.getItem('user'));
 
@@ -45,7 +35,7 @@ export class AppContextProvider extends Component {
           headers: { Authorization: `Bearer ${token}` }
         };
 
-        // get the user
+        // Get the user info from DB
         const response = await axios.get(
           `${BACKEND_URL}/get_user/${user.id}`,
           requestOptions
@@ -54,7 +44,7 @@ export class AppContextProvider extends Component {
         if (response.status === 200) {
           this.setState({
             authenticated: true,
-            user: response.data.user
+            user: { ...response.data }
           });
         } else {
           clearLocalstorage(); // response was not 200
@@ -63,27 +53,43 @@ export class AppContextProvider extends Component {
         clearLocalstorage(); // token or user not in localstorage
       }
     } catch (e) {
-      //failed async
+      // failed async
       clearLocalstorage(); // error encountered
     }
-  }
 
-  //to update state: userPosition, used in Map.js
-  handleUpdateUserPosition = (long, lat) => {
-    this.setState({
-      userPosition: {
-        longitude: long,
-        latitude: lat
-      }
+    // Ask for user location if browser is compatible
+    if ('geolocation' in navigator) this.hasGeolocation();
+  } // componentDidMount
+
+  hasGeolocation = () => {
+    // Browsers built-in method to get a user's location
+    navigator.geolocation.getCurrentPosition(position => {
+      this.updateUserPosition(
+        position.coords.latitude,
+        position.coords.longitude
+      );
     });
   };
 
-  //to update state: currentCountry (last clicked), called in Map.js
-  handleUpdateCurrentCountry = (code, info) => {
-    console.log('EDWARDRDRDRDz');
+  // Update the user's geolocation position
+  updateUserPosition = (lat, lng) => {
     this.setState({
-      currentCountry: { code, info }
+      userPosition: { lng, lat }
     });
+  };
+  updateCountryPanel() {
+    console.log('HELLO WOrld', this.state.currentCountry);
+  }
+
+  // Update state with currently selected country, called in Map.js
+  handleUpdateCurrentCountry = (code, info) => {
+    this.setState({
+      currentCountry: { code, info },
+      countryPanelIsOpen: true
+    });
+
+    // update the panel with current country
+    this.updateCountryPanel();
   };
 
   handleSignIn = async e => {
@@ -97,7 +103,7 @@ export class AppContextProvider extends Component {
       const user = await JSON.stringify(response.data.user);
       localStorage.setItem('token', response.data.jwt_token);
       localStorage.setItem('user', user);
-      this.setState({ authenticated: true, user: response.data.user });
+      this.setState({ authenticated: true, user: { ...response.data.user } });
     } catch (e) {
       // failed async
     }
@@ -125,6 +131,10 @@ export class AppContextProvider extends Component {
     this.setState({ authenticated: true, user: response.data.user });
   };
 
+  toggleCountryPanel = () => {
+    this.setState({ countryPanelIsOpen: !this.state.countryPanelIsOpen });
+  };
+
   render() {
     return (
       <AppContext.Provider
@@ -135,7 +145,8 @@ export class AppContextProvider extends Component {
           authenticated: this.state.authenticated,
           handleSignIn: this.handleSignIn,
           handleSignOut: this.handleSignOut,
-          handleSignUp: this.handleSignUp
+          handleSignUp: this.handleSignUp,
+          toggleCountryPanel: this.toggleCountryPanel
         }}
       >
         {this.props.children}

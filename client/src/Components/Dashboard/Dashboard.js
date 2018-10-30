@@ -3,6 +3,7 @@ import { AppContextConsumer } from '../../AppContext';
 
 import Map from '../Map/Map';
 import Nav from '../Nav/Nav';
+import CountryPanel from '../CountryCard/CountryPanel';
 import Legend from '../Legend/Legend';
 import Settings from '../Settings/Settings';
 import SearchCountry from '../SearchCountry/SearchCountry';
@@ -29,6 +30,7 @@ class Dashboard extends Component {
     return (
       <div className="Dashboard">
         <Nav toggleSettings={this.toggleSettings} />
+        <CountryPanel />
         <Legend />
         <AppContextConsumer>
           {value => (
@@ -42,11 +44,12 @@ class Dashboard extends Component {
           {value => {
             return (
               <Map
-                userPosition={value.AppState.UserPosition}
+                userPosition={value.AppState.userPosition}
                 updateUserPosition={value.updateUserPosition}
                 searchCountry={this.state.searchCountry}
                 updateCurrentCountry={value.updateCurrentCountry}
                 currentCountry={value.AppState.currentCountry}
+                user={value.AppState.user}
               />
             );
           }}

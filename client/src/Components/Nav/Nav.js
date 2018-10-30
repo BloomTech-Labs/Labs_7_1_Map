@@ -43,6 +43,7 @@ const Nav = props => {
             >
               Settings
             </div>
+
             <div className="MenuItem Right__signout" onClick={handleSignOut}>
               Sign Out
             </div>
