@@ -9,6 +9,7 @@ import {
   getCountryShapeFromCode,
   getCountryInfoFromCode
 } from '../../utils.js';
+import geojson2svg, {Renderer} from 'geojson-to-svg';
 
 /* LEAFLET MAP SETUP START */
 // Marker (workaround for an issue with react-leaflet)
@@ -68,8 +69,8 @@ class MapComponent extends Component {
   handleClick = async e => {
     // Get the country code of the location clicked on
     const countryCode = await wc([e.latlng.lng, e.latlng.lat]);
-
     const countryInfo = getCountryInfoFromCode(countryCode);
+    // const countryBorder = getCountryShapeFromCode(geojson.features.coordinates);
 
     // This can be removed once popup is not needed since
     // the lat/lng in local state isn't required by anything else.
