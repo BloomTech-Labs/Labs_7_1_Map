@@ -24,10 +24,17 @@ class SearchCountry extends Component {
     return (
       <form className="SearchCountry" onSubmit={this.handleSearchSubmit}>
         <FuzzySearch
-          list={world}
-          keys={['author', 'title']}
-          width={430}
-          onSelect={action('selected')}
+          className="MenuItem Center__search"
+          type="search"
+          name="search"
+          value={this.state.formValue}
+          onChange={e => this.handleSearchChange(e)}
+          list={[]}
+          keys={['name']}
+          width={200}
+          tokenize={true}
+          verbose={true}
+          onSelect={this.handleSearchSubmit}
         />
         {/* <input
           className="MenuItem Center__search"
