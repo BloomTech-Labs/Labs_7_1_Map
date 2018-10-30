@@ -1,11 +1,12 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "The scratch and map server",
-  "main": "server.js",
+  "description": "Scratch-N-Map",
+  "main": "app.js",
   "scripts": {
     "test": "jest --watch --verbose",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "heroku-postbuild": "cd client && npm install && npm run build && cd .."
   },
   "repository": {
     "type": "git",
@@ -50,5 +51,9 @@
       "<rootDir>/node_modules",
       "<rootDir>/client"
     ]
+  },
+  "engines": {
+    "node": "10.12.x",
+    "npm": "6.4.x"
   }
 }
