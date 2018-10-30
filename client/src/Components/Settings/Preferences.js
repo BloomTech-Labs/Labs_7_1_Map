@@ -40,7 +40,7 @@ class Preferences extends Component {
           />
         </div>
         <button onClick={() => this.props.handleUpdatePreferences(this.state)}>
-          Submit
+          Apply
         </button>
       </div>
     );
