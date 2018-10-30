@@ -3,6 +3,12 @@ import FuzzySearch from 'react-fuzzy';
 import world from 'country-data';
 import { getCountryCodeFromName } from '../../utils.js';
 
+const countries = [
+  {
+    name: world.countries
+  }
+];
+
 class SearchCountry extends Component {
   state = {
     formValue: ''
@@ -29,7 +35,7 @@ class SearchCountry extends Component {
           name="search"
           value={this.state.formValue}
           onChange={e => this.handleSearchChange(e)}
-          list={[]}
+          list={countries}
           keys={['name']}
           width={200}
           tokenize={true}
