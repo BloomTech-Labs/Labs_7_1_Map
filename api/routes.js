@@ -7,13 +7,6 @@ const {
   login,
   update_preferences
 } = require('./controllers/user_controller');
-const {
-  getNotes,
-  getNoteById,
-  postNote,
-  updateNote
-  // deleteNote
-} = require('./controllers/notesController');
 const passport = require('./utils/passport');
 const path = require('path');
 
@@ -43,22 +36,6 @@ module.exports = server => {
   server.route('/api/change_password').post(protected_route, change_password);
   server.route('/api/change_email').post(protected_route, change_email);
   server.route('/api/update_preferences').post(protected_route, update_preferences)
-
-
-  // Notes Routes
-  server.get('/api/note', (req, res) => {
-    res.status(200).json('Note API IS LIT');
-  });
-
-  server
-    .route('/api/notes')
-    .get(getNotes)
-    .post(postNote);
-  server
-    .route('/api/notes/:id')
-    .get(getNoteById)
-    .put(updateNote);
-  // .destroy(deleteNote);
 
   server.route('/api/get_user/:id').get(protected_route, get_user);
 
