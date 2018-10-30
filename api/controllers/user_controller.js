@@ -89,7 +89,7 @@ module.exports = {
     }
   }, // create_user
 
-  facebook_login: async (req, res) => {
+  facebook_loggedIn: async (req, res) => {
     /*
     res.json({ facebook: 'We in facebook now' });
     try {

@@ -67,15 +67,17 @@ passport.use(jwt_strategy); // using the jwt strategy
 
 // facebook strategy
 // load the credentials
-const FACEBOOK_APP_ID = '320480212099454';
-const FACE_APP_SECRET = 'd461bbe6b5905474ab5f46e346be0b93';
-const CALLBACK_URL = 'http://localhost:8000/api/facebook-success';
+const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
+const FACE_APP_SECRET = process.env.FACE_APP_SECRET;
+const FACEBOOK_APP_CALLBACK_URL_URL =
+  process.env.FACEBOOK_APP_CALLBACK_URL ||
+  'http://localhost:8000/api/facebook_login_success';
 
 // define the options object using the credentials object
 const FACEBOOK_OPTIONS = {
   clientID: FACEBOOK_APP_ID,
   clientSecret: FACE_APP_SECRET,
-  callbackURL: CALLBACK_URL,
+  callbackURL: FACEBOOK_APP_CALLBACK_URL_URL,
   profileFields: ['emails', 'name', 'user_friends']
 };
 

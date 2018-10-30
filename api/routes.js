@@ -3,7 +3,7 @@ const {
   login,
   change_password,
   change_email,
-  facebook_login,
+  facebook_loggedIn,
   get_user
 } = require('./controllers/user_controller');
 const {
@@ -19,8 +19,9 @@ const path = require('path');
 // session is false so we can use jwt
 const authenticate = passport.authenticate('local', { session: false });
 const facebook_authentication = passport.authenticate('facebook', {
-  successRedirect: '/api/facebook-success',
-  failureRedirect: '/api/login-failure'
+  scope: ['email', 'user_friends'],
+  successRedirect: '/api/facebook_login_success',
+  failureRedirect: '/api/login_failure'
 });
 const protected_route = passport.authenticate('jwt', { session: false });
 
@@ -37,13 +38,13 @@ module.exports = server => {
   });
 
   // test route
-  server.get('/api/login-failure', (req, res) => {
+  server.get('/api/login_failure', (req, res) => {
     res.status(400).json({ msg: 'Failed to login in' });
   });
 
   server.route('/api/login').post(authenticate, login);
-  server.route('/api/facebook-login').get(facebook_authentication);
-  server.route('/api/facebook-success').get(facebook_login);
+  server.route('/api/facebook_login').get(facebook_authentication);
+  server.route('/api/facebook_login_success').get(facebook_loggedIn);
   server.route('/api/register').post(create_user);
   server.route('/api/change_password').post(protected_route, change_password);
   server.route('/api/change_email').post(protected_route, change_email);
