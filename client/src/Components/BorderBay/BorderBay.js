@@ -6,30 +6,10 @@ import 'rc-slider/assets/index.css';
 
 const marks = {
   0: 'No Interest',
-  1: {
-    style: {
-      color: 'pink'
-    },
-    label: 'Wishlist'
-  },
-  2: {
-    style: {
-      color: 'yellow'
-    },
-    label: 'Transited'
-  },
-  3: {
-    style: {
-      color: 'green'
-    },
-    label: 'Visited'
-  },
-  4: {
-    style: {
-      color: 'blue'
-    },
-    label: 'Lived'
-  }
+  1: { style: { color: 'pink' }, label: 'Wishlist' },
+  2: { style: { color: 'yellow' }, label: 'Transited' },
+  3: { style: { color: 'green' }, label: 'Visited' },
+  4: { style: { color: 'blue' }, label: 'Lived' }
 };
 
 const log = value => {
