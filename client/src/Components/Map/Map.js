@@ -131,6 +131,7 @@ class MapComponent extends Component {
             )
         )}
 
+        {/* Render a layer for each country in the user object */}
         {this.props.user && this.props.user.countries
           ? this.props.user.countries.map((country, i) => {
               // get countries geojson shape
@@ -138,9 +139,10 @@ class MapComponent extends Component {
                 country.country_code
               );
               // TODO: get style for corresponding status code
+              const style = countryStatusStyles[country.status_code]
               // render geojson layer
               return (
-                <GeoJSON key={i} data={countryShape} style={styleSelected} />
+                <GeoJSON key={i} data={countryShape} style={style} />
               );
             })
           : null}
