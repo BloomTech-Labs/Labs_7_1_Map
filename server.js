@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 // bring in the routes
 const routes = require('./api/routes');
