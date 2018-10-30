@@ -12,7 +12,6 @@ export function getCountryCodeFromName(countryName) {
     feature =>
       feature.properties.name.toLowerCase() === countryName.toLowerCase()
   );
-  if (!countryFeature) console.log('There is no country by that name');
   return countryFeature ? countryFeature.id : null;
 }
 
@@ -23,4 +22,10 @@ export function getCountryInfoFromCode(countryCode) {
       emoji: ''
     }
   );
+}
+
+export function clearLocalstorage() {
+  // delete the tokens from the browser
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
 }

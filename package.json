@@ -1,11 +1,12 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "The scratch and map server",
-  "main": "server.js",
+  "description": "Scratch-N-Map",
+  "main": "app.js",
   "scripts": {
     "test": "jest --watch --verbose",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "heroku-postbuild": "cd client && npm install && npm run build && cd .."
   },
   "repository": {
     "type": "git",
@@ -33,11 +34,13 @@
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
     "helmet": "^3.14.0",
+    "i": "^0.3.6",
     "jsonwebtoken": "^8.3.0",
     "mongodb-memory-server": "^2.6.0",
     "mongoose": "^5.3.4",
     "morgan": "^1.9.1",
     "node-gyp": "^3.8.0",
+    "npm": "^6.4.1",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-jwt": "^4.0.0",
@@ -48,5 +51,9 @@
       "<rootDir>/node_modules",
       "<rootDir>/client"
     ]
+  },
+  "engines": {
+    "node": "10.12.x",
+    "npm": "6.4.x"
   }
 }
