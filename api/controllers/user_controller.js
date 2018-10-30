@@ -115,16 +115,37 @@ module.exports = {
       if (DEV) console.log(err);
       res.status(500).json({ error: 'Failed to get user!' });
     }
-  },
+  }, // get_user
 
   login: async (req, res) => {
     try {
       // we only reach here because we are authenticated
-      const user = { id: req.user.id, username: req.user.username, countries: req.user.countries }; // add the things you need to send
+      const user = {
+        id: req.user.id,
+        username: req.user.username,
+        countries: req.user.countries
+      }; // add the things you need to send
       res.status(200).json({ jwt_token: make_token(req.user), user });
     } catch (err) {
       if (DEV) console.log(err);
       res.status(500).json({ error: 'Internal server error!' });
     }
-  } // login
+  }, // login
+
+  update_preferences: async (req, res) => {
+    try {
+      // find user and update preferences object
+      const { username, preferences } = req.body;
+      const updatedUser = await User.findOneAndUpdate(
+        { username },
+        { preferences },
+        { new: true }
+      );
+
+      res.status(200).json(updatedUser);
+    } catch (err) {
+      if (DEV) console.log(err);
+      res.status(500).json({ error: 'Failed to update preferences' });
+    }
+  }
 }; // module.eports

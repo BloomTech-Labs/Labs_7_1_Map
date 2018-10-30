@@ -1,10 +1,11 @@
 const {
   create_user,
-  login,
   change_password,
   change_email,
   facebook_login,
-  get_user
+  get_user,
+  login,
+  update_preferences
 } = require('./controllers/user_controller');
 const {
   getNotes,
@@ -41,6 +42,7 @@ module.exports = server => {
   server.route('/api/register').post(create_user);
   server.route('/api/change_password').post(protected_route, change_password);
   server.route('/api/change_email').post(protected_route, change_email);
+  server.route('/api/update_preferences').post(protected_route, update_preferences)
 
 
   // Notes Routes
