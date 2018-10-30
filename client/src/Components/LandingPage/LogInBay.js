@@ -4,8 +4,6 @@ import { AppContextConsumer } from '../../AppContext';
 
 import './LogInBay.css';
 
-// ReactModal.setAppElement('div');
-
 const SignUpModalStyles = {
   content: {
     display: 'flex',
@@ -21,6 +19,8 @@ const SignUpModalStyles = {
     border: '3px dashed red'
   }
 };
+
+ReactModal.setAppElement(document.getElementById('App'));
 
 class LogInBay extends React.Component {
   state = {
