@@ -138,6 +138,16 @@ module.exports = {
       //  e.g. { theme: 'light', autoscratch: true }
       const { username, preferences } = req.body;
 
+      // Return an error if a username or valid preferences object is not provided
+      if (!username)
+        res
+          .status(400)
+          .json({ error: 'You did not provide a username!' });
+      if (!preferences)
+        res
+          .status(400)
+          .json({ error: 'You did not provide preferences!' });
+
       const updatedUser = await User.findOneAndUpdate(
         { username },
         { preferences },

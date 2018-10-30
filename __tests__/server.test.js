@@ -266,7 +266,6 @@ describe('User', () => {
       }
 
       const response = await request(server).put(`/api/update_preferences`).send(updatedPreferences)
-      console.log(response.body)
       expect(response.status).toBe(200);
       expect(response.body).toBeDefined();
       expect(response.body.username).toBeDefined();
