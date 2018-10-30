@@ -44,7 +44,17 @@ const UserSchema = new Schema(
         }, //0, 1, 2, 3, 4
         notes: String
       }
-    ]
+    ],
+    preferences: {
+      theme: {
+        type: String,
+        default: 'dark'
+      },
+      autoscratch: {
+        type: Boolean,
+        default: false
+      }
+    }
     // social: [
     //   {
     //     provider: String,
