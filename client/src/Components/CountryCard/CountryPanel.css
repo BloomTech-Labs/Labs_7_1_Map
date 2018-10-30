@@ -7,4 +7,13 @@
   height: auto;
   width: auto;
   padding: 10px;
+  animation: Settings 0.5s all;
+  transition-property: all;
+  transition-duration: 0.8s;
+}
+.CountryPanel .CountryPanel-closed {
+  right: -300px;
+}
+.CountryPanel .CountryPanel-open {
+  right: 0px;
 }

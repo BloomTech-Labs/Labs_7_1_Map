@@ -10,7 +10,7 @@ import './Card.css';
 
 const Card = () => {
   return (
-    <div className="Card">
+    <div className="Card ">
       <AppContextConsumer>
         {value => (
           <React.Fragment>

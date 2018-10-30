@@ -9,7 +9,11 @@ const CountryPanel = () => {
       <AppContextConsumer>
         {value => (
           <React.Fragment>
-            {value && value.AppState.countryPanelIsOpen ? <Card /> : ''}
+            {value && value.AppState.countryPanelIsOpen ? (
+              <Card open={value.AppState.countryPanelIsOpen} />
+            ) : (
+              ''
+            )}
           </React.Fragment>
         )}
       </AppContextConsumer>
