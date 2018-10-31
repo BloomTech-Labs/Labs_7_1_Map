@@ -3,7 +3,7 @@ import { AppContextConsumer } from '../../AppContext';
 
 import Map from '../Map/Map';
 import Nav from '../Nav/Nav';
-import CountryPanel from '../CountryCard/CountryPanel';
+import CountryPanel from '../CountryPanel/CountryPanel';
 import Legend from '../Legend/Legend';
 import Settings from '../Settings/Settings';
 import SearchCountry from '../SearchCountry/SearchCountry';
