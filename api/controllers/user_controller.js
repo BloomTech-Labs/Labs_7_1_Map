@@ -95,20 +95,20 @@ module.exports = {
   }, // create_user
 
   facebook_loggedIn: async (req, res) => {
-    /*
-    res.json({ facebook: 'We in facebook now' });
     try {
       // we only reach here because we are authenticated
-      res.status(200).json({ jwt_token: make_token(req.user) });
+      const user = {
+        id: req.user.id,
+        username: req.user.username,
+        countries: req.user.countries
+      }; // add the things you need to send
+      res.status(200).json({ jwt_token: make_token(req.user), user });
     } catch (err) {
       if (DEV) {
         console.log(err);
       }
       res.status(500).json({ error: 'Internal server error!' });
     }
-    */
-    console.log(req.user, 'PPPPP');
-    res.status(200).json({ msg: 'Worked!' });
   }, // facebook_login
 
   get_user: async (req, res) => {
