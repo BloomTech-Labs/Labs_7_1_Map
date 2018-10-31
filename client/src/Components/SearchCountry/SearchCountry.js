@@ -3,10 +3,26 @@ import FuzzySearch from 'react-fuzzy';
 import world from 'country-data';
 import { getCountryCodeFromName } from '../../utils.js';
 
+const names = [];
+getNames(world, 'name');
+// document.write('names: ' + names.join(', '));
+
+function getNames(obj, name) {
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      if ('object' === typeof obj[key]) {
+        getNames(obj[key], name);
+      } else if (key === name) {
+        names.push(obj[key]);
+      }
+    }
+  }
+}
+
 class SearchCountry extends Component {
   state = {
     // formValue: ''
-    name: ''
+    name: names
   };
 
   // handleSearchChange = e => {
@@ -30,8 +46,8 @@ class SearchCountry extends Component {
           width={200}
           verbose={true}
           onSelect={this.handleSubmit}
-          // keys={['name']}
-          // tokenize={true}
+          tokenize={true}
+          keys={['name']}
         />
         {/* <input
           className="MenuItem Center__search"
