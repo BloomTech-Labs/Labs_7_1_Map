@@ -57,9 +57,10 @@ class MapComponent extends Component {
       ? [this.props.userPosition.lat, this.props.userPosition.lng]
       : [0, 0];
 
-    const theme = this.props.user && this.props.user.preferences
-      ? this.props.user.preferences.theme
-      : 'dark';
+    const theme =
+      this.props.user && this.props.user.preferences
+        ? this.props.user.preferences.theme
+        : 'dark';
 
     return (
       <Map
@@ -107,16 +108,15 @@ class MapComponent extends Component {
             )
         )}
 
-        {/* Render a layer for each country in the user object */}
+        {/* Render a layer for each country saved in user's 'countries' array */}
         {this.props.user && this.props.user.countries
           ? this.props.user.countries.map((country, i) => {
-              // get countries geojson shape
-              const countryShape = getCountryShapeFromCode(
-                country.country_code
-              );
-              // TODO: get style for corresponding status code
-              const style = countryStatusStyles[country.status_code];
-              // render geojson layer
+              const { country_code, status_code } = country;
+              // get geojson shape using helper function in `utils.js`
+              const countryShape = getCountryShapeFromCode(country_code);
+              // Get the corresponding style from status code from `countryStyles.js`
+              const style = countryStatusStyles[status_code];
+              // render geojson layer with the correct shape and style
               return <GeoJSON key={i} data={countryShape} style={style} />;
             })
           : null}
