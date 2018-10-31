@@ -1,139 +1,90 @@
 const User = require('../models/user');
 
+//note from nalee
+//current route for this is localhost:8000/api/country_status
+//it currently is accepting a json object with the following structure
+/*
+{
+  country_code: '',
+  status_code: '',
+  username: '',
+  name: ''
+}
+*/
+
 module.exports = {
   handle_status: (req, res) => {
-    const username = 'SuperKewl';
-    const countryToEdit = 'USA';
-    const countryThatIsIn = 'AUS';
 
-    const query1 = {
+    const { country_code, status_code, username, name } = req.body;
+
+    //below are queries
+
+    const queryUserCountry = {
       $and: [
         { 'username': username },
         {
-          'countries': {$elemMatch: {'country_code': 'CAN'}}
+          'countries': {$elemMatch: {'country_code': country_code}}
         }
       ]
     };
-
-    const query = {
+    const queryUser = {
       "username": username
-      // "username":  {$elemMatch: {country_code:"AUS"}}
     };
 
-    const query2 = {
-      "countries.country_code": "AUS"
-    }
-    const sort = [];
-    const operator1 = {
+    //below are operators
+    const editCountry = {
       $set: {
-        'countries.$.country_code': 'CAN'
+        'countries.$.status_code': status_code
       }
     };
 
-    const operator2 = {
+    const createCountry = {
       $push: {
         countries: {
-          country_code: 'CAN',
-          name: 'Canada',
-          status_code: 0,
-          notes: ''
+          'country_code': country_code,
+          'name': name,
+          'status_code': status_code,
+          'notes': ''
         }
       }
     };
+
+    //below is the option to return the document, after it is edited, from
+    //findOneAndUpdate()
+
     const options = {
+      //cant get this to work
       new: true
+      // {returnOriginal:false}
     };
 
-    const options2 = {};
-
-    //i have to use a query to select the document which i have to update,
-    //however when pushing to the array, that is because there is none in there
-    //so how do i query something because it's missing an item?
-
-    User.findOne(query1).then(result => {
+    //logic for below:
+    //1. searches for document that includes user & country (findOne)
+    //2. If fails, that means user does not have the country
+        // it will create a new country object for that use with all of the information from the req.body (updateOne)
+    //2. If #1 succeeds, it will update the user countries code with the status_code from the req.body (findOneAndUpdate)
+    User.findOne(queryUserCountry).then(result => {
       console.log(result);
       if (result !== null) {
-      User.findOneAndUpdate(query2, operator1, options)
+      User.findOneAndUpdate(queryUserCountry, editCountry, options)
         .then( newDoc => {
         res.status(200).json(newDoc);
         })
         .catch( err => {
-          console.log(err, '1');
+          res.status(400).json({error: 'failure to update country status'});
         })
       } else {
-        User.updateOne(query, operator2)
+        User.updateOne(queryUser, createCountry)
           .then( newDoc => {
             res.status(201).json(newDoc);
           })
           .catch( err => {
-            console.log(err, '2');
+            res.status(409).json({error: 'failure to create new country'});
           })
       }
     })
-    // .catch( err => {
-    //   console.log('findOne broken', err);
-    // })
+    .catch( err => {
+      res.status(500).json({error: 'failure to initiate query'});
+    })
   }
 };
-
-//     User.updateOne(query, operator2)
-//       .then( newDoc => {
-//         res.status(201).json(newDoc);
-//       })
-//   }
-// };
-
-//below paragraph is good
-
-// User.findOneAndUpdate(query, operator, options)
-//   .then( newDoc => {
-//     res.status(200).json(newDoc);
-//   })
-
-// if(err) throw err;
-// if(!doc) {
-//   console.log("did not update");
-// }
-// else {
-//   console.log(doc);
-
-// return db.close();
-
-//ok so now i can find and update an object within the array
-// i need to first check if the object is in there
-
-// user.find({countries: {$elemMatch: {country_code:'CHN'}}})
-// .then(result => {
-//   res.status(200).json(result);
-// user
-// .updateOne(query, update);
-// .catch( err => {
-//   res.status(399).json({message: 'there was an error!', err})
-// })
-
-// .catch( err => {
-//   res.status(399).json({message: 'there was an error!', err})
-// })
-/*
-
-  */
-
-// user.find({countries: {$elemMatch: {country_code:'CHN'}}})
-//   .then(result => {
-//     console.log(result);
-//     res.status(200).json(result);
-//   })
-// // user.updateOne(
-// //   { "countries.country_code": "CHN"},
-// //   { "$set": { "countries.$.country_code": "USA"}}
-// // )
-// .catch( err => {
-//   res.status(399).json({message: 'there was an error!', err})
-// })
-
-// handle_status: async (req, res) => {
-//   const query = {countries: {$elemMatch: {country_code:'CHN'}}}
-//   const sort  [];
-//   const operator = { <operator1>: {}}
-//   user.findAndModify()
-//   }
