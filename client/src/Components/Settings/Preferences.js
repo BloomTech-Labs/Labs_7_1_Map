@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import mapTilesUrls from '../Map/mapSetup.js';
 
 import './Preferences.css';
 
