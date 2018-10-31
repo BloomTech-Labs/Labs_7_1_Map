@@ -1,10 +1,15 @@
 const passport = require('passport');
 require('dotenv').config();
 
+// local
 const LocalStrategy = require('passport-local').Strategy;
+
+// jwt
 const { ExtractJwt } = require('passport-jwt');
 const JwtStrategy = require('passport-jwt').Strategy;
-//const OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
+
+// facebook
+const FacebookStrategy = require('passport-facebook').Strategy;
 
 const User = require('../models/user');
 
@@ -23,7 +28,6 @@ const local_strategy = new LocalStrategy(async (username, password, done) => {
         // authenticated, so pass on some of the user fields
 
         return done(null, found);
-
       } else {
         // wrong password
         return done(null, false, { message: 'Incorrect credentials.' });
@@ -50,9 +54,9 @@ const jwt_strategy = new JwtStrategy(jwtOptions, async (payload, done) => {
     // get a user using the id
     const found = await User.findById(payload.sub).select('-password');
     if (found) {
-      done(null, found); // found user
+      return done(null, found); // found user
     } else {
-      done(null, false); // not found
+      return done(null, false); // not found
     }
   } catch (err) {
     if (DEV) console.log(err);
@@ -62,19 +66,72 @@ const jwt_strategy = new JwtStrategy(jwtOptions, async (payload, done) => {
 passport.use(jwt_strategy); // using the jwt strategy
 
 // facebook strategy
-/*
-passport.use('provider', new OAuth2Strategy({
-	authorizationURL: 'https://www.provider.com/oauth2/authorize',
-	tokenURL: 'https://www.provider.com/oauth2/token',
-	clientID: '123-456-789',
-	clientSecret: 'shhh-its-a-secret'
-    callbackURL: 'https://www.example.com/auth/provider/callback'
-},
-	function (accessToken, refreshToken, profile, done) {
-		User.findOrCreate(..., function (err, user) {
-			done(err, user);
-		});
-	}
-)); // using the facebook strategy
-*/
+// load the credentials
+const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
+const FACE_APP_SECRET = process.env.FACE_APP_SECRET;
+const FACEBOOK_APP_CALLBACK_URL_URL =
+  process.env.FACEBOOK_APP_CALLBACK_URL ||
+  'http://localhost:8000/api/facebook_callback';
+
+// define the options object using the credentials object
+const FACEBOOK_OPTIONS = {
+  clientID: FACEBOOK_APP_ID,
+  clientSecret: FACE_APP_SECRET,
+  callbackURL: FACEBOOK_APP_CALLBACK_URL_URL,
+  profileFields: ['id', 'emails', 'name']
+};
+
+// feed the strategy with options and callback function
+const facebook_strategy = new FacebookStrategy(FACEBOOK_OPTIONS, async function(
+  accessToken,
+  refreshToken,
+  profile,
+  done
+) {
+  try {
+    const found = await User.findOne({ 'facebook.id': profile.id });
+
+    if (found) {
+      return done(null, found); // found user
+    } else {
+      const email = profile.emails[0].value;
+
+      const facebook = {
+        id: profile.id,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        email: email,
+        last_name: profile.name.familyName,
+        first_name: profile.name.givenName
+      };
+
+      // find by email, if found, update else create
+
+      const found_by_email = await User.findOne({ email });
+      if (found_by_email) {
+        const updated_user = await User.findOneAndUpdate(
+          { email },
+          { facebook },
+          { new: true }
+        );
+        return done(null, updated_user);
+      } else {
+        // create user
+        const new_user = new User({
+          email,
+          username: email,
+          facebook
+        });
+        const created_user = await new_user.save();
+        return done(null, created_user);
+      }
+    }
+  } catch (err) {
+    if (DEV) console.log(err);
+    return done(null, false, { message: 'Internal Error.' });
+  }
+});
+// use the facebook_strategy
+passport.use(facebook_strategy);
+
 module.exports = passport;
