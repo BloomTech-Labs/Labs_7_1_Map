@@ -69,7 +69,7 @@ export class AppContextProvider extends Component {
         position.coords.longitude
       );
     });
-  };
+  }; // hasGeolocation
 
   // Update the user's geolocation position
   updateUserPosition = (lat, lng) => {
@@ -79,7 +79,45 @@ export class AppContextProvider extends Component {
   };
   updateCountryPanel() {
     console.log('HELLO WOrld', this.state.currentCountry);
-  }
+  } // updateUserPosition
+
+  handleUpdatePreferences = async preferences => {
+    // TODO: Abort if preferences does not have valid values
+    try {
+      const body = {
+        username: this.state.user.username,
+        preferences
+      };
+
+      const options = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      };
+
+      const request = await axios.put(
+        `${BACKEND_URL}/update_preferences`,
+        body,
+        options
+
+      );
+      if (request.status === 200)
+        console.log(
+          'Preferences were updated successfully!',
+          request.status,
+          request.body
+        );
+
+      if (request.status === 400)
+        console.log(
+          'Preferences failed to update!',
+          request.status,
+          request.body
+        );
+    } catch (err) {
+        console.error('There was an error trying to update preferences!');
+    }
+  }; // update_preferences
 
   // Update state with currently selected country, called in Map.js
   handleUpdateCurrentCountry = (code, info) => {
@@ -107,12 +145,12 @@ export class AppContextProvider extends Component {
     } catch (e) {
       // failed async
     }
-  };
+  }; // handleSignIn
 
   handleSignOut = () => {
     this.setState({ authenticated: false, user: {} });
     clearLocalstorage();
-  };
+  }; // handleSignOut
 
   handleSignUp = async e => {
     e.preventDefault();
@@ -133,7 +171,7 @@ export class AppContextProvider extends Component {
 
   toggleCountryPanel = () => {
     this.setState({ countryPanelIsOpen: !this.state.countryPanelIsOpen });
-  };
+  }; // handleSignUp
 
   render() {
     return (
@@ -146,6 +184,7 @@ export class AppContextProvider extends Component {
           handleSignIn: this.handleSignIn,
           handleSignOut: this.handleSignOut,
           handleSignUp: this.handleSignUp,
+          handleUpdatePreferences: this.handleUpdatePreferences,
           toggleCountryPanel: this.toggleCountryPanel
         }}
       >

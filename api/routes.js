@@ -1,34 +1,34 @@
 const {
-  create_user,
-  login,
-  change_password,
   change_email,
-  facebook_login,
-  get_user
+  change_password,
+  create_user,
+  facebook_loggedIn,
+  get_user,
+  get_users,
+  login,
+  update_preferences
 } = require('./controllers/user_controller');
-const {
-  getNotes,
-  getNoteById,
-  postNote,
-  updateNote
-  // deleteNote
-} = require('./controllers/notesController');
 
 //below handles the status change of country
-const {
-  handle_status
-} = require('./controllers/statusController');
+const { handle_status } = require('./controllers/statusController');
 
 const passport = require('./utils/passport');
 const path = require('path');
 
 // session is false so we can use jwt
 const authenticate = passport.authenticate('local', { session: false });
-const facebook_authentication = passport.authenticate('facebook', {
-  successRedirect: '/',
-  failureRedirect: '/login'
-});
 const protected_route = passport.authenticate('jwt', { session: false });
+
+// facebook strategy
+const facebook_authentication = passport.authenticate('facebook', {
+  scope: ['email', 'user_friends'],
+  session: false
+});
+
+const facebook_authentication_callback = passport.authenticate('facebook', {
+  session: false,
+  failureRedirect: '/api'
+});
 
 // export the routes
 module.exports = server => {
@@ -42,30 +42,28 @@ module.exports = server => {
     res.status(200).json({ msg: 'Entry allowed' });
   });
 
-  server.route('/api/login').post(authenticate, login);
-  server.route('/api/facebook-login').post(facebook_login);
-  server.route('/api/register').post(create_user);
-  server.route('/api/change_password').post(protected_route, change_password);
-  server.route('/api/change_email').post(protected_route, change_email);
-
-  // Notes Routes
-  server.get('/api/note', (req, res) => {
-    res.status(200).json('Note API IS LIT');
+  // test route
+  server.get('/api/login_failure', (req, res) => {
+    res.status(400).json({ msg: 'Failed to login in' });
   });
 
+  server.route('/api/login').post(authenticate, login);
+  server.route('/api/register').post(create_user);
+  server.route('/api/facebook_login').get(facebook_authentication);
   server
-    .route('/api/notes')
-    .get(getNotes)
-    .post(postNote);
-  server
-    .route('/api/notes/:id')
-    .get(getNoteById)
-    .put(updateNote);
-  // .destroy(deleteNote);
+    .route('/api/facebook_callback')
+    .get(facebook_authentication_callback, facebook_loggedIn);
 
-    // Country Status Route
-    server.route('/api/country_status').post(handle_status);
+  // Country Status Route
+  server.route('/api/country_status').post(handle_status);
+
+  // Update settings
+  server.route('/api/change_password').put(protected_route, change_password);
+  server.route('/api/change_email').put(protected_route, change_email);
+  server
+    .route('/api/update_preferences')
+    .put(protected_route, update_preferences);
 
   server.route('/api/get_user/:id').get(protected_route, get_user);
-
+  server.route('/api/get_users/').get(get_users); // TODO: protect this route one
 };

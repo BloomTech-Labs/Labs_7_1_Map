@@ -17,7 +17,6 @@ const UserSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
       minlength: 6
     },
     email: {
@@ -28,6 +27,14 @@ const UserSchema = new Schema(
     },
     firstname: String,
     lastname: String,
+    facebook: {
+      id: String,
+      accessToken: String,
+      refreshToken: String,
+      email: String,
+      last_name: String,
+      first_name: String
+    },
     countries: [
       {
         country_code: {
@@ -44,7 +51,19 @@ const UserSchema = new Schema(
         }, //0, 1, 2, 3, 4
         notes: String
       }
-    ]
+    ],
+    preferences: {
+      theme: {
+        type: String,
+        required: true,
+        default: 'dark'
+      },
+      autoscratch: {
+        type: Boolean,
+        required: true,
+        default: false
+      }
+    }
     // social: [
     //   {
     //     provider: String,
@@ -63,7 +82,7 @@ UserSchema.pre('save', async function(next) {
     this.password = await argon2.hash(this.password);
     next();
   } catch (err) {
-    if (Dev) {
+    if (DEV) {
       console.log(err);
     }
   }
@@ -78,11 +97,6 @@ UserSchema.methods.check_password = async function(entered_password) {
       console.log(err);
     }
   }
-};
-
-//get all notes for user
-UserSchema.methods.get_notes = async function() {
-  await this.populate('notes');
 };
 
 // export the user schema
