@@ -133,21 +133,17 @@ module.exports = {
   }, // login
 
   update_preferences: async (req, res) => {
+    // req.body.preferences should be an object with properties for each setting
+    //  e.g. { theme: 'light', autoscratch: true }
+    const { username, preferences } = req.body;
+
+    if (!username || !preferences)
+      res
+        .status(400)
+        .json({ error: 'You did not provide a username or preferences!' });
+
     try {
-      // req.body.preferences should be an object with properties for each setting
-      //  e.g. { theme: 'light', autoscratch: true }
-      const { username, preferences } = req.body;
-
       // Return an error if a username or valid preferences object is not provided
-      if (!username)
-        res
-          .status(400)
-          .json({ error: 'You did not provide a username!' });
-      if (!preferences)
-        res
-          .status(400)
-          .json({ error: 'You did not provide preferences!' });
-
       const updatedUser = await User.findOneAndUpdate(
         { username },
         { preferences },
@@ -156,7 +152,6 @@ module.exports = {
 
       res.status(200).json(updatedUser);
     } catch (err) {
-      if (DEV) console.log(err);
       res.status(500).json({ error: 'Failed to update preferences' });
     }
   } // update_preferences

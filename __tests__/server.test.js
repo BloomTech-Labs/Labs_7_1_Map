@@ -255,7 +255,6 @@ describe('User', () => {
       const newUser = await request(server).post(`/api/register`).send(testUserInfo)
 
       expect(newUser.status).toBe(200);
-      console.log(newUser.body)
 
       const updatedPreferences = {
         username: 'updatepreferences1',
@@ -272,6 +271,27 @@ describe('User', () => {
       expect(response.body.preferences).toBeDefined();
       expect(response.body.preferences.theme).toBe('light');
       expect(response.body.preferences.autoscratch).toBe(false);
+    })
+
+    it('update_preferences rejects request if username is not provided', async () => {
+      const testUserInfo = {
+        username: 'updatepreferences2',
+        password: '123456',
+        email: 'update_preferences2@test.com'
+      }
+
+      const newUser = await request(server).post(`/api/register`).send(testUserInfo)
+
+      expect(newUser.status).toBe(200);
+
+      const updatedPreferences = {
+        username: 'updatepreferences2',
+      }
+
+      const response = await request(server).put(`/api/update_preferences`).send(updatedPreferences)
+      expect(response.status).toBe(400);
+      expect(response.body.username).toBeUndefined();
+      expect(response.body.preferences).toBeUndefined();
     })
   })
 });
