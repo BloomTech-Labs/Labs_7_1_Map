@@ -10,7 +10,7 @@ module.exports = {
       $and: [
         { 'username': username },
         {
-          'countries': {$elemMatch: {'country_code': 'USA'}}
+          'countries': {$elemMatch: {'country_code': 'CAN'}}
         }
       ]
     };
@@ -19,18 +19,22 @@ module.exports = {
       "username": username
       // "username":  {$elemMatch: {country_code:"AUS"}}
     };
+
+    const query2 = {
+      "countries.country_code": "AUS"
+    }
     const sort = [];
     const operator1 = {
       $set: {
-        'countries.$.country_code': 'LAO'
+        'countries.$.country_code': 'CAN'
       }
     };
 
     const operator2 = {
       $push: {
         countries: {
-          country_code: 'AUS',
-          name: 'Austrailia',
+          country_code: 'CAN',
+          name: 'Canada',
           status_code: 0,
           notes: ''
         }
@@ -48,23 +52,23 @@ module.exports = {
 
     User.findOne(query1).then(result => {
       console.log(result);
-      // if (result !== null) {
-      // User.findOneAndUpdate(query, operator1, options)
-      //   .then( newDoc => {
-      //   res.status(200).json(newDoc);
-      //   })
-      //   .catch( err => {
-      //     console.log(err, '1');
-      //   })
-      // } else {
-      //   User.updateOne(query, operator2)
-      //     .then( newDoc => {
-      //       res.status(201).json(newDoc);
-      //     })
-      //     .catch( err => {
-      //       console.log(err, '2');
-      //     })
-      // }
+      if (result !== null) {
+      User.findOneAndUpdate(query2, operator1, options)
+        .then( newDoc => {
+        res.status(200).json(newDoc);
+        })
+        .catch( err => {
+          console.log(err, '1');
+        })
+      } else {
+        User.updateOne(query, operator2)
+          .then( newDoc => {
+            res.status(201).json(newDoc);
+          })
+          .catch( err => {
+            console.log(err, '2');
+          })
+      }
     })
     // .catch( err => {
     //   console.log('findOne broken', err);
