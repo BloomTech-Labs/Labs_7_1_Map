@@ -18,12 +18,17 @@ const path = require('path');
 
 // session is false so we can use jwt
 const authenticate = passport.authenticate('local', { session: false });
+const protected_route = passport.authenticate('jwt', { session: false });
+
+// facebook strategy
 const facebook_authentication = passport.authenticate('facebook', {
-  scope: ['email', 'user_friends'],
+  scope: ['email', 'user_friends']
+});
+
+const facebook_authentication_callback = passport.authenticate('facebook', {
   successRedirect: '/api/facebook_login_success',
   failureRedirect: '/api/login_failure'
 });
-const protected_route = passport.authenticate('jwt', { session: false });
 
 // export the routes
 module.exports = server => {
@@ -43,9 +48,12 @@ module.exports = server => {
   });
 
   server.route('/api/login').post(authenticate, login);
-  server.route('/api/facebook_login').get(facebook_authentication);
-  server.route('/api/facebook_login_success').get(facebook_loggedIn);
   server.route('/api/register').post(create_user);
+  server.route('/api/facebook_login').get(facebook_authentication);
+  server
+    .route('/api/facebook_login_callback')
+    .get(facebook_authentication_callback);
+  server.route('/api/facebook_login_success').get(facebook_loggedIn);
   server.route('/api/change_password').post(protected_route, change_password);
   server.route('/api/change_email').post(protected_route, change_email);
 

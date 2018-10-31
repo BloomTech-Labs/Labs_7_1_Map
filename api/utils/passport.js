@@ -71,25 +71,27 @@ const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
 const FACE_APP_SECRET = process.env.FACE_APP_SECRET;
 const FACEBOOK_APP_CALLBACK_URL_URL =
   process.env.FACEBOOK_APP_CALLBACK_URL ||
-  'http://localhost:8000/api/facebook_login_success';
+  'http://localhost:8000/api/facebook_login_callback';
 
 // define the options object using the credentials object
 const FACEBOOK_OPTIONS = {
   clientID: FACEBOOK_APP_ID,
   clientSecret: FACE_APP_SECRET,
   callbackURL: FACEBOOK_APP_CALLBACK_URL_URL,
-  profileFields: ['emails', 'name', 'user_friends']
+  profileFields: ['id', 'emails', 'name']
 };
 
-// define a call function
+// define a callback function
 const FACEBOOK_CALLBACK = function(accessToken, refreshToken, profile, done) {
+  console.log('HHHHHDJHGDJHGDJG');
   /*
-  User.findOrCreate(..., function (err, user) {
-    if (err) { return done(err); }
+  User.findOrCreate({ facebookId: profile.id }, function(err, user) {
+    if (err) {
+      return done(err);
+    }
     done(null, user);
   });
-  */
-  /*
+*/
   console.log('HERERE');
   console.log('one');
   console.log(accessToken);
@@ -97,7 +99,7 @@ const FACEBOOK_CALLBACK = function(accessToken, refreshToken, profile, done) {
   console.log(refreshToken);
   console.log('trhee');
   console.log(profile);
-  */
+
   console.log('HELLLLLLLO');
 };
 

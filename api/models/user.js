@@ -28,6 +28,15 @@ const UserSchema = new Schema(
     },
     firstname: String,
     lastname: String,
+    facebook: {
+      id: String,
+      token: String,
+      email: String,
+      name: {
+        familyName: String,
+        givenName: String
+      }
+    },
     countries: [
       {
         country_code: {

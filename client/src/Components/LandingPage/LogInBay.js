@@ -46,7 +46,9 @@ class LogInBay extends React.Component {
               <input type="password" placeholder="Password" name="password" />
               <input type="submit" />
             </form>
-
+            <a href="http://localhost:8000/api/facebook_login">
+              Login with Facebook
+            </a>
             <br />
             <p> - or -</p>
             <br />
