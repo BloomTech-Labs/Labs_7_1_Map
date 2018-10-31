@@ -89,7 +89,7 @@ module.exports = {
         res.status(400).json({ error: 'failed user creation' });
       }
     } catch (err) {
-      if (DEV) console.log(err);
+      // if (DEV) console.log(err);
       res.status(500).json({ error: 'failed user creation' });
     }
   }, // create_user
@@ -117,12 +117,12 @@ module.exports = {
       if (!id) res.status(400).json({ error: 'ID is a required parameter' });
       const foundUser = await User.findById(id);
       const user = { id: req.user._id, username: req.user.username }; // add the things you need to send
-      res.status(200).json(foundUser);
+      return res.status(200).json(foundUser);
     } catch (err) {
       if (DEV) console.log(err);
-      res.status(500).json({ error: 'Failed to get user!' });
+      return res.status(500).json({ error: 'Failed to get user!' });
     }
-  },
+  }, // get_user
 
   get_users: async (req, res) => {
     try {
@@ -146,10 +146,36 @@ module.exports = {
         username: req.user.username,
         countries: req.user.countries
       }; // add the things you need to send
-      res.status(200).json({ jwt_token: make_token(req.user), user });
+      return res.status(200).json({ jwt_token: make_token(req.user), user });
     } catch (err) {
       if (DEV) console.log(err);
-      res.status(500).json({ error: 'Internal server error!' });
+      return res.status(500).json({ error: 'Internal server error!' });
     }
-  } // login
-}; // module.eports
+  }, // login
+
+  update_preferences: async (req, res) => {
+    // req.body.preferences should be an object with properties for each setting
+    //  e.g. { theme: 'light', autoscratch: true }
+    const { username, preferences } = req.body;
+
+    try {
+      // Return an error if a username or valid preferences object is not provided
+      if (!username || !preferences) {
+        return res
+          .status(400)
+          .send({ error: 'You did not provide a username or preferences!' });
+      }
+
+      const updatedUser = await User.findOneAndUpdate(
+        { username },
+        { preferences },
+        { new: true }
+      );
+
+      res.status(200).json(updatedUser);
+    } catch (err) {
+      if (DEV) console.log(err);
+      return res.status(500).send({ error: 'Failed to update preferences' });
+    }
+  } // update_preferences
+}; // module.exports

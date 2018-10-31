@@ -1,0 +1,48 @@
+.CountryPanel {
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.1);
+  bottom: 0px;
+  left: 0px;
+  z-index: 11;
+  height: auto;
+  width: auto;
+  padding: 10px;
+  animation: Settings 0.5s all;
+  transition-property: all;
+  transition-duration: 0.8s;
+}
+.CountryPanel .Card {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-around;
+  height: 300px;
+  width: 100%;
+}
+.CountryPanel .Card .Card_Header {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 0.2rem;
+  align-items: center;
+  border: 1px solid black;
+  width: 100%;
+  background: beige;
+}
+.CountryPanel .Card .Card_Header .Header_Country-Name {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+.CountryPanel .Card .Card_Header .Header_Country-Name span {
+  margin-right: 0.5rem;
+}
+.CountryPanel .Card .Card_Header .Header_Country-Name .closeCountryPanelIcon {
+  /* css for this */
+  border: 3px solid red;
+}
+.CountryPanel .Card .Card_Header .Header_Country-Name .closeCountryPanelIcon:hover {
+  cursor: pointer;
+  color: red;
+}

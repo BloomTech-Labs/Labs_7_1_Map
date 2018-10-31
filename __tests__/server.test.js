@@ -171,6 +171,7 @@ describe('User', () => {
       });
     });
   });
+
   describe('GET routes', () => {
     it('get_user retrieves a user with a valid token', async () => {
       const testUserInfo = {
@@ -183,15 +184,15 @@ describe('User', () => {
         .send(testUserInfo);
       const { jwt_token, user } = newUser.body;
 
-      console.log(user)
       const getUser = await request(server)
         .get(`/api/get_user/${user.id}`)
         .set('Authorization', `Bearer ${jwt_token}`);
 
-
       expect(newUser).toBeDefined();
       expect(jwt_token).toBeDefined();
       expect(getUser.body._id).toBe(user.id);
+      expect(getUser.body.countries).toBeDefined();
+      expect(getUser.body.preferences).toBeDefined();
       expect(getUser.body.username).toBe('getuser1');
       expect(getUser.body.email).toBe('getuser1@test.com');
     });
@@ -207,8 +208,7 @@ describe('User', () => {
         .send(testUserInfo);
       const { jwt_token, user } = newUser.body;
 
-      const getUser = await request(server)
-        .get(`/api/get_user/${user._id}`)
+      const getUser = await request(server).get(`/api/get_user/${user._id}`);
 
       expect(newUser).toBeDefined();
       expect(jwt_token).toBeDefined();
@@ -239,6 +239,98 @@ describe('User', () => {
       expect(getUser.body._id).toBeUndefined();
       expect(getUser.body.username).toBeUndefined();
       expect(getUser.body.email).toBeUndefined();
+    });
+  });
+
+  describe('PUT routes', () => {
+    // TODO: Add tests for change_email
+    // TODO: Add tests for change_password
+    it('update_preferences updates user correctly', async () => {
+      const testUserInfo = {
+        username: 'updatepreferences1',
+        password: '123456',
+        email: 'update_preferences1@test.com'
+      };
+
+      const newUser = await request(server)
+        .post(`/api/register`)
+        .send(testUserInfo);
+      expect(newUser.status).toBe(200);
+
+      const updatedPreferences = {
+        username: 'updatepreferences1',
+        preferences: {
+          theme: 'light',
+          autoscratch: false
+        }
+      };
+
+      const response = await request(server)
+        .put(`/api/update_preferences`)
+        .set('Authorization', `Bearer ${newUser.body.jwt_token}`)
+        .send(updatedPreferences);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toBeDefined();
+      expect(response.body.username).toBeDefined();
+      expect(response.body.preferences).toBeDefined();
+      expect(response.body.preferences.theme).toBe('light');
+      expect(response.body.preferences.autoscratch).toBe(false);
+    });
+
+    it('update_preferences rejects request if preferences is not provided', async () => {
+      const testUserInfo = {
+        username: 'updatepreferences2',
+        password: '123456',
+        email: 'update_preferences2@test.com'
+      };
+
+      const newUser = await request(server)
+        .post(`/api/register`)
+        .send(testUserInfo);
+      expect(newUser.status).toBe(200);
+
+      const updatedPreferences = {
+        username: 'updatepreferences2'
+      };
+
+      const response = await request(server)
+        .put(`/api/update_preferences`)
+        .set('Authorization', `Bearer ${newUser.body.jwt_token}`)
+        .send(updatedPreferences);
+
+      expect(response.status).toBe(400);
+      expect(response.body.username).toBeUndefined();
+      expect(response.body.preferences).toBeUndefined();
+    });
+
+    it('update_preferences rejects request if username is not provided', async () => {
+      const testUserInfo = {
+        username: 'updatepreferences3',
+        password: '123456',
+        email: 'update_preferences3@test.com'
+      };
+
+      const newUser = await request(server)
+        .post(`/api/register`)
+        .send(testUserInfo);
+      expect(newUser.status).toBe(200);
+
+      const updatedPreferences = {
+        preferences: {
+          theme: 'light',
+          autoscratch: false
+        }
+      };
+
+      const response = await request(server)
+        .put(`/api/update_preferences`)
+        .set('Authorization', `Bearer ${newUser.body.jwt_token}`)
+        .send(updatedPreferences);
+
+      expect(response.status).toBe(400);
+      expect(response.body.username).toBeUndefined();
+      expect(response.body.preferences).toBeUndefined();
     });
   });
 });

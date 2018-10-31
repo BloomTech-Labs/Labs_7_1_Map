@@ -5,15 +5,9 @@ const {
   facebook_loggedIn,
   get_user,
   get_users,
-  login
+  login,
+  update_preferences
 } = require('./controllers/user_controller');
-const {
-  getNotes,
-  getNoteById,
-  postNote,
-  updateNote
-  // deleteNote
-} = require('./controllers/notesController');
 const passport = require('./utils/passport');
 const path = require('path');
 
@@ -55,22 +49,11 @@ module.exports = server => {
   server
     .route('/api/facebook_callback')
     .get(facebook_authentication_callback, facebook_loggedIn);
-  server.route('/api/change_password').post(protected_route, change_password);
-  server.route('/api/change_email').post(protected_route, change_email);
 
-  // Notes Routes
-  server.get('/api/note', (req, res) => {
-    res.status(200).json('Note API');
-  });
-
-  server
-    .route('/api/notes')
-    .get(getNotes)
-    .post(postNote);
-  server
-    .route('/api/notes/:id')
-    .get(getNoteById)
-    .put(updateNote);
+  // Update settings
+  server.route('/api/change_password').put(protected_route, change_password);
+  server.route('/api/change_email').put(protected_route, change_email);
+  server.route('/api/update_preferences').put(protected_route, update_preferences)
 
   server.route('/api/get_user/:id').get(protected_route, get_user);
   server.route('/api/get_users/').get(get_users); // TODO: protect this route one
