@@ -141,10 +141,12 @@ module.exports = {
   login: async (req, res) => {
     try {
       // we only reach here because we are authenticated
+      const { id, username, countries, preferences } = req.user
       const user = {
-        id: req.user.id,
-        username: req.user.username,
-        countries: req.user.countries
+        id,
+        username,
+        countries,
+        preferences
       }; // add the things you need to send
       return res.status(200).json({ jwt_token: make_token(req.user), user });
     } catch (err) {
