@@ -36,6 +36,9 @@ class Preferences extends Component {
           >
             <option value="light">light</option>
             <option value="dark">dark</option>
+            <option value="watercolor">watercolor</option>
+            <option value="toner">toner</option>
+            <option value="standard">standard</option>
           </select>
         </div>
 
