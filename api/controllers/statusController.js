@@ -7,14 +7,12 @@ module.exports = {
     const countryThatIsIn = 'AUS';
 
     const query1 = {
-      // $and: [
-        // { 'username': username },
-        // {
-          'countries': {
-            'country_code': 'USA'
-          }
-        // }
-      // ]
+      $and: [
+        { 'username': username },
+        {
+          'countries': {$elemMatch: {'country_code': 'USA'}}
+        }
+      ]
     };
 
     const query = {
