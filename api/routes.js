@@ -1,18 +1,12 @@
 const {
   create_user,
-  login,
   change_password,
   change_email,
   facebook_login,
-  get_user
+  get_user,
+  login,
+  update_preferences
 } = require('./controllers/user_controller');
-const {
-  getNotes,
-  getNoteById,
-  postNote,
-  updateNote
-  // deleteNote
-} = require('./controllers/notesController');
 const passport = require('./utils/passport');
 const path = require('path');
 
@@ -39,24 +33,12 @@ module.exports = server => {
   server.route('/api/login').post(authenticate, login);
   server.route('/api/facebook-login').post(facebook_login);
   server.route('/api/register').post(create_user);
-  server.route('/api/change_password').post(protected_route, change_password);
-  server.route('/api/change_email').post(protected_route, change_email);
 
-
-  // Notes Routes
-  server.get('/api/note', (req, res) => {
-    res.status(200).json('Note API IS LIT');
-  });
-
-  server
-    .route('/api/notes')
-    .get(getNotes)
-    .post(postNote);
-  server
-    .route('/api/notes/:id')
-    .get(getNoteById)
-    .put(updateNote);
-  // .destroy(deleteNote);
+  // Update settings
+  server.route('/api/change_password').put(protected_route, change_password);
+  server.route('/api/change_email').put(protected_route, change_email);
+  // TODO: add protected_route middleware
+  server.route('/api/update_preferences').put(protected_route, update_preferences)
 
   server.route('/api/get_user/:id').get(protected_route, get_user);
 

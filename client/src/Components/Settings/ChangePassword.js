@@ -50,7 +50,7 @@ class ChangePassword extends Component {
         headers: { Authorization: `Bearer ${token}` }
       };
 
-      const response = await axios.post(url, body, options);
+      const response = await axios.put(url, body, options);
       this.setState({
         currentPassword: '',
         newPassword: '',

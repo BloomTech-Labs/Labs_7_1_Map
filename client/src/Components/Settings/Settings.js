@@ -16,7 +16,7 @@ class Settings extends Component {
   render() {
     return (
       <AppContextConsumer>
-        {({ AppState }) => (
+        {({ AppState, handleUpdatePreferences }) => (
           <div
             className={
               this.props.showingSettings
@@ -25,7 +25,10 @@ class Settings extends Component {
             }
           >
             <h1>Settings</h1>
-            <Preferences user={AppState.user} />
+            <Preferences
+              user={AppState.user}
+              handleUpdatePreferences={handleUpdatePreferences}
+            />
             <ChangeEmail user={AppState.user} />
             <ChangePassword user={AppState.user} />
           </div>
