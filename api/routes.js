@@ -1,10 +1,11 @@
 const {
-  create_user,
-  login,
-  change_password,
   change_email,
+  change_password,
+  create_user,
   facebook_loggedIn,
-  get_user
+  get_user,
+  get_users,
+  login
 } = require('./controllers/user_controller');
 const {
   getNotes,
@@ -22,12 +23,13 @@ const protected_route = passport.authenticate('jwt', { session: false });
 
 // facebook strategy
 const facebook_authentication = passport.authenticate('facebook', {
-  scope: ['email', 'user_friends']
+  scope: ['email', 'user_friends'],
+  session: false
 });
 
 const facebook_authentication_callback = passport.authenticate('facebook', {
-  successRedirect: '/api/facebook_login_success',
-  failureRedirect: '/api/login_failure'
+  session: false,
+  failureRedirect: '/api'
 });
 
 // export the routes
@@ -51,15 +53,14 @@ module.exports = server => {
   server.route('/api/register').post(create_user);
   server.route('/api/facebook_login').get(facebook_authentication);
   server
-    .route('/api/facebook_login_callback')
-    .get(facebook_authentication_callback);
-  server.route('/api/facebook_login_success').get(facebook_loggedIn);
+    .route('/api/facebook_callback')
+    .get(facebook_authentication_callback, facebook_loggedIn);
   server.route('/api/change_password').post(protected_route, change_password);
   server.route('/api/change_email').post(protected_route, change_email);
 
   // Notes Routes
   server.get('/api/note', (req, res) => {
-    res.status(200).json('Note API IS LIT');
+    res.status(200).json('Note API');
   });
 
   server
@@ -70,7 +71,7 @@ module.exports = server => {
     .route('/api/notes/:id')
     .get(getNoteById)
     .put(updateNote);
-  // .destroy(deleteNote);
 
   server.route('/api/get_user/:id').get(protected_route, get_user);
+  server.route('/api/get_users/').get(get_users); // TODO: protect this route one
 };

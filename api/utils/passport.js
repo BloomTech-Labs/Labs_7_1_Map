@@ -54,9 +54,9 @@ const jwt_strategy = new JwtStrategy(jwtOptions, async (payload, done) => {
     // get a user using the id
     const found = await User.findById(payload.sub).select('-password');
     if (found) {
-      done(null, found); // found user
+      return done(null, found); // found user
     } else {
-      done(null, false); // not found
+      return done(null, false); // not found
     }
   } catch (err) {
     if (DEV) console.log(err);
@@ -71,7 +71,7 @@ const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
 const FACE_APP_SECRET = process.env.FACE_APP_SECRET;
 const FACEBOOK_APP_CALLBACK_URL_URL =
   process.env.FACEBOOK_APP_CALLBACK_URL ||
-  'http://localhost:8000/api/facebook_login_callback';
+  'http://localhost:8000/api/facebook_callback';
 
 // define the options object using the credentials object
 const FACEBOOK_OPTIONS = {
@@ -81,33 +81,56 @@ const FACEBOOK_OPTIONS = {
   profileFields: ['id', 'emails', 'name']
 };
 
-// define a callback function
-const FACEBOOK_CALLBACK = function(accessToken, refreshToken, profile, done) {
-  console.log('HHHHHDJHGDJHGDJG');
-  /*
-  User.findOrCreate({ facebookId: profile.id }, function(err, user) {
-    if (err) {
-      return done(err);
-    }
-    done(null, user);
-  });
-*/
-  console.log('HERERE');
-  console.log('one');
-  console.log(accessToken);
-  console.log('two');
-  console.log(refreshToken);
-  console.log('trhee');
-  console.log(profile);
-
-  console.log('HELLLLLLLO');
-};
-
 // feed the strategy with options and callback function
-const facebook_strategy = new FacebookStrategy(
-  FACEBOOK_OPTIONS,
-  FACEBOOK_CALLBACK
-);
+const facebook_strategy = new FacebookStrategy(FACEBOOK_OPTIONS, async function(
+  accessToken,
+  refreshToken,
+  profile,
+  done
+) {
+  try {
+    const found = await User.findOne({ 'facebook.id': profile.id });
+
+    if (found) {
+      return done(null, found); // found user
+    } else {
+      const email = profile.emails[0].value;
+
+      const facebook = {
+        id: profile.id,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        email: email,
+        last_name: profile.name.familyName,
+        first_name: profile.name.givenName
+      };
+
+      // find by email, if found, update else create
+
+      const found_by_email = await User.findOne({ email });
+      if (found_by_email) {
+        const updated_user = await User.findOneAndUpdate(
+          { email },
+          { facebook },
+          { new: true }
+        );
+        return done(null, updated_user);
+      } else {
+        // create user
+        const new_user = new User({
+          email,
+          username: email,
+          facebook
+        });
+        const created_user = await new_user.save();
+        return done(null, created_user);
+      }
+    }
+  } catch (err) {
+    if (DEV) console.log(err);
+    return done(null, false, { message: 'Internal Error.' });
+  }
+});
 // use the facebook_strategy
 passport.use(facebook_strategy);
 

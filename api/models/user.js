@@ -17,7 +17,6 @@ const UserSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
       minlength: 6
     },
     email: {
@@ -30,12 +29,11 @@ const UserSchema = new Schema(
     lastname: String,
     facebook: {
       id: String,
-      token: String,
+      accessToken: String,
+      refreshToken: String,
       email: String,
-      name: {
-        familyName: String,
-        givenName: String
-      }
+      last_name: String,
+      first_name: String
     },
     countries: [
       {
@@ -72,7 +70,7 @@ UserSchema.pre('save', async function(next) {
     this.password = await argon2.hash(this.password);
     next();
   } catch (err) {
-    if (Dev) {
+    if (DEV) {
       console.log(err);
     }
   }
