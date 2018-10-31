@@ -188,7 +188,6 @@ describe('User', () => {
         .get(`/api/get_user/${user.id}`)
         .set('Authorization', `Bearer ${jwt_token}`);
 
-
       expect(newUser).toBeDefined();
       expect(jwt_token).toBeDefined();
       expect(getUser.body._id).toBe(user.id);
@@ -209,8 +208,7 @@ describe('User', () => {
         .send(testUserInfo);
       const { jwt_token, user } = newUser.body;
 
-      const getUser = await request(server)
-        .get(`/api/get_user/${user._id}`)
+      const getUser = await request(server).get(`/api/get_user/${user._id}`);
 
       expect(newUser).toBeDefined();
       expect(jwt_token).toBeDefined();
@@ -252,9 +250,11 @@ describe('User', () => {
         username: 'updatepreferences1',
         password: '123456',
         email: 'update_preferences1@test.com'
-      }
+      };
 
-      const newUser = await request(server).post(`/api/register`).send(testUserInfo)
+      const newUser = await request(server)
+        .post(`/api/register`)
+        .send(testUserInfo);
       expect(newUser.status).toBe(200);
 
       const updatedPreferences = {
@@ -263,45 +263,57 @@ describe('User', () => {
           theme: 'light',
           autoscratch: false
         }
-      }
+      };
 
-      const response = await request(server).put(`/api/update_preferences`).send(updatedPreferences)
+      const response = await request(server)
+        .put(`/api/update_preferences`)
+        .set('Authorization', `Bearer ${newUser.body.jwt_token}`)
+        .send(updatedPreferences);
+
       expect(response.status).toBe(200);
       expect(response.body).toBeDefined();
       expect(response.body.username).toBeDefined();
       expect(response.body.preferences).toBeDefined();
       expect(response.body.preferences.theme).toBe('light');
       expect(response.body.preferences.autoscratch).toBe(false);
-    })
+    });
 
     it('update_preferences rejects request if preferences is not provided', async () => {
       const testUserInfo = {
         username: 'updatepreferences2',
         password: '123456',
         email: 'update_preferences2@test.com'
-      }
+      };
 
-      const newUser = await request(server).post(`/api/register`).send(testUserInfo)
+      const newUser = await request(server)
+        .post(`/api/register`)
+        .send(testUserInfo);
       expect(newUser.status).toBe(200);
 
       const updatedPreferences = {
-        username: 'updatepreferences2',
-      }
+        username: 'updatepreferences2'
+      };
 
-      const response = await request(server).put(`/api/update_preferences`).send(updatedPreferences)
+      const response = await request(server)
+        .put(`/api/update_preferences`)
+        .set('Authorization', `Bearer ${newUser.body.jwt_token}`)
+        .send(updatedPreferences);
+
       expect(response.status).toBe(400);
       expect(response.body.username).toBeUndefined();
       expect(response.body.preferences).toBeUndefined();
-    })
+    });
 
     it('update_preferences rejects request if username is not provided', async () => {
       const testUserInfo = {
         username: 'updatepreferences3',
         password: '123456',
         email: 'update_preferences3@test.com'
-      }
+      };
 
-      const newUser = await request(server).post(`/api/register`).send(testUserInfo)
+      const newUser = await request(server)
+        .post(`/api/register`)
+        .send(testUserInfo);
       expect(newUser.status).toBe(200);
 
       const updatedPreferences = {
@@ -309,13 +321,16 @@ describe('User', () => {
           theme: 'light',
           autoscratch: false
         }
-      }
+      };
 
-      const response = await request(server).put(`/api/update_preferences`).send(updatedPreferences)
+      const response = await request(server)
+        .put(`/api/update_preferences`)
+        .set('Authorization', `Bearer ${newUser.body.jwt_token}`)
+        .send(updatedPreferences);
+
       expect(response.status).toBe(400);
       expect(response.body.username).toBeUndefined();
       expect(response.body.preferences).toBeUndefined();
-    })
-
-  })
+    });
+  });
 });

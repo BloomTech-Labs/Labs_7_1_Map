@@ -84,7 +84,7 @@ module.exports = {
         user: { id: created_user._id, username: created_user.username }
       });
     } catch (err) {
-      if (DEV) console.log(err);
+      // if (DEV) console.log(err);
       res.status(500).json({ error: 'failed user creation' });
     }
   }, // create_user

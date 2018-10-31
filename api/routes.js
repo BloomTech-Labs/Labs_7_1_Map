@@ -38,7 +38,7 @@ module.exports = server => {
   server.route('/api/change_password').put(protected_route, change_password);
   server.route('/api/change_email').put(protected_route, change_email);
   // TODO: add protected_route middleware
-  server.route('/api/update_preferences').put(update_preferences)
+  server.route('/api/update_preferences').put(protected_route, update_preferences)
 
   server.route('/api/get_user/:id').get(protected_route, get_user);
 
