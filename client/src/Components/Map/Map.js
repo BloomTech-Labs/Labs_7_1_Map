@@ -98,7 +98,7 @@ class MapComponent extends Component {
       >
         <TileLayer
           attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-          url={this.state.mapTile}
+          url={mapTilesUrls[this.props.user.preferences.theme]}
         />
 
         {/* Layers that will be active when a country is CLICKED */}
