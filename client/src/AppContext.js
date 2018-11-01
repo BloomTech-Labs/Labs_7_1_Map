@@ -69,11 +69,13 @@ export class AppContextProvider extends Component {
     const currentCountryCode = this.state.currentCountry.code;
     const userCountries = this.state.user.countries;
 
-    const findCountry = userCountries.find(
-      country => currentCountryCode === country.country_code
-    );
+    if (userCountries) {
+      const findCountry = userCountries.find(
+        country => currentCountryCode === country.country_code
+      );
 
-    return findCountry ? findCountry.status_code : 0;
+      return findCountry ? findCountry.status_code : 0;
+    }
   }; // getCurrentCountryStatus
 
   hasGeolocation = () => {
@@ -135,7 +137,9 @@ export class AppContextProvider extends Component {
     const geoInfo = getCountryShapeFromCode(code);
     this.setState({
       currentCountry: { code, info, geoInfo },
-      countryPanelIsOpen: true,
+      countryPanelIsOpen: true
+    });
+    this.setState({
       currentCountryStatus: this.getCurrentCountryStatus()
     });
   };
@@ -156,6 +160,8 @@ export class AppContextProvider extends Component {
       // Clear user on state first as a workaround for the following issue:
       //    Updating an existing country would not update the color
       //    Clearing the user on state first forces the geojson layer to re-render
+      // This is because React is not detecting changes in nested objects.
+      // TODO: Store users' countries as an array on AppState (not inside user)
       this.setState({ user: {} });
       this.setState({ user: response.data });
       this.setState({ currentCountryStatus: this.getCurrentCountryStatus() });
