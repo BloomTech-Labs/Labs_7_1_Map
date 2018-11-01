@@ -142,8 +142,8 @@ export class AppContextProvider extends Component {
 
       const response = await axios.post(`${BACKEND_URL}/country_status`, body);
 
-      // Cear user on state first as a workaround for the following issue:
-      //    Updating an existing country would not re-render the geojson layer
+      // Clear user on state first as a workaround for the following issue:
+      //    Updating an existing country would not update the color
       //    Clearing the user on state first forces the geojson layer to re-render
       this.setState({ user: {} });
       this.setState({ user: response.data });
