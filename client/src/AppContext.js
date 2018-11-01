@@ -168,7 +168,7 @@ export class AppContextProvider extends Component {
       this.setState({ user: response.data });
       this.setState({ currentCountryStatus: this.getCurrentCountryStatus() });
     } catch (err) {
-      console.error('Error update country status!');
+      console.error('Error updating country status!');
     }
   };
 
