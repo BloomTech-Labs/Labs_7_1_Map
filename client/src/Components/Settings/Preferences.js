@@ -18,14 +18,26 @@ class Preferences extends Component {
   };
 
   render() {
+    const theme =
+      this.props.user && this.props.user.preferences
+        ? this.props.user.preferences.theme
+        : 'dark';
     return (
       <div className="Settings__Preferences">
         <h4>Preferences</h4>
         <div className="Preferences__theme">
           <h5>Theme</h5>
-          <select className="Theme" name="theme" onChange={this.handleChange}>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
+          <select
+            className="Theme"
+            defaultValue={theme}
+            name="theme"
+            onChange={this.handleChange}
+          >
+            <option value="light">light</option>
+            <option value="dark">dark</option>
+            <option value="watercolor">watercolor</option>
+            <option value="toner">toner</option>
+            <option value="standard">standard</option>
           </select>
         </div>
 

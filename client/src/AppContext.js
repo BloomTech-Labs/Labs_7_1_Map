@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { clearLocalstorage } from './utils.js';
+import { clearLocalstorage, getCountryShapeFromCode } from './utils.js';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -18,10 +18,12 @@ export class AppContextProvider extends Component {
     },
     currentCountry: {
       code: '',
-      info: {}
+      info: {},
+      geoInfo: {}
     },
-    countryPanelIsOpen: false,
-    failedLogin: false
+    failedLogin: false,
+    currentCountryStatus: null,
+    countryPanelIsOpen: false
   };
 
   async componentDidMount() {
@@ -62,6 +64,23 @@ export class AppContextProvider extends Component {
     if ('geolocation' in navigator) this.hasGeolocation();
   } // componentDidMount
 
+  // Get the status_code of a country saved on user if it exists
+  // Otherwise, return 0
+  getCurrentCountryStatus = () => {
+    // TODO: This function could probably just call setState here
+    // instead of doing that in the function that uses it
+    const currentCountryCode = this.state.currentCountry.code;
+    const userCountries = this.state.user.countries;
+
+    if (userCountries) {
+      const findCountry = userCountries.find(
+        country => currentCountryCode === country.country_code
+      );
+
+      return findCountry ? findCountry.status_code : 0;
+    }
+  }; // getCurrentCountryStatus
+
   hasGeolocation = () => {
     // Browsers built-in method to get a user's location
     navigator.geolocation.getCurrentPosition(position => {
@@ -78,9 +97,6 @@ export class AppContextProvider extends Component {
       userPosition: { lng, lat }
     });
   };
-  updateCountryPanel() {
-    console.log('HELLO WOrld', this.state.currentCountry);
-  } // updateUserPosition
 
   handleUpdatePreferences = async preferences => {
     // TODO: Abort if preferences does not have valid values
@@ -121,13 +137,40 @@ export class AppContextProvider extends Component {
 
   // Update state with currently selected country, called in Map.js
   handleUpdateCurrentCountry = (code, info) => {
+    const geoInfo = getCountryShapeFromCode(code);
     this.setState({
-      currentCountry: { code, info },
+      currentCountry: { code, info, geoInfo },
       countryPanelIsOpen: true
     });
+    this.setState({
+      currentCountryStatus: this.getCurrentCountryStatus()
+    });
+  };
 
-    // update the panel with current country
-    this.updateCountryPanel();
+  // Called in BorderBay.js
+  handleSliderMove = async value => {
+    try {
+      const { user, currentCountry } = this.state;
+      const body = {
+        username: user.username,
+        country_code: currentCountry.code,
+        name: currentCountry.info.name,
+        status_code: value
+      };
+
+      const response = await axios.post(`${BACKEND_URL}/country_status`, body);
+
+      // Clear user on state first as a workaround for the following issue:
+      //    Updating an existing country would not update the color
+      //    Clearing the user on state first forces the geojson layer to re-render
+      // This is because React is not detecting changes in nested objects.
+      // TODO: Store users' countries as an array on AppState (not inside user)
+      this.setState({ user: {} });
+      this.setState({ user: response.data });
+      this.setState({ currentCountryStatus: this.getCurrentCountryStatus() });
+    } catch (err) {
+      console.error('Error updating country status!');
+    }
   };
 
   handleSignIn = async e => {
@@ -173,25 +216,27 @@ export class AppContextProvider extends Component {
     localStorage.setItem('token', response.data.jwt_token);
     localStorage.setItem('user', user);
     this.setState({ authenticated: true, user: response.data.user });
-  };
+  }; // handleSignUp
 
   toggleCountryPanel = () => {
     this.setState({ countryPanelIsOpen: !this.state.countryPanelIsOpen });
-  }; // handleSignUp
+  }; // toggleCountryPanel
 
   render() {
     return (
       <AppContext.Provider
         value={{
           AppState: this.state,
-          updateUserPosition: this.handleUpdateUserPosition,
-          updateCurrentCountry: this.handleUpdateCurrentCountry,
           authenticated: this.state.authenticated,
+          currentCountryInfo: this.state.currentCountry.geoInfo,
           handleSignIn: this.handleSignIn,
           handleSignOut: this.handleSignOut,
           handleSignUp: this.handleSignUp,
+          handleSliderMove: this.handleSliderMove,
           handleUpdatePreferences: this.handleUpdatePreferences,
-          toggleCountryPanel: this.toggleCountryPanel
+          toggleCountryPanel: this.toggleCountryPanel,
+          updateCurrentCountry: this.handleUpdateCurrentCountry,
+          updateUserPosition: this.handleUpdateUserPosition
         }}
       >
         {this.props.children}

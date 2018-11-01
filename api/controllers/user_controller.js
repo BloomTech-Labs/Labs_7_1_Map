@@ -28,10 +28,10 @@ module.exports = {
         { new: true }
       );
 
-      res.status(200).json({ message: 'Email was updated successfully!' });
+      return res.status(200).json({ message: 'Email was updated successfully!' });
     } catch (err) {
       if (DEV) console.log(err);
-      res.status(500).json({ error: 'Failed to change email!' });
+      return res.status(500).json({ error: 'Failed to change email!' });
     }
   }, // change_email
 
@@ -43,7 +43,7 @@ module.exports = {
 
       // Check if password is the same as the old before updating
       if (await user.check_password(new_password)) {
-        res.status(400).json({ error: 'New password is the same as the old!' });
+        return res.status(400).json({ error: 'New password is the same as the old!' });
       } else {
         // hash new password (mongoose doesn't support pre update hooks)
         const password_hash = await argon2.hash(new_password);
@@ -55,11 +55,11 @@ module.exports = {
           { new: true }
         );
 
-        res.status(200).json({ message: 'Password was updated successfully!' });
+        return res.status(200).json({ message: 'Password was updated successfully!' });
       }
     } catch (err) {
       if (DEV) console.log(err);
-      res.status(500).json({ error: 'Failed to change password!' });
+      return res.status(500).json({ error: 'Failed to change password!' });
     }
   }, // change_password
 
@@ -68,7 +68,7 @@ module.exports = {
 
     // found an error, terminate
     if (check.error !== undefined) {
-      res.status(400).json(check);
+      return res.status(400).json(check);
       return;
     }
 
@@ -80,17 +80,17 @@ module.exports = {
 
       if (created_user) {
         // user creation was successful, send a jwt_token back
-        res.status(200).json({
+        return res.status(200).json({
           jwt_token: make_token(created_user),
           user: { id: created_user._id, username: created_user.username }
         });
       } else {
         if (DEV) console.log(err);
-        res.status(400).json({ error: 'failed user creation' });
+        return res.status(400).json({ error: 'failed user creation' });
       }
     } catch (err) {
       // if (DEV) console.log(err);
-      res.status(500).json({ error: 'failed user creation' });
+      return res.status(500).json({ error: 'failed user creation' });
     }
   }, // create_user
 
@@ -102,12 +102,12 @@ module.exports = {
         username: req.user.username,
         countries: req.user.countries
       }; // add the things you need to send
-      res.status(200).json({ jwt_token: make_token(req.user), user });
+      return res.status(200).json({ jwt_token: make_token(req.user), user });
     } catch (err) {
       if (DEV) {
         console.log(err);
       }
-      res.status(500).json({ error: 'Internal server error!' });
+      return res.status(500).json({ error: 'Internal server error!' });
     }
   }, // facebook_login
 
@@ -128,23 +128,25 @@ module.exports = {
     try {
       const foundUsers = await User.find({});
       if (foundUsers) {
-        res.status(200).json(foundUsers);
+        return res.status(200).json(foundUsers);
       } else {
-        res.status(400).json({ msg: 'No users found!' });
+        return res.status(400).json({ msg: 'No users found!' });
       }
     } catch (err) {
       if (DEV) console.log(err);
-      res.status(500).json({ error: 'Failed to get user!' });
+      return res.status(500).json({ error: 'Failed to get user!' });
     }
   },
 
   login: async (req, res) => {
     try {
       // we only reach here because we are authenticated
+      const { id, username, countries, preferences } = req.user
       const user = {
-        id: req.user.id,
-        username: req.user.username,
-        countries: req.user.countries
+        id,
+        username,
+        countries,
+        preferences
       }; // add the things you need to send
       return res.status(200).json({ jwt_token: make_token(req.user), user });
     } catch (err) {
@@ -172,7 +174,7 @@ module.exports = {
         { new: true }
       );
 
-      res.status(200).json(updatedUser);
+      return res.status(200).json(updatedUser);
     } catch (err) {
       if (DEV) console.log(err);
       return res.status(500).send({ error: 'Failed to update preferences' });
