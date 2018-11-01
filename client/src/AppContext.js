@@ -22,6 +22,8 @@ export class AppContextProvider extends Component {
       geoInfo: {}
     },
     failedLogin: false,
+    failedSignUp: false,
+    failedSignUpMessage: '',
     currentCountryStatus: null,
     countryPanelIsOpen: false
   };
@@ -123,7 +125,7 @@ export class AppContextProvider extends Component {
           response.status,
           response.data
         );
-        this.setState({ user: response.data })
+        this.setState({ user: response.data });
       }
 
       if (response.status === 400)
@@ -188,7 +190,7 @@ export class AppContextProvider extends Component {
       localStorage.setItem('user', user);
       this.setState({
         authenticated: true,
-        user: { ...response.data.user },
+        user: { ...response.data.user }
       });
     } catch (e) {
       // failed async

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { AppContextConsumer } from './AppContext';
+
 import LogInBay from './LogInBay';
 import FailedLoginPopUp from './FailedLoginPopUp';
 import Footer from '../Footer/Footer';
@@ -22,6 +24,16 @@ const LandingPage = props => {
       <h3 className="LandingPage__Tagline">
         Scratch the Itch to Track Your Trips
       </h3>
+      <AppContextConsumer>
+        {value => {
+          return (
+            <LogInBay
+              failedSignUp={value.AppState.failedSignUp}
+              failedSignUpMessage={value.AppState.failedSignUpMessage}
+            />
+          );
+        }}
+      </AppContextConsumer>
       <LogInBay />
       {PopUp}
       <Footer />

@@ -36,10 +36,16 @@ class LogInBay extends React.Component {
   };
 
   render() {
+    var FailedSignUp;
+    if (props.failedSignUp === true) {
+      FailedSignUp = <FailedSignUpPopUp message={this.props.failedSignUpMessage} />;
+    } else {
+      PopUp = <div> </div>;
+    }
     return (
       <AppContextConsumer>
         {({ handleSignIn, handleSignUp }) => (
-          <div className="LogInBay">
+          < className="LogInBay">
             <form className="LogInForm" onSubmit={handleSignIn}>
               Sign In
               <input type="text" placeholder="Username" name="username" />
@@ -85,6 +91,8 @@ class LogInBay extends React.Component {
                 <input type="submit" />
               </form>
               <button onClick={this.handleCloseModal}>Close Modal</button>
+              {FailedSignUp}
+              {/* above is the message that pops up when a signup error occurs */}
             </ReactModal>
           </div>
         )}
