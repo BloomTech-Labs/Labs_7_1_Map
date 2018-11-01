@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 import Slider from 'rc-slider/lib/Slider';
+import ScratchCard from 'react-scratchcard';
 
 import './CountryBorder.css';
 import 'rc-slider/assets/index.css';
+import travellingImg from '../../travelling.jpg';
+
+const settings = {
+  width: 300,
+  height: 150,
+  image: travellingImg,
+  finishPercent: 100,
+  onComplete: () => console.log('The card is now clear!')
+};
 
 const canvasWidth = 300;
 const canvasHeight = 150;
@@ -169,12 +179,14 @@ export default class CountryBorder extends Component {
   render() {
     return (
       <div className="CountryBorder">
-        <canvas
-          ref="canvas"
-          className="CountryBorder__Border"
-          width={canvasWidth}
-          height={canvasHeight}
-        />
+        <ScratchCard {...settings}>
+          <canvas
+            ref="canvas"
+            className="CountryBorder__Border"
+            width={canvasWidth}
+            height={canvasHeight}
+          />
+        </ScratchCard>
         <div className="CountryBorder__Slider">
           <p className="Slide-Tag">Level of Stay</p>
           <Slider
