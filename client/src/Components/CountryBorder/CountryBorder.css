@@ -1,0 +1,14 @@
+.CountryBorder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+}
+.CountryBorder .CountryBorder__Slider {
+  width: 100%;
+}
+.CountryBorder .CountryBorder__Slider .Slider1 {
+  position: relative;
+  z-index: 100;
+}
