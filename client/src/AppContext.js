@@ -20,7 +20,8 @@ export class AppContextProvider extends Component {
       code: '',
       info: {}
     },
-    countryPanelIsOpen: false
+    countryPanelIsOpen: false,
+    failedLogin: false
   };
 
   async componentDidMount() {
@@ -99,7 +100,6 @@ export class AppContextProvider extends Component {
         `${BACKEND_URL}/update_preferences`,
         body,
         options
-
       );
       if (request.status === 200)
         console.log(
@@ -115,7 +115,7 @@ export class AppContextProvider extends Component {
           request.body
         );
     } catch (err) {
-        console.error('There was an error trying to update preferences!');
+      console.error('There was an error trying to update preferences!');
     }
   }; // update_preferences
 
@@ -141,9 +141,15 @@ export class AppContextProvider extends Component {
       const user = await JSON.stringify(response.data.user);
       localStorage.setItem('token', response.data.jwt_token);
       localStorage.setItem('user', user);
-      this.setState({ authenticated: true, user: { ...response.data.user } });
+      this.setState({
+        authenticated: true,
+        user: { ...response.data.user },
+      });
     } catch (e) {
       // failed async
+      this.setState({
+        failedLogin: true
+      });
     }
   }; // handleSignIn
 
