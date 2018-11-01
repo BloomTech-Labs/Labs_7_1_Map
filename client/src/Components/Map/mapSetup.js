@@ -4,9 +4,10 @@ import L from 'leaflet';
 // Marker (workaround for an issue with react-leaflet)
 //TODO: Change to custom icon
 export const markerIcon = L.icon({
-  iconUrl: '../client/src/Orion_pin.svg',
+  iconUrl:
+    'https://visualpharm.com/assets/658/Map%20Pin-595b40b75ba036ed117d9f4f.svg',
   shadowUrl: null,
-  iconSize: [25, 40],
+  iconSize: [35, 30],
   iconAnchor: [0, 0]
 });
 
