@@ -131,16 +131,25 @@ export class AppContextProvider extends Component {
   };
 
   handleSliderMove = async value => {
-    const { user, currentCountry } = this.state;
-    const body = {
-      username: user.username,
-      country_code: currentCountry.code,
-      name: currentCountry.info.name,
-      status_code: value
-    };
-    const response = await axios.post(`${BACKEND_URL}/country_status`, body);
-    console.log('RESPONSE: ', response.status, response.data);
-    this.setState({ user: response.data });
+    try {
+      const { user, currentCountry } = this.state;
+      const body = {
+        username: user.username,
+        country_code: currentCountry.code,
+        name: currentCountry.info.name,
+        status_code: value
+      };
+
+      const response = await axios.post(`${BACKEND_URL}/country_status`, body);
+
+      // Cear user on state first as a workaround for the following issue:
+      //    Updating an existing country would not re-render the geojson layer
+      //    Clearing the user on state first forces the geojson layer to re-render
+      this.setState({ user: {} });
+      this.setState({ user: response.data });
+    } catch (err) {
+      console.error('Error update country status!');
+    }
   };
 
   handleSignIn = async e => {
