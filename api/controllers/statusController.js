@@ -7,28 +7,26 @@ const User = require('../models/user');
 {
   country_code: '',
   status_code: '',
+  name: '' (name of country)
   username: '',
-  name: ''
 }
 */
 
 module.exports = {
   handle_status: (req, res) => {
-
     const { country_code, status_code, username, name } = req.body;
 
     //below are queries
-
     const queryUserCountry = {
       $and: [
-        { 'username': username },
+        { username: username },
         {
-          'countries': {$elemMatch: {'country_code': country_code}}
+          countries: { $elemMatch: { country_code: country_code } }
         }
       ]
     };
     const queryUser = {
-      "username": username
+      username: username
     };
 
     //below are operators
@@ -41,10 +39,10 @@ module.exports = {
     const createCountry = {
       $push: {
         countries: {
-          'country_code': country_code,
-          'name': name,
-          'status_code': status_code,
-          'notes': ''
+          country_code: country_code,
+          name: name,
+          status_code: status_code,
+          notes: ''
         }
       }
     };
@@ -61,30 +59,32 @@ module.exports = {
     //logic for below:
     //1. searches for document that includes user & country (findOne)
     //2. If fails, that means user does not have the country
-        // it will create a new country object for that use with all of the information from the req.body (updateOne)
-    //2. If #1 succeeds, it will update the user countries code with the status_code from the req.body (findOneAndUpdate)
-    User.findOne(queryUserCountry).then(result => {
-      console.log(result);
-      if (result !== null) {
-      User.findOneAndUpdate(queryUserCountry, editCountry, options)
-        .then( newDoc => {
-        res.status(200).json(newDoc);
-        })
-        .catch( err => {
-          res.status(400).json({error: 'failure to update country status'});
-        })
-      } else {
-        User.updateOne(queryUser, createCountry)
-          .then( newDoc => {
-            res.status(201).json(newDoc);
-          })
-          .catch( err => {
-            res.status(409).json({error: 'failure to create new country'});
-          })
-      }
-    })
-    .catch( err => {
-      res.status(500).json({error: 'failure to initiate query'});
-    })
+    // it will create a new country object for that use with all of the information from the req.body (updateOne)
+    //3. If #1 succeeds, it will update the user countries code with the status_code from the req.body (findOneAndUpdate)
+    User.findOne(queryUserCountry)
+      .then(result => {
+        if (result !== null) {
+          User.findOneAndUpdate(queryUserCountry, editCountry, options)
+            .then(newDoc => {
+              res.status(200).json(newDoc);
+            })
+            .catch(err => {
+              res
+                .status(400)
+                .json({ error: 'failure to update country status' });
+            });
+        } else {
+          User.updateOne(queryUser, createCountry)
+            .then(newDoc => {
+              res.status(201).json(newDoc);
+            })
+            .catch(err => {
+              res.status(409).json({ error: 'failure to create new country' });
+            });
+        }
+      })
+      .catch(err => {
+        res.status(500).json({ error: 'failure to initiate query' });
+      });
   }
 };
