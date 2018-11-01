@@ -74,7 +74,7 @@ module.exports = {
                 .json({ error: 'failure to update country status' });
             });
         } else {
-          User.updateOne(queryUser, createCountry)
+          User.findOneAndUpdate(queryUser, createCountry, options)
             .then(newDoc => {
               res.status(201).json(newDoc);
             })
