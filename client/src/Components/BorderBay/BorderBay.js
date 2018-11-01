@@ -33,14 +33,6 @@ const marks = {
 };
 
 export default class BorderBay extends Component {
-  handleSlider(marks) {
-    this.setState({ marks });
-  }
-
-  log(marks) {
-    console.log(marks); //eslint-disable-line
-  }
-
   render() {
     return (
       <div className="Country_Border">
@@ -53,9 +45,9 @@ export default class BorderBay extends Component {
             max={4}
             marks={marks}
             step={null}
-            onChange={this.log}
+            onChange={this.props.handleSliderMove}
             defaultValue={0}
-            // value={0}
+            value={this.props.currentCountryStatus}
           />
         </div>
       </div>

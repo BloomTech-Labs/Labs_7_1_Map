@@ -11,30 +11,29 @@ const CountryPanel = () => {
   return (
     <div className="CountryPanel">
       <AppContextConsumer>
-        {value => (
-          <React.Fragment>
-            {value && value.AppState.countryPanelIsOpen ? (
-              <div className="Card ">
-                <div className="Card_Header">
-                  <div className="Header_Country-Name">
-                    <span>{value.AppState.currentCountry.info.emoji}</span>
-                    <span>{value.AppState.currentCountry.info.name}</span>
-                  </div>
-                  <FontAwesomeIcon
-                    className="closeCountryPanelIcon"
-                    onClick={value.toggleCountryPanel}
-                    icon="times"
-                  />
+        {value =>
+          value && value.AppState.countryPanelIsOpen ? (
+            <div className="Card ">
+              <div className="Card_Header">
+                <div className="Header_Country-Name">
+                  <span>{value.AppState.currentCountry.info.emoji}</span>
+                  <span>{value.AppState.currentCountry.info.name}</span>
                 </div>
-                <BorderBay />
-                <Note user={value.AppState.user} />
-                <FriendList user={value.AppState.user} />
+                <FontAwesomeIcon
+                  className="closeCountryPanelIcon"
+                  onClick={value.toggleCountryPanel}
+                  icon="times"
+                />
               </div>
-            ) : (
-              ''
-            )}
-          </React.Fragment>
-        )}
+              <BorderBay
+                handleSliderMove={value.handleSliderMove}
+                currentCountryStatus={value.AppState.currentCountryStatus}
+              />
+              <Note user={value.AppState.user} />
+              <FriendList user={value.AppState.user} />
+            </div>
+          ) : null
+        }
       </AppContextConsumer>
     </div>
   );

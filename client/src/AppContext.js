@@ -20,6 +20,7 @@ export class AppContextProvider extends Component {
       code: '',
       info: {}
     },
+    currentCountryStatus: null,
     countryPanelIsOpen: false
   };
 
@@ -61,6 +62,19 @@ export class AppContextProvider extends Component {
     if ('geolocation' in navigator) this.hasGeolocation();
   } // componentDidMount
 
+  // get the status code of a country saved on user if it exists
+  // otherwise, return 0
+  getCurrentCountryStatus = () => {
+    const currentCountryCode = this.state.currentCountry.code;
+    const userCountries = this.state.user.countries;
+
+    const findCountry = userCountries.find(
+      country => currentCountryCode === country.country_code
+    );
+
+    return findCountry ? findCountry.status_code : 0;
+  }; // getCurrentCountryStatus
+
   hasGeolocation = () => {
     // Browsers built-in method to get a user's location
     navigator.geolocation.getCurrentPosition(position => {
@@ -76,10 +90,11 @@ export class AppContextProvider extends Component {
     this.setState({
       userPosition: { lng, lat }
     });
-  };
+  }; // updateUserPosition
+
   updateCountryPanel() {
     console.log('HELLO WOrld', this.state.currentCountry);
-  } // updateUserPosition
+  }
 
   handleUpdatePreferences = async preferences => {
     // TODO: Abort if preferences does not have valid values
@@ -99,7 +114,6 @@ export class AppContextProvider extends Component {
         `${BACKEND_URL}/update_preferences`,
         body,
         options
-
       );
       if (request.status === 200)
         console.log(
@@ -115,7 +129,7 @@ export class AppContextProvider extends Component {
           request.body
         );
     } catch (err) {
-        console.error('There was an error trying to update preferences!');
+      console.error('There was an error trying to update preferences!');
     }
   }; // update_preferences
 
@@ -125,9 +139,33 @@ export class AppContextProvider extends Component {
       currentCountry: { code, info },
       countryPanelIsOpen: true
     });
-
+    this.setState({ currentCountryStatus: this.getCurrentCountryStatus() });
     // update the panel with current country
     this.updateCountryPanel();
+  };
+
+  // Called in BorderBay.js
+  handleSliderMove = async value => {
+    try {
+      const { user, currentCountry } = this.state;
+      const body = {
+        username: user.username,
+        country_code: currentCountry.code,
+        name: currentCountry.info.name,
+        status_code: value
+      };
+
+      const response = await axios.post(`${BACKEND_URL}/country_status`, body);
+
+      // Clear user on state first as a workaround for the following issue:
+      //    Updating an existing country would not update the color
+      //    Clearing the user on state first forces the geojson layer to re-render
+      this.setState({ user: {} });
+      this.setState({ user: response.data });
+      this.setState({ currentCountryStatus: this.getCurrentCountryStatus() });
+    } catch (err) {
+      console.error('Error update country status!');
+    }
   };
 
   handleSignIn = async e => {
@@ -167,11 +205,11 @@ export class AppContextProvider extends Component {
     localStorage.setItem('token', response.data.jwt_token);
     localStorage.setItem('user', user);
     this.setState({ authenticated: true, user: response.data.user });
-  };
+  }; // handleSignUp
 
   toggleCountryPanel = () => {
     this.setState({ countryPanelIsOpen: !this.state.countryPanelIsOpen });
-  }; // handleSignUp
+  }; // toggleCountryPanel
 
   render() {
     return (
@@ -184,6 +222,7 @@ export class AppContextProvider extends Component {
           handleSignIn: this.handleSignIn,
           handleSignOut: this.handleSignOut,
           handleSignUp: this.handleSignUp,
+          handleSliderMove: this.handleSliderMove,
           handleUpdatePreferences: this.handleUpdatePreferences,
           toggleCountryPanel: this.toggleCountryPanel
         }}
