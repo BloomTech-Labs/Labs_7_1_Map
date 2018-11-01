@@ -63,9 +63,11 @@ export class AppContextProvider extends Component {
     if ('geolocation' in navigator) this.hasGeolocation();
   } // componentDidMount
 
-  // get the status code of a country saved on user if it exists
-  // otherwise, return 0
+  // Get the status_code of a country saved on user if it exists
+  // Otherwise, return 0
   getCurrentCountryStatus = () => {
+    // TODO: This function could probably just call setState here
+    // instead of doing that in the function that uses it
     const currentCountryCode = this.state.currentCountry.code;
     const userCountries = this.state.user.countries;
 
