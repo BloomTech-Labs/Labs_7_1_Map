@@ -135,11 +135,9 @@ export class AppContextProvider extends Component {
     const geoInfo = getCountryShapeFromCode(code);
     this.setState({
       currentCountry: { code, info, geoInfo },
-      countryPanelIsOpen: true
+      countryPanelIsOpen: true,
+      currentCountryStatus: this.getCurrentCountryStatus()
     });
-    this.setState({ currentCountryStatus: this.getCurrentCountryStatus() });
-    // update the panel with current country
-    this.updateCountryPanel();
   };
 
   // Called in BorderBay.js

@@ -15,18 +15,21 @@ const CountryPanel = () => {
           value && value.AppState.countryPanelIsOpen ? (
             <div className="Card ">
               <div className="Card_Header">
-                <div className="Header_Country-Name">
-                  <span>{value.AppState.currentCountry.info.emoji}</span>
-                  <span>{value.AppState.currentCountry.info.name}</span>
-                </div>
-                <CountryBorder
-                  geometry={value.currentCountryInfo.geometry}
-                  handleSliderMove={value.handleSliderMove}
-                  currentCountryStatus={value.AppState.currentCountryStatus}
+                <span>{value.AppState.currentCountry.info.emoji}</span>
+                <span>{value.AppState.currentCountry.info.name}</span>
+                <FontAwesomeIcon
+                  className="closeCountryPanelIcon"
+                  onClick={value.toggleCountryPanel}
+                  icon="times"
                 />
-                <Note user={value.AppState.user} />
-                <FriendList user={value.AppState.user} />
               </div>
+              <CountryBorder
+                geometry={value.currentCountryInfo.geometry}
+                handleSliderMove={value.handleSliderMove}
+                currentCountryStatus={value.AppState.currentCountryStatus}
+              />
+              <Note user={value.AppState.user} />
+              <FriendList user={value.AppState.user} />
             </div>
           ) : null
         }

@@ -180,8 +180,9 @@ export default class CountryBorder extends Component {
             max={4}
             marks={marks}
             step={null}
-            onChange={this.log}
+            onChange={this.props.handleSliderMove}
             defaultValue={0}
+            value={this.props.currentCountryStatus}
           />
         </div>
       </div>
