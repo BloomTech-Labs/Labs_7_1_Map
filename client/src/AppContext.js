@@ -18,7 +18,8 @@ export class AppContextProvider extends Component {
     },
     currentCountry: {
       code: '',
-      info: {}
+      info: {},
+      geoInfo: {}
     },
     countryPanelIsOpen: false
   };
