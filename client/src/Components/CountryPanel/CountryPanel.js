@@ -26,7 +26,7 @@ const CountryPanel = () => {
                     icon="times"
                   />
                 </div>
-                <CountryBorder />
+                <CountryBorder geometry={value.currentCountryInfo.geometry} />
                 <Note user={value.AppState.user} />
                 <FriendList user={value.AppState.user} />
               </div>
