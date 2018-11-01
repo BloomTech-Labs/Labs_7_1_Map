@@ -26,12 +26,7 @@ class MapComponent extends Component {
   handleClick = async e => {
     // Get the country code of the location clicked on
     const countryCode = await wc([e.latlng.lng, e.latlng.lat]);
-
     const countryInfo = getCountryInfoFromCode(countryCode);
-
-    // This can be removed once popup is not needed since
-    // the lat/lng in local state isn't required by anything else.
-    this.setState({ ...e.latlng });
 
     // Update AppContext with the info of the currently selected country
     this.props.updateCurrentCountry(countryCode, countryInfo);
