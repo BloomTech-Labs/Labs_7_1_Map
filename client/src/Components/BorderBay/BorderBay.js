@@ -37,9 +37,16 @@ export default class BorderBay extends Component {
     this.setState({ marks });
   }
 
-  log(marks) {
-    console.log(marks); //eslint-disable-line
-  }
+  handleSliderMove = value => {
+    const { user, currentCountry } = this.props;
+    const body = {
+      username: user.username,
+      country_code: currentCountry.code,
+      name: currentCountry.info.name,
+      status_code: value
+    };
+    console.log(body);
+  };
 
   render() {
     return (
@@ -53,7 +60,7 @@ export default class BorderBay extends Component {
             max={4}
             marks={marks}
             step={null}
-            onChange={this.log}
+            onChange={this.handleSliderMove}
             defaultValue={0}
             // value={0}
           />
