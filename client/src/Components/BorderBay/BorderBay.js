@@ -37,17 +37,6 @@ export default class BorderBay extends Component {
     this.setState({ marks });
   }
 
-  handleSliderMove = value => {
-    const { user, currentCountry } = this.props;
-    const body = {
-      username: user.username,
-      country_code: currentCountry.code,
-      name: currentCountry.info.name,
-      status_code: value
-    };
-    console.log(body);
-  };
-
   render() {
     return (
       <div className="Country_Border">
@@ -60,7 +49,7 @@ export default class BorderBay extends Component {
             max={4}
             marks={marks}
             step={null}
-            onChange={this.handleSliderMove}
+            onChange={this.props.handleSliderMove}
             defaultValue={0}
             // value={0}
           />

@@ -25,10 +25,7 @@ const CountryPanel = () => {
                   icon="times"
                 />
               </div>
-              <BorderBay
-                user={value.AppState.user}
-                currentCountry={value.AppState.currentCountry}
-              />
+              <BorderBay handleSliderMove={value.handleSliderMove} />
               <Note user={value.AppState.user} />
               <FriendList user={value.AppState.user} />
             </div>

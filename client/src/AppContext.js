@@ -130,6 +130,17 @@ export class AppContextProvider extends Component {
     this.updateCountryPanel();
   };
 
+  handleSliderMove = value => {
+    const { user, currentCountry } = this.state;
+    const body = {
+      username: user.username,
+      country_code: currentCountry.code,
+      name: currentCountry.info.name,
+      status_code: value
+    };
+    console.log(body);
+  };
+
   handleSignIn = async e => {
     e.preventDefault();
     const body = {
@@ -184,8 +195,9 @@ export class AppContextProvider extends Component {
           handleSignIn: this.handleSignIn,
           handleSignOut: this.handleSignOut,
           handleSignUp: this.handleSignUp,
+          handleSliderMove: this.handleSliderMove,
           handleUpdatePreferences: this.handleUpdatePreferences,
-          toggleCountryPanel: this.toggleCountryPanel
+          toggleCountryPanel: this.toggleCountryPanel,
         }}
       >
         {this.props.children}
