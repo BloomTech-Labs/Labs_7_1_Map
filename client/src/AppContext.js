@@ -123,7 +123,7 @@ export class AppContextProvider extends Component {
           response.status,
           response.data
         );
-        this.setState({ user: response.data })
+        this.setState({ user: response.data });
       }
 
       if (response.status === 400)
@@ -153,6 +153,7 @@ export class AppContextProvider extends Component {
   handleSliderMove = async value => {
     try {
       const { user, currentCountry } = this.state;
+
       const body = {
         username: user.username,
         country_code: currentCountry.code,
@@ -160,20 +161,30 @@ export class AppContextProvider extends Component {
         status_code: value
       };
 
-      const response = await axios.post(`${BACKEND_URL}/country_status`, body);
+      const options = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      };
+
+      const response = await axios.post(
+        `${BACKEND_URL}/country_status`,
+        body,
+        options
+      );
 
       // Clear user on state first as a workaround for the following issue:
       //    Updating an existing country would not update the color
       //    Clearing the user on state first forces the geojson layer to re-render
       // This is because React is not detecting changes in nested objects.
-      // TODO: Store users' countries as an array on AppState (not inside user)
+      // TODO: Refactor to store users' countries as an array on AppState (not inside user)
       this.setState({ user: {} });
       this.setState({ user: response.data });
       this.setState({ currentCountryStatus: this.getCurrentCountryStatus() });
     } catch (err) {
       console.error('Error updating country status!');
     }
-  };
+  }; // handleSliderMove
 
   handleSignIn = async e => {
     e.preventDefault();
@@ -188,7 +199,7 @@ export class AppContextProvider extends Component {
       localStorage.setItem('user', user);
       this.setState({
         authenticated: true,
-        user: { ...response.data.user },
+        user: { ...response.data.user }
       });
     } catch (e) {
       // failed async
