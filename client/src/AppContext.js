@@ -63,17 +63,21 @@ export class AppContextProvider extends Component {
     if ('geolocation' in navigator) this.hasGeolocation();
   } // componentDidMount
 
-  // get the status code of a country saved on user if it exists
-  // otherwise, return 0
+  // Get the status_code of a country saved on user if it exists
+  // Otherwise, return 0
   getCurrentCountryStatus = () => {
+    // TODO: This function could probably just call setState here
+    // instead of doing that in the function that uses it
     const currentCountryCode = this.state.currentCountry.code;
     const userCountries = this.state.user.countries;
 
-    const findCountry = userCountries.find(
-      country => currentCountryCode === country.country_code
-    );
+    if (userCountries) {
+      const findCountry = userCountries.find(
+        country => currentCountryCode === country.country_code
+      );
 
-    return findCountry ? findCountry.status_code : 0;
+      return findCountry ? findCountry.status_code : 0;
+    }
   }; // getCurrentCountryStatus
 
   hasGeolocation = () => {
@@ -135,7 +139,9 @@ export class AppContextProvider extends Component {
     const geoInfo = getCountryShapeFromCode(code);
     this.setState({
       currentCountry: { code, info, geoInfo },
-      countryPanelIsOpen: true,
+      countryPanelIsOpen: true
+    });
+    this.setState({
       currentCountryStatus: this.getCurrentCountryStatus()
     });
   };
@@ -156,11 +162,13 @@ export class AppContextProvider extends Component {
       // Clear user on state first as a workaround for the following issue:
       //    Updating an existing country would not update the color
       //    Clearing the user on state first forces the geojson layer to re-render
+      // This is because React is not detecting changes in nested objects.
+      // TODO: Store users' countries as an array on AppState (not inside user)
       this.setState({ user: {} });
       this.setState({ user: response.data });
       this.setState({ currentCountryStatus: this.getCurrentCountryStatus() });
     } catch (err) {
-      console.error('Error update country status!');
+      console.error('Error updating country status!');
     }
   };
 
