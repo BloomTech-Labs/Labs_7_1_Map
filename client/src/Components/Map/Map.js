@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Map, TileLayer, Marker, GeoJSON } from 'react-leaflet';
+import { Map, TileLayer, GeoJSON } from 'react-leaflet';
 import wc from 'which-country';
 import geojson from './countries.geo.json';
 import {
@@ -11,7 +11,7 @@ import {
   styleHover,
   countryStatusStyles
 } from './countryStyles.js';
-import { mapTilesUrls, markerIcon, bounds } from './mapSetup.js';
+import { mapTilesUrls, bounds } from './mapSetup.js';
 
 import './Map.css';
 
@@ -120,15 +120,6 @@ class MapComponent extends Component {
               return <GeoJSON key={i} data={countryShape} style={style} />;
             })
           : null}
-
-        {this.props.userPosition && (
-          <Marker
-            position={position}
-            icon={markerIcon}
-            opacity={0.8}
-            className="userPosition"
-          />
-        )}
       </Map>
     );
   }
