@@ -2,6 +2,7 @@ import React from 'react';
 import ReactModal from 'react-modal';
 import { AppContextConsumer } from '../../AppContext';
 
+import FailedSignUpPopUp from './FailedSignUpPopUp';
 import './LogInBay.css';
 
 const SignUpModalStyles = {
@@ -37,15 +38,15 @@ class LogInBay extends React.Component {
 
   render() {
     var FailedSignUp;
-    if (props.failedSignUp === true) {
+    if (this.props.failedSignUp === true) {
       FailedSignUp = <FailedSignUpPopUp message={this.props.failedSignUpMessage} />;
     } else {
-      PopUp = <div> </div>;
+      FailedSignUp = <div> </div>;
     }
     return (
       <AppContextConsumer>
         {({ handleSignIn, handleSignUp }) => (
-          < className="LogInBay">
+          <div className="LogInBay">
             <form className="LogInForm" onSubmit={handleSignIn}>
               Sign In
               <input type="text" placeholder="Username" name="username" />

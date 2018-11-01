@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AppContextConsumer } from './AppContext';
+import { AppContextConsumer } from '../../AppContext';
 
 import LogInBay from './LogInBay';
 import FailedLoginPopUp from './FailedLoginPopUp';
@@ -34,7 +34,6 @@ const LandingPage = props => {
           );
         }}
       </AppContextConsumer>
-      <LogInBay />
       {PopUp}
       <Footer />
     </div>
