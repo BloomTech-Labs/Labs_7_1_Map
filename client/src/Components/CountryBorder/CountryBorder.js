@@ -146,14 +146,17 @@ export default class CountryBorder extends Component {
     this.drawBorder();
   }
   drawBorder = () => {
-    const canvas = this.refs.canvas;
-    draw(
-      canvas,
-      canvasWidth,
-      canvasHeight,
-      getBoundingBox(this.props.geometry),
-      this.props.geometry
-    );
+    // only draw if we have the geometry
+    if (this.props.geometry) {
+      const canvas = this.refs.canvas;
+      draw(
+        canvas,
+        canvasWidth,
+        canvasHeight,
+        getBoundingBox(this.props.geometry),
+        this.props.geometry
+      );
+    }
   };
   handleSlider(marks) {
     this.setState({ marks });

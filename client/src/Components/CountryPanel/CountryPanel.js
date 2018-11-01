@@ -24,7 +24,11 @@ const CountryPanel = () => {
                 />
               </div>
               <CountryBorder
-                geometry={value.currentCountryInfo.geometry}
+                geometry={
+                  value.currentCountryInfo
+                    ? value.currentCountryInfo.geometry
+                    : null
+                }
                 handleSliderMove={value.handleSliderMove}
                 currentCountryStatus={value.AppState.currentCountryStatus}
               />
