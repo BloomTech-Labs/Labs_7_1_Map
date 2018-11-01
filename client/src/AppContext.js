@@ -123,9 +123,6 @@ export class AppContextProvider extends Component {
       currentCountry: { code, info, geoInfo },
       countryPanelIsOpen: true
     });
-
-    // update the panel with current country
-    this.updateCountryPanel();
   };
 
   handleSignIn = async e => {

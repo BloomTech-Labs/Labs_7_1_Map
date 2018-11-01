@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { AppContextConsumer } from '../../AppContext';
-import BorderBay from '../BorderBay/BorderBay';
+import CountryBorder from '../CountryBorder/CountryBorder';
 import Note from '../Note/Note';
 import FriendList from '../Friends/FriendList';
 import './CountryPanel.css';
@@ -26,7 +26,7 @@ const CountryPanel = () => {
                     icon="times"
                   />
                 </div>
-                <BorderBay />
+                <CountryBorder />
                 <Note user={value.AppState.user} />
                 <FriendList user={value.AppState.user} />
               </div>

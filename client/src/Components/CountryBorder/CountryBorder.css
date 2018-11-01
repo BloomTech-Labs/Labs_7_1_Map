@@ -1,20 +1,20 @@
-.Country_Border {
+.CountryBorder {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 100%;
   border: 1px solid black;
 }
-.Country_Border .Country_Border-Border {
+.CountryBorder .CountryBorder__Border {
   text-align: center;
   width: 50%;
   border: 1px solid black;
 }
-.Country_Border .Country_Border-Slider {
+.CountryBorder .CountryBorder__Slider {
   position: relative;
   z-index: 10;
 }
-.Country_Border .Country_Border-Slider .Slider1 {
+.CountryBorder .CountryBorder__Slider .Slider1 {
   position: relative;
   z-index: 100;
 }
