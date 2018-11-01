@@ -10,7 +10,11 @@ const {
 } = require('./controllers/user_controller');
 
 //below handles the status change of country
-const { handle_status } = require('./controllers/statusController');
+const {
+  handle_status,
+  save_note,
+  update_note
+} = require('./controllers/statusController');
 
 const passport = require('./utils/passport');
 const path = require('path');
@@ -58,13 +62,15 @@ module.exports = server => {
   server.route('/api/country_status').post(handle_status);
 
   // Country Note Route
-  server.route('/api/country_note').post(save_note)
-  server.route('/api/country_note').put(update_note)
+  server.route('/api/country_note').post(save_note);
+  server.route('/api/country_note').put(update_note);
 
   // Update settings
   server.route('/api/change_password').put(protected_route, change_password);
   server.route('/api/change_email').put(protected_route, change_email);
-  server.route('/api/update_preferences').put(protected_route, update_preferences);
+  server
+    .route('/api/update_preferences')
+    .put(protected_route, update_preferences);
 
   server.route('/api/get_user/:id').get(protected_route, get_user);
   server.route('/api/get_users/').get(get_users); // TODO: protect this route one

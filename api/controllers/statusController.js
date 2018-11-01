@@ -13,6 +13,27 @@ const User = require('../models/user');
 */
 
 module.exports = {
+  save_note: async (req, res, next) => {
+    try {
+      const newNote = new Note(req.body);
+      const note = await newNote.save();
+      res.status(201).json(note);
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  update_note: async (req, res, next) => {
+    try {
+      const { noteId } = req.params;
+      const updateNote = req.body;
+      const updated = await Note.findOneAndUpdate(noteId, updateNote);
+      return res.status(200).json(updated);
+    } catch (err) {
+      next(err);
+    }
+  },
+
   handle_status: (req, res) => {
     const { country_code, status_code, username, name } = req.body;
 
@@ -86,8 +107,5 @@ module.exports = {
       .catch(err => {
         res.status(500).json({ error: 'failure to initiate query' });
       });
-    
-    // Route for Notes based on Country
-    
   }
 };
