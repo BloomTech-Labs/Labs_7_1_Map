@@ -20,6 +20,7 @@ export class AppContextProvider extends Component {
       code: '',
       info: {}
     },
+    currentCountryStatus: null,
     countryPanelIsOpen: false
   };
 
@@ -60,6 +61,19 @@ export class AppContextProvider extends Component {
     // Ask for user location if browser is compatible
     if ('geolocation' in navigator) this.hasGeolocation();
   } // componentDidMount
+
+  // get the status code of a country saved on user if it exists
+  // otherwise, return 0
+  getCurrentCountryStatus = () => {
+    const currentCountryCode = this.state.currentCountry.code;
+    const userCountries = this.state.user.countries;
+
+    const findCountry = userCountries.find(
+      country => currentCountryCode === country.country_code
+    );
+
+    return findCountry ? findCountry.status_code : 0;
+  }; // getCurrentCountryStatus
 
   hasGeolocation = () => {
     // Browsers built-in method to get a user's location
@@ -125,11 +139,12 @@ export class AppContextProvider extends Component {
       currentCountry: { code, info },
       countryPanelIsOpen: true
     });
-
+    this.setState({ currentCountryStatus: this.getCurrentCountryStatus() });
     // update the panel with current country
     this.updateCountryPanel();
   };
 
+  // Called in BorderBay.js
   handleSliderMove = async value => {
     try {
       const { user, currentCountry } = this.state;
@@ -147,6 +162,7 @@ export class AppContextProvider extends Component {
       //    Clearing the user on state first forces the geojson layer to re-render
       this.setState({ user: {} });
       this.setState({ user: response.data });
+      this.setState({ currentCountryStatus: this.getCurrentCountryStatus() });
     } catch (err) {
       console.error('Error update country status!');
     }
@@ -189,11 +205,11 @@ export class AppContextProvider extends Component {
     localStorage.setItem('token', response.data.jwt_token);
     localStorage.setItem('user', user);
     this.setState({ authenticated: true, user: response.data.user });
-  };
+  }; // handleSignUp
 
   toggleCountryPanel = () => {
     this.setState({ countryPanelIsOpen: !this.state.countryPanelIsOpen });
-  }; // handleSignUp
+  }; // toggleCountryPanel
 
   render() {
     return (
