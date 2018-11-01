@@ -78,9 +78,6 @@ export class AppContextProvider extends Component {
       userPosition: { lng, lat }
     });
   };
-  updateCountryPanel() {
-    console.log('HELLO WOrld', this.state.currentCountry);
-  } // updateUserPosition
 
   handleUpdatePreferences = async preferences => {
     // TODO: Abort if preferences does not have valid values
@@ -100,7 +97,6 @@ export class AppContextProvider extends Component {
         `${BACKEND_URL}/update_preferences`,
         body,
         options
-
       );
       if (request.status === 200)
         console.log(
@@ -116,7 +112,7 @@ export class AppContextProvider extends Component {
           request.body
         );
     } catch (err) {
-        console.error('There was an error trying to update preferences!');
+      console.error('There was an error trying to update preferences!');
     }
   }; // update_preferences
 
