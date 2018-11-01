@@ -111,23 +111,25 @@ export class AppContextProvider extends Component {
         }
       };
 
-      const request = await axios.put(
+      const response = await axios.put(
         `${BACKEND_URL}/update_preferences`,
         body,
         options
       );
-      if (request.status === 200)
+      if (response.status === 200) {
         console.log(
           'Preferences were updated successfully!',
-          request.status,
-          request.body
+          response.status,
+          response.data
         );
+        this.setState({ user: response.data })
+      }
 
-      if (request.status === 400)
+      if (response.status === 400)
         console.log(
           'Preferences failed to update!',
-          request.status,
-          request.body
+          response.status,
+          response.body
         );
     } catch (err) {
       console.error('There was an error trying to update preferences!');
