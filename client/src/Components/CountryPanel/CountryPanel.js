@@ -19,24 +19,14 @@ const CountryPanel = () => {
                   <span>{value.AppState.currentCountry.info.emoji}</span>
                   <span>{value.AppState.currentCountry.info.name}</span>
                 </div>
-<<<<<<< HEAD
-                <CountryBorder geometry={value.currentCountryInfo.geometry} />
+                <CountryBorder
+                  geometry={value.currentCountryInfo.geometry}
+                  handleSliderMove={value.handleSliderMove}
+                  currentCountryStatus={value.AppState.currentCountryStatus}
+                />
                 <Note user={value.AppState.user} />
                 <FriendList user={value.AppState.user} />
-=======
-                <FontAwesomeIcon
-                  className="closeCountryPanelIcon"
-                  onClick={value.toggleCountryPanel}
-                  icon="times"
-                />
->>>>>>> master
               </div>
-              <BorderBay
-                handleSliderMove={value.handleSliderMove}
-                currentCountryStatus={value.AppState.currentCountryStatus}
-              />
-              <Note user={value.AppState.user} />
-              <FriendList user={value.AppState.user} />
             </div>
           ) : null
         }
