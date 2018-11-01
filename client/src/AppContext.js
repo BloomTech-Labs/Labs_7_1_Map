@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { clearLocalstorage } from './utils.js';
+import { clearLocalstorage, getCountryShapeFromCode } from './utils.js';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -118,8 +118,9 @@ export class AppContextProvider extends Component {
 
   // Update state with currently selected country, called in Map.js
   handleUpdateCurrentCountry = (code, info) => {
+    const geoInfo = getCountryShapeFromCode(code);
     this.setState({
-      currentCountry: { code, info },
+      currentCountry: { code, info, geoInfo },
       countryPanelIsOpen: true
     });
 
@@ -175,14 +176,15 @@ export class AppContextProvider extends Component {
       <AppContext.Provider
         value={{
           AppState: this.state,
-          updateUserPosition: this.handleUpdateUserPosition,
-          updateCurrentCountry: this.handleUpdateCurrentCountry,
           authenticated: this.state.authenticated,
+          currentCountryInfo: this.state.currentCountry.geoInfo,
           handleSignIn: this.handleSignIn,
           handleSignOut: this.handleSignOut,
           handleSignUp: this.handleSignUp,
           handleUpdatePreferences: this.handleUpdatePreferences,
-          toggleCountryPanel: this.toggleCountryPanel
+          toggleCountryPanel: this.toggleCountryPanel,
+          updateCurrentCountry: this.handleUpdateCurrentCountry,
+          updateUserPosition: this.handleUpdateUserPosition
         }}
       >
         {this.props.children}
