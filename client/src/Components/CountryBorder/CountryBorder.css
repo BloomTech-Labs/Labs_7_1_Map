@@ -2,17 +2,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
-  border: 1px solid black;
-}
-.CountryBorder .CountryBorder__Border {
-  text-align: center;
-  width: 50%;
+  align-items: center;
   border: 1px solid black;
 }
 .CountryBorder .CountryBorder__Slider {
-  position: relative;
-  z-index: 10;
+  width: 100%;
 }
 .CountryBorder .CountryBorder__Slider .Slider1 {
   position: relative;

@@ -5,7 +5,7 @@ import './CountryBorder.css';
 import 'rc-slider/assets/index.css';
 
 const canvasWidth = 300;
-const canvasHeight = 300;
+const canvasHeight = 150;
 
 const marks = {
   0: 'No Interest',
@@ -86,7 +86,7 @@ const getBoundingBox = geometry => {
 const draw = (canvas, canvasWidth, canvasHeight, bounds, geometry) => {
   const context = canvas.getContext('2d');
   context.clearRect(0, 0, canvasWidth, canvasHeight);
-  context.fillStyle = '#333';
+  //context.fillStyle = '#333';
 
   // determine the scale
   const xScale = canvasWidth / Math.abs(bounds.xMax - bounds.xMin);
@@ -109,7 +109,7 @@ const draw = (canvas, canvasWidth, canvasHeight, bounds, geometry) => {
             context.lineTo(point[0], point[1]);
           }
         });
-      context.fill();
+      context.stroke();
       break;
     case 'MultiPolygon':
       //multiPolygonBoundingBox(geometry.coordinates);
@@ -129,7 +129,7 @@ const draw = (canvas, canvasWidth, canvasHeight, bounds, geometry) => {
               context.lineTo(point[0], point[1]);
             }
           });
-        context.fill();
+        context.stroke();
       });
 
       break;
