@@ -21,6 +21,7 @@ export class AppContextProvider extends Component {
       info: {},
       geoInfo: {}
     },
+    failedLogin: false,
     currentCountryStatus: null,
     countryPanelIsOpen: false
   };
@@ -185,9 +186,15 @@ export class AppContextProvider extends Component {
       const user = await JSON.stringify(response.data.user);
       localStorage.setItem('token', response.data.jwt_token);
       localStorage.setItem('user', user);
-      this.setState({ authenticated: true, user: { ...response.data.user } });
+      this.setState({
+        authenticated: true,
+        user: { ...response.data.user },
+      });
     } catch (e) {
       // failed async
+      this.setState({
+        failedLogin: true
+      });
     }
   }; // handleSignIn
 
