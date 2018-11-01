@@ -76,10 +76,11 @@ export class AppContextProvider extends Component {
     this.setState({
       userPosition: { lng, lat }
     });
-  };
+  }; // updateUserPosition
+
   updateCountryPanel() {
     console.log('HELLO WOrld', this.state.currentCountry);
-  } // updateUserPosition
+  }
 
   handleUpdatePreferences = async preferences => {
     // TODO: Abort if preferences does not have valid values
@@ -99,7 +100,6 @@ export class AppContextProvider extends Component {
         `${BACKEND_URL}/update_preferences`,
         body,
         options
-
       );
       if (request.status === 200)
         console.log(
@@ -115,7 +115,7 @@ export class AppContextProvider extends Component {
           request.body
         );
     } catch (err) {
-        console.error('There was an error trying to update preferences!');
+      console.error('There was an error trying to update preferences!');
     }
   }; // update_preferences
 
@@ -130,7 +130,7 @@ export class AppContextProvider extends Component {
     this.updateCountryPanel();
   };
 
-  handleSliderMove = value => {
+  handleSliderMove = async value => {
     const { user, currentCountry } = this.state;
     const body = {
       username: user.username,
@@ -138,7 +138,9 @@ export class AppContextProvider extends Component {
       name: currentCountry.info.name,
       status_code: value
     };
-    console.log(body);
+    const response = await axios.post(`${BACKEND_URL}/country_status`, body);
+    console.log('RESPONSE: ', response.status, response.data);
+    this.setState({ user: response.data });
   };
 
   handleSignIn = async e => {
@@ -197,7 +199,7 @@ export class AppContextProvider extends Component {
           handleSignUp: this.handleSignUp,
           handleSliderMove: this.handleSliderMove,
           handleUpdatePreferences: this.handleUpdatePreferences,
-          toggleCountryPanel: this.toggleCountryPanel,
+          toggleCountryPanel: this.toggleCountryPanel
         }}
       >
         {this.props.children}
