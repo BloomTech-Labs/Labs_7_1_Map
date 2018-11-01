@@ -83,9 +83,7 @@ const getBoundingBox = geometry => {
   }
 };
 
-const draw = (canvas, canvasWidth, canvasHeight, bounds, geometry) => {
-  const context = canvas.getContext('2d');
-  context.clearRect(0, 0, canvasWidth, canvasHeight);
+const draw = (context, canvasWidth, canvasHeight, bounds, geometry) => {
   //context.fillStyle = '#333';
 
   // determine the scale
@@ -146,11 +144,13 @@ export default class CountryBorder extends Component {
     this.drawBorder();
   }
   drawBorder = () => {
+    const canvas = this.refs.canvas;
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvasWidth, canvasHeight);
     // only draw if we have the geometry
     if (this.props.geometry) {
-      const canvas = this.refs.canvas;
       draw(
-        canvas,
+        context,
         canvasWidth,
         canvasHeight,
         getBoundingBox(this.props.geometry),
