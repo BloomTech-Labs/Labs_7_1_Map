@@ -10,13 +10,8 @@ const mongod = new MongodbMemoryServer();
 const testServer = http.createServer(server);
 
 describe('User', () => {
-  const testuser = {
-    username: 'theTestAccount',
-    password: '123456',
-    email: 'email@email.com'
-  };
-  // Connect to the mongodb before tests are run
   beforeAll(async () => {
+    // Connect to the mongodb before all tests are run
     const uri = await mongod.getConnectionString();
     await mongoose.connect(
       uri,
@@ -24,17 +19,34 @@ describe('User', () => {
     );
   });
 
-  // Disconnect from mongodb after all tests are completed
   afterAll(async () => {
+    // Disconnect from mongodb after all tests are completed
     await mongoose.disconnect();
     mongod.stop();
   });
 
-  beforeEach(() => {
+  beforeEach(async () => {
     testServer.listen(PORT);
+
+    // Save an initial test user
+    const initialTestUser = {
+      username: 'initialTestUser',
+      password: '123456',
+      email: 'email@email.com'
+    };
+
+    await request(server)
+      .post('/api/register')
+      .send(initialTestUser);
   });
 
-  afterEach(() => {
+  afterEach(async () => {
+    // Clear test DB after each test
+    const collections = await mongoose.connection.db.collections();
+
+    for (let collection of collections) {
+      await collection.remove();
+    }
     testServer.close();
   });
 
@@ -149,7 +161,7 @@ describe('User', () => {
 
     describe('/login', () => {
       it('succeeds with correct credentials', async () => {
-        const user = { username: 'patrick', password: 'pasdfsadfasdfsdf' };
+        const user = { username: 'initialTestUser', password: '123456' };
         const response = await request(server)
           .post('/api/login')
           .send(user);
