@@ -12,16 +12,8 @@ export class AppContextProvider extends Component {
   state = {
     authenticated: false,
     user: {},
-    userPosition: {
-      lat: 22.28552,
-      lng: 114.15769
-    },
-    currentCountry: {
-      code: '',
-      info: {},
-      geoInfo: {},
-      scratched: false
-    },
+    userPosition: { lat: 22.28552, lng: 114.15769 },
+    currentCountry: { code: '', info: {}, geoInfo: {}, scratched: false },
     failedLogin: false,
     currentCountryStatus: null,
     countryPanelIsOpen: false
@@ -86,11 +78,6 @@ export class AppContextProvider extends Component {
     }
   }; // getCurrentCountryStatus
 
-  handleScratched = () => {
-    const currentCountry = { ...this.state.currentCountry, scratched: true };
-    this.setState({ currentCountry });
-  };
-
   getLocationUsingIP = () => {
     axios
       .get('https://ipapi.co/json')
@@ -105,6 +92,150 @@ export class AppContextProvider extends Component {
         console.log(err);
       });
   };
+
+  handleScratched = () => {
+    const currentCountry = { ...this.state.currentCountry, scratched: true };
+    this.setState({ currentCountry });
+  };
+
+  handleSignIn = async e => {
+    e.preventDefault();
+    const body = {
+      username: e.target.username.value,
+      password: e.target.password.value
+    };
+    try {
+      const response = await axios.post(`${BACKEND_URL}/login`, body);
+      const user = await JSON.stringify(response.data.user);
+      localStorage.setItem('token', response.data.jwt_token);
+      localStorage.setItem('user', user);
+      this.setState({
+        authenticated: true,
+        user: { ...response.data.user }
+      });
+    } catch (e) {
+      // failed async
+      this.setState({ failedLogin: true });
+    }
+  }; // handleSignIn
+
+  handleSignOut = () => {
+    this.setState({ authenticated: false, user: {} });
+    clearLocalstorage();
+  }; // handleSignOut
+
+  handleSignUp = async e => {
+    e.preventDefault();
+
+    // TODO: Error handling
+    const body = {
+      username: e.target.username.value,
+      password: e.target.password.value,
+      email: e.target.email.value
+    };
+
+    const response = await axios.post(`${BACKEND_URL}/register`, body);
+    const user = JSON.stringify(response.data.user);
+    localStorage.setItem('token', response.data.jwt_token);
+    localStorage.setItem('user', user);
+    this.setState({
+      authenticated: true,
+      user: response.data.user
+    });
+  }; // handleSignUp
+
+  // Called in BorderBay.js
+  handleSliderMove = async value => {
+    try {
+      const { user, currentCountry } = this.state;
+
+      const body = {
+        username: user.username,
+        country_code: currentCountry.code,
+        name: currentCountry.info.name,
+        status_code: value,
+        scratched: currentCountry.scratched
+      };
+
+      const options = {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      };
+
+      const response = await axios.post(
+        `${BACKEND_URL}/country_status`,
+        body,
+        options
+      );
+
+      // Clear the countries array on state first (whilst keeping the rest of the user data)
+      // This is needed so React re-renders an existing country's updated status color
+      // It is a workaround for the following issue:
+      //    - Updating an existing country would not update the color
+      //    - This is because React does not detect changes in nested objects
+      //    - Clearing the countries array first will cause the geojson layer to re-render
+      // TODO: Refactor to store users' countries as an array on AppState (not inside user)
+
+      const currentUserInfo = this.state.user;
+      currentUserInfo.countries = [];
+      this.setState({ user: currentUserInfo });
+
+      // Update user data on state with new data from back end
+      this.setState({ user: response.data });
+      this.setState({
+        currentCountryStatus: this.getCurrentCountryStatus()
+      });
+    } catch (err) {
+      console.error('Error updating country status!');
+    }
+  }; // handleSliderMove
+
+  // Update state with currently selected country, called in Map.js
+  handleUpdateCurrentCountry = (code, info) => {
+    const geoInfo = getCountryShapeFromCode(code);
+    const scratched = this.isScratched(code);
+    this.setState({
+      currentCountry: { code, info, geoInfo, scratched },
+      countryPanelIsOpen: true
+    });
+    this.setState({
+      currentCountryStatus: this.getCurrentCountryStatus()
+    });
+  };
+
+  handleUpdatePreferences = async preferences => {
+    // TODO: Abort if preferences does not have valid values
+    try {
+      const body = { username: this.state.user.username, preferences };
+
+      const options = {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      };
+
+      const response = await axios.put(
+        `${BACKEND_URL}/update_preferences`,
+        body,
+        options
+      );
+      if (response.status === 200) {
+        console.log(
+          'Preferences were updated successfully!',
+          response.status,
+          response.data
+        );
+        this.setState({ user: response.data });
+      }
+
+      if (response.status === 400)
+        console.log(
+          'Preferences failed to update!',
+          response.status,
+          response.body
+        );
+    } catch (err) {
+      console.error('There was an error trying to update preferences!');
+    }
+  }; // update_preferences
+
   hasGeolocation = () => {
     // Browsers built-in method to get a user's location
     navigator.geolocation.getCurrentPosition(
@@ -133,170 +264,16 @@ export class AppContextProvider extends Component {
     return scratched;
   };
 
+  toggleCountryPanel = () => {
+    this.setState({
+      countryPanelIsOpen: !this.state.countryPanelIsOpen
+    });
+  }; // toggleCountryPanel
+
   // Update the user's geolocation position
   updateUserPosition = (lat, lng) => {
-    this.setState({
-      userPosition: { lng, lat }
-    });
+    this.setState({ userPosition: { lng, lat } });
   };
-
-  handleUpdatePreferences = async preferences => {
-    // TODO: Abort if preferences does not have valid values
-    try {
-      const body = {
-        username: this.state.user.username,
-        preferences
-      };
-
-      const options = {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      };
-
-      const response = await axios.put(
-        `${BACKEND_URL}/update_preferences`,
-        body,
-        options
-      );
-      if (response.status === 200) {
-        console.log(
-          'Preferences were updated successfully!',
-          response.status,
-          response.data
-        );
-        this.setState({ user: response.data });
-      }
-
-      if (response.status === 400)
-        console.log(
-          'Preferences failed to update!',
-          response.status,
-          response.body
-        );
-    } catch (err) {
-      console.error('There was an error trying to update preferences!');
-    }
-  }; // update_preferences
-
-  // Update state with currently selected country, called in Map.js
-  handleUpdateCurrentCountry = (code, info) => {
-    const geoInfo = getCountryShapeFromCode(code);
-    const scratched = this.isScratched(code);
-    this.setState({
-      currentCountry: { code, info, geoInfo, scratched },
-      countryPanelIsOpen: true
-    });
-    this.setState({
-      currentCountryStatus: this.getCurrentCountryStatus()
-    });
-  };
-
-  // Called in BorderBay.js
-  handleSliderMove = async value => {
-    try {
-      const { user, currentCountry } = this.state;
-
-<<<<<<< HEAD
-      console.log(currentCountry.scratched);
-=======
->>>>>>> master
-      const body = {
-        username: user.username,
-        country_code: currentCountry.code,
-        name: currentCountry.info.name,
-        status_code: value,
-        scratched: currentCountry.scratched
-      };
-
-      const options = {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      };
-
-<<<<<<< HEAD
-      // Clear user on state first as a workaround for the following issue:
-      //    Updating an existing country would not update the color
-      //    Clearing the user on state first forces the geojson layer to re-render
-      // This is because React is not detecting changes in nested objects.
-      // TODO: Store users' countries as an array on AppState (not inside user)
-=======
-      const response = await axios.post(
-        `${BACKEND_URL}/country_status`,
-        body,
-        options
-      );
-
-
-      // Clear the countries array on state first (whilst keeping the rest of the user data)
-      // This is needed so React re-renders an existing country's updated status color
-      // It is a workaround for the following issue:
-      //    - Updating an existing country would not update the color
-      //    - This is because React does not detect changes in nested objects
-      //    - Clearing the countries array first will cause the geojson layer to re-render
-      // TODO: Refactor to store users' countries as an array on AppState (not inside user)
->>>>>>> master
-      const currentUserInfo = this.state.user;
-      currentUserInfo.countries = [];
-      this.setState({ user: currentUserInfo });
-
-      // Update user data on state with new data from back end
-      this.setState({ user: response.data });
-      this.setState({ currentCountryStatus: this.getCurrentCountryStatus() });
-    } catch (err) {
-      console.error('Error updating country status!');
-    }
-  }; // handleSliderMove
-
-  handleSignIn = async e => {
-    e.preventDefault();
-    const body = {
-      username: e.target.username.value,
-      password: e.target.password.value
-    };
-    try {
-      const response = await axios.post(`${BACKEND_URL}/login`, body);
-      const user = await JSON.stringify(response.data.user);
-      localStorage.setItem('token', response.data.jwt_token);
-      localStorage.setItem('user', user);
-      this.setState({
-        authenticated: true,
-        user: { ...response.data.user }
-      });
-    } catch (e) {
-      // failed async
-      this.setState({
-        failedLogin: true
-      });
-    }
-  }; // handleSignIn
-
-  handleSignOut = () => {
-    this.setState({ authenticated: false, user: {} });
-    clearLocalstorage();
-  }; // handleSignOut
-
-  handleSignUp = async e => {
-    e.preventDefault();
-
-    // TODO: Error handling
-    const body = {
-      username: e.target.username.value,
-      password: e.target.password.value,
-      email: e.target.email.value
-    };
-
-    const response = await axios.post(`${BACKEND_URL}/register`, body);
-    const user = JSON.stringify(response.data.user);
-    localStorage.setItem('token', response.data.jwt_token);
-    localStorage.setItem('user', user);
-    this.setState({ authenticated: true, user: response.data.user });
-  }; // handleSignUp
-
-  toggleCountryPanel = () => {
-    this.setState({ countryPanelIsOpen: !this.state.countryPanelIsOpen });
-  }; // toggleCountryPanel
 
   render() {
     return (
