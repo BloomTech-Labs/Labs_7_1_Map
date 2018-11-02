@@ -194,15 +194,25 @@ describe('User', () => {
       };
 
       it('fails without a token', async () => {
-        const { jwt_token, user } = initialTestUser.body;
-        expect(jwt_token).toBeDefined();
-        expect(user.username).toBe('initialTestUser');
-        expect(user.id).toBeDefined();
-        expect(user.countries.length).toBe(0);
-
         const response = await request(server)
           .post('/api/country_status')
           .send(new_country_status);
+
+        expect(response.status).toBe(401);
+        expect(response.body.username).toBeUndefined();
+        expect(response.body.countries).toBeUndefined();
+      });
+
+      it('fails with an invalid token', async () => {
+        const jwt_token = initialTestUser.body.jwt_token
+          .split('')
+          .reverse()
+          .join('');
+
+        const response = await request(server)
+          .post('/api/country_status')
+          .send(new_country_status)
+          .set('Authorization', `Bearer ${jwt_token}`);
 
         expect(response.status).toBe(401);
         expect(response.body.username).toBeUndefined();
