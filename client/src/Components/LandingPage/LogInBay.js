@@ -53,6 +53,7 @@ class LogInBay extends React.Component {
     this.setState({ showModal: false });
   };
 
+  //These update state when signup fields are changed
   handleChangeSignUpUsername = event => {
     this.setState({ signupUsername: event.target.value });
   };
@@ -68,6 +69,7 @@ class LogInBay extends React.Component {
   handleChangeSignUpPassword2 = event => {
     this.setState({ signupPassword2: event.target.value });
   };
+  //------------------------------------------------------
 
   handleSignUpSubmit = event => {
     const {
@@ -77,6 +79,9 @@ class LogInBay extends React.Component {
       signupPassword2
     } = this.state;
     event.preventDefault();
+    
+    //begin local error check
+
     if (
       signupUsername &&
       signupEmail &&
@@ -104,6 +109,7 @@ class LogInBay extends React.Component {
               signupErrorExists: true
             });
           } else {
+            //no local errors detected
             this.onSignUpSubmitSuccess();
           }
         }
@@ -116,6 +122,7 @@ class LogInBay extends React.Component {
     }
   };
 
+  //calls handleSignUp method from context store, passing in signup field values from the state
   onSignUpSubmitSuccess = () => {
     const { signupUsername, signupEmail, signupPassword1 } = this.state;
     this.props.handleSignUp(signupUsername, signupEmail, signupPassword1);
@@ -123,7 +130,10 @@ class LogInBay extends React.Component {
 
   render() {
     var FailedSignUp;
+    //initially renders error popup when signupErrorExists state is set to true (See handleSignUpSubmit)
     if (this.state.signupErrorExists === true) {
+      //created a switch here incase I have to have seperate functionality for remote errors (from the server)
+      //(how do i get rid of the red-error-lines in the case below?)
       switch (this.state.signupErrorCase) {
         case 'local':
           FailedSignUp = (
@@ -216,4 +226,3 @@ class LogInBay extends React.Component {
 }
 
 export default LogInBay;
-// line 112: above used to be onSubmit handleSignUp
