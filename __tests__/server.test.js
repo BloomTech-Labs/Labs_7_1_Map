@@ -193,7 +193,7 @@ describe('User', () => {
         expect(user.id).toBeDefined();
         expect(user.countries.length).toBe(0);
 
-        const status_update = {
+        const new_country_status = {
           country_code: 'CHN',
           status_code: 1,
           name: 'China',
@@ -203,7 +203,7 @@ describe('User', () => {
         const response = await request(server)
           .post('/api/country_status')
           .set('Authorization', `Bearer ${jwt_token}`)
-          .send(status_update);
+          .send(new_country_status);
 
         expect(response.body.countries.length).toBe(1);
         expect(response.body.countries[0]).toBeDefined();
@@ -211,6 +211,48 @@ describe('User', () => {
         expect(response.body.countries[0].status_code).toBe(1);
         expect(response.body.countries[0].name).toBe('China');
       });
+
+      it('updates an existing country correctly', async () => {
+        const { jwt_token, user } = initialTestUser.body;
+        expect(jwt_token).toBeDefined();
+        expect(user.username).toBe('initialTestUser');
+        expect(user.id).toBeDefined();
+        expect(user.countries.length).toBe(0);
+
+        const new_country_status= {
+          country_code: 'CHN',
+          status_code: 1,
+          name: 'China',
+          username: 'initialTestUser'
+        };
+
+        const response_1 = await request(server)
+          .post('/api/country_status')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send(new_country_status);
+
+        expect(response_1.body.countries.length).toBe(1);
+        expect(response_1.body.countries[0].country_code).toBe('CHN');
+        expect(response_1.body.countries[0].status_code).toBe(1);
+        expect(response_1.body.countries[0].name).toBe('China');
+
+        const update_country_status= {
+          country_code: 'CHN',
+          status_code: 2,
+          name: 'China',
+          username: 'initialTestUser'
+        };
+
+        const response_2 = await request(server)
+          .post('/api/country_status')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send(update_country_status);
+
+        expect(response_2.body.countries.length).toBe(1);
+        expect(response_2.body.countries[0].country_code).toBe('CHN');
+        expect(response_2.body.countries[0].status_code).toBe(2);
+        expect(response_2.body.countries[0].name).toBe('China');
+      })
     });
   });
 
