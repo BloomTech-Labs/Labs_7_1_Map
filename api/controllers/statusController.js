@@ -13,6 +13,7 @@ const User = require('../models/user');
 */
 
 module.exports = {
+  // Note Routes for Saving and Updating
   save_note: async (req, res, next) => {
     try {
       const newNote = new Note(req.body);
