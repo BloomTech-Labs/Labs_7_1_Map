@@ -61,7 +61,11 @@ export class AppContextProvider extends Component {
     }
 
     // Ask for user location if browser is compatible
-    if ('geolocation' in navigator) this.hasGeolocation();
+    if ('geolocation' in navigator) {
+      this.hasGeolocation();
+    } else {
+      this.getLocationUsingIP(); // geo location not available on device
+    }
   } // componentDidMount
 
   // Get the status_code of a country saved on user if it exists
@@ -80,7 +84,20 @@ export class AppContextProvider extends Component {
       return findCountry ? findCountry.status_code : 0;
     }
   }; // getCurrentCountryStatus
-
+  getLocationUsingIP = () => {
+    axios
+      .get('https://ipapi.co/json')
+      .then(response => {
+        this.updateUserPosition(
+          response.data.latitude,
+          response.data.longitude
+        );
+      })
+      .catch(err => {
+        // error
+        console.log(err);
+      });
+  };
   hasGeolocation = () => {
     // Browsers built-in method to get a user's location
     navigator.geolocation.getCurrentPosition(
@@ -91,18 +108,7 @@ export class AppContextProvider extends Component {
         );
       },
       () => {
-        axios
-          .get('https://ipapi.co/json')
-          .then(response => {
-            this.updateUserPosition(
-              response.data.latitude,
-              response.data.longitude
-            );
-          })
-          .catch(err => {
-            // error
-            console.log(err);
-          });
+        this.getLocationUsingIP(); //permission denied
       }
     );
   }; // hasGeolocation
@@ -158,9 +164,7 @@ export class AppContextProvider extends Component {
     const geoInfo = getCountryShapeFromCode(code);
     this.setState({
       currentCountry: { code, info, geoInfo },
-      countryPanelIsOpen: true
-    });
-    this.setState({
+      countryPanelIsOpen: true,
       currentCountryStatus: this.getCurrentCountryStatus()
     });
   };
