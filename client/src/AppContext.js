@@ -197,7 +197,10 @@ export class AppContextProvider extends Component {
     try {
       const { user, currentCountry } = this.state;
 
+<<<<<<< HEAD
       console.log(currentCountry.scratched);
+=======
+>>>>>>> master
       const body = {
         username: user.username,
         country_code: currentCountry.code,
@@ -206,13 +209,34 @@ export class AppContextProvider extends Component {
         scratched: currentCountry.scratched
       };
 
-      const response = await axios.post(`${BACKEND_URL}/country_status`, body);
+      const options = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      };
 
+<<<<<<< HEAD
       // Clear user on state first as a workaround for the following issue:
       //    Updating an existing country would not update the color
       //    Clearing the user on state first forces the geojson layer to re-render
       // This is because React is not detecting changes in nested objects.
       // TODO: Store users' countries as an array on AppState (not inside user)
+=======
+      const response = await axios.post(
+        `${BACKEND_URL}/country_status`,
+        body,
+        options
+      );
+
+
+      // Clear the countries array on state first (whilst keeping the rest of the user data)
+      // This is needed so React re-renders an existing country's updated status color
+      // It is a workaround for the following issue:
+      //    - Updating an existing country would not update the color
+      //    - This is because React does not detect changes in nested objects
+      //    - Clearing the countries array first will cause the geojson layer to re-render
+      // TODO: Refactor to store users' countries as an array on AppState (not inside user)
+>>>>>>> master
       const currentUserInfo = this.state.user;
       currentUserInfo.countries = [];
       this.setState({ user: currentUserInfo });
@@ -223,7 +247,7 @@ export class AppContextProvider extends Component {
     } catch (err) {
       console.error('Error updating country status!');
     }
-  };
+  }; // handleSliderMove
 
   handleSignIn = async e => {
     e.preventDefault();

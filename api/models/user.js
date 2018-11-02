@@ -4,7 +4,7 @@ const argon2 = require('argon2');
 const DEV = process.env.DEV || null;
 
 const Schema = mongoose.Schema;
-const ObjectIdSchema = Schema.Types.ObjectId;
+//const ObjectIdSchema = Schema.Types.ObjectId;
 
 // define a user schema
 const UserSchema = new Schema(
