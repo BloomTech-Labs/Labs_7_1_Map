@@ -83,12 +83,28 @@ export class AppContextProvider extends Component {
 
   hasGeolocation = () => {
     // Browsers built-in method to get a user's location
-    navigator.geolocation.getCurrentPosition(position => {
-      this.updateUserPosition(
-        position.coords.latitude,
-        position.coords.longitude
-      );
-    });
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        this.updateUserPosition(
+          position.coords.latitude,
+          position.coords.longitude
+        );
+      },
+      () => {
+        axios
+          .get('https://ipapi.co/json')
+          .then(response => {
+            this.updateUserPosition(
+              response.data.latitude,
+              response.data.longitude
+            );
+          })
+          .catch(err => {
+            // error
+            console.log(err);
+          });
+      }
+    );
   }; // hasGeolocation
 
   // Update the user's geolocation position
@@ -123,7 +139,7 @@ export class AppContextProvider extends Component {
           response.status,
           response.data
         );
-        this.setState({ user: response.data })
+        this.setState({ user: response.data });
       }
 
       if (response.status === 400)
@@ -188,7 +204,7 @@ export class AppContextProvider extends Component {
       localStorage.setItem('user', user);
       this.setState({
         authenticated: true,
-        user: { ...response.data.user },
+        user: { ...response.data.user }
       });
     } catch (e) {
       // failed async
