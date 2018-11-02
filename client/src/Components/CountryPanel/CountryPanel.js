@@ -32,7 +32,6 @@ const CountryPanel = () => {
                 handleSliderMove={value.handleSliderMove}
                 handleScratched={value.handleScratched}
                 currentCountryStatus={value.AppState.currentCountryStatus}
-                name={value.AppState.currentCountry.code}
                 scratched={value.AppState.currentCountry.scratched}
               />
               <Note user={value.AppState.user} />
