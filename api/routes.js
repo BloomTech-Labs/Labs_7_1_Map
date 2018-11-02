@@ -62,8 +62,10 @@ module.exports = server => {
   server.route('/api/country_status').post(handle_status);
 
   // Country Note Route
-  server.route('/api/country_note').post(save_note);
-  server.route('/api/country_note').put(update_note);
+  server
+    .route('/api/country_note')
+    .post(save_note)
+    .put(update_note);
 
   // Update settings
   server.route('/api/change_password').put(protected_route, change_password);
