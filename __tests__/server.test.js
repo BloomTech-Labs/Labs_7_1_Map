@@ -186,19 +186,35 @@ describe('User', () => {
     });
 
     describe('/country_status', () => {
-      it('adds a new country if it does not already exist', async () => {
+      const new_country_status = {
+        country_code: 'CHN',
+        status_code: 1,
+        name: 'China',
+        username: 'initialTestUser'
+      };
+
+      it('fails without a token', async () => {
         const { jwt_token, user } = initialTestUser.body;
         expect(jwt_token).toBeDefined();
         expect(user.username).toBe('initialTestUser');
         expect(user.id).toBeDefined();
         expect(user.countries.length).toBe(0);
 
-        const new_country_status = {
-          country_code: 'CHN',
-          status_code: 1,
-          name: 'China',
-          username: 'initialTestUser'
-        };
+        const response = await request(server)
+          .post('/api/country_status')
+          .send(new_country_status);
+
+        expect(response.status).toBe(401);
+        expect(response.body.username).toBeUndefined();
+        expect(response.body.countries).toBeUndefined();
+      });
+
+      it('adds a new country if it does not already exist', async () => {
+        const { jwt_token, user } = initialTestUser.body;
+        expect(jwt_token).toBeDefined();
+        expect(user.username).toBe('initialTestUser');
+        expect(user.id).toBeDefined();
+        expect(user.countries.length).toBe(0);
 
         const response = await request(server)
           .post('/api/country_status')
@@ -219,13 +235,6 @@ describe('User', () => {
         expect(user.id).toBeDefined();
         expect(user.countries.length).toBe(0);
 
-        const new_country_status= {
-          country_code: 'CHN',
-          status_code: 1,
-          name: 'China',
-          username: 'initialTestUser'
-        };
-
         const response_1 = await request(server)
           .post('/api/country_status')
           .set('Authorization', `Bearer ${jwt_token}`)
@@ -236,7 +245,7 @@ describe('User', () => {
         expect(response_1.body.countries[0].status_code).toBe(1);
         expect(response_1.body.countries[0].name).toBe('China');
 
-        const update_country_status= {
+        const update_country_status = {
           country_code: 'CHN',
           status_code: 2,
           name: 'China',
@@ -252,7 +261,7 @@ describe('User', () => {
         expect(response_2.body.countries[0].country_code).toBe('CHN');
         expect(response_2.body.countries[0].status_code).toBe(2);
         expect(response_2.body.countries[0].name).toBe('China');
-      })
+      });
     });
   });
 
