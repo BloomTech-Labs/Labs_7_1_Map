@@ -29,10 +29,11 @@ const CountryPanel = () => {
                     ? value.currentCountryInfo.geometry
                     : null
                 }
-                scratched={value.AppState.scratched}
                 handleSliderMove={value.handleSliderMove}
-                handleScrached={value.handleScrached}
+                handleScratched={value.handleScratched}
                 currentCountryStatus={value.AppState.currentCountryStatus}
+                name={value.AppState.currentCountry.code}
+                scratched={value.AppState.currentCountry.scratched}
               />
               <Note user={value.AppState.user} />
               <FriendList user={value.AppState.user} />

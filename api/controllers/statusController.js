@@ -14,14 +14,16 @@ const User = require('../models/user');
 
 module.exports = {
   handle_status: (req, res) => {
-    const { country_code, status_code, username, name } = req.body;
+    const { country_code, status_code, username, name, scratched } = req.body;
 
     //below are queries
     const queryUserCountry = {
       $and: [
         { username: username },
         {
-          countries: { $elemMatch: { country_code: country_code } }
+          countries: {
+            $elemMatch: { country_code: country_code }
+          }
         }
       ]
     };
@@ -32,7 +34,8 @@ module.exports = {
     //below are operators
     const editCountry = {
       $set: {
-        'countries.$.status_code': status_code
+        'countries.$.status_code': status_code,
+        'countries.$.scratched': scratched
       }
     };
 
@@ -43,6 +46,7 @@ module.exports = {
           name: name,
           status_code: status_code,
           notes: ''
+          // TODO: add scratched here whenever slider is disabled
         }
       }
     };

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Slider from 'rc-slider/lib/Slider';
 import ScratchCard from 'react-scratchcard';
 
+import { getBoundingBox } from '../../utils';
+
 import './CountryBorder.css';
 import 'rc-slider/assets/index.css';
 import travellingImg from '../../travelling.jpg';
@@ -10,8 +12,7 @@ const settings = {
   width: 300,
   height: 150,
   image: travellingImg,
-  finishPercent: 100,
-  onComplete: () => console.log('The card is now clear!')
+  finishPercent: 50
 };
 
 const canvasWidth = 300;
@@ -45,54 +46,6 @@ const marks = {
   }
 };
 
-const polygonBoundingBox = coordinates => {
-  const bounds = {
-    xMin: coordinates[0][0],
-    xMax: coordinates[0][0],
-    yMin: coordinates[0][1],
-    yMax: coordinates[0][1]
-  };
-
-  coordinates.forEach(point => {
-    if (point[0] < bounds.xMin) bounds.xMin = point[0];
-    if (point[0] > bounds.xMax) bounds.xMax = point[0];
-    if (point[1] < bounds.yMin) bounds.yMin = point[1];
-    if (point[1] > bounds.yMax) bounds.yMax = point[1];
-  });
-
-  return bounds;
-};
-
-const multiPolygonBoundingBox = shape => {
-  const bounds = {
-    xMin: shape[0][0][0][0],
-    xMax: shape[0][0][0][0],
-    yMin: shape[0][0][0][1],
-    yMax: shape[0][0][0][1]
-  };
-
-  shape.forEach(coordinates => {
-    coordinates[0].forEach(point => {
-      if (point[0] < bounds.xMin) bounds.xMin = point[0];
-      if (point[0] > bounds.xMax) bounds.xMax = point[0];
-      if (point[1] < bounds.yMin) bounds.yMin = point[1];
-      if (point[1] > bounds.yMax) bounds.yMax = point[1];
-    });
-  });
-  return bounds;
-};
-
-const getBoundingBox = geometry => {
-  switch (geometry.type) {
-    case 'Polygon':
-      return polygonBoundingBox(geometry.coordinates[0]);
-    case 'MultiPolygon':
-      return multiPolygonBoundingBox(geometry.coordinates);
-    default:
-      console.log('NONE');
-  }
-};
-
 const draw = (context, canvasWidth, canvasHeight, bounds, geometry) => {
   //context.fillStyle = '#333';
 
@@ -101,9 +54,27 @@ const draw = (context, canvasWidth, canvasHeight, bounds, geometry) => {
   const yScale = canvasHeight / Math.abs(bounds.yMax - bounds.yMin);
   const scale = xScale < yScale ? xScale : yScale;
 
-  switch (geometry.type) {
-    case 'Polygon':
-      const coordinates = geometry.coordinates[0];
+  if (geometry.type === 'Polygon') {
+    const coordinates = geometry.coordinates[0];
+    coordinates
+      .map(point => [
+        (point[0] - bounds.xMin) * scale,
+        (bounds.yMax - point[1]) * scale
+      ])
+      .forEach((point, index) => {
+        if (index === 0) {
+          context.beginPath();
+          context.moveTo(point[0], point[1]);
+        } else {
+          context.lineTo(point[0], point[1]);
+        }
+      });
+    context.stroke();
+  } else if (geometry.type === 'MultiPolygon') {
+    //multiPolygonBoundingBox(geometry.coordinates);
+    const shape = geometry.coordinates;
+    shape.forEach((polygon, i) => {
+      const coordinates = polygon[0];
       coordinates
         .map(point => [
           (point[0] - bounds.xMin) * scale,
@@ -118,38 +89,15 @@ const draw = (context, canvasWidth, canvasHeight, bounds, geometry) => {
           }
         });
       context.stroke();
-      break;
-    case 'MultiPolygon':
-      //multiPolygonBoundingBox(geometry.coordinates);
-      const shape = geometry.coordinates;
-      shape.forEach((polygon, i) => {
-        const coordinates = polygon[0];
-        coordinates
-          .map(point => [
-            (point[0] - bounds.xMin) * scale,
-            (bounds.yMax - point[1]) * scale
-          ])
-          .forEach((point, index) => {
-            if (index === 0) {
-              context.beginPath();
-              context.moveTo(point[0], point[1]);
-            } else {
-              context.lineTo(point[0], point[1]);
-            }
-          });
-        context.stroke();
-      });
-
-      break;
-    default:
-      console.log('NONE Drawn');
+    });
+  } else {
+    console.log('NONE Drawn');
   }
 };
 
 export default class CountryBorder extends Component {
   componentDidMount() {
     this.drawBorder();
-    console.log(this.props);
   }
   componentDidUpdate() {
     this.drawBorder();
@@ -178,16 +126,20 @@ export default class CountryBorder extends Component {
     let counrtyBorderMap;
     if (this.props.scratched) {
       counrtyBorderMap = (
-        <canvas
-          ref="canvas"
-          className="CountryBorder__Border"
-          width={canvasWidth}
-          height={canvasHeight}
-        />
+        <React.Fragment>
+          <h1>WE THERE</h1>{' '}
+          <canvas
+            ref="canvas"
+            className="CountryBorder__Border"
+            width={canvasWidth}
+            height={canvasHeight}
+          />
+        </React.Fragment>
       );
     } else {
       counrtyBorderMap = (
-        <ScratchCard {...settings}>
+        <ScratchCard {...settings} onComplete={this.props.handleScratched}>
+          <h1>WE HERE</h1>
           <canvas
             ref="canvas"
             className="CountryBorder__Border"

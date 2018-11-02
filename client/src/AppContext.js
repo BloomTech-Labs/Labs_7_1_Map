@@ -19,11 +19,11 @@ export class AppContextProvider extends Component {
     currentCountry: {
       code: '',
       info: {},
-      geoInfo: {}
+      geoInfo: {},
+      scratched: false
     },
     failedLogin: false,
     currentCountryStatus: null,
-    scratched: false,
     countryPanelIsOpen: false
   };
 
@@ -86,19 +86,9 @@ export class AppContextProvider extends Component {
     }
   }; // getCurrentCountryStatus
 
-  handleScrached = () => {
-    let scratched = false;
-    const currentCountryCode = this.state.currentCountry.code;
-    const userCountries = this.state.user.countries;
-
-    if (userCountries) {
-      const findCountry = userCountries.find(
-        country => currentCountryCode === country.country_code
-      );
-
-      scratched = findCountry ? findCountry.scratched : false;
-    }
-    this.setState({ scratched });
+  handleScratched = () => {
+    const currentCountry = { ...this.state.currentCountry, scratched: true };
+    this.setState({ currentCountry });
   };
 
   getLocationUsingIP = () => {
@@ -129,6 +119,19 @@ export class AppContextProvider extends Component {
       }
     );
   }; // hasGeolocation
+
+  isScratched = countryCode => {
+    let scratched = false;
+    const userCountries = this.state.user.countries;
+
+    if (userCountries) {
+      const found = userCountries.find(
+        country => countryCode === country.country_code
+      );
+      scratched = found ? found.scratched : false;
+    }
+    return scratched;
+  };
 
   // Update the user's geolocation position
   updateUserPosition = (lat, lng) => {
@@ -179,25 +182,28 @@ export class AppContextProvider extends Component {
   // Update state with currently selected country, called in Map.js
   handleUpdateCurrentCountry = (code, info) => {
     const geoInfo = getCountryShapeFromCode(code);
+    const scratched = this.isScratched(code);
     this.setState({
-      currentCountry: { code, info, geoInfo },
+      currentCountry: { code, info, geoInfo, scratched },
       countryPanelIsOpen: true
     });
     this.setState({
       currentCountryStatus: this.getCurrentCountryStatus()
     });
-    this.handleScrached();
   };
 
   // Called in BorderBay.js
   handleSliderMove = async value => {
     try {
       const { user, currentCountry } = this.state;
+
+      console.log(currentCountry.scratched);
       const body = {
         username: user.username,
         country_code: currentCountry.code,
         name: currentCountry.info.name,
-        status_code: value
+        status_code: value,
+        scratched: currentCountry.scratched
       };
 
       const response = await axios.post(`${BACKEND_URL}/country_status`, body);
@@ -275,7 +281,7 @@ export class AppContextProvider extends Component {
           handleSignOut: this.handleSignOut,
           handleSignUp: this.handleSignUp,
           handleSliderMove: this.handleSliderMove,
-          handleScrached: this.handleScrached,
+          handleScratched: this.handleScratched,
           handleUpdatePreferences: this.handleUpdatePreferences,
           toggleCountryPanel: this.toggleCountryPanel,
           updateCurrentCountry: this.handleUpdateCurrentCountry,
