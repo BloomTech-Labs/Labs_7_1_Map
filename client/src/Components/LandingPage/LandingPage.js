@@ -30,6 +30,7 @@ const LandingPage = props => {
             <LogInBay
               failedSignUp={value.AppState.failedSignUp}
               failedSignUpMessage={value.AppState.failedSignUpMessage}
+              handleSignUp={value.handleSignUp}
             />
           );
         }}

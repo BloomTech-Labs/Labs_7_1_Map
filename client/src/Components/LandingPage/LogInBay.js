@@ -21,11 +21,28 @@ const SignUpModalStyles = {
   }
 };
 
+//notes from nalee
+//november 1, 2018, 8pm
+/*
+need to have onSubmit create call submithandler
+submithandler will check to see if information matches'etc
+if it goes through it will call the one on the context
+otherwise it will change the context state to error
+
+*/
+
 ReactModal.setAppElement(document.getElementById('App'));
 
 class LogInBay extends React.Component {
   state = {
-    showModal: false
+    showModal: false,
+    signupUsername: '',
+    signupEmail: '',
+    signupPassword1: '',
+    signupPassword2: '',
+    signupErrorResponse: '',
+    signupErrorCase: '',
+    signupErrorExists: false
   };
 
   handleOpenModal = () => {
@@ -36,16 +53,96 @@ class LogInBay extends React.Component {
     this.setState({ showModal: false });
   };
 
+  handleChangeSignUpUsername = event => {
+    this.setState({ signupUsername: event.target.value });
+  };
+
+  handleChangeSignUpEmail = event => {
+    this.setState({ signupEmail: event.target.value });
+  };
+
+  handleChangeSignUpPassword1 = event => {
+    this.setState({ signupPassword1: event.target.value });
+  };
+
+  handleChangeSignUpPassword2 = event => {
+    this.setState({ signupPassword2: event.target.value });
+  };
+
+  handleSignUpSubmit = event => {
+    const {
+      signupUsername,
+      signupEmail,
+      signupPassword1,
+      signupPassword2
+    } = this.state;
+    event.preventDefault();
+    if (
+      signupUsername &&
+      signupEmail &&
+      signupPassword1 &&
+      signupPassword2 !== ''
+    ) {
+      if (signupPassword1 !== signupPassword2) {
+        this.setState({
+          signupErrorResponse: 'Passwords do not match',
+          signupErrorCase: 'local',
+          signupErrorExists: true
+        });
+      } else {
+        if (signupPassword1.length < 6) {
+          this.setState({
+            signupErrorResponse: 'Password must be a minimum of 6 characters',
+            signupErrorCase: 'local',
+            signupErrorExists: true
+          });
+        } else {
+          if (signupUsername === signupPassword1) {
+            this.setState({
+              signupErrorResponse: 'Password cannot be the same as username!',
+              signupErrorCase: 'local',
+              signupErrorExists: true
+            });
+          } else {
+            this.onSignUpSubmitSuccess();
+          }
+        }
+      }
+    } else {
+      this.setState({
+        signupErrorResponse: 'Please complete the entire form',
+        signupErrorExists: true
+      });
+    }
+  };
+
+  onSignUpSubmitSuccess = () => {
+    const { signupUsername, signupEmail, signupPassword1 } = this.state;
+    this.props.handleSignUp(signupUsername, signupEmail, signupPassword1);
+  };
+
   render() {
     var FailedSignUp;
-    if (this.props.failedSignUp === true) {
-      FailedSignUp = <FailedSignUpPopUp message={this.props.failedSignUpMessage} />;
+    if (this.state.signupErrorExists === true) {
+      switch (this.state.signupErrorCase) {
+        case 'local':
+          FailedSignUp = (
+            <FailedSignUpPopUp message={this.state.signupErrorResponse} />
+          );
+          break;
+        case 'remote':
+          FailedSignUp = (
+            <FailedSignUpPopUp message={this.props.failedSignUpMessage} />
+          );
+        default:
+          console.log('error with switch statement in LoginBay.js');
+      }
     } else {
       FailedSignUp = <div> </div>;
     }
     return (
       <AppContextConsumer>
-        {({ handleSignIn, handleSignUp }) => (
+        {({ handleSignIn }) => (
           <div className="LogInBay">
             <form className="LogInForm" onSubmit={handleSignIn}>
               Sign In
@@ -78,16 +175,32 @@ class LogInBay extends React.Component {
             >
               <p>Sign Up</p>
               <form
-                onSubmit={handleSignUp}
+                onSubmit={this.handleSignUpSubmit}
                 style={{ display: 'flex', flexFlow: 'column nowrap' }}
               >
-                <input type="text" placeholder="Username" name="username" />
-                <input type="email" placeholder="Email" name="email" />
-                <input type="password" placeholder="Password" name="password" />
+                <input
+                  type="text"
+                  placeholder="Username"
+                  name="username"
+                  onChange={this.handleChangeSignUpUsername}
+                />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                  onChange={this.handleChangeSignUpEmail}
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  onChange={this.handleChangeSignUpPassword1}
+                />
                 <input
                   type="password"
                   placeholder="Confirm Password"
                   name="confirmPassword"
+                  onChange={this.handleChangeSignUpPassword2}
                 />
                 <input type="submit" />
               </form>
@@ -103,3 +216,4 @@ class LogInBay extends React.Component {
 }
 
 export default LogInBay;
+// line 112: above used to be onSubmit handleSignUp

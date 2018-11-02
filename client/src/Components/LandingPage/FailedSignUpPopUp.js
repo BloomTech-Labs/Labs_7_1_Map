@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import './FailedSignUpPopUp.css';
 
 export default class FailedSignUpPopUp extends Component {
   render() {
-    return <div>Sorry! {this.props.message}</div>;
+    return <div className="FailedSignUpPopUp">{this.props.message}</div>;
   }
 }

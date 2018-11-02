@@ -205,14 +205,13 @@ export class AppContextProvider extends Component {
     clearLocalstorage();
   }; // handleSignOut
 
-  handleSignUp = async e => {
-    e.preventDefault();
+  handleSignUp = async (username, email, password) => {
 
     // TODO: Error handling
     const body = {
-      username: e.target.username.value,
-      password: e.target.password.value,
-      email: e.target.email.value
+      username: username,
+      password: password,
+      email: email
     };
 
     const response = await axios.post(`${BACKEND_URL}/register`, body);
