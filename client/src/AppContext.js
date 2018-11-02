@@ -23,6 +23,7 @@ export class AppContextProvider extends Component {
     },
     failedLogin: false,
     currentCountryStatus: null,
+    scratched: false,
     countryPanelIsOpen: false
   };
 
@@ -84,6 +85,22 @@ export class AppContextProvider extends Component {
       return findCountry ? findCountry.status_code : 0;
     }
   }; // getCurrentCountryStatus
+
+  handleScrached = () => {
+    let scratched = false;
+    const currentCountryCode = this.state.currentCountry.code;
+    const userCountries = this.state.user.countries;
+
+    if (userCountries) {
+      const findCountry = userCountries.find(
+        country => currentCountryCode === country.country_code
+      );
+
+      scratched = findCountry ? findCountry.scratched : false;
+    }
+    this.setState({ scratched });
+  };
+
   getLocationUsingIP = () => {
     axios
       .get('https://ipapi.co/json')
@@ -169,6 +186,7 @@ export class AppContextProvider extends Component {
     this.setState({
       currentCountryStatus: this.getCurrentCountryStatus()
     });
+    this.handleScrached();
   };
 
   // Called in BorderBay.js
@@ -257,6 +275,7 @@ export class AppContextProvider extends Component {
           handleSignOut: this.handleSignOut,
           handleSignUp: this.handleSignUp,
           handleSliderMove: this.handleSliderMove,
+          handleScrached: this.handleScrached,
           handleUpdatePreferences: this.handleUpdatePreferences,
           toggleCountryPanel: this.toggleCountryPanel,
           updateCurrentCountry: this.handleUpdateCurrentCountry,

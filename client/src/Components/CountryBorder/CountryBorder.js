@@ -149,6 +149,7 @@ const draw = (context, canvasWidth, canvasHeight, bounds, geometry) => {
 export default class CountryBorder extends Component {
   componentDidMount() {
     this.drawBorder();
+    console.log(this.props);
   }
   componentDidUpdate() {
     this.drawBorder();
@@ -168,17 +169,24 @@ export default class CountryBorder extends Component {
       );
     }
   };
-  handleSlider(marks) {
-    this.setState({ marks });
-  }
 
   log(marks) {
     console.log(marks); //eslint-disable-line
   }
 
   render() {
-    return (
-      <div className="CountryBorder">
+    let counrtyBorderMap;
+    if (this.props.scratched) {
+      counrtyBorderMap = (
+        <canvas
+          ref="canvas"
+          className="CountryBorder__Border"
+          width={canvasWidth}
+          height={canvasHeight}
+        />
+      );
+    } else {
+      counrtyBorderMap = (
         <ScratchCard {...settings}>
           <canvas
             ref="canvas"
@@ -187,6 +195,11 @@ export default class CountryBorder extends Component {
             height={canvasHeight}
           />
         </ScratchCard>
+      );
+    }
+    return (
+      <div className="CountryBorder">
+        {counrtyBorderMap}
         <div className="CountryBorder__Slider">
           <p className="Slide-Tag">Level of Stay</p>
           <Slider
