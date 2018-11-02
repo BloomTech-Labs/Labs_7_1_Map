@@ -82,7 +82,7 @@ module.exports = {
         // user creation was successful, send a jwt_token back
         return res.status(200).json({
           jwt_token: make_token(created_user),
-          user: { id: created_user._id, username: created_user.username }
+          user: { id: created_user._id, username: created_user.username, countries: created_user.countries }
         });
       } else {
         if (DEV) console.log(err);

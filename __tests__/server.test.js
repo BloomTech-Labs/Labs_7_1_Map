@@ -25,19 +25,21 @@ describe('User', () => {
     mongod.stop();
   });
 
+  let initialTestUser;
+
   beforeEach(async () => {
     testServer.listen(PORT);
 
     // Save an initial test user
-    const initialTestUser = {
+    const initialTestUserInfo = {
       username: 'initialTestUser',
       password: '123456',
       email: 'email@email.com'
     };
 
-    await request(server)
+    initialTestUser = await request(server)
       .post('/api/register')
-      .send(initialTestUser);
+      .send(initialTestUserInfo);
   });
 
   afterEach(async () => {
@@ -180,6 +182,34 @@ describe('User', () => {
           .send(user);
 
         expect(response.status).toBe(401);
+      });
+    });
+
+    describe('/country_status', () => {
+      it('adds a new country if it does not already exist', async () => {
+        const { jwt_token, user } = initialTestUser.body;
+        expect(jwt_token).toBeDefined();
+        expect(user.username).toBe('initialTestUser');
+        expect(user.id).toBeDefined();
+        expect(user.countries.length).toBe(0);
+
+        const status_update = {
+          country_code: 'CHN',
+          status_code: 1,
+          name: 'China',
+          username: 'initialTestUser'
+        };
+
+        const response = await request(server)
+          .post('/api/country_status')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send(status_update);
+
+        expect(response.body.countries.length).toBe(1);
+        expect(response.body.countries[0]).toBeDefined();
+        expect(response.body.countries[0].country_code).toBe('CHN');
+        expect(response.body.countries[0].status_code).toBe(1);
+        expect(response.body.countries[0].name).toBe('China');
       });
     });
   });
