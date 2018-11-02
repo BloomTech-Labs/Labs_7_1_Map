@@ -15,7 +15,7 @@ import { mapTilesUrls, markerIcon, bounds } from './mapSetup.js';
 
 import './Map.css';
 
-/* MAIN MAP COMPONENT START */
+
 class MapComponent extends Component {
   state = {
     zoom: 2,
@@ -47,6 +47,7 @@ class MapComponent extends Component {
     }
   };
 
+  // Maintains zoom level
   handleZoomend = e => {
     const newZoomLevel = e.target._zoom;
     this.setState({ zoom: newZoomLevel });
@@ -55,7 +56,7 @@ class MapComponent extends Component {
   render() {
     const position = this.props.userPosition
       ? [this.props.userPosition.lat, this.props.userPosition.lng]
-      : [0, 0];
+      : [0, 0]; // Arbitrary value, can be changed to something else
 
     const theme =
       this.props.user && this.props.user.preferences
@@ -132,7 +133,6 @@ class MapComponent extends Component {
       </Map>
     );
   }
-}
-/* MAIN MAP COMPONENT END */
+} // MapComponent
 
 export default MapComponent;

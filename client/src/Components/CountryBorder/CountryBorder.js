@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 import Slider from 'rc-slider/lib/Slider';
+import ScratchCard from 'react-scratchcard';
 
 import './CountryBorder.css';
 import 'rc-slider/assets/index.css';
+import travellingImg from '../../travelling.jpg';
+
+const settings = {
+  width: 300,
+  height: 150,
+  image: travellingImg,
+  finishPercent: 100,
+  onComplete: () => console.log('The card is now clear!')
+};
 
 const canvasWidth = 300;
 const canvasHeight = 150;
@@ -83,9 +93,7 @@ const getBoundingBox = geometry => {
   }
 };
 
-const draw = (canvas, canvasWidth, canvasHeight, bounds, geometry) => {
-  const context = canvas.getContext('2d');
-  context.clearRect(0, 0, canvasWidth, canvasHeight);
+const draw = (context, canvasWidth, canvasHeight, bounds, geometry) => {
   //context.fillStyle = '#333';
 
   // determine the scale
@@ -146,11 +154,13 @@ export default class CountryBorder extends Component {
     this.drawBorder();
   }
   drawBorder = () => {
+    const canvas = this.refs.canvas;
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvasWidth, canvasHeight);
     // only draw if we have the geometry
     if (this.props.geometry) {
-      const canvas = this.refs.canvas;
       draw(
-        canvas,
+        context,
         canvasWidth,
         canvasHeight,
         getBoundingBox(this.props.geometry),
@@ -169,12 +179,14 @@ export default class CountryBorder extends Component {
   render() {
     return (
       <div className="CountryBorder">
-        <canvas
-          ref="canvas"
-          className="CountryBorder__Border"
-          width={canvasWidth}
-          height={canvasHeight}
-        />
+        <ScratchCard {...settings}>
+          <canvas
+            ref="canvas"
+            className="CountryBorder__Border"
+            width={canvasWidth}
+            height={canvasHeight}
+          />
+        </ScratchCard>
         <div className="CountryBorder__Slider">
           <p className="Slide-Tag">Level of Stay</p>
           <Slider

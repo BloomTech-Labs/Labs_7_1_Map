@@ -13,7 +13,17 @@ class App extends Component {
       <AppContextConsumer>
         {value => (
           <div className="App">
-            {value.AppState.authenticated ? <Dashboard /> : <LandingPage />}
+            {value.AppState.authenticated ? (
+              <Dashboard />
+            ) : (
+              <AppContextConsumer>
+                {value => {
+                  return (
+                    <LandingPage failedLogin={value.AppState.failedLogin} />
+                  );
+                }}
+              </AppContextConsumer>
+            )}
           </div>
         )}
       </AppContextConsumer>

@@ -55,7 +55,7 @@ module.exports = server => {
     .get(facebook_authentication_callback, facebook_loggedIn);
 
   // Country Status Route
-  server.route('/api/country_status').post(handle_status);
+  server.route('/api/country_status').post(protected_route, handle_status);
 
   // Update settings
   server.route('/api/change_password').put(protected_route, change_password);

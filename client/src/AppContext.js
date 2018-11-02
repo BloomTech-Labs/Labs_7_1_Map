@@ -21,6 +21,7 @@ export class AppContextProvider extends Component {
       info: {},
       geoInfo: {}
     },
+    failedLogin: false,
     currentCountryStatus: null,
     countryPanelIsOpen: false
   };
@@ -63,17 +64,21 @@ export class AppContextProvider extends Component {
     if ('geolocation' in navigator) this.hasGeolocation();
   } // componentDidMount
 
-  // get the status code of a country saved on user if it exists
-  // otherwise, return 0
+  // Get the status_code of a country saved on user if it exists
+  // Otherwise, return 0
   getCurrentCountryStatus = () => {
+    // TODO: This function could probably just call setState here
+    // instead of doing that in the function that uses it
     const currentCountryCode = this.state.currentCountry.code;
     const userCountries = this.state.user.countries;
 
-    const findCountry = userCountries.find(
-      country => currentCountryCode === country.country_code
-    );
+    if (userCountries) {
+      const findCountry = userCountries.find(
+        country => currentCountryCode === country.country_code
+      );
 
-    return findCountry ? findCountry.status_code : 0;
+      return findCountry ? findCountry.status_code : 0;
+    }
   }; // getCurrentCountryStatus
 
   hasGeolocation = () => {
@@ -107,23 +112,25 @@ export class AppContextProvider extends Component {
         }
       };
 
-      const request = await axios.put(
+      const response = await axios.put(
         `${BACKEND_URL}/update_preferences`,
         body,
         options
       );
-      if (request.status === 200)
+      if (response.status === 200) {
         console.log(
           'Preferences were updated successfully!',
-          request.status,
-          request.body
+          response.status,
+          response.data
         );
+        this.setState({ user: response.data });
+      }
 
-      if (request.status === 400)
+      if (response.status === 400)
         console.log(
           'Preferences failed to update!',
-          request.status,
-          request.body
+          response.status,
+          response.body
         );
     } catch (err) {
       console.error('There was an error trying to update preferences!');
@@ -135,7 +142,9 @@ export class AppContextProvider extends Component {
     const geoInfo = getCountryShapeFromCode(code);
     this.setState({
       currentCountry: { code, info, geoInfo },
-      countryPanelIsOpen: true,
+      countryPanelIsOpen: true
+    });
+    this.setState({
       currentCountryStatus: this.getCurrentCountryStatus()
     });
   };
@@ -144,6 +153,7 @@ export class AppContextProvider extends Component {
   handleSliderMove = async value => {
     try {
       const { user, currentCountry } = this.state;
+
       const body = {
         username: user.username,
         country_code: currentCountry.code,
@@ -151,18 +161,30 @@ export class AppContextProvider extends Component {
         status_code: value
       };
 
-      const response = await axios.post(`${BACKEND_URL}/country_status`, body);
+      const options = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      };
+
+      const response = await axios.post(
+        `${BACKEND_URL}/country_status`,
+        body,
+        options
+      );
 
       // Clear user on state first as a workaround for the following issue:
       //    Updating an existing country would not update the color
       //    Clearing the user on state first forces the geojson layer to re-render
+      // This is because React is not detecting changes in nested objects.
+      // TODO: Refactor to store users' countries as an array on AppState (not inside user)
       this.setState({ user: {} });
       this.setState({ user: response.data });
       this.setState({ currentCountryStatus: this.getCurrentCountryStatus() });
     } catch (err) {
-      console.error('Error update country status!');
+      console.error('Error updating country status!');
     }
-  };
+  }; // handleSliderMove
 
   handleSignIn = async e => {
     e.preventDefault();
@@ -175,9 +197,15 @@ export class AppContextProvider extends Component {
       const user = await JSON.stringify(response.data.user);
       localStorage.setItem('token', response.data.jwt_token);
       localStorage.setItem('user', user);
-      this.setState({ authenticated: true, user: { ...response.data.user } });
+      this.setState({
+        authenticated: true,
+        user: { ...response.data.user }
+      });
     } catch (e) {
       // failed async
+      this.setState({
+        failedLogin: true
+      });
     }
   }; // handleSignIn
 
