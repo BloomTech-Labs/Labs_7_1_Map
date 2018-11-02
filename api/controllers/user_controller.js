@@ -72,26 +72,52 @@ module.exports = {
       return;
     }
 
-    try {
-      // create a new user
-      const new_user = new User(req.body);
+    //below runs to compare passed in username and email to see if any exist on the database,
+    //i'm doing this because I don't know the correct mongoose way
+    //it is so i can response with seperate codes, so I can render the correct error response on the front end
 
-      const created_user = await new_user.save();
-
-      if (created_user) {
-        // user creation was successful, send a jwt_token back
-        return res.status(200).json({
-          jwt_token: make_token(created_user),
-          user: { id: created_user._id, username: created_user.username }
-        });
-      } else {
-        if (DEV) console.log(err);
-        return res.status(400).json({ error: 'failed user creation' });
+    const {username, email} = req.body;
+    User.findOne( {username: username}, function(err, result) {
+      if (err) {
+        res.status(500).json({ error: 'Internal Server Error'})
       }
-    } catch (err) {
-      // if (DEV) console.log(err);
-      return res.status(500).json({ error: 'failed user creation' });
-    }
+      if (result) {
+        res.status(398).json({ error: 'Username not availible'});
+      } else {
+        User.findOne( {email: email}, function(err, result) {
+          if (err) {
+            res.status(500).json({ error: 'Internal Server Error'})
+          }
+          if (result) {
+            res.status(399).json({ error: 'Email not availible'});}
+
+  //i don't know how to get the below to work, because it requires async which is not availible this deep in these if statements
+  
+          // } else {
+          //   try {
+          //     // create a new user
+          //     const new_user = new User(req.body);
+        
+          //     const created_user = await new_user.save();
+        
+          //     if (created_user) {
+          //       // user creation was successful, send a jwt_token back
+          //       return res.status(200).json({
+          //         jwt_token: make_token(created_user),
+          //         user: { id: created_user._id, username: created_user.username }
+          //       });
+          //     } else {
+          //       if (DEV) console.log(err);
+          //       return res.status(400).json({ error: 'failed user creation' });
+          //     }
+          //   } catch (err) {
+          //     // if (DEV) console.log(err);
+          //     return res.status(500).json({ error: 'failed user creation' });
+          //   }
+          // }
+        })
+      }
+    })
   }, // create_user
 
   facebook_loggedIn: async (req, res) => {
