@@ -213,7 +213,11 @@ export class AppContextProvider extends Component {
       //    Clearing the user on state first forces the geojson layer to re-render
       // This is because React is not detecting changes in nested objects.
       // TODO: Store users' countries as an array on AppState (not inside user)
-      this.setState({ user: {} });
+      const currentUserInfo = this.state.user;
+      currentUserInfo.countries = [];
+      this.setState({ user: currentUserInfo });
+
+      // Update user data on state with new data from back end
       this.setState({ user: response.data });
       this.setState({ currentCountryStatus: this.getCurrentCountryStatus() });
     } catch (err) {
