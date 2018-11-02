@@ -164,7 +164,9 @@ export class AppContextProvider extends Component {
     const geoInfo = getCountryShapeFromCode(code);
     this.setState({
       currentCountry: { code, info, geoInfo },
-      countryPanelIsOpen: true,
+      countryPanelIsOpen: true
+    });
+    this.setState({
       currentCountryStatus: this.getCurrentCountryStatus()
     });
   };
