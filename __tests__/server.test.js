@@ -56,7 +56,21 @@ describe('User', () => {
 
   describe('POST routes', () => {
     describe('/register', () => {
-      it('detects invalid password', async () => {
+      it('successfully creates new user', async () => {
+        const user = {
+          username: 'patrick',
+          password: 'pasdfsadfasdfsdf',
+          email: 'patrick@gmail.com'
+        };
+
+        const response = await request(server)
+          .post('/api/register')
+          .send(user);
+
+        expect(response.status).toBe(200);
+      });
+
+      it('fails with an invalid password', async () => {
         const user = {
           username: 'Pikachu',
           password: 'p',
@@ -69,7 +83,7 @@ describe('User', () => {
         expect(response.status).toBe(400);
       });
 
-      it('detects undefined password', async () => {
+      it('fails with an undefined password', async () => {
         const user = { username: 'Pikachu', email: 'pika@gmail.com' };
         const response = await request(server)
           .post('/api/register')
@@ -78,7 +92,7 @@ describe('User', () => {
         expect(response.status).toBe(400);
       });
 
-      it('detects undefined username', async () => {
+      it('fails with an undefined username', async () => {
         const user = { password: 'pasdfsadfasdfsdf', email: 'pika@gmail.com' };
         const response = await request(server)
           .post('/api/register')
@@ -87,7 +101,7 @@ describe('User', () => {
         expect(response.status).toBe(400);
       });
 
-      it('detects undefined email', async () => {
+      it('fails with an undefined email', async () => {
         const user = { username: 'Pikachu', password: 'pasdfsadfasdfsdf' };
         const response = await request(server)
           .post('/api/register')
@@ -96,7 +110,7 @@ describe('User', () => {
         expect(response.status).toBe(400);
       });
 
-      it('rejects non-unique username', async () => {
+      it('fails with a non-unique username', async () => {
         const user1 = {
           username: 'Pikachu',
           password: 'pasdfsadfasdfsdf',
@@ -121,7 +135,7 @@ describe('User', () => {
         expect(response2.status).toBe(500);
       });
 
-      it('rejects non-unique email', async () => {
+      it('fails with a non-unique email', async () => {
         const user1 = {
           username: 'Frodo',
           password: 'pasdfsadfasdfsdf',
@@ -145,24 +159,10 @@ describe('User', () => {
         expect(response1.status).toBe(200);
         expect(response2.status).toBe(500);
       });
-
-      it('successfully creates new user', async () => {
-        const user = {
-          username: 'patrick',
-          password: 'pasdfsadfasdfsdf',
-          email: 'patrick@gmail.com'
-        };
-
-        const response = await request(server)
-          .post('/api/register')
-          .send(user);
-
-        expect(response.status).toBe(200);
-      });
     });
 
     describe('/login', () => {
-      it('succeeds with correct credentials', async () => {
+      it('successfully logs in a user', async () => {
         const user = { username: 'initialTestUser', password: '123456' };
         const response = await request(server)
           .post('/api/login')
@@ -192,6 +192,41 @@ describe('User', () => {
         name: 'China',
         username: 'initialTestUser'
       };
+
+      it('updates an existing country correctly', async () => {
+        const { jwt_token, user } = initialTestUser.body;
+        expect(jwt_token).toBeDefined();
+        expect(user.username).toBe('initialTestUser');
+        expect(user.id).toBeDefined();
+        expect(user.countries.length).toBe(0);
+
+        const response_1 = await request(server)
+          .post('/api/country_status')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send(new_country_status);
+
+        expect(response_1.body.countries.length).toBe(1);
+        expect(response_1.body.countries[0].country_code).toBe('CHN');
+        expect(response_1.body.countries[0].status_code).toBe(1);
+        expect(response_1.body.countries[0].name).toBe('China');
+
+        const update_country_status = {
+          country_code: 'CHN',
+          status_code: 2,
+          name: 'China',
+          username: 'initialTestUser'
+        };
+
+        const response_2 = await request(server)
+          .post('/api/country_status')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send(update_country_status);
+
+        expect(response_2.body.countries.length).toBe(1);
+        expect(response_2.body.countries[0].country_code).toBe('CHN');
+        expect(response_2.body.countries[0].status_code).toBe(2);
+        expect(response_2.body.countries[0].name).toBe('China');
+      });
 
       it('fails without a token', async () => {
         const response = await request(server)
@@ -237,47 +272,12 @@ describe('User', () => {
         expect(response.body.countries[0].status_code).toBe(1);
         expect(response.body.countries[0].name).toBe('China');
       });
-
-      it('updates an existing country correctly', async () => {
-        const { jwt_token, user } = initialTestUser.body;
-        expect(jwt_token).toBeDefined();
-        expect(user.username).toBe('initialTestUser');
-        expect(user.id).toBeDefined();
-        expect(user.countries.length).toBe(0);
-
-        const response_1 = await request(server)
-          .post('/api/country_status')
-          .set('Authorization', `Bearer ${jwt_token}`)
-          .send(new_country_status);
-
-        expect(response_1.body.countries.length).toBe(1);
-        expect(response_1.body.countries[0].country_code).toBe('CHN');
-        expect(response_1.body.countries[0].status_code).toBe(1);
-        expect(response_1.body.countries[0].name).toBe('China');
-
-        const update_country_status = {
-          country_code: 'CHN',
-          status_code: 2,
-          name: 'China',
-          username: 'initialTestUser'
-        };
-
-        const response_2 = await request(server)
-          .post('/api/country_status')
-          .set('Authorization', `Bearer ${jwt_token}`)
-          .send(update_country_status);
-
-        expect(response_2.body.countries.length).toBe(1);
-        expect(response_2.body.countries[0].country_code).toBe('CHN');
-        expect(response_2.body.countries[0].status_code).toBe(2);
-        expect(response_2.body.countries[0].name).toBe('China');
-      });
     });
   });
 
   describe('GET routes', () => {
     describe('/get_user', () => {
-      it('retrieves a user with a valid token', async () => {
+      it('successfully gets a user', async () => {
         const testUserInfo = {
           username: 'getuser1',
           password: '123456',
@@ -353,7 +353,7 @@ describe('User', () => {
         new_email: 'newEmail@email.com'
       };
 
-      it('succeeds with a valid token', async () => {
+      it('successfully updates email', async () => {
         const { jwt_token } = initialTestUser.body;
 
         const response = await request(server)
@@ -398,7 +398,7 @@ describe('User', () => {
       const body = {
         new_password: '654321'
       };
-      it('updates password correctly', async () => {
+      it('successfully updates password', async () => {
         const { jwt_token } = initialTestUser.body;
         const response = await request(server)
           .put('/api/change_password')
@@ -448,7 +448,7 @@ describe('User', () => {
     });
 
     describe('/update_preferences', () => {
-      it('updates preferences correctly', async () => {
+      it('successfully updates preferences', async () => {
         const updatedPreferences = {
           preferences: {
             theme: 'light',
@@ -485,7 +485,7 @@ describe('User', () => {
       });
 
       it('fails if invalid token is supplied', async () => {
-        const invalid_token = initialTestUser.body.jwt_token.slice(1)
+        const invalid_token = initialTestUser.body.jwt_token.slice(1);
         const updatedPreferences = {
           preferences: {
             theme: 'light',
@@ -503,7 +503,7 @@ describe('User', () => {
         expect(response.body.preferences).toBeUndefined();
       });
 
-      it('rejects request if preferences is not provided', async () => {
+      it('fails if preferences is not provided', async () => {
         const response = await request(server)
           .put(`/api/update_preferences`)
           .set('Authorization', `Bearer ${initialTestUser.body.jwt_token}`)
