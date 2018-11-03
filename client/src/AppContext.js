@@ -141,11 +141,7 @@ export class AppContextProvider extends Component {
         body,
         options
       );
-      /*
-      const currentUserInfo = this.state.user;
-      currentUserInfo.countries = [];
-      this.setState({ user: currentUserInfo });
-      */
+
       currentCountry.scratched = true;
       this.setState({
         currentCountry,
@@ -262,6 +258,33 @@ export class AppContextProvider extends Component {
     });
   };
 
+  handleUpdateNotes = async notes => {
+    try {
+      const { user, currentCountry } = this.state;
+
+      const body = {
+        username: user.username,
+        country_code: currentCountry.code,
+        name: currentCountry.info.name,
+        notes: notes
+      };
+
+      const options = {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      };
+
+      const response = await axios.post(`${BACKEND_URL}/notes`, body, options);
+
+      currentCountry.notes = notes;
+      this.setState({
+        currentCountry,
+        user: response.data
+      });
+    } catch (err) {
+      console.error('Error updating notes for country!');
+    }
+  };
+
   handleUpdatePreferences = async preferences => {
     // TODO: Abort if preferences does not have valid values
     try {
@@ -330,7 +353,7 @@ export class AppContextProvider extends Component {
   };
 
   render() {
-    console.log(this.state);
+    console.log(this.state.currentCountry);
     return (
       <AppContext.Provider
         value={{
