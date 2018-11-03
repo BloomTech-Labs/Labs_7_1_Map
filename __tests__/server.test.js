@@ -394,7 +394,24 @@ describe('User', () => {
       });
     });
 
-    // TODO: Add tests for change_password
+    describe('/change_password', () => {
+      const body = {
+        username: 'initialTestUser',
+        new_password: '654321'
+      }
+      it('updates password correctly', async () => {
+        const { jwt_token } = initialTestUser.body;
+        const response = await request(server)
+          .put('/api/change_password')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send(body);
+
+        expect(response.status).toBe(200);
+        expect(body.new_password).toEqual('654321');
+      })
+    })
+
+
     describe('/update_preferences', () => {
       it('updates user correctly', async () => {
         const testUserInfo = {
