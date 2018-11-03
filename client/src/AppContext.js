@@ -128,7 +128,8 @@ export class AppContextProvider extends Component {
         username: user.username,
         country_code: currentCountry.code,
         name: currentCountry.info.name,
-        scratched: true
+        scratched: true,
+        notes: currentCountry.notes
       };
 
       const options = {
