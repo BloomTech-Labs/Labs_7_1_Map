@@ -278,8 +278,7 @@ export class AppContextProvider extends Component {
         name: currentCountry.info.name,
         notes: notes
       };
-      console.log(body);
-      /*
+
       const options = {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       };
@@ -291,7 +290,6 @@ export class AppContextProvider extends Component {
         currentCountry,
         user: response.data
       });
-      */
     } catch (err) {
       console.error('Error updating notes for country!');
     }

@@ -181,7 +181,7 @@ module.exports = {
       const queryUser = { username: username };
 
       //below are operators
-      const editCountry = { $set: { 'countries.$.notes': have_notes } };
+      const editCountry = { $set: { 'countries.$.notes': notes } };
 
       const createCountry = {
         $push: {

@@ -25,14 +25,13 @@ class Note extends Component {
     this.setState({ editMode: true });
   };
   updateNote = () => {
-    this.props.handleUpdateNotes();
+    this.props.handleUpdateNotes(this.state.notes);
     this.setState({ editMode: false });
   };
 
   render() {
-    console.log(this.state);
     let display;
-    if (this.state.editMode === 'true') {
+    if (this.state.editMode) {
       display = (
         <div className="Notes__EditMode">
           <FontAwesomeIcon
