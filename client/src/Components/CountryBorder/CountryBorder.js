@@ -12,7 +12,7 @@ const settings = {
   width: 300,
   height: 150,
   image: travellingImg,
-  finishPercent: 50
+  finishPercent: 95
 };
 
 const canvasWidth = 300;
@@ -115,6 +115,8 @@ export default class CountryBorder extends Component {
         getBoundingBox(this.props.geometry),
         this.props.geometry
       );
+    } else {
+      this.props.closeCountryPanel();
     }
   };
 

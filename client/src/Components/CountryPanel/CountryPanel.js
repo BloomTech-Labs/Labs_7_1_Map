@@ -19,7 +19,7 @@ const CountryPanel = () => {
                 <span>{value.AppState.currentCountry.info.name}</span>
                 <FontAwesomeIcon
                   className="closeCountryPanelIcon"
-                  onClick={value.toggleCountryPanel}
+                  onClick={value.closeCountryPanel}
                   icon="times"
                 />
               </div>
@@ -29,6 +29,7 @@ const CountryPanel = () => {
                     ? value.currentCountryInfo.geometry
                     : null
                 }
+                closeCountryPanel={value.closeCountryPanel}
                 handleSliderMove={value.handleSliderMove}
                 handleScratched={value.handleScratched}
                 currentCountryStatus={value.AppState.currentCountryStatus}

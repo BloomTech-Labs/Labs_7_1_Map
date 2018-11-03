@@ -61,6 +61,12 @@ export class AppContextProvider extends Component {
     }
   } // componentDidMount
 
+  closeCountryPanel = () => {
+    this.setState({
+      countryPanelIsOpen: false
+    });
+  }; // closeCountryPanel
+
   // Get the status_code of a country saved on user if it exists
   // Otherwise, return 0
   getCurrentCountryStatus = () => {
@@ -264,12 +270,6 @@ export class AppContextProvider extends Component {
     return scratched;
   };
 
-  toggleCountryPanel = () => {
-    this.setState({
-      countryPanelIsOpen: !this.state.countryPanelIsOpen
-    });
-  }; // toggleCountryPanel
-
   // Update the user's geolocation position
   updateUserPosition = (lat, lng) => {
     this.setState({ userPosition: { lng, lat } });
@@ -288,7 +288,7 @@ export class AppContextProvider extends Component {
           handleSliderMove: this.handleSliderMove,
           handleScratched: this.handleScratched,
           handleUpdatePreferences: this.handleUpdatePreferences,
-          toggleCountryPanel: this.toggleCountryPanel,
+          closeCountryPanel: this.closeCountryPanel,
           updateCurrentCountry: this.handleUpdateCurrentCountry,
           updateUserPosition: this.handleUpdateUserPosition
         }}
