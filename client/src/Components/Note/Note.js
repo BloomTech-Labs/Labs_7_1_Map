@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import EditNote from './EditNote';
-
 import './Note.css';
 
 class Note extends Component {
@@ -13,11 +11,10 @@ class Note extends Component {
 
   componentDidMount() {
     this.setState({
-      //notes: this.props.country.notes
-      notes:
-        'This is a test note hioiuhigfyufy jhhgjfjgfj khgjhgj kjhjg fyjfuydes wsdgh jkydxy cvghnudf hgbdf'
+      notes: this.props.country.notes
     });
   }
+
   //this happens when something changes on the form
   handleChange = e => {
     this.setState({ notes: e.target.value });
@@ -37,7 +34,11 @@ class Note extends Component {
             onClick={this.props.handleUpdateNotes}
             icon="save"
           />
-          <EditNote />
+          <textarea
+            name="notes"
+            onChange={this.handleChange}
+            value={this.state.notes}
+          />
         </div>
       );
     } else {
