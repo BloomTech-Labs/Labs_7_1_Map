@@ -123,8 +123,8 @@ export class AppContextProvider extends Component {
 
   handleChangeNote = e => {
     const currentCountry = { ...this.state.currentCountry };
-    console.log(e.target.name, 'CHANGING NOTES');
-    //this.setState({ notes: e.target.value });
+    currentCountry[e.target.name] = e.target.value;
+    this.setState({ currentCountry });
   };
 
   handleScratched = async () => {

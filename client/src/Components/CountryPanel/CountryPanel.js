@@ -37,6 +37,7 @@ const CountryPanel = () => {
               />
               <Note
                 country={value.AppState.currentCountry}
+                handleChangeNote={value.handleChangeNote}
                 handleUpdateNotes={value.handleUpdateNotes}
               />
               <FriendList user={value.AppState.user} />

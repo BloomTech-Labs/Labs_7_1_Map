@@ -16,11 +16,6 @@ class Note extends Component {
     });
   }
 
-  //this happens when something changes on the form
-  handleChange = e => {
-    this.setState({ notes: e.target.value });
-  };
-
   edit = () => {
     this.setState({ editMode: true });
   };
@@ -42,8 +37,8 @@ class Note extends Component {
           />
           <textarea
             name="notes"
-            onChange={this.handleChange}
-            value={this.state.notes}
+            onChange={this.props.handleChangeNote}
+            value={this.props.country.notes}
           />
         </div>
       );
@@ -56,7 +51,7 @@ class Note extends Component {
               onClick={this.edit}
               icon="edit"
             />
-            <div className="ViewMode__Notes">{this.state.notes}</div>
+            <div className="ViewMode__Notes">{this.props.country.notes}</div>
           </div>
         );
       } else {
