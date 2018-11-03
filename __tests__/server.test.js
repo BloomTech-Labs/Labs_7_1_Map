@@ -449,19 +449,7 @@ describe('User', () => {
 
     describe('/update_preferences', () => {
       it('updates user correctly', async () => {
-        const testUserInfo = {
-          username: 'updatepreferences1',
-          password: '123456',
-          email: 'update_preferences1@test.com'
-        };
-
-        const newUser = await request(server)
-          .post(`/api/register`)
-          .send(testUserInfo);
-        expect(newUser.status).toBe(200);
-
         const updatedPreferences = {
-          username: 'updatepreferences1',
           preferences: {
             theme: 'light',
             autoscratch: false
@@ -470,37 +458,20 @@ describe('User', () => {
 
         const response = await request(server)
           .put(`/api/update_preferences`)
-          .set('Authorization', `Bearer ${newUser.body.jwt_token}`)
+          .set('Authorization', `Bearer ${initialTestUser.body.jwt_token}`)
           .send(updatedPreferences);
 
         expect(response.status).toBe(200);
-        expect(response.body).toBeDefined();
         expect(response.body.username).toBeDefined();
-        expect(response.body.preferences).toBeDefined();
         expect(response.body.preferences.theme).toBe('light');
         expect(response.body.preferences.autoscratch).toBe(false);
       });
 
       it('rejects request if preferences is not provided', async () => {
-        const testUserInfo = {
-          username: 'updatepreferences2',
-          password: '123456',
-          email: 'update_preferences2@test.com'
-        };
-
-        const newUser = await request(server)
-          .post(`/api/register`)
-          .send(testUserInfo);
-        expect(newUser.status).toBe(200);
-
-        const updatedPreferences = {
-          username: 'updatepreferences2'
-        };
-
         const response = await request(server)
           .put(`/api/update_preferences`)
-          .set('Authorization', `Bearer ${newUser.body.jwt_token}`)
-          .send(updatedPreferences);
+          .set('Authorization', `Bearer ${initialTestUser.body.jwt_token}`)
+          .send({});
 
         expect(response.status).toBe(400);
         expect(response.body.username).toBeUndefined();
