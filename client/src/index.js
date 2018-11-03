@@ -2,7 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import {
+  faTimes,
+  faPlusCircle,
+  faEdit
+} from '@fortawesome/free-solid-svg-icons';
 
 // bring in our context provider
 import { AppContextProvider } from './AppContext';
@@ -12,7 +16,7 @@ import * as serviceWorker from './serviceWorker';
 import './index.css';
 import 'leaflet/dist/leaflet.css';
 
-library.add(faTimes);
+library.add(faTimes, faPlusCircle, faEdit);
 
 ReactDOM.render(
   <AppContextProvider>

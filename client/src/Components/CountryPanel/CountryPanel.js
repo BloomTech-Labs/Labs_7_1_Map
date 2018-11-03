@@ -35,7 +35,10 @@ const CountryPanel = () => {
                 currentCountryStatus={value.AppState.currentCountryStatus}
                 scratched={value.AppState.currentCountry.scratched}
               />
-              <Note user={value.AppState.user} />
+              <Note
+                country={value.AppState.currentCountry}
+                handleUpdateNotes={value.handleUpdateNotes}
+              />
               <FriendList user={value.AppState.user} />
             </div>
           ) : null
