@@ -257,7 +257,8 @@ export class AppContextProvider extends Component {
       info,
       geoInfo,
       scratched,
-      notes
+      notes,
+      editNoteMode: false
     };
     this.setState({
       currentCountry,
@@ -346,7 +347,7 @@ export class AppContextProvider extends Component {
 
   isScratched = countryCode => {
     let scratched = false;
-    const userCountries = this.state.user.countries;
+    const userCountries = [...this.state.user.countries];
 
     if (userCountries) {
       const found = userCountries.find(
@@ -356,6 +357,14 @@ export class AppContextProvider extends Component {
     }
     return scratched;
   };
+
+  /*
+  turnOnEditNote = () => {
+    this.setState({
+
+    })
+  }
+  */
 
   // Update the user's geolocation position
   updateUserPosition = (lat, lng) => {

@@ -30,6 +30,7 @@ class Note extends Component {
   };
 
   render() {
+    console.log('heeeeelllll');
     let display;
     if (this.state.editMode) {
       display = (
