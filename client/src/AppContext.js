@@ -13,7 +13,13 @@ export class AppContextProvider extends Component {
     authenticated: false,
     user: {},
     userPosition: { lat: 22.28552, lng: 114.15769 },
-    currentCountry: { code: '', info: {}, geoInfo: {}, scratched: false },
+    currentCountry: {
+      code: '',
+      info: {},
+      geoInfo: {},
+      scratched: false,
+      notes: ''
+    },
     failedLogin: false,
     currentCountryStatus: null,
     countryPanelIsOpen: false
@@ -66,6 +72,21 @@ export class AppContextProvider extends Component {
       countryPanelIsOpen: false
     });
   }; // closeCountryPanel
+
+  // Get the notes of a country saved on user
+  getCurrentCountryNotes = code => {
+    let notes = '';
+    const userCountries = this.state.user.countries;
+
+    if (userCountries) {
+      const findCountry = userCountries.find(
+        country => code === country.country_code
+      );
+
+      notes = findCountry ? findCountry.notes : '';
+    }
+    return notes;
+  }; // getCurrentCountryNotes
 
   // Get the status_code of a country saved on user if it exists
   // Otherwise, return 0
@@ -199,8 +220,9 @@ export class AppContextProvider extends Component {
   handleUpdateCurrentCountry = (code, info) => {
     const geoInfo = getCountryShapeFromCode(code);
     const scratched = this.isScratched(code);
+    const notes = this.getCurrentCountryNotes(code);
     this.setState({
-      currentCountry: { code, info, geoInfo, scratched },
+      currentCountry: { code, info, geoInfo, scratched, notes },
       countryPanelIsOpen: true
     });
     this.setState({
@@ -276,6 +298,7 @@ export class AppContextProvider extends Component {
   };
 
   render() {
+    console.log(this.state);
     return (
       <AppContext.Provider
         value={{

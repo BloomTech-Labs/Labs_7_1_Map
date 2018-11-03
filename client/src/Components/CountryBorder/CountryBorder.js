@@ -8,42 +8,13 @@ import './CountryBorder.css';
 import 'rc-slider/assets/index.css';
 import travellingImg from '../../travelling.jpg';
 
-const settings = {
-  width: 300,
-  height: 150,
-  image: travellingImg,
-  finishPercent: 95
-};
-
 const canvasWidth = 300;
 const canvasHeight = 150;
 
-const marks = {
-  0: 'No Interest',
-  1: {
-    style: {
-      color: 'pink'
-    },
-    label: 'Wishlist'
-  },
-  2: {
-    style: {
-      color: 'yellow'
-    },
-    label: 'Transited'
-  },
-  3: {
-    style: {
-      color: 'green'
-    },
-    label: 'Visited'
-  },
-  4: {
-    style: {
-      color: 'blue'
-    },
-    label: 'Lived'
-  }
+const settings = {
+  width: canvasWidth,
+  image: travellingImg,
+  finishPercent: 95
 };
 
 const draw = (context, canvasWidth, canvasHeight, bounds, geometry) => {
@@ -96,6 +67,41 @@ const draw = (context, canvasWidth, canvasHeight, bounds, geometry) => {
 };
 
 export default class CountryBorder extends Component {
+  state = {
+    marks: {
+      0: 'None',
+      1: {
+        style: {
+          color: 'purple'
+        },
+        label: 'Wishlist'
+      },
+      2: {
+        style: {
+          color: 'yellow'
+        },
+        label: 'Transited'
+      },
+      3: {
+        style: {
+          color: 'red'
+        },
+        label: 'Visited'
+      },
+      4: {
+        style: {
+          color: 'blue'
+        },
+        label: 'Lived'
+      },
+      5: {
+        style: {
+          color: 'green'
+        },
+        label: 'Home'
+      }
+    }
+  };
   componentDidMount() {
     this.drawBorder();
   }
@@ -157,17 +163,19 @@ export default class CountryBorder extends Component {
     return (
       <div className="CountryBorder">
         {counrtyBorderMap}
-        <Slider
-          className="CountryBorder_Slider"
-          min={0}
-          max={4}
-          marks={marks}
-          step={null}
-          onChange={this.props.handleSliderMove}
-          defaultValue={0}
-          value={this.props.currentCountryStatus}
-          disabled={notScratched}
-        />
+        <div className="CountryBorder__SliderContainer">
+          <Slider
+            className="Slider"
+            min={0}
+            max={5}
+            marks={this.state.marks}
+            step={null}
+            onChange={this.props.handleSliderMove}
+            defaultValue={0}
+            value={this.props.currentCountryStatus}
+            disabled={notScratched}
+          />
+        </div>
       </div>
     );
   }

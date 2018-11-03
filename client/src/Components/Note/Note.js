@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import NoteEdit from './NoteEdit';
-import NoteView from './NoteView';
 
 import './Note.css';
 
@@ -14,14 +13,7 @@ class Note extends Component {
     viewnote: '',
     messagebox: '',
     messageboxcolor: '',
-    editview: 'false',
-    user: { username: '' }
-  };
-
-  componentDidMount = () => {
-    this.setState({
-      user: { username: 'todo: get user from context' }
-    });
+    editview: 'false'
   };
 
   //this happens when something changes on the form
@@ -90,12 +82,11 @@ class Note extends Component {
   editviewToggle = () => {
     this.setState({ editview: 'true' });
   };
-
-  //pass in this.props. submitchecker and user, onchangenote, messageboxcolor, messagebox
-
   render() {
+    console.log(this.props);
+    let display;
     if (this.state.editview === 'true') {
-      return (
+      display = (
         <NoteEdit
           submitChecker={this.submitChecker}
           user={this.state.user}
@@ -105,14 +96,10 @@ class Note extends Component {
           editnote={this.state.editnote}
         />
       );
-    } else
-      return (
-        <NoteView
-          user={this.state.user}
-          editnote={this.state.editnote}
-          editviewToggle={this.editviewToggle}
-        />
-      );
+    } else {
+      display = <div>+ Add a note</div>;
+    }
+    return <div className="Note">{display}</div>;
   }
 }
 //user editnote editviewToggle

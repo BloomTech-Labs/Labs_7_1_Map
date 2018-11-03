@@ -1,10 +1,20 @@
 .CountryBorder {
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
+  background: rgba(100, 99, 99, 0.2);
   .CountryBorder__Canvas {
-    border: 0.3rem solid #fff;
     width: 100%;
+    background: white;
   }
-  .CountryBorder__Slider {
+  .CountryBorder__SliderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.2rem 0;
+
+    .Slider {
+      width: 90%;
+    }
   }
+  padding-bottom: 1rem;
 }

@@ -10,19 +10,19 @@ const Legend = () => {
       </div>
       <div className="Legend__Wishlist">
         <span className="Wishlist__purple" />
-        Wishlist
+        Wish List
       </div>
-      <div className="Legend__Flyover">
-        <span className="Flyover__yellow" />
-        Fly Over
+      <div className="Legend__Transited">
+        <span className="Transited__yellow" />
+        Transited
       </div>
       <div className="Legend__Visited">
         <span className="Visited__red" />
         Visited
       </div>
-      <div className="Legend__LivedIn">
-        <span className="LivedIn__blue" />
-        Lived In
+      <div className="Legend__Lived">
+        <span className="Lived__blue" />
+        Lived
       </div>
       <div className="Legend__Home">
         <span className="Home__green" />

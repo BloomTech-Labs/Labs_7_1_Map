@@ -1,3 +1,8 @@
+.Note {
+  border: 1px solid #000000;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
 .Edit-Note {
   background: beige;
   width: 100%;
