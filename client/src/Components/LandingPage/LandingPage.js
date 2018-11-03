@@ -18,12 +18,15 @@ const LandingPage = () => {
             <div className="LandingPage__Tagline">
               Scratch the Itch to Track Your Trips
             </div>
-            <Login
-              handleSignIn={value.handleSignIn}
-              handleChange={value.handleChange}
-              error={value.AppState.user.error}
-            />
-            {/* <Signup /> */}
+            {value.AppState.signup ? (
+              <Signup />
+            ) : (
+              <Login
+                handleSignIn={value.handleSignIn}
+                handleChange={value.handleChange}
+                error={value.AppState.user.error}
+              />
+            )}
           </React.Fragment>
         )}
       </AppContextConsumer>

@@ -11,8 +11,7 @@ const AppContext = React.createContext();
 export class AppContextProvider extends Component {
   state = {
     authenticated: false,
-    user: {},
-    userPosition: { lat: 22.28552, lng: 114.15769 },
+    countryPanelIsOpen: false,
     currentCountry: {
       code: '',
       info: {},
@@ -21,9 +20,10 @@ export class AppContextProvider extends Component {
       notes: '',
       editNoteMode: false
     },
-    failedLogin: false,
     currentCountryStatus: null,
-    countryPanelIsOpen: false
+    signup: false,
+    user: {},
+    userPosition: { lat: 22.28552, lng: 114.15769 }
   };
 
   async componentDidMount() {
@@ -73,6 +73,10 @@ export class AppContextProvider extends Component {
       countryPanelIsOpen: false
     });
   }; // closeCountryPanel
+
+  displaySignUp = () => {
+    this.setState({ signup: true });
+  };
 
   // Get the notes of a country saved on user
   getCurrentCountryNotes = code => {
@@ -364,6 +368,10 @@ export class AppContextProvider extends Component {
     );
   }; // hasGeolocation
 
+  hideSignUp = () => {
+    this.setState({ signup: false });
+  };
+
   isScratched = countryCode => {
     let scratched = false;
     const userCountries = [...this.state.user.countries];
@@ -398,6 +406,7 @@ export class AppContextProvider extends Component {
           authenticated: this.state.authenticated,
           closeCountryPanel: this.closeCountryPanel,
           currentCountryInfo: this.state.currentCountry.geoInfo,
+          displaySignUp: this.displaySignUp,
           handleChange: this.handleChange,
           handleChangeNote: this.handleChangeNote,
           handleSignIn: this.handleSignIn,
@@ -407,6 +416,7 @@ export class AppContextProvider extends Component {
           handleScratched: this.handleScratched,
           handleUpdateNotes: this.handleUpdateNotes,
           handleUpdatePreferences: this.handleUpdatePreferences,
+          hideSignUp: this.hideSignUp,
           turnOnEditNote: this.turnOnEditNote,
           updateCurrentCountry: this.handleUpdateCurrentCountry,
           updateUserPosition: this.handleUpdateUserPosition
