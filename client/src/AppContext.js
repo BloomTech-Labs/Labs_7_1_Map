@@ -121,6 +121,12 @@ export class AppContextProvider extends Component {
       });
   };
 
+  handleChangeNote = e => {
+    const currentCountry = { ...this.state.currentCountry };
+    console.log(e.target.name, 'CHANGING NOTES');
+    //this.setState({ notes: e.target.value });
+  };
+
   handleScratched = async () => {
     try {
       const { user, currentCountry } = this.state;
@@ -379,6 +385,7 @@ export class AppContextProvider extends Component {
           AppState: this.state,
           authenticated: this.state.authenticated,
           currentCountryInfo: this.state.currentCountry.geoInfo,
+          handleChangeNote: this.handleChangeNote,
           handleSignIn: this.handleSignIn,
           handleSignOut: this.handleSignOut,
           handleSignUp: this.handleSignUp,
