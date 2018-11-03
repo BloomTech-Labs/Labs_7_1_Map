@@ -12,7 +12,43 @@ module.exports = {
 
   handle_scratched: async (req, res) => {
     try {
-      console.log('here');
+      const { country_code, username, name, scratched } = req.body;
+
+      //below are queries
+      const queryUserCountry = {
+        $and: [
+          { username: username },
+          { countries: { $elemMatch: { country_code: country_code } } }
+        ]
+      };
+      const queryUser = { username: username };
+
+      const createCountry = {
+        $push: {
+          countries: {
+            country_code: country_code,
+            name: name,
+            scratched: true
+          }
+        }
+      };
+
+      const options = {
+        new: true
+      };
+
+      // create a new country object for that use with all of the information from the req.body (updateOne)
+      // create new country by updating the user
+      const found_user = await User.findOneAndUpdate(
+        queryUser,
+        createCountry,
+        options
+      );
+      if (found_user) {
+        res.status(200).json(found_user);
+      } else {
+        res.status(409).json({ error: 'failure to create new country' });
+      }
     } catch (err) {
       if (DEV) console.log(err);
       return res.status(500).json({ error: 'Internal server error!' });
