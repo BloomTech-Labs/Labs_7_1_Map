@@ -348,9 +348,43 @@ describe('User', () => {
   });
 
   describe('PUT routes', () => {
+    describe('/change_email', () => {
+      it('succeeds with a valid token and username', async () => {
+        const { user, jwt_token } = initialTestUser.body;
+
+        const body = {
+          username: user.username,
+          new_email: 'newEmail@email.com'
+        };
+        const response = await request(server)
+          .put('/api/change_email')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send(body);
+
+        expect(response.status).toBe(200);
+        expect(response.body.message).toEqual(
+          'Email was updated successfully!'
+        );
+      });
+
+      it('fails without a valid token', async () => {
+        const { user, jwt_token } = initialTestUser.body;
+
+        const body = {
+          username: user.username,
+          new_email: 'newEmail@email.com'
+        };
+        const response = await request(server)
+          .put('/api/change_email')
+          .send(body);
+
+        expect(response.status).toBe(401);
+        expect(response.error).toBeDefined();
+      });
+    });
+
+    // TODO: Add tests for change_password
     describe('/update_preferences', () => {
-      // TODO: Add tests for change_email
-      // TODO: Add tests for change_password
       it('updates user correctly', async () => {
         const testUserInfo = {
           username: 'updatepreferences1',
