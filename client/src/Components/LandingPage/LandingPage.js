@@ -1,30 +1,26 @@
 import React from 'react';
+import { AppContextConsumer } from '../../AppContext';
 
-import LogInBay from './LogInBay';
-import FailedLoginPopUp from './FailedLoginPopUp';
-import Footer from '../Footer/Footer';
+import Login from './Login';
 
 import Logo from '../../logo.png';
 import './LandingPage.css';
 
 const LandingPage = props => {
-  var PopUp;
-  if (props.failedLogin === true) {
-    PopUp = <FailedLoginPopUp />;
-    console.log('failure!!!!!');
-  } else {
-    PopUp = <div> </div>;
-  }
   return (
     <div className="LandingPage">
-      <img src={Logo} alt="logo" className="LandingPage__Logo" />
+      <AppContextConsumer>
+        {() => (
+          <React.Fragment>
+            <img src={Logo} alt="logo" className="LandingPage__Logo" />
 
-      <h3 className="LandingPage__Tagline">
-        Scratch the Itch to Track Your Trips
-      </h3>
-      <LogInBay />
-      {PopUp}
-      <Footer />
+            <div className="LandingPage__Tagline">
+              Scratch the Itch to Track Your Trips
+            </div>
+            <Login />
+          </React.Fragment>
+        )}
+      </AppContextConsumer>
     </div>
   );
 };
