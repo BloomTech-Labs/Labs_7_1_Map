@@ -275,7 +275,7 @@ export class AppContextProvider extends Component {
     });
   };
 
-  handleUpdateNotes = async notes => {
+  handleUpdateNotes = async () => {
     try {
       const { user, currentCountry } = this.state;
 
@@ -283,7 +283,7 @@ export class AppContextProvider extends Component {
         username: user.username,
         country_code: currentCountry.code,
         name: currentCountry.info.name,
-        notes: notes
+        notes: currentCountry.notes
       };
 
       const options = {
@@ -292,7 +292,7 @@ export class AppContextProvider extends Component {
 
       const response = await axios.post(`${BACKEND_URL}/notes`, body, options);
 
-      currentCountry.notes = notes;
+      currentCountry.editNoteMode = false;
       this.setState({
         currentCountry,
         user: response.data
@@ -364,13 +364,13 @@ export class AppContextProvider extends Component {
     return scratched;
   };
 
-  /*
   turnOnEditNote = () => {
+    const currentCountry = { ...this.state.currentCountry };
+    currentCountry.editNoteMode = true;
     this.setState({
-
-    })
-  }
-  */
+      currentCountry
+    });
+  };
 
   // Update the user's geolocation position
   updateUserPosition = (lat, lng) => {
@@ -384,6 +384,7 @@ export class AppContextProvider extends Component {
         value={{
           AppState: this.state,
           authenticated: this.state.authenticated,
+          closeCountryPanel: this.closeCountryPanel,
           currentCountryInfo: this.state.currentCountry.geoInfo,
           handleChangeNote: this.handleChangeNote,
           handleSignIn: this.handleSignIn,
@@ -393,7 +394,7 @@ export class AppContextProvider extends Component {
           handleScratched: this.handleScratched,
           handleUpdateNotes: this.handleUpdateNotes,
           handleUpdatePreferences: this.handleUpdatePreferences,
-          closeCountryPanel: this.closeCountryPanel,
+          turnOnEditNote: this.turnOnEditNote,
           updateCurrentCountry: this.handleUpdateCurrentCountry,
           updateUserPosition: this.handleUpdateUserPosition
         }}

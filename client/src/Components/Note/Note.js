@@ -4,35 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Note.css';
 
 class Note extends Component {
-  state = {
-    notes: '',
-    editMode: false
-  };
-
-  componentDidMount() {
-    this.setState({
-      notes: this.props.country.notes,
-      editMode: this.props.country.editNoteMode
-    });
-  }
-
-  edit = () => {
-    this.setState({ editMode: true });
-  };
-  updateNote = () => {
-    this.props.handleUpdateNotes(this.state.notes);
-    this.setState({ editMode: false });
-  };
-
   render() {
-    console.log('heeeeelllll');
     let display;
-    if (this.state.editMode) {
+    if (this.props.country.editNoteMode) {
       display = (
         <div className="Notes__EditMode">
           <FontAwesomeIcon
             className="EditMode__save"
-            onClick={this.updateNote}
+            onClick={this.props.handleUpdateNotes}
             icon="save"
           />
           <textarea
@@ -43,12 +22,12 @@ class Note extends Component {
         </div>
       );
     } else {
-      if (this.state.notes) {
+      if (this.props.country.notes) {
         display = (
           <div className="Notes__ViewMode">
             <FontAwesomeIcon
               className="ViewMode__edit"
-              onClick={this.edit}
+              onClick={this.props.turnOnEditNote}
               icon="edit"
             />
             <div className="ViewMode__Notes">{this.props.country.notes}</div>
@@ -59,7 +38,7 @@ class Note extends Component {
           <div className="Notes__ViewMode">
             <FontAwesomeIcon
               className="ViewMode__add"
-              onClick={this.edit}
+              onClick={this.props.turnOnEditNote}
               icon="plus-circle"
             />
             <span>Add a note</span>
