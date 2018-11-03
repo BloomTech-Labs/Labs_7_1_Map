@@ -7,7 +7,7 @@ import Signup from './Signup';
 import Logo from '../../logo.png';
 import './LandingPage.css';
 
-const LandingPage = props => {
+const LandingPage = () => {
   return (
     <div className="LandingPage">
       <AppContextConsumer>
@@ -21,6 +21,7 @@ const LandingPage = props => {
             <Login
               handleSignIn={value.handleSignIn}
               handleChange={value.handleChange}
+              error={value.AppState.user.error}
             />
             {/* <Signup /> */}
           </React.Fragment>

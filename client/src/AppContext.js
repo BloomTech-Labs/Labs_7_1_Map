@@ -121,6 +121,14 @@ export class AppContextProvider extends Component {
       });
   };
 
+  handleChange = e => {
+    const user = { ...this.state.user };
+    user.error = '';
+    user[e.target.name] = e.target.value;
+    console.log(user);
+    this.setState({ user });
+  };
+
   handleChangeNote = e => {
     const currentCountry = { ...this.state.currentCountry };
     currentCountry[e.target.name] = e.target.value;
@@ -162,9 +170,13 @@ export class AppContextProvider extends Component {
 
   handleSignIn = async e => {
     e.preventDefault();
+    const user = { ...this.state.user };
+
+    console.log(user, 'IN THE APP');
+
     const body = {
-      username: e.target.username.value,
-      password: e.target.password.value
+      username: user.username,
+      password: user.password
     };
     try {
       const response = await axios.post(`${BACKEND_URL}/login`, body);
@@ -177,7 +189,8 @@ export class AppContextProvider extends Component {
       });
     } catch (e) {
       // failed async
-      this.setState({ failedLogin: true });
+      user.error = 'Incorrect username/password';
+      this.setState({ user });
     }
   }; // handleSignIn
 
@@ -385,6 +398,7 @@ export class AppContextProvider extends Component {
           authenticated: this.state.authenticated,
           closeCountryPanel: this.closeCountryPanel,
           currentCountryInfo: this.state.currentCountry.geoInfo,
+          handleChange: this.handleChange,
           handleChangeNote: this.handleChangeNote,
           handleSignIn: this.handleSignIn,
           handleSignOut: this.handleSignOut,

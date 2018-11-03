@@ -3,6 +3,7 @@ import React from 'react';
 import './Login.css';
 
 const Login = props => {
+  console.log(props);
   return (
     <div className="Login">
       <form className="Login__LoginForm" onSubmit={props.handleSignIn}>
