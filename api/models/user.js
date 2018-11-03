@@ -48,7 +48,7 @@ const UserSchema = new Schema(
         status_code: {
           type: Number,
           default: 0
-        }, //0, 1, 2, 3, 4
+        }, //0, 1, 2, 3, 4, 5
         notes: {
           type: String,
           default: ''
