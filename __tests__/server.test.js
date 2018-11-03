@@ -70,20 +70,7 @@ describe('User', () => {
         expect(response.status).toBe(200);
       });
 
-      it('fails with an invalid password', async () => {
-        const user = {
-          username: 'Pikachu',
-          password: 'p',
-          email: 'pika@gmail.com'
-        };
-        const response = await request(server)
-          .post('/api/register')
-          .send(user);
-
-        expect(response.status).toBe(400);
-      });
-
-      it('fails with an undefined password', async () => {
+      it('fails if password is not provided', async () => {
         const user = { username: 'Pikachu', email: 'pika@gmail.com' };
         const response = await request(server)
           .post('/api/register')
@@ -92,7 +79,21 @@ describe('User', () => {
         expect(response.status).toBe(400);
       });
 
-      it('fails with an undefined username', async () => {
+      it('fails if password is not valid', async () => {
+        const user = {
+          username: 'Pikachu',
+          password: 'p',
+          email: 'pika@gmail.com'
+        };
+
+        const response = await request(server)
+          .post('/api/register')
+          .send(user);
+
+        expect(response.status).toBe(400);
+      });
+
+      it('fails if username is not provided', async () => {
         const user = { password: 'pasdfsadfasdfsdf', email: 'pika@gmail.com' };
         const response = await request(server)
           .post('/api/register')
@@ -101,16 +102,7 @@ describe('User', () => {
         expect(response.status).toBe(400);
       });
 
-      it('fails with an undefined email', async () => {
-        const user = { username: 'Pikachu', password: 'pasdfsadfasdfsdf' };
-        const response = await request(server)
-          .post('/api/register')
-          .send(user);
-
-        expect(response.status).toBe(400);
-      });
-
-      it('fails with a non-unique username', async () => {
+      it('fails if username is not unique', async () => {
         const user1 = {
           username: 'Pikachu',
           password: 'pasdfsadfasdfsdf',
@@ -135,7 +127,16 @@ describe('User', () => {
         expect(response2.status).toBe(500);
       });
 
-      it('fails with a non-unique email', async () => {
+      it('fails if email is not provided', async () => {
+        const user = { username: 'Pikachu', password: 'pasdfsadfasdfsdf' };
+        const response = await request(server)
+          .post('/api/register')
+          .send(user);
+
+        expect(response.status).toBe(400);
+      });
+
+      it('fails if email is not unique', async () => {
         const user1 = {
           username: 'Frodo',
           password: 'pasdfsadfasdfsdf',
@@ -193,7 +194,26 @@ describe('User', () => {
         username: 'initialTestUser'
       };
 
-      it('updates an existing country correctly', async () => {
+      it('successfully adds a new country if it does not exist', async () => {
+        const { jwt_token, user } = initialTestUser.body;
+        expect(jwt_token).toBeDefined();
+        expect(user.username).toBe('initialTestUser');
+        expect(user.id).toBeDefined();
+        expect(user.countries.length).toBe(0);
+
+        const response = await request(server)
+          .post('/api/country_status')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send(new_country_status);
+
+        expect(response.body.countries.length).toBe(1);
+        expect(response.body.countries[0]).toBeDefined();
+        expect(response.body.countries[0].country_code).toBe('CHN');
+        expect(response.body.countries[0].status_code).toBe(1);
+        expect(response.body.countries[0].name).toBe('China');
+      });
+
+      it('successfully updates an existing country', async () => {
         const { jwt_token, user } = initialTestUser.body;
         expect(jwt_token).toBeDefined();
         expect(user.username).toBe('initialTestUser');
@@ -228,7 +248,7 @@ describe('User', () => {
         expect(response_2.body.countries[0].name).toBe('China');
       });
 
-      it('fails without a token', async () => {
+      it('fails if no token is provided', async () => {
         const response = await request(server)
           .post('/api/country_status')
           .send(new_country_status);
@@ -238,7 +258,7 @@ describe('User', () => {
         expect(response.body.countries).toBeUndefined();
       });
 
-      it('fails with an invalid token', async () => {
+      it('fails if invalid token is provided', async () => {
         const jwt_token = initialTestUser.body.jwt_token
           .split('')
           .reverse()
@@ -252,25 +272,6 @@ describe('User', () => {
         expect(response.status).toBe(401);
         expect(response.body.username).toBeUndefined();
         expect(response.body.countries).toBeUndefined();
-      });
-
-      it('adds a new country if it does not already exist', async () => {
-        const { jwt_token, user } = initialTestUser.body;
-        expect(jwt_token).toBeDefined();
-        expect(user.username).toBe('initialTestUser');
-        expect(user.id).toBeDefined();
-        expect(user.countries.length).toBe(0);
-
-        const response = await request(server)
-          .post('/api/country_status')
-          .set('Authorization', `Bearer ${jwt_token}`)
-          .send(new_country_status);
-
-        expect(response.body.countries.length).toBe(1);
-        expect(response.body.countries[0]).toBeDefined();
-        expect(response.body.countries[0].country_code).toBe('CHN');
-        expect(response.body.countries[0].status_code).toBe(1);
-        expect(response.body.countries[0].name).toBe('China');
       });
     });
   });
@@ -301,7 +302,7 @@ describe('User', () => {
         expect(getUser.body.email).toBe('getuser1@test.com');
       });
 
-      it('fails without a token', async () => {
+      it('fails if no token is provided', async () => {
         const testUserInfo = {
           username: 'getuser2',
           password: '123456',
@@ -322,7 +323,7 @@ describe('User', () => {
         expect(getUser.body.email).toBeUndefined();
       });
 
-      it('fails with an invalid token', async () => {
+      it('fails if invalid token is provided', async () => {
         const testUserInfo = {
           username: 'getuser3',
           password: '123456',
@@ -367,7 +368,7 @@ describe('User', () => {
         );
       });
 
-      it('fails if a token is not supplied', async () => {
+      it('fails if no token is provided', async () => {
         const { jwt_token } = initialTestUser.body;
 
         const response = await request(server)
@@ -378,7 +379,7 @@ describe('User', () => {
         expect(response.error).toBeDefined();
       });
 
-      it('fails with an invalid token', async () => {
+      it('fails if invalid token is provided', async () => {
         const jwt_token = initialTestUser.body.jwt_token
           .split('')
           .reverse()
@@ -409,7 +410,7 @@ describe('User', () => {
         expect(body.new_password).toEqual('654321');
       });
 
-      it('fails if no token is supplied', async () => {
+      it('fails if no token is provided', async () => {
         const response = await request(server)
           .put('/api/change_password')
           .send({ new_password: initialTestUserInfo.password });
@@ -418,7 +419,7 @@ describe('User', () => {
         expect(response.error).toBeDefined();
       });
 
-      it('fails if invalid token is supplied', async () => {
+      it('fails if invalid token is provided', async () => {
         const jwt_token = initialTestUser.body.jwt_token
           .split('')
           .reverse()
@@ -467,7 +468,7 @@ describe('User', () => {
         expect(response.body.preferences.autoscratch).toBe(false);
       });
 
-      it('fails if no token is supplied', async () => {
+      it('fails if no token is provided', async () => {
         const updatedPreferences = {
           preferences: {
             theme: 'light',
@@ -484,7 +485,7 @@ describe('User', () => {
         expect(response.body.preferences).toBeUndefined();
       });
 
-      it('fails if invalid token is supplied', async () => {
+      it('fails if invalid token is provided', async () => {
         const invalid_token = initialTestUser.body.jwt_token.slice(1);
         const updatedPreferences = {
           preferences: {
