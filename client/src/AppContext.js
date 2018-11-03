@@ -378,7 +378,6 @@ export class AppContextProvider extends Component {
   };
 
   render() {
-    console.log(this.state.currentCountry);
     return (
       <AppContext.Provider
         value={{
