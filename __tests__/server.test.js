@@ -27,15 +27,15 @@ describe('User', () => {
 
   let initialTestUser;
 
+  // Save an initial test user
+  const initialTestUserInfo = {
+    username: 'initialTestUser',
+    password: '123456',
+    email: 'email@email.com'
+  };
+
   beforeEach(async () => {
     testServer.listen(PORT);
-
-    // Save an initial test user
-    const initialTestUserInfo = {
-      username: 'initialTestUser',
-      password: '123456',
-      email: 'email@email.com'
-    };
 
     initialTestUser = await request(server)
       .post('/api/register')
@@ -397,7 +397,7 @@ describe('User', () => {
     describe('/change_password', () => {
       const body = {
         new_password: '654321'
-      }
+      };
       it('updates password correctly', async () => {
         const { jwt_token } = initialTestUser.body;
         const response = await request(server)
@@ -407,8 +407,45 @@ describe('User', () => {
 
         expect(response.status).toBe(200);
         expect(body.new_password).toEqual('654321');
-      })
-    })
+      });
+
+      it('fails if no token is supplied', async () => {
+        const response = await request(server)
+          .put('/api/change_password')
+          .send({ new_password: initialTestUserInfo.password });
+
+        expect(response.status).toBe(401);
+        expect(response.error).toBeDefined();
+      });
+
+      it('fails if invalid token is supplied', async () => {
+        const jwt_token = initialTestUser.body.jwt_token
+          .split('')
+          .reverse()
+          .join('');
+
+        const response = await request(server)
+          .put('/api/change_password')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send(body);
+
+        expect(response.status).toBe(401);
+        expect(response.error).toBeDefined();
+      });
+
+      it('fails if new password is the same as the old', async () => {
+        const { jwt_token } = initialTestUser.body;
+        const response = await request(server)
+          .put('/api/change_password')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send({ new_password: initialTestUserInfo.password });
+
+        expect(response.status).toBe(400);
+        expect(response.body.error).toEqual(
+          'New password is the same as the old!'
+        );
+      });
+    });
 
     describe('/update_preferences', () => {
       it('updates user correctly', async () => {
