@@ -153,7 +153,7 @@ export default class CountryBorder extends Component {
       <div className="CountryBorder">
         {counrtyBorderMap}
         <div className="CountryBorder__Slider">
-          <p className="Slide-Tag">Level of Stay</p>
+          <div className="Slide-Tag">Level of Stay</div>
           <Slider
             className="Slider1"
             min={0}

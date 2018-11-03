@@ -9,35 +9,16 @@
   transition-duration: 0.8s;
 }
 .CountryPanel .Card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
   padding: 0.2rem;
 }
 .CountryPanel .Card .Card_Header {
   display: flex;
   justify-content: space-between;
-  padding-right: 0.2rem;
-  align-items: center;
-  width: 100%;
-  background: beige;
-}
-.CountryPanel .Card .Card_Header .Header_Country-Name {
-  display: flex;
-  justify-content: center;
-  width: 100%;
   align-items: center;
   font-weight: 700;
   font-size: 1.2rem;
 }
-.CountryPanel .Card .Card_Header .Header_Country-Name span {
-  margin-right: 0.5rem;
-}
-.CountryPanel .Card .Card_Header .Header_Country-Name .closeCountryPanelIcon {
-  /* css for this */
-  border: 3px solid red;
-}
-.CountryPanel .Card .Card_Header .Header_Country-Name .closeCountryPanelIcon:hover {
+.CountryPanel .Card .Card_Header .closeCountryPanelIcon:hover {
   cursor: pointer;
   color: red;
 }
