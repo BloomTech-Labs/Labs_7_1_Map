@@ -19,12 +19,18 @@ const LandingPage = () => {
               Scratch the Itch to Track Your Trips
             </div>
             {value.AppState.signup ? (
-              <Signup />
+              <Signup
+                handleSignUp={value.handleSignIn}
+                handleChange={value.handleChange}
+                error={value.AppState.user.error}
+                hideSignUp={value.hideSignUp}
+              />
             ) : (
               <Login
                 handleSignIn={value.handleSignIn}
                 handleChange={value.handleChange}
                 error={value.AppState.user.error}
+                displaySignUp={value.displaySignUp}
               />
             )}
           </React.Fragment>

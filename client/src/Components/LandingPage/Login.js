@@ -25,6 +25,9 @@ const Login = props => {
         <button className="LoginForm__Button">Login</button>
         <div className="danger">{props.error ? props.error : ''}</div>
       </form>
+      <button className="LoginForm__Signup" onClick={props.displaySignUp}>
+        sign up with username/password
+      </button>
     </div>
   );
 };

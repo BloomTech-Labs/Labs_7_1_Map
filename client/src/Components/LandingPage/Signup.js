@@ -38,6 +38,9 @@ const Signup = props => {
         <button className="SignupForm__Button">Sign Up</button>
         <div className="danger">{props.error ? props.error : ''}</div>
       </form>
+      <button className="LoginForm__Login" onClick={props.hideSignUp}>
+        Login with username/password
+      </button>
     </div>
   );
 };
