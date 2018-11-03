@@ -82,6 +82,10 @@ class LogInBay extends React.Component {
     
     //begin local error check
 
+//call return on this.setState (or below)
+//Seperate out first field check
+//no else statements, just if
+
     if (
       signupUsername &&
       signupEmail &&
@@ -135,17 +139,18 @@ class LogInBay extends React.Component {
       //created a switch here incase I have to have seperate functionality for remote errors (from the server)
       //(how do i get rid of the red-error-lines in the case below?)
       switch (this.state.signupErrorCase) {
-        case 'local':
-          FailedSignUp = (
-            <FailedSignUpPopUp message={this.state.signupErrorResponse} />
-          );
-          break;
-        case 'remote':
-          FailedSignUp = (
-            <FailedSignUpPopUp message={this.props.failedSignUpMessage} />
-          );
-        default:
-          console.log('error with switch statement in LoginBay.js');
+      case 'local':
+        FailedSignUp = (
+          <FailedSignUpPopUp message={this.state.signupErrorResponse} />
+        );
+        break;
+      case 'remote':
+        FailedSignUp = (
+          <FailedSignUpPopUp message={this.props.failedSignUpMessage} />
+        );
+        break;
+      default:
+        console.log('error with switch statement in LoginBay.js');
       }
     } else {
       FailedSignUp = <div> </div>;
