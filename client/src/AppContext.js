@@ -120,9 +120,40 @@ export class AppContextProvider extends Component {
       });
   };
 
-  handleScratched = () => {
-    const currentCountry = { ...this.state.currentCountry, scratched: true };
-    this.setState({ currentCountry });
+  handleScratched = async () => {
+    try {
+      const { user, currentCountry } = this.state;
+
+      const body = {
+        username: user.username,
+        country_code: currentCountry.code,
+        name: currentCountry.info.name,
+        scratched: true
+      };
+
+      const options = {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      };
+
+      const response = await axios.post(
+        `${BACKEND_URL}/country_scratched`,
+        body,
+        options
+      );
+      /*
+      const currentUserInfo = this.state.user;
+      currentUserInfo.countries = [];
+      this.setState({ user: currentUserInfo });
+      */
+      currentCountry.scratched = true;
+      this.setState({
+        currentCountry,
+        currentCountryStatus: 0,
+        user: response.data
+      });
+    } catch (err) {
+      console.error('Error updating scratched for country!');
+    }
   };
 
   handleSignIn = async e => {
