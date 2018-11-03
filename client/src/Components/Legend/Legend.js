@@ -1,37 +1,33 @@
 import React from 'react';
-import { AppContextConsumer } from '../../AppContext';
 import './Legend.css';
 
 const Legend = () => {
   return (
     <div className="Legend">
-      <AppContextConsumer>
-        {() => (
-          <ul>
-            {/* <input type="checkbox" className="Legend__showFriends" /> Show Friends */}
-            <li>
-              <div className="Legend__swatch NoInterest" />
-              No Interest
-            </li>
-            <li>
-              <div className="Legend__swatch Wishlist" />
-              Wishlist
-            </li>
-            <li>
-              <div className="Legend__swatch Visited" />
-              Visited
-            </li>
-            <li>
-              <div className="Legend__swatch LivedIn" />
-              Lived In
-            </li>
-            <li>
-              <div className="Legend__swatch Home" />
-              Home
-            </li>
-          </ul>
-        )}
-      </AppContextConsumer>
+      <div className="Legend__NoInterest">
+        <span className="NoInterest__gray" />
+        No Interest
+      </div>
+      <div className="Legend__Wishlist">
+        <span className="Wishlist__purple" />
+        Wishlist
+      </div>
+      <div className="Legend__Flyover">
+        <span className="Flyover__yellow" />
+        Fly Over
+      </div>
+      <div className="Legend__Visited">
+        <span className="Visited__red" />
+        Visited
+      </div>
+      <div className="Legend__LivedIn">
+        <span className="LivedIn__blue" />
+        Lived In
+      </div>
+      <div className="Legend__Home">
+        <span className="Home__green" />
+        Home
+      </div>
     </div>
   );
 };

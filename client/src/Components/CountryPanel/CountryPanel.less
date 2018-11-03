@@ -1,13 +1,9 @@
 .CountryPanel {
   position: fixed;
-  display: flex;
-  flex-direction: column;
-  //background-color: rgba(255, 255, 255, 0.1);
-  bottom: 0px;
-  left: 0px;
+  bottom: 10px;
+  left: 10px;
   z-index: 11;
   background-color: rgba(245, 245, 220, 1);
-
   animation: Settings 0.5s all;
   transition-property: all;
   transition-duration: 0.8s;
@@ -15,8 +11,9 @@
   .Card {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
 
+    justify-content: space-around;
+    padding: 0.2rem;
     .Card_Header {
       display: flex;
       justify-content: space-between;

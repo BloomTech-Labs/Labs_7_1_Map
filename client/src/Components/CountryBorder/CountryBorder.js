@@ -127,7 +127,6 @@ export default class CountryBorder extends Component {
     if (this.props.scratched) {
       counrtyBorderMap = (
         <React.Fragment>
-          <h1>WE THERE</h1>{' '}
           <canvas
             ref="canvas"
             className="CountryBorder__Border"
@@ -139,7 +138,6 @@ export default class CountryBorder extends Component {
     } else {
       counrtyBorderMap = (
         <ScratchCard {...settings} onComplete={this.props.handleScratched}>
-          <h1>WE HERE</h1>
           <canvas
             ref="canvas"
             className="CountryBorder__Border"

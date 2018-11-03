@@ -7,33 +7,32 @@
   height: auto;
   width: auto;
   padding: 10px;
+  color: #fff;
 }
-.Legend .Legend__showFriends {
-  margin: 0 0 20px 10px;
+.Legend div {
+  margin: 15px;
 }
-.Legend li {
-  display: flex;
-  margin: 10px;
-  list-style: none;
-  color: white;
-}
-.Legend li .Legend__swatch {
+.Legend span {
   height: 15px;
   width: 15px;
   margin-right: 10px;
+  display: inline-block;
 }
-.Legend li .NoInterest {
+.Legend .NoInterest__gray {
   background-color: gray;
 }
-.Legend li .Wishlist {
+.Legend .Wishlist__purple {
   background-color: purple;
 }
-.Legend li .Visited {
+.Legend .Flyover__yellow {
+  background-color: yellow;
+}
+.Legend .Visited__red {
   background-color: red;
 }
-.Legend li .LivedIn {
+.Legend .LivedIn__blue {
   background-color: blue;
 }
-.Legend li .Home {
+.Legend .Home__green {
   background-color: green;
 }
