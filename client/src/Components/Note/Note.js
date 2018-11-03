@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import NoteEdit from './EditNote';
+import EditNote from './EditNote';
 
 import './Note.css';
 
@@ -13,7 +13,9 @@ class Note extends Component {
 
   componentDidMount() {
     this.setState({
-      notes: this.props.country.notes
+      //notes: this.props.country.notes
+      notes:
+        'This is a test note hioiuhigfyufy jhhgjfjgfj khgjhgj kjhjg fyjfuydes wsdgh jkydxy cvghnudf hgbdf'
     });
   }
   //this happens when something changes on the form
@@ -28,43 +30,33 @@ class Note extends Component {
   render() {
     let display;
     if (this.state.editMode === 'true') {
-      /*
-        <EditNote
-          submitChecker={this.submitChecker}
-          user={this.state.user}
-          onChangeNote={this.onChangeNote}
-          messageboxcolor={this.state.messageboxcolor}
-          messagebox={this.state.messagebox}
-          editnote={this.state.editnote}
-        />
-        */ display = (
+      display = (
         <div className="Notes__EditMode">
           <FontAwesomeIcon
             className="EditMode__save"
             onClick={this.props.handleUpdateNotes}
             icon="save"
           />
-          <span>Save note</span>
+          <EditNote />
         </div>
       );
     } else {
-      if (this.notes) {
+      if (this.state.notes) {
         display = (
           <div className="Notes__ViewMode">
             <FontAwesomeIcon
-              className="VieMode__edit"
+              className="ViewMode__edit"
               onClick={this.edit}
               icon="edit"
             />
-            <span>Edit note</span>
-            <div>{this.notes}</div>
+            <div className="ViewMode__Notes">{this.state.notes}</div>
           </div>
         );
       } else {
         display = (
           <div className="Notes__ViewMode">
             <FontAwesomeIcon
-              className="VieWMode__add"
+              className="ViewMode__add"
               onClick={this.edit}
               icon="plus-circle"
             />
