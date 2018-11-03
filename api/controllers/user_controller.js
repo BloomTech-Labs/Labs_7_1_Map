@@ -40,9 +40,9 @@ module.exports = {
 
   change_password: async (req, res) => {
     try {
-      const { username, new_password } = req.body;
+      const { new_password } = req.body;
 
-      const user = await User.findOne({ username });
+      const user = await User.findOne({ username: req.user.username });
 
       // Check if password is the same as the old before updating
       if (await user.check_password(new_password)) {
@@ -53,7 +53,7 @@ module.exports = {
 
         // update password
         await User.findOneAndUpdate(
-          { username },
+          { username: req.user.username },
           { password: password_hash },
           { new: true }
         );

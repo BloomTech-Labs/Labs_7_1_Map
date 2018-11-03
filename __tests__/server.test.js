@@ -396,7 +396,6 @@ describe('User', () => {
 
     describe('/change_password', () => {
       const body = {
-        username: 'initialTestUser',
         new_password: '654321'
       }
       it('updates password correctly', async () => {
@@ -410,7 +409,6 @@ describe('User', () => {
         expect(body.new_password).toEqual('654321');
       })
     })
-
 
     describe('/update_preferences', () => {
       it('updates user correctly', async () => {
