@@ -349,12 +349,13 @@ describe('User', () => {
 
   describe('PUT routes', () => {
     describe('/change_email', () => {
-      it('succeeds with a valid token and username', async () => {
+      const body = {
+        new_email: 'newEmail@email.com'
+      };
+
+      it('succeeds with a valid token', async () => {
         const { jwt_token } = initialTestUser.body;
 
-        const body = {
-          new_email: 'newEmail@email.com'
-        };
         const response = await request(server)
           .put('/api/change_email')
           .set('Authorization', `Bearer ${jwt_token}`)
@@ -367,12 +368,8 @@ describe('User', () => {
       });
 
       it('fails if a token is not supplied', async () => {
-        const { user, jwt_token } = initialTestUser.body;
+        const { jwt_token } = initialTestUser.body;
 
-        const body = {
-          username: user.username,
-          new_email: 'newEmail@email.com'
-        };
         const response = await request(server)
           .put('/api/change_email')
           .send(body);
@@ -386,10 +383,6 @@ describe('User', () => {
           .split('')
           .reverse()
           .join('');
-
-        const body = {
-          new_email: 'newEmail@email.com'
-        };
 
         const response = await request(server)
           .put('/api/change_email')
