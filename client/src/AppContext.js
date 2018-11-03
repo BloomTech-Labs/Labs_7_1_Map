@@ -77,7 +77,7 @@ export class AppContextProvider extends Component {
   // Get the notes of a country saved on user
   getCurrentCountryNotes = code => {
     let notes = '';
-    const userCountries = this.state.user.countries;
+    const userCountries = [...this.state.user.countries];
 
     if (userCountries) {
       const findCountry = userCountries.find(
