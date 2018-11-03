@@ -6,12 +6,13 @@ import './Note.css';
 class Note extends Component {
   state = {
     notes: '',
-    editMode: 'false'
+    editMode: false
   };
 
   componentDidMount() {
     this.setState({
-      notes: this.props.country.notes
+      notes: this.props.country.notes,
+      editMode: this.props.country.editNoteMode
     });
   }
 
@@ -21,17 +22,22 @@ class Note extends Component {
   };
 
   edit = () => {
-    this.setState({ editMode: 'true' });
+    this.setState({ editMode: true });
+  };
+  updateNote = () => {
+    this.props.handleUpdateNotes();
+    this.setState({ editMode: false });
   };
 
   render() {
+    console.log(this.state);
     let display;
     if (this.state.editMode === 'true') {
       display = (
         <div className="Notes__EditMode">
           <FontAwesomeIcon
             className="EditMode__save"
-            onClick={this.props.handleUpdateNotes}
+            onClick={this.updateNote}
             icon="save"
           />
           <textarea

@@ -18,7 +18,8 @@ export class AppContextProvider extends Component {
       info: {},
       geoInfo: {},
       scratched: false,
-      notes: ''
+      notes: '',
+      editNoteMode: false
     },
     failedLogin: false,
     currentCountryStatus: null,
@@ -249,8 +250,17 @@ export class AppContextProvider extends Component {
     const geoInfo = getCountryShapeFromCode(code);
     const scratched = this.isScratched(code);
     const notes = this.getCurrentCountryNotes(code);
+
+    const currentCountry = {
+      ...this.state.currentCountry,
+      code,
+      info,
+      geoInfo,
+      scratched,
+      notes
+    };
     this.setState({
-      currentCountry: { code, info, geoInfo, scratched, notes },
+      currentCountry,
       countryPanelIsOpen: true
     });
     this.setState({
@@ -268,7 +278,8 @@ export class AppContextProvider extends Component {
         name: currentCountry.info.name,
         notes: notes
       };
-
+      console.log(body);
+      /*
       const options = {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       };
@@ -280,6 +291,7 @@ export class AppContextProvider extends Component {
         currentCountry,
         user: response.data
       });
+      */
     } catch (err) {
       console.error('Error updating notes for country!');
     }

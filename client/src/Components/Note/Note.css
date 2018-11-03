@@ -6,32 +6,32 @@
   padding: 0.2rem;
 }
 .Note .Notes__ViewMode .ViewMode__add {
-  color: blue;
+  color: gray;
   margin-right: 0.2rem;
 }
 .Note .Notes__ViewMode .ViewMode__add:hover {
   cursor: pointer;
-  opacity: 0.8;
+  color: green;
 }
 .Note .Notes__ViewMode .ViewMode__edit {
   position: absolute;
   right: 3px;
   margin-right: 0.2rem;
-  color: blue;
+  color: gray;
 }
 .Note .Notes__ViewMode .ViewMode__edit:hover {
   cursor: pointer;
-  opacity: 0.8;
+  color: blue;
 }
 .Note .Notes__EditMode .EditMode__save {
   position: absolute;
   right: 5px;
   margin-right: 0.2rem;
-  color: green;
+  color: gray;
 }
 .Note .Notes__EditMode .EditMode__save:hover {
   cursor: pointer;
-  opacity: 0.8;
+  color: blue;
 }
 .Note .Notes__EditMode textarea {
   width: 100%;
