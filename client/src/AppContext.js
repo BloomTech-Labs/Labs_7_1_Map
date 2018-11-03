@@ -95,7 +95,7 @@ export class AppContextProvider extends Component {
     // TODO: This function could probably just call setState here
     // instead of doing that in the function that uses it
     const currentCountryCode = this.state.currentCountry.code;
-    const userCountries = this.state.user.countries;
+    const userCountries = [...this.state.user.countries];
 
     if (userCountries) {
       const findCountry = userCountries.find(
