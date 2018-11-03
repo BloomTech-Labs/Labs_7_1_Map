@@ -2,6 +2,15 @@
   border: 1px solid #000000;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+  padding: 0.2rem;
+}
+.Note .Notes__ViewMode .VieWMode__add {
+  margin-right: 0.2rem;
+  color: blue;
+}
+.Note .Notes__ViewMode .VieWMode__add:hover {
+  cursor: pointer;
+  opacity: 0.8;
 }
 .Edit-Note {
   background: beige;
