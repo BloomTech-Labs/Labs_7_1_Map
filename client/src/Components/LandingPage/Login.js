@@ -5,8 +5,8 @@ import './Login.css';
 const Login = props => {
   return (
     <div className="Login">
-      <form className="LogInForm" onSubmit={props.handleSignIn}>
-        <div className="Login__title">Sign In</div>
+      <form className="Login__LoginForm" onSubmit={props.handleSignIn}>
+        <div className="LoginForm__title">Sign In</div>
         <input
           type="text"
           onChange={props.handleChange}
@@ -21,9 +21,9 @@ const Login = props => {
           placeholder="Password"
           name="password"
         />
-        <input type="submit" />
+        <button className="LoginForm__Button">Login</button>
+        <div className="danger">{props.error ? props.error : ''}</div>
       </form>
-      <div>Sign Up</div>
     </div>
   );
 };

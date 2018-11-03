@@ -1,0 +1,42 @@
+.Login {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+  width: 400px;
+  padding: 1rem 2rem;
+}
+.Login .Login__LoginForm {
+  display: flex;
+  flex-direction: column;
+}
+.Login .Login__LoginForm .LoginForm__title {
+  color: gray;
+  align-self: center;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+.Login .Login__LoginForm input {
+  margin-bottom: 0.5rem;
+  padding: 0.4rem 0.2rem;
+  font-size: 0.9rem;
+  opacity: 0.6;
+  border: none;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+.Login .Login__LoginForm .LoginForm__Button {
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+  color: var(--sky);
+  padding: 0.4rem;
+  border-radius: 3px;
+  font-size: 1rem;
+  background-color: #fff;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+.Login .Login__LoginForm .LoginForm__Button:hover {
+  cursor: pointer;
+  color: #fff;
+  background-color: var(--blue);
+}
