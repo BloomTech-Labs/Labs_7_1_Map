@@ -12,6 +12,7 @@ module.exports = {
 
   handle_scratched: async (req, res) => {
     try {
+      console.log('here');
     } catch (err) {
       if (DEV) console.log(err);
       return res.status(500).json({ error: 'Internal server error!' });
