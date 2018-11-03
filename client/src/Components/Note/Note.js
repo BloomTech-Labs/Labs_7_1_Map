@@ -28,8 +28,7 @@ class Note extends Component {
   render() {
     let display;
     if (this.state.editMode === 'true') {
-      display = (
-        /*
+      /*
         <EditNote
           submitChecker={this.submitChecker}
           user={this.state.user}
@@ -38,8 +37,15 @@ class Note extends Component {
           messagebox={this.state.messagebox}
           editnote={this.state.editnote}
         />
-        */
-        <div>Edit Mode</div>
+        */ display = (
+        <div className="Notes__EditMode">
+          <FontAwesomeIcon
+            className="EditMode__save"
+            onClick={this.props.handleUpdateNotes}
+            icon="save"
+          />
+          <span>Save note</span>
+        </div>
       );
     } else {
       if (this.notes) {
@@ -51,6 +57,7 @@ class Note extends Component {
               icon="edit"
             />
             <span>Edit note</span>
+            <div>{this.notes}</div>
           </div>
         );
       } else {

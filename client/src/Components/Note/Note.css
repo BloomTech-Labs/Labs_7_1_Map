@@ -6,9 +6,25 @@
 }
 .Note .Notes__ViewMode .VieWMode__add {
   margin-right: 0.2rem;
-  color: blue;
+  color: purple;
 }
 .Note .Notes__ViewMode .VieWMode__add:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+.Note .Notes__ViewMode .VieWMode__edit {
+  margin-right: 0.2rem;
+  color: purple;
+}
+.Note .Notes__ViewMode .VieWMode__edit:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+.Note .Notes__EditMode .EditMode__save {
+  margin-right: 0.2rem;
+  color: green;
+}
+.Note .Notes__EditMode .EditMode__save:hover {
   cursor: pointer;
   opacity: 0.8;
 }

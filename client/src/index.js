@@ -5,7 +5,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faTimes,
   faPlusCircle,
-  faEdit
+  faEdit,
+  faSave
 } from '@fortawesome/free-solid-svg-icons';
 
 // bring in our context provider
@@ -16,7 +17,7 @@ import * as serviceWorker from './serviceWorker';
 import './index.css';
 import 'leaflet/dist/leaflet.css';
 
-library.add(faTimes, faPlusCircle, faEdit);
+library.add(faTimes, faPlusCircle, faEdit, faSave);
 
 ReactDOM.render(
   <AppContextProvider>
