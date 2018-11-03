@@ -448,7 +448,7 @@ describe('User', () => {
     });
 
     describe('/update_preferences', () => {
-      it('updates user correctly', async () => {
+      it('updates preferences correctly', async () => {
         const updatedPreferences = {
           preferences: {
             theme: 'light',
@@ -465,6 +465,42 @@ describe('User', () => {
         expect(response.body.username).toBeDefined();
         expect(response.body.preferences.theme).toBe('light');
         expect(response.body.preferences.autoscratch).toBe(false);
+      });
+
+      it('fails if no token is supplied', async () => {
+        const updatedPreferences = {
+          preferences: {
+            theme: 'light',
+            autoscratch: false
+          }
+        };
+
+        const response = await request(server)
+          .put(`/api/update_preferences`)
+          .send(updatedPreferences);
+
+        expect(response.status).toBe(401);
+        expect(response.body.username).toBeUndefined();
+        expect(response.body.preferences).toBeUndefined();
+      });
+
+      it('fails if invalid token is supplied', async () => {
+        const invalid_token = initialTestUser.body.jwt_token.slice(1)
+        const updatedPreferences = {
+          preferences: {
+            theme: 'light',
+            autoscratch: false
+          }
+        };
+
+        const response = await request(server)
+          .put(`/api/update_preferences`)
+          .set('Authorization', `Bearer ${invalid_token}`)
+          .send(updatedPreferences);
+
+        expect(response.status).toBe(401);
+        expect(response.body.username).toBeUndefined();
+        expect(response.body.preferences).toBeUndefined();
       });
 
       it('rejects request if preferences is not provided', async () => {
