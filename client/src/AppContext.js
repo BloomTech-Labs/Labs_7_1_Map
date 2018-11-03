@@ -365,6 +365,7 @@ export class AppContextProvider extends Component {
           handleSignUp: this.handleSignUp,
           handleSliderMove: this.handleSliderMove,
           handleScratched: this.handleScratched,
+          handleUpdateNotes: this.handleUpdateNotes,
           handleUpdatePreferences: this.handleUpdatePreferences,
           closeCountryPanel: this.closeCountryPanel,
           updateCurrentCountry: this.handleUpdateCurrentCountry,

@@ -15,7 +15,7 @@ const settings = {
   width: canvasWidth,
   height: canvasHeight,
   image: travellingImg,
-  finishPercent: 50
+  finishPercent: 95
 };
 
 const draw = (context, canvasWidth, canvasHeight, bounds, geometry) => {
