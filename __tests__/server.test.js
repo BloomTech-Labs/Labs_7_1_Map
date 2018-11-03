@@ -506,35 +506,6 @@ describe('User', () => {
         expect(response.body.username).toBeUndefined();
         expect(response.body.preferences).toBeUndefined();
       });
-
-      it('rejects request if username is not provided', async () => {
-        const testUserInfo = {
-          username: 'updatepreferences3',
-          password: '123456',
-          email: 'update_preferences3@test.com'
-        };
-
-        const newUser = await request(server)
-          .post(`/api/register`)
-          .send(testUserInfo);
-        expect(newUser.status).toBe(200);
-
-        const updatedPreferences = {
-          preferences: {
-            theme: 'light',
-            autoscratch: false
-          }
-        };
-
-        const response = await request(server)
-          .put(`/api/update_preferences`)
-          .set('Authorization', `Bearer ${newUser.body.jwt_token}`)
-          .send(updatedPreferences);
-
-        expect(response.status).toBe(400);
-        expect(response.body.username).toBeUndefined();
-        expect(response.body.preferences).toBeUndefined();
-      });
     });
   });
 });
