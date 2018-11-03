@@ -1,14 +1,8 @@
 .CountryBorder {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid black;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
 }
-.CountryBorder .CountryBorder__Slider {
+.CountryBorder .CountryBorder__Canvas {
+  border: 0.3rem solid #fff;
   width: 100%;
-}
-.CountryBorder .CountryBorder__Slider .Slider1 {
-  position: relative;
-  z-index: 100;
 }

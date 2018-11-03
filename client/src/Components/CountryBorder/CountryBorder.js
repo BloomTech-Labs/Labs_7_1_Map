@@ -125,13 +125,14 @@ export default class CountryBorder extends Component {
   }
 
   render() {
+    const notScratched = !this.props.scratched ? true : false;
     let counrtyBorderMap;
     if (this.props.scratched) {
       counrtyBorderMap = (
         <React.Fragment>
           <canvas
             ref="canvas"
-            className="CountryBorder__Border"
+            className="CountryBorder__Canvas"
             width={canvasWidth}
             height={canvasHeight}
           />
@@ -139,7 +140,11 @@ export default class CountryBorder extends Component {
       );
     } else {
       counrtyBorderMap = (
-        <ScratchCard {...settings} onComplete={this.props.handleScratched}>
+        <ScratchCard
+          className="CountryBorder__Canvas"
+          {...settings}
+          onComplete={this.props.handleScratched}
+        >
           <canvas
             ref="canvas"
             className="CountryBorder__Border"
@@ -152,19 +157,17 @@ export default class CountryBorder extends Component {
     return (
       <div className="CountryBorder">
         {counrtyBorderMap}
-        <div className="CountryBorder__Slider">
-          <div className="Slide-Tag">Level of Stay</div>
-          <Slider
-            className="Slider1"
-            min={0}
-            max={4}
-            marks={marks}
-            step={null}
-            onChange={this.props.handleSliderMove}
-            defaultValue={0}
-            value={this.props.currentCountryStatus}
-          />
-        </div>
+        <Slider
+          className="CountryBorder_Slider"
+          min={0}
+          max={4}
+          marks={marks}
+          step={null}
+          onChange={this.props.handleSliderMove}
+          defaultValue={0}
+          value={this.props.currentCountryStatus}
+          disabled={notScratched}
+        />
       </div>
     );
   }
