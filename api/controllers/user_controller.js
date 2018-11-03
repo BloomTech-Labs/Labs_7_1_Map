@@ -19,16 +19,19 @@ const validate_new_user = ({ username, password, email }) => {
 module.exports = {
   change_email: async (req, res) => {
     try {
-      const { username, new_email } = req.body;
-
-      // update email
-      await User.findOneAndUpdate(
-        { username },
-        { email: new_email },
+      // update email address stored on DB
+      // passport passes on the correct user based on the JWT supplied
+      const response = await User.findOneAndUpdate(
+        { username: req.user.username },
+        { email: req.body.new_email },
         { new: true }
       );
 
-      return res.status(200).json({ message: 'Email was updated successfully!' });
+      console.log(response);
+      if (response)
+        return res.status(200).json({ message: 'Email was updated successfully!' });
+      else
+        return res.status(400).json({ message: 'Failed to update email!' })
     } catch (err) {
       if (DEV) console.log(err);
       return res.status(500).json({ error: 'Failed to change email!' });
