@@ -49,7 +49,10 @@ const UserSchema = new Schema(
           type: Number,
           default: 0
         }, //0, 1, 2, 3, 4
-        notes: String,
+        notes: {
+          type: String,
+          default: ''
+        },
         scratched: {
           type: Boolean,
           default: false

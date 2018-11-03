@@ -20,7 +20,14 @@ module.exports = {
 
   handle_status: async (req, res) => {
     try {
-      const { country_code, status_code, username, name, scratched } = req.body;
+      const {
+        country_code,
+        status_code,
+        username,
+        name,
+        scratched,
+        notes
+      } = req.body;
 
       //below are queries
       const queryUserCountry = {
@@ -41,7 +48,8 @@ module.exports = {
       const editCountry = {
         $set: {
           'countries.$.status_code': status_code,
-          'countries.$.scratched': scratched
+          'countries.$.scratched': scratched,
+          'countries.$.notes': notes
         }
       };
 
@@ -98,35 +106,6 @@ module.exports = {
           res.status(409).json({ error: 'failure to create new country' });
         }
       }
-
-      /*const 
-      
-      User.findOne(queryUserCountry)
-        .then(result => {
-          if (result !== null) {
-            User.findOneAndUpdate(queryUserCountry, editCountry, options)
-              .then(newDoc => {
-                res.status(200).json(newDoc);
-              })
-              .catch(err => {
-                res
-                  .status(400)
-                  .json({ error: 'failure to update country status' });
-              });
-          } else {
-            User.findOneAndUpdate(queryUser, createCountry, options)
-              .then(newDoc => {
-                res.status(201).json(newDoc);
-              })
-              .catch(err => {
-                res.status(409).json({ error: 'failure to create new country' });
-              });
-          }
-        })
-        .catch(err => {
-          res.status(500).json({ error: 'failure to initiate query' });
-        });
-        */
     } catch (err) {
       if (DEV) console.log(err);
       return res.status(500).json({ error: 'Internal server error!' });

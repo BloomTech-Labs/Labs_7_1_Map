@@ -13,6 +13,7 @@ const canvasHeight = 150;
 
 const settings = {
   width: canvasWidth,
+  height: canvasHeight,
   image: travellingImg,
   finishPercent: 95
 };

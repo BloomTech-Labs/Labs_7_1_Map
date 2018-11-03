@@ -181,9 +181,9 @@ export class AppContextProvider extends Component {
         country_code: currentCountry.code,
         name: currentCountry.info.name,
         status_code: value,
-        scratched: currentCountry.scratched
+        scratched: currentCountry.scratched,
+        notes: currentCountry.notes
       };
-
       const options = {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       };
