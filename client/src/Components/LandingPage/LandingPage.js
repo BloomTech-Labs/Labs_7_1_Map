@@ -20,9 +20,10 @@ const LandingPage = () => {
             </div>
             {value.AppState.signup ? (
               <Signup
-                handleSignUp={value.handleSignIn}
+                handleSignUp={value.handleSignUp}
                 handleChange={value.handleChange}
                 error={value.AppState.user.error}
+                signupError={value.AppState.user.signupError}
                 hideSignUp={value.hideSignUp}
               />
             ) : (

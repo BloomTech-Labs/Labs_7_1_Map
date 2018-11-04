@@ -14,6 +14,11 @@ const Signup = props => {
           placeholder="Username"
           name="username"
         />
+        <span className="danger">
+          {props.signupError && props.signupError.username
+            ? props.signupError.username
+            : ''}
+        </span>
         <input
           type="email"
           onChange={props.handleChange}
@@ -21,6 +26,11 @@ const Signup = props => {
           placeholder="email address"
           name="email"
         />
+        <span className="danger">
+          {props.signupError && props.signupError.email
+            ? props.signupError.email
+            : ''}
+        </span>
         <input
           type="password"
           onChange={props.handleChange}
@@ -28,6 +38,11 @@ const Signup = props => {
           placeholder="Password"
           name="password"
         />
+        <span className="danger">
+          {props.signupError && props.signupError.password
+            ? props.signupError.password
+            : ''}
+        </span>
         <input
           type="password"
           onChange={props.handleChange}

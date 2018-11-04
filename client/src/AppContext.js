@@ -22,6 +22,7 @@ export class AppContextProvider extends Component {
     },
     currentCountryStatus: null,
     signup: false,
+    signupError: {},
     user: {},
     userPosition: { lat: 22.28552, lng: 114.15769 }
   };
@@ -75,7 +76,7 @@ export class AppContextProvider extends Component {
   }; // closeCountryPanel
 
   displaySignUp = () => {
-    this.setState({ signup: true });
+    this.setState({ signup: true, user: {} });
   };
 
   // Get the notes of a country saved on user
@@ -129,7 +130,6 @@ export class AppContextProvider extends Component {
     const user = { ...this.state.user };
     user.error = '';
     user[e.target.name] = e.target.value;
-    console.log(user);
     this.setState({ user });
   };
 
@@ -176,8 +176,6 @@ export class AppContextProvider extends Component {
     e.preventDefault();
     const user = { ...this.state.user };
 
-    console.log(user, 'IN THE APP');
-
     const body = {
       username: user.username,
       password: user.password
@@ -203,9 +201,11 @@ export class AppContextProvider extends Component {
     clearLocalstorage();
   }; // handleSignOut
 
-  handleSignUp = async e => {
+  handleSignUp = e => {
     e.preventDefault();
-
+    const user = { ...this.state.user };
+    console.log(user);
+    /*
     // TODO: Error handling
     const body = {
       username: e.target.username.value,
@@ -221,6 +221,7 @@ export class AppContextProvider extends Component {
       authenticated: true,
       user: response.data.user
     });
+    */
   }; // handleSignUp
 
   // Called in BorderBay.js
@@ -369,7 +370,7 @@ export class AppContextProvider extends Component {
   }; // hasGeolocation
 
   hideSignUp = () => {
-    this.setState({ signup: false });
+    this.setState({ signup: false, user: {} });
   };
 
   isScratched = countryCode => {
