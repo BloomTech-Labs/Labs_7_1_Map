@@ -23,7 +23,7 @@ const LandingPage = () => {
                 handleSignUp={value.handleSignUp}
                 handleChange={value.handleChange}
                 error={value.AppState.user.error}
-                signupError={value.AppState.user.signupError}
+                signupErrors={value.AppState.signupErrors}
                 hideSignUp={value.hideSignUp}
               />
             ) : (

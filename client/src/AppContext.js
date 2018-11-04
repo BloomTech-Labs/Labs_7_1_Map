@@ -22,7 +22,7 @@ export class AppContextProvider extends Component {
     },
     currentCountryStatus: null,
     signup: false,
-    signupError: {},
+    signupErrors: {},
     user: {},
     userPosition: { lat: 22.28552, lng: 114.15769 }
   };
@@ -128,9 +128,12 @@ export class AppContextProvider extends Component {
 
   handleChange = e => {
     const user = { ...this.state.user };
+    const signupErrors = { ...this.state.signupErrors };
+    signupErrors[e.target.name] = '';
     user.error = '';
+
     user[e.target.name] = e.target.value;
-    this.setState({ user });
+    this.setState({ user, signupErrors });
   };
 
   handleChangeNote = e => {
@@ -204,7 +207,35 @@ export class AppContextProvider extends Component {
   handleSignUp = e => {
     e.preventDefault();
     const user = { ...this.state.user };
-    console.log(user);
+    const signupErrors = { ...this.state.signupErrors };
+    // check if the username is given
+    if (!user.username) {
+      signupErrors.username = 'A username is required!';
+    }
+
+    // check if the email is given
+    if (!user.email) {
+      signupErrors.email = 'An email is required!';
+    }
+
+    // check if the password is given
+    if (!user.password) {
+      signupErrors.password = 'A password is required!';
+    } else if (user.password.length < 6) {
+      signupErrors.password = 'Password must have 6 characters or more!';
+    }
+
+    // check if the password matches passwordComfirm
+    if (user.password !== user.passwordComfirm) {
+      signupErrors.passwordComfirm = 'Passwords do not match!';
+    }
+
+    if (Object.keys(signupErrors).length > 0) {
+      user.error = 'Fix the errors before proceeding to signup!';
+      this.setState({ signupErrors, user });
+    }
+    console.log(this.state);
+
     /*
     // TODO: Error handling
     const body = {
