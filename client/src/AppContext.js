@@ -204,55 +204,56 @@ export class AppContextProvider extends Component {
     clearLocalstorage();
   }; // handleSignOut
 
-  handleSignUp = e => {
+  handleSignUp = async e => {
     e.preventDefault();
     const user = { ...this.state.user };
-    const signupErrors = { ...this.state.signupErrors };
-    // check if the username is given
-    if (!user.username) {
-      signupErrors.username = 'A username is required!';
+    const signupErrors = {};
+    try {
+      // check if the username is given
+      if (!user.username) {
+        signupErrors.username = 'A username is required!';
+      }
+
+      // check if the email is given
+      if (!user.email) {
+        signupErrors.email = 'An email is required!';
+      }
+
+      // check if the password is given
+      if (!user.password) {
+        signupErrors.password = 'A password is required!';
+      } else if (user.password.length < 6) {
+        signupErrors.password = 'Password must have 6 characters or more!';
+      }
+
+      // check if the password matches passwordComfirm
+      if (user.password !== user.passwordComfirm) {
+        signupErrors.passwordComfirm = 'Passwords do not match!';
+      }
+
+      if (Object.keys(signupErrors).length > 0) {
+        user.error = 'Fix the errors before proceeding to signup!';
+        this.setState({ signupErrors, user });
+      } else {
+        const body = {
+          username: e.target.username.value,
+          password: e.target.password.value,
+          email: e.target.email.value
+        };
+
+        const response = await axios.post(`${BACKEND_URL}/register`, body);
+        const user = JSON.stringify(response.data.user);
+        localStorage.setItem('token', response.data.jwt_token);
+        localStorage.setItem('user', user);
+        this.setState({
+          authenticated: true,
+          user: response.data.user
+        });
+      }
+    } catch (err) {
+      user.error = 'Error encountered during signup!';
+      this.setState({ user });
     }
-
-    // check if the email is given
-    if (!user.email) {
-      signupErrors.email = 'An email is required!';
-    }
-
-    // check if the password is given
-    if (!user.password) {
-      signupErrors.password = 'A password is required!';
-    } else if (user.password.length < 6) {
-      signupErrors.password = 'Password must have 6 characters or more!';
-    }
-
-    // check if the password matches passwordComfirm
-    if (user.password !== user.passwordComfirm) {
-      signupErrors.passwordComfirm = 'Passwords do not match!';
-    }
-
-    if (Object.keys(signupErrors).length > 0) {
-      user.error = 'Fix the errors before proceeding to signup!';
-      this.setState({ signupErrors, user });
-    }
-    console.log(this.state);
-
-    /*
-    // TODO: Error handling
-    const body = {
-      username: e.target.username.value,
-      password: e.target.password.value,
-      email: e.target.email.value
-    };
-
-    const response = await axios.post(`${BACKEND_URL}/register`, body);
-    const user = JSON.stringify(response.data.user);
-    localStorage.setItem('token', response.data.jwt_token);
-    localStorage.setItem('user', user);
-    this.setState({
-      authenticated: true,
-      user: response.data.user
-    });
-    */
   }; // handleSignUp
 
   // Called in BorderBay.js
