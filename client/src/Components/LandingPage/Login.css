@@ -40,3 +40,14 @@
   color: #fff;
   background-color: var(--blue);
 }
+.Login .LoginForm__Signup {
+  opacity: 0.7;
+  font-size: 0.8rem;
+  color: gray;
+  border: none;
+  background-color: white;
+}
+.Login .LoginForm__Signup:hover {
+  color: var(--blue);
+  cursor: pointer;
+}
