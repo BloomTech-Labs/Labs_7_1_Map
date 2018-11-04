@@ -247,7 +247,8 @@ export class AppContextProvider extends Component {
         localStorage.setItem('user', user);
         this.setState({
           authenticated: true,
-          user: response.data.user
+          user: response.data.user,
+          signup: false
         });
       }
     } catch (err) {
