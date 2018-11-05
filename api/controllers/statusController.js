@@ -11,9 +11,8 @@ const User = require('../models/user');
   username: '',
 }
 */
-
 module.exports = {
-  handle_status: (req, res) => {
+  handle_status: async (req, res) => {
     const { country_code, status_code, username, name } = req.body;
 
     //below are queries
@@ -47,20 +46,38 @@ module.exports = {
       }
     };
 
-    //below is the option to return the document, after it is edited, from
-    //findOneAndUpdate()
-
     const options = {
-      //cant get this to work
       new: true
-      // {returnOriginal:false}
     };
 
-    //logic for below:
-    //1. searches for document that includes user & country (findOne)
-    //2. If fails, that means user does not have the country
-    // it will create a new country object for that use with all of the information from the req.body (updateOne)
-    //3. If #1 succeeds, it will update the user countries code with the status_code from the req.body (findOneAndUpdate)
+    try {
+      // Search for document that includes user & country
+      const findCountryOnUser = await User.findOne(queryUserCountry);
+
+      // If country is found on user, update the country's code with the status_code in req.body
+      if (findCountryOnUser) {
+        const newDoc = await User.findOneAndUpdate(
+          queryUserCountry,
+          editCountry,
+          options
+        );
+        return res.status(200).json(newDoc);
+      }
+      // If country does not exist on user, create a new object with status_code in req.body
+      else {
+        const newDoc = await User.findOneAndUpdate(
+          queryUser,
+          createCountry,
+          options
+        );
+        return res.status(201).json(newDoc);
+      }
+    } catch (err) {
+      res.status(500).json({ error: 'failure to initiate query' });
+    }
+
+
+    /*
     User.findOne(queryUserCountry)
       .then(result => {
         if (result !== null) {
@@ -86,5 +103,6 @@ module.exports = {
       .catch(err => {
         res.status(500).json({ error: 'failure to initiate query' });
       });
+    */
   }
 };
