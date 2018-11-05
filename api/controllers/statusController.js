@@ -56,26 +56,33 @@ module.exports = {
 
       // If country is found on user, update the country's code with the status_code in req.body
       if (findCountryOnUser) {
-        const newDoc = await User.findOneAndUpdate(
-          queryUserCountry,
-          editCountry,
-          options
-        );
-        return res.status(200).json(newDoc);
+        try {
+          const newDoc = await User.findOneAndUpdate(
+            queryUserCountry,
+            editCountry,
+            options
+          );
+          return res.status(200).json(newDoc);
+        } catch (err) {
+          res.status(400).json({ error: 'failure to update country status' });
+        }
       }
       // If country does not exist on user, create a new object with status_code in req.body
       else {
-        const newDoc = await User.findOneAndUpdate(
-          queryUser,
-          createCountry,
-          options
-        );
-        return res.status(201).json(newDoc);
+        try {
+          const newDoc = await User.findOneAndUpdate(
+            queryUser,
+            createCountry,
+            options
+          );
+          return res.status(201).json(newDoc);
+        } catch (err) {
+          res.status(409).json({ error: 'failure to create new country' });
+        }
       }
     } catch (err) {
       res.status(500).json({ error: 'failure to initiate query' });
     }
-
 
     /*
     User.findOne(queryUserCountry)
