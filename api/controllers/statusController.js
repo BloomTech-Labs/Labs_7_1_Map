@@ -14,18 +14,16 @@ Expects a json object with the following structure:
 module.exports = {
   handle_status: async (req, res) => {
     const { country_code, status_code, name } = req.body;
+    const username = req.user.username;
 
     // queries
-    const queryUserCountry = {
+    const findUserCountryQuery = {
       $and: [
-        { username: req.user.username },
+        { username },
         {
-          countries: { $elemMatch: { country_code: country_code } }
+          countries: { $elemMatch: { country_code } }
         }
       ]
-    };
-    const queryUser = {
-      username: req.user.username
     };
 
     // operators
@@ -38,27 +36,24 @@ module.exports = {
     const createCountry = {
       $push: {
         countries: {
-          country_code: country_code,
-          name: name,
-          status_code: status_code,
-          notes: ''
+          country_code,
+          name,
+          status_code
         }
       }
     };
 
-    const options = {
-      new: true
-    };
+    const options = { new: true };
 
     try {
       // Check if the User already has the country in it's countries array
-      const findCountryOnUser = await User.findOne(queryUserCountry);
+      const findCountryOnUser = await User.findOne(findUserCountryQuery);
 
       // If country is found on user, update the country's code with the status_code in req.body
       if (findCountryOnUser) {
         try {
           const newDoc = await User.findOneAndUpdate(
-            queryUserCountry,
+            findUserCountryQuery,
             editCountry,
             options
           );
@@ -74,7 +69,7 @@ module.exports = {
       else {
         try {
           const newDoc = await User.findOneAndUpdate(
-            queryUser,
+            { username },
             createCountry,
             options
           );
@@ -87,6 +82,60 @@ module.exports = {
       }
     } catch (err) {
       return res.status(500).json({ error: 'Failed to initiate query!' });
+    }
+  },
+
+  handle_notes: async (req, res) => {
+    try {
+      const { country_code, name, notes } = req.body;
+      const username = req.user.username;
+
+      //below are queries
+      const findUserCountryQuery = {
+        $and: [
+          { username },
+          { countries: { $elemMatch: { country_code } } }
+        ]
+      };
+
+      //below are operators
+      const editCountry = { $set: { 'countries.$.notes': notes } };
+
+      const createCountry = {
+        $push: {
+          countries: { country_code, name, notes }
+        }
+      };
+
+      const options = { new: true };
+
+      // Check if the User already has the country in it's countries array
+      const findCountryOnUser = await User.findOne(findUserCountryQuery);
+
+      if (findCountryOnUser) {
+        // update the country in user
+        const updatedUser = await User.findOneAndUpdate(
+          findUserCountryQuery,
+          editCountry,
+          options
+        );
+
+        return res.status(200).json(updatedUser);
+        // res.status(400).json({ error: 'failure to update country notes' });
+      }
+      // If country does not exist on user, create a new object with the info in req.body
+      else {
+        const updatedUser = await User.findOneAndUpdate(
+          { username },
+          createCountry,
+          options
+        );
+        return res.status(200).json(updatedUser);
+        // return res.status(409).json({ error: 'Failed to create new country!' });
+      }
+    } catch (err) {
+      if (DEV) console.log(err);
+      return res.status(500).json({ error: 'Internal server error!' });
     }
   }
 };
