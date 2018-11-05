@@ -137,7 +137,7 @@ module.exports = {
             createCountryQuery,
             options
           );
-          return res.status(200).json(updatedUser);
+          return res.status(201).json(updatedUser);
         } catch (err) {
           return res
             .status(409)
