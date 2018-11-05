@@ -45,6 +45,8 @@ class LogInBay extends React.Component {
     signupErrorExists: false
   };
 
+  //above, most of these states are updated by typing into the field
+
   handleOpenModal = () => {
     this.setState({ showModal: true });
   };
@@ -79,57 +81,47 @@ class LogInBay extends React.Component {
       signupPassword2
     } = this.state;
     event.preventDefault();
-    
-    //begin local error check
-
-//call return on this.setState (or below)
-//Seperate out first field check
-//no else statements, just if
 
     if (
-      signupUsername &&
-      signupEmail &&
-      signupPassword1 &&
-      signupPassword2 !== ''
+      !signupUsername ||
+      !signupEmail ||
+      !signupPassword1 ||
+      !signupPassword2
     ) {
+      return this.setState({
+        signupErrorResponse: 'Please fill all fields before submitting', //if all fields are not filled in
+        signupErrorExists: true
+      });
+    } else {
       if (signupPassword1 !== signupPassword2) {
-        this.setState({
-          signupErrorResponse: 'Passwords do not match',
+        return this.setState({
+          signupErrorResponse: 'Passwords do not match', //if passwords do not match
           signupErrorCase: 'local',
           signupErrorExists: true
         });
-      } else {
-        if (signupPassword1.length < 6) {
-          this.setState({
-            signupErrorResponse: 'Password must be a minimum of 6 characters',
-            signupErrorCase: 'local',
-            signupErrorExists: true
-          });
-        } else {
-          if (signupUsername === signupPassword1) {
-            this.setState({
-              signupErrorResponse: 'Password cannot be the same as username!',
-              signupErrorCase: 'local',
-              signupErrorExists: true
-            });
-          } else {
-            //no local errors detected
-            this.onSignUpSubmitSuccess();
-          }
-        }
       }
-    } else {
-      this.setState({
-        signupErrorResponse: 'Please complete the entire form',
-        signupErrorExists: true
-      });
+      if (signupPassword1.length < 6) {
+        return this.setState({
+          signupErrorResponse: 'Password must be a minimum of 6 characters', //if password is not long enough
+          signupErrorCase: 'local',
+          signupErrorExists: true
+        });
+      }
+      if (signupUsername === signupPassword1) {
+        return this.setState({
+          signupErrorResponse: 'Password cannot be the same as username!', //if password is same as username
+          signupErrorCase: 'local',
+          signupErrorExists: true
+        });
+      }
+      this.onSignUpSubmitSuccess(); //passes local checks, will be sent to the server
     }
   };
 
   //calls handleSignUp method from context store, passing in signup field values from the state
   onSignUpSubmitSuccess = () => {
     const { signupUsername, signupEmail, signupPassword1 } = this.state;
-    this.props.handleSignUp(signupUsername, signupEmail, signupPassword1);
+    this.props.handleSignUp(signupUsername, signupEmail, signupPassword1); //calls handleSignUp in context
   };
 
   render() {
@@ -139,18 +131,18 @@ class LogInBay extends React.Component {
       //created a switch here incase I have to have seperate functionality for remote errors (from the server)
       //(how do i get rid of the red-error-lines in the case below?)
       switch (this.state.signupErrorCase) {
-      case 'local':
-        FailedSignUp = (
-          <FailedSignUpPopUp message={this.state.signupErrorResponse} />
-        );
-        break;
-      case 'remote':
-        FailedSignUp = (
-          <FailedSignUpPopUp message={this.props.failedSignUpMessage} />
-        );
-        break;
-      default:
-        console.log('error with switch statement in LoginBay.js');
+        case 'local':
+          FailedSignUp = (
+            <FailedSignUpPopUp message={this.state.signupErrorResponse} />
+          );
+          break;
+        case 'remote':
+          FailedSignUp = (
+            <FailedSignUpPopUp message={this.props.failedSignUpMessage} />
+          );
+          break;
+        default:
+          console.log('error with switch statement in LoginBay.js');
       }
     } else {
       FailedSignUp = <div> </div>;
