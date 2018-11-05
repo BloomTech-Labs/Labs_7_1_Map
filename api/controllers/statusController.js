@@ -8,25 +8,24 @@ Expects a json object with the following structure:
     country_code: '',
     status_code: '',
     name: '' (name of country)
-    username: '',
   }
 */
 
 module.exports = {
   handle_status: async (req, res) => {
-    const { country_code, status_code, username, name } = req.body;
+    const { country_code, status_code, name } = req.body;
 
     // queries
     const queryUserCountry = {
       $and: [
-        { username: username },
+        { username: req.user.username },
         {
           countries: { $elemMatch: { country_code: country_code } }
         }
       ]
     };
     const queryUser = {
-      username: username
+      username: req.user.username
     };
 
     // operators
