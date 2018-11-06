@@ -190,7 +190,13 @@ module.exports = {
         { new: true }
       );
 
-      return res.status(200).json(updatedUser);
+      const response = {
+        username: updatedUser.username,
+        preferences: updatedUser.preferences,
+        countries: updatedUser.countries
+      }
+
+      return res.status(200).json(response);
     } catch (err) {
       if (DEV) console.log(err);
       return res.status(500).send({ error: 'Failed to update preferences' });

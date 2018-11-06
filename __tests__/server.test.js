@@ -55,6 +55,7 @@ describe('User', () => {
   //need to add tests to add checking for 0 character values
 
   describe('POST routes', () => {
+    /* /api/register */
     describe('/register', () => {
       it('successfully creates new user', async () => {
         const user = {
@@ -67,6 +68,8 @@ describe('User', () => {
           .post('/api/register')
           .send(user);
 
+        expect(response.body.user.password).toBeUndefined();
+        expect(response.body.user.username).toEqual('patrick');
         expect(response.status).toBe(200);
       });
 
@@ -163,6 +166,7 @@ describe('User', () => {
     });
 
     describe('/login', () => {
+      /* /api/login */
       it('successfully logs in a user', async () => {
         const user = { username: 'initialTestUser', password: '123456' };
         const response = await request(server)
@@ -170,6 +174,7 @@ describe('User', () => {
           .send(user);
 
         expect(response.status).toBe(200);
+        expect(response.body.password).toBeUndefined();
         expect(response.body.user).toBeDefined();
         expect(response.body.user.id).toBeDefined();
         expect(response.body.user.username).toBeDefined();
@@ -186,7 +191,9 @@ describe('User', () => {
       });
     });
 
+    /* /api/country_status */
     describe('/country_status', () => {
+      // TODO: Eliminate some duplicate code by making use of beforeEach/afterEach
       const new_country_status = {
         country_code: 'CHN',
         status_code: 1,
@@ -206,6 +213,7 @@ describe('User', () => {
           .set('Authorization', `Bearer ${jwt_token}`)
           .send(new_country_status);
 
+        expect(response.body.password).toBeUndefined();
         expect(response.body.countries.length).toBe(1);
         expect(response.body.countries[0]).toBeDefined();
         expect(response.body.countries[0].country_code).toBe('CHN');
@@ -225,6 +233,7 @@ describe('User', () => {
           .set('Authorization', `Bearer ${jwt_token}`)
           .send(new_country_status);
 
+        expect(response_1.body.password).toBeUndefined();
         expect(response_1.body.countries.length).toBe(1);
         expect(response_1.body.countries[0].country_code).toBe('CHN');
         expect(response_1.body.countries[0].status_code).toBe(1);
@@ -275,6 +284,7 @@ describe('User', () => {
       });
     });
 
+    /* /api/country_notes */
     describe('/country_notes', () => {
       const new_country_status = {
         country_code: 'CHN',
@@ -293,7 +303,7 @@ describe('User', () => {
       it('successfully creates and updates a country that does not exist', async () => {
         const { jwt_token } = initialTestUser.body;
 
-        const updateNote = await request(server)
+        const response = await request(server)
           .post('/api/country_notes')
           .set('Authorization', `Bearer ${jwt_token}`)
           .send({
@@ -302,14 +312,15 @@ describe('User', () => {
             notes: 'New note contents'
           });
 
-        expect(updateNote.status).toBe(201);
-        expect(updateNote.body.countries[1].notes).toEqual('New note contents');
+        expect(response.status).toBe(201);
+        expect(response.body.password).toBeUndefined();
+        expect(response.body.countries[1].notes).toEqual('New note contents');
       });
 
       it('successfully updates an existing country', async () => {
         const { jwt_token } = initialTestUser.body;
 
-        const updateNote = await request(server)
+        const response = await request(server)
           .post('/api/country_notes')
           .set('Authorization', `Bearer ${jwt_token}`)
           .send({
@@ -318,8 +329,9 @@ describe('User', () => {
             notes: 'New note contents'
           });
 
-        expect(updateNote.status).toBe(200);
-        expect(updateNote.body.countries[0].notes).toEqual('New note contents');
+        expect(response.status).toBe(200);
+        expect(response.body.password).toBeUndefined();
+        expect(response.body.countries[0].notes).toEqual('New note contents');
       });
 
       it('fails if no token is provided', async () => {
@@ -355,6 +367,7 @@ describe('User', () => {
       });
     });
 
+    /* /api/country_scratched */
     describe('/country_scratched', () => {
       const new_scratched_status = {
         country_code: 'CHN',
@@ -373,7 +386,7 @@ describe('User', () => {
       it('successfully creates and updates a country that does not exist', async () => {
         const { jwt_token } = initialTestUser.body;
 
-        const updateNote = await request(server)
+        const response = await request(server)
           .post('/api/country_scratched')
           .set('Authorization', `Bearer ${jwt_token}`)
           .send({
@@ -382,14 +395,15 @@ describe('User', () => {
             scratched: true
           });
 
-        expect(updateNote.status).toBe(201);
-        expect(updateNote.body.countries[1].scratched).toBe(true);
+        expect(response.status).toBe(201);
+        expect(response.body.password).toBeUndefined();
+        expect(response.body.countries[1].scratched).toBe(true);
       });
 
       it('successfully creates and updates a new country if it does not exist', async () => {
         const { jwt_token } = initialTestUser.body;
 
-        const updateNote = await request(server)
+        const response = await request(server)
           .post('/api/country_scratched')
           .set('Authorization', `Bearer ${jwt_token}`)
           .send({
@@ -398,8 +412,9 @@ describe('User', () => {
             scratched: true
           });
 
-        expect(updateNote.status).toBe(200);
-        expect(updateNote.body.countries[0].scratched).toBe(true);
+        expect(response.status).toBe(200);
+        expect(response.body.password).toBeUndefined();
+        expect(response.body.countries[0].scratched).toBe(true);
       });
 
       it('fails if no token is provided', async () => {
@@ -456,6 +471,7 @@ describe('User', () => {
 
         expect(newUser).toBeDefined();
         expect(jwt_token).toBeDefined();
+        expect(getUser.body.password).toBeUndefined();
         expect(getUser.body.id).toBe(user.id);
         expect(getUser.body.countries).toBeDefined();
         expect(getUser.body.preferences).toBeDefined();
@@ -524,6 +540,7 @@ describe('User', () => {
           .send(body);
 
         expect(response.status).toBe(200);
+        expect(response.body.password).toBeUndefined();
         expect(response.body.message).toEqual(
           'Email was updated successfully!'
         );
@@ -568,7 +585,8 @@ describe('User', () => {
           .send(body);
 
         expect(response.status).toBe(200);
-        expect(body.new_password).toEqual('654321');
+        expect(response.body.password).toBeUndefined();
+        expect(response.body.message).toEqual('Password was updated successfully!');
       });
 
       it('fails if no token is provided', async () => {
@@ -624,6 +642,7 @@ describe('User', () => {
           .send(updatedPreferences);
 
         expect(response.status).toBe(200);
+        expect(response.body.password).toBeUndefined();
         expect(response.body.username).toBeDefined();
         expect(response.body.preferences.theme).toBe('light');
         expect(response.body.preferences.autoscratch).toBe(false);

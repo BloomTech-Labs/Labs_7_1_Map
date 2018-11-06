@@ -11,6 +11,8 @@ Expects a json object with the following structure:
   }
 */
 
+// TODO: A lot of duplicate code written in these functions. Refactor to eliminate some repition.
+
 module.exports = {
   handle_status: async (req, res) => {
     const { country_code, status_code, name } = req.body;
@@ -133,7 +135,12 @@ module.exports = {
             options
           );
 
-          return res.status(200).json(updatedUser);
+          const response = {
+            username: updatedUser.username,
+            countries: updatedUser.countries,
+          }
+
+          return res.status(200).json(response);
         } catch (err) {
           if (DEV) console.log(err);
           return res
@@ -149,7 +156,13 @@ module.exports = {
             createCountryQuery,
             options
           );
-          return res.status(201).json(updatedUser);
+
+          const response = {
+            username: updatedUser.username,
+            countries: updatedUser.countries,
+          }
+
+          return res.status(201).json(response);
         } catch (err) {
           return res
             .status(409)
@@ -195,7 +208,12 @@ module.exports = {
             options
           );
 
-          return res.status(200).json(updatedUser);
+          const response = {
+            username: updatedUser.username,
+            countries: updatedUser.countries,
+          }
+
+          return res.status(200).json(response);
         } catch (err) {
           if (DEV) console.log(err);
           return res
@@ -212,7 +230,13 @@ module.exports = {
             createCountryQuery,
             options
           );
-          return res.status(201).json(updatedUser);
+
+          const response = {
+            username: updatedUser.username,
+            countries: updatedUser.countries,
+          }
+
+          return res.status(201).json(response);
         } catch (err) {
           return res
             .status(409)
