@@ -194,7 +194,7 @@ describe('User', () => {
         username: 'initialTestUser'
       };
 
-      it('successfully adds a new country if it does not exist', async () => {
+      it('successfully creates and updates a country that does not exist', async () => {
         const { jwt_token, user } = initialTestUser.body;
         expect(jwt_token).toBeDefined();
         expect(user.username).toBe('initialTestUser');
@@ -290,7 +290,23 @@ describe('User', () => {
           .send(new_country_status);
       });
 
-      it('successfully updates notes for a country', async () => {
+      it('successfully creates and updates a country that does not exist', async () => {
+        const { jwt_token } = initialTestUser.body;
+
+        const updateNote = await request(server)
+          .post('/api/country_notes')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send({
+            country_code: 'IND',
+            name: 'India',
+            notes: 'New note contents'
+          });
+
+        expect(updateNote.status).toBe(201);
+        expect(updateNote.body.countries[1].notes).toEqual('New note contents');
+      });
+
+      it('successfully updates an existing country', async () => {
         const { jwt_token } = initialTestUser.body;
 
         const updateNote = await request(server)
@@ -319,6 +335,24 @@ describe('User', () => {
 
         expect(updateNote.status).toBe(401);
       });
+
+      it('fails if invalid token is provided', async () => {
+        const jwt_token = initialTestUser.body.jwt_token
+          .split('')
+          .reverse()
+          .join('');
+
+        const updateNote = await request(server)
+          .post('/api/country_notes')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send({
+            country_code: 'CHN',
+            name: 'China',
+            notes: 'This should not get saved'
+          });
+
+        expect(updateNote.status).toBe(401);
+      });
     });
 
     describe('/api/country_scratched', () => {
@@ -336,7 +370,23 @@ describe('User', () => {
           .send(new_scratched_status);
       });
 
-      it('successfully updates scratched status for an existing country', async () => {
+      it('successfully creates and updates a country that does not exist', async () => {
+        const { jwt_token } = initialTestUser.body;
+
+        const updateNote = await request(server)
+          .post('/api/country_scratched')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send({
+            country_code: 'IND',
+            name: 'India',
+            scratched: true
+          });
+
+        expect(updateNote.status).toBe(201);
+        expect(updateNote.body.countries[1].scratched).toBe(true);
+      });
+
+      it('successfully creates and updates a new country if it does not exist', async () => {
         const { jwt_token } = initialTestUser.body;
 
         const updateNote = await request(server)
@@ -350,9 +400,41 @@ describe('User', () => {
 
         expect(updateNote.status).toBe(200);
         expect(updateNote.body.countries[0].scratched).toBe(true);
+      });
 
-      })
-    })
+      it('fails if no token is provided', async () => {
+        const { jwt_token } = initialTestUser.body;
+
+        const updateNote = await request(server)
+          .post('/api/country_notes')
+          .send({
+            country_code: 'CHN',
+            name: 'China',
+            scratched: true
+          });
+
+        expect(updateNote.status).toBe(401);
+      });
+
+      it('fails if invalid token is provided', async () => {
+        const jwt_token = initialTestUser.body.jwt_token
+          .split('')
+          .reverse()
+          .join('');
+
+
+        const updateNote = await request(server)
+          .post('/api/country_notes')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send({
+            country_code: 'CHN',
+            name: 'China',
+            scratched: true
+          });
+
+        expect(updateNote.status).toBe(401);
+      });
+    });
   });
 
   describe('GET routes', () => {
