@@ -24,10 +24,6 @@ const Legend = () => {
         <span className="Lived__blue" />
         Lived
       </div>
-      <div className="Legend__Home">
-        <span className="Home__green" />
-        Home
-      </div>
     </div>
   );
 };

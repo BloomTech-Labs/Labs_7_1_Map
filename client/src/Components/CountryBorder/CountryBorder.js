@@ -94,12 +94,6 @@ export default class CountryBorder extends Component {
           color: 'blue'
         },
         label: 'Lived'
-      },
-      5: {
-        style: {
-          color: 'green'
-        },
-        label: 'Home'
       }
     }
   };
@@ -168,7 +162,7 @@ export default class CountryBorder extends Component {
           <Slider
             className="Slider"
             min={0}
-            max={5}
+            max={4}
             marks={this.state.marks}
             step={null}
             onChange={this.props.handleSliderMove}
