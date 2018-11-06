@@ -37,6 +37,11 @@ class ChangePassword extends Component {
         changePasswordError: 'Please complete the form'
       });
     };
+    if (currentPassword.length <6) {
+      return this.setState({
+        changePasswordError: 'Current password is invalid'
+      });
+    };
     if (newPassword !== confirmNewPassword) {
       return this.setState({
         changePasswordError: 'Passwords do not match'
