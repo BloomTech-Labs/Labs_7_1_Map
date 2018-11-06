@@ -32,26 +32,26 @@ class ChangePassword extends Component {
 
     const { currentPassword, newPassword, confirmNewPassword } = this.state;
 
-    if (!currentPassword || !newPassword, !confirmNewPassword) {
+    if ((!currentPassword || !newPassword, !confirmNewPassword)) {
       return this.setState({
         changePasswordError: 'Please complete the form'
       });
-    };
-    if (currentPassword.length <6) {
+    }
+    if (currentPassword.length < 6) {
       return this.setState({
         changePasswordError: 'Current password is invalid'
       });
-    };
+    }
     if (newPassword !== confirmNewPassword) {
       return this.setState({
         changePasswordError: 'Passwords do not match'
       });
-    };
-    if (newPassword.length <6) {
+    }
+    if (newPassword.length < 6) {
       return this.setState({
         changePasswordError: 'Password must be at least 6 characters long'
       });
-    };
+    }
 
     // Error handling
     // TODO: Notify user of errors
