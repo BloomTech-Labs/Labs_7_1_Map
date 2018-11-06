@@ -21,16 +21,6 @@ const SignUpModalStyles = {
   }
 };
 
-//notes from nalee
-//november 1, 2018, 8pm
-/*
-need to have onSubmit create call submithandler
-submithandler will check to see if information matches'etc
-if it goes through it will call the one on the context
-otherwise it will change the context state to error
-
-*/
-
 ReactModal.setAppElement(document.getElementById('App'));
 
 class LogInBay extends React.Component {
@@ -41,10 +31,17 @@ class LogInBay extends React.Component {
     signupPassword1: '',
     signupPassword2: '',
     signupErrorResponse: '',
-    signupErrorCase: '',
-    signupErrorExists: false
+    errorExists: false
   };
 
+  componentDidUpdate = prevProps => {
+    if (prevProps.failedSignUp !== this.props.failedSignUp) {
+      this.setState({
+        signupErrorResponse: this.props.failedSignUpMessage,
+        errorExists: this.props.failedSignUp
+      });
+    }
+  };
   //above, most of these states are updated by typing into the field
 
   handleOpenModal = () => {
@@ -74,13 +71,20 @@ class LogInBay extends React.Component {
   //------------------------------------------------------
 
   handleSignUpSubmit = event => {
+    event.preventDefault();
+    this.props.resetAppStateError();
+    setTimeout(this.handleErrorChecks, 500);
+  };
+
+  //created above because i couldn't figure out how to set up resetAppStateError() and handleErrorChecks as promises
+
+  handleErrorChecks = () => {
     const {
       signupUsername,
       signupEmail,
       signupPassword1,
       signupPassword2
     } = this.state;
-    event.preventDefault();
 
     if (
       !signupUsername ||
@@ -90,63 +94,32 @@ class LogInBay extends React.Component {
     ) {
       return this.setState({
         signupErrorResponse: 'Please fill all fields before submitting', //if all fields are not filled in
-        signupErrorExists: true
+        errorExists: true
       });
     } else {
       if (signupPassword1 !== signupPassword2) {
         return this.setState({
           signupErrorResponse: 'Passwords do not match', //if passwords do not match
-          signupErrorCase: 'local',
-          signupErrorExists: true
+          errorExists: true
         });
       }
       if (signupPassword1.length < 6) {
         return this.setState({
           signupErrorResponse: 'Password must be a minimum of 6 characters', //if password is not long enough
-          signupErrorCase: 'local',
-          signupErrorExists: true
+          errorExists: true
         });
       }
       if (signupUsername === signupPassword1) {
         return this.setState({
           signupErrorResponse: 'Password cannot be the same as username!', //if password is same as username
-          signupErrorCase: 'local',
-          signupErrorExists: true
+          errorExists: true
         });
       }
-      this.onSignUpSubmitSuccess(); //passes local checks, will be sent to the server
+      this.props.handleSignUp(signupUsername, signupEmail, signupPassword1);
     }
-  };
-
-  //calls handleSignUp method from context store, passing in signup field values from the state
-  onSignUpSubmitSuccess = () => {
-    const { signupUsername, signupEmail, signupPassword1 } = this.state;
-    this.props.handleSignUp(signupUsername, signupEmail, signupPassword1); //calls handleSignUp in context
   };
 
   render() {
-    var FailedSignUp;
-    //initially renders error popup when signupErrorExists state is set to true (See handleSignUpSubmit)
-    if (this.state.signupErrorExists === true) {
-      //created a switch here incase I have to have seperate functionality for remote errors (from the server)
-      //(how do i get rid of the red-error-lines in the case below?)
-      switch (this.state.signupErrorCase) {
-        case 'local':
-          FailedSignUp = (
-            <FailedSignUpPopUp message={this.state.signupErrorResponse} />
-          );
-          break;
-        case 'remote':
-          FailedSignUp = (
-            <FailedSignUpPopUp message={this.props.failedSignUpMessage} />
-          );
-          break;
-        default:
-          console.log('error with switch statement in LoginBay.js');
-      }
-    } else {
-      FailedSignUp = <div> </div>;
-    }
     return (
       <AppContextConsumer>
         {({ handleSignIn }) => (
@@ -212,8 +185,7 @@ class LogInBay extends React.Component {
                 <input type="submit" />
               </form>
               <button onClick={this.handleCloseModal}>Close Modal</button>
-              {FailedSignUp}
-              {/* above is the message that pops up when a signup error occurs */}
+              <FailedSignUpPopUp message={this.state.signupErrorResponse} />
             </ReactModal>
           </div>
         )}

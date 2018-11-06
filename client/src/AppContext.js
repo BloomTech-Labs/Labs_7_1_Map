@@ -23,9 +23,9 @@ export class AppContextProvider extends Component {
     },
     failedLogin: false,
     failedSignUp: false,
-    failedSignUpMessage: '',
     currentCountryStatus: null,
-    countryPanelIsOpen: false
+    countryPanelIsOpen: false,
+    failedSignUpMessage: ''
   };
 
   async componentDidMount() {
@@ -222,12 +222,19 @@ export class AppContextProvider extends Component {
     } catch (e) {
       if (e.response.status === 500) {
         this.setState({
-          failedSignUp: true
+          failedSignUp: true,
+          failedSignUpMessage: 'Username or password already in use!'
         });
-        console.log(this.state.failedSignUp);
       }
-      }
-    };
+    }
+  };
+
+  resetAppStateError = () => {
+    this.setState({
+      failedSignUp: false,
+      failedSignUpMessage: ''
+    });
+  };
 
   toggleCountryPanel = () => {
     this.setState({ countryPanelIsOpen: !this.state.countryPanelIsOpen });
@@ -245,6 +252,7 @@ export class AppContextProvider extends Component {
           handleSignUp: this.handleSignUp,
           handleSliderMove: this.handleSliderMove,
           handleUpdatePreferences: this.handleUpdatePreferences,
+          resetAppStateError: this.resetAppStateError,
           toggleCountryPanel: this.toggleCountryPanel,
           updateCurrentCountry: this.handleUpdateCurrentCountry,
           updateUserPosition: this.handleUpdateUserPosition
