@@ -75,12 +75,18 @@ module.exports = {
       // If country does not exist on user, create a new object with the status_code in req.body
       else {
         try {
-          const newDoc = await User.findOneAndUpdate(
+          const updatedUser = await User.findOneAndUpdate(
             { username },
             createCountryQuery,
             options
           );
-          return res.status(201).json(newDoc);
+
+          const response = {
+            username: updatedUser.username,
+            countries: updatedUser.countries,
+          }
+
+          return res.status(201).json(response);
         } catch (err) {
           if (DEV) console.log(err);
           return res
