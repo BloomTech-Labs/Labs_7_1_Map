@@ -21,18 +21,11 @@ class ChangeEmail extends Component {
   // handleSubmit for ChangeEmail
   handleSubmit = async e => {
     e.preventDefault();
-    // TODO: Error handling
-    const { currentPassword, newEmail } = this.state;
+    const { newEmail } = this.state;
 
-    if (!currentPassword || !newEmail) {
+    if (!newEmail) {
       return this.setState({
         emailError: 'Please complete the form'
-      });
-    }
-
-    if (currentPassword.length < 6) {
-      return this.setState({
-        emailError: 'Invalid Password'
       });
     }
 
@@ -40,8 +33,6 @@ class ChangeEmail extends Component {
       const token = localStorage.getItem('token');
 
       const body = {
-        username: this.props.user.username,
-        password: currentPassword,
         new_email: newEmail
       };
 
@@ -88,16 +79,16 @@ class ChangeEmail extends Component {
               />
             </div>
 
-            <div className="ChangeEmail__currentPassword">
-              <h5>Current Password</h5>
-              <input
-                type="password"
-                name="currentPassword"
-                placeholder="Current Password"
-                value={this.state.currentPassword}
-                onChange={e => this.handleChange(e)}
-              />
-            </div>
+            {/* <div className="ChangeEmail__currentPassword"> */}
+            {/*   <h5>Current Password</h5> */}
+            {/*   <input */}
+            {/*     type="password" */}
+            {/*     name="currentPassword" */}
+            {/*     placeholder="Current Password" */}
+            {/*     value={this.state.currentPassword} */}
+            {/*     onChange={e => this.handleChange(e)} */}
+            {/*   /> */}
+            {/* </div> */}
 
             <input
               className="ChangeEmail__submit"
