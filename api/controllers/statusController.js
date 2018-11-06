@@ -79,7 +79,7 @@ module.exports = {
           if (DEV) console.log(err);
           return res
             .status(409)
-            .json({ error: 'Failed to create new country!' });
+            .json({ error: 'Failed to create a new country and update status!' });
         }
       }
     } catch (err) {
@@ -126,7 +126,7 @@ module.exports = {
           if (DEV) console.log(err);
           return res
             .status(400)
-            .json({ error: 'failure to update country notes' });
+            .json({ error: 'Failed to updates notes!' });
         }
       }
       // If country does not exist on user, create a new object with the info in req.body
@@ -141,7 +141,70 @@ module.exports = {
         } catch (err) {
           return res
             .status(409)
-            .json({ error: 'Failed to create new country!' });
+            .json({ error: 'Failed to create a new country and update notes!' });
+        }
+      }
+    } catch (err) {
+      if (DEV) console.log(err);
+      return res.status(500).json({ error: 'Internal server error!' });
+    }
+  },
+
+  handle_scratched: async (req, res) => {
+    try {
+      const { country_code, name, scratched } = req.body;
+      const username = req.user.username;
+
+      // Conditions to find if a country exists on a User
+      const findUserCountryConditions = {
+        $and: [{ username }, { countries: { $elemMatch: { country_code } } }]
+      };
+
+      //below are operators
+      const editCountryQuery = { $set: { 'countries.$.scratched': scratched } };
+
+      const createCountryQuery = {
+        $push: {
+          countries: { country_code, name, scratched }
+        }
+      };
+
+      const options = { new: true };
+
+      // Check if the User already has the country in it's countries array
+      const findCountryOnUser = await User.findOne(findUserCountryConditions);
+
+      if (findCountryOnUser) {
+        try {
+          // update the country in user
+          const updatedUser = await User.findOneAndUpdate(
+            findUserCountryConditions,
+            editCountryQuery,
+            options
+          );
+
+          return res.status(200).json(updatedUser);
+        } catch (err) {
+          if (DEV) console.log(err);
+          return res
+            .status(400)
+            .json({ error: 'Failed to update scratched status!' });
+        }
+      }
+
+      // If country does not exist on user, create a new object with the info in req.body
+      else {
+        try {
+          const updatedUser = await User.findOneAndUpdate(
+            { username },
+            createCountryQuery,
+            options
+          );
+          return res.status(201).json(updatedUser);
+        } catch (err) {
+          return res
+            .status(409)
+            .json({ error: 'Failed to create a new country and update scratched status!' });
         }
       }
     } catch (err) {
