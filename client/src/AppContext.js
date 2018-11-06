@@ -206,7 +206,6 @@ export class AppContextProvider extends Component {
   }; // handleSignOut
 
   handleSignUp = async (username, email, password) => {
-
     // TODO: Error handling
     const body = {
       username: username,
@@ -214,12 +213,21 @@ export class AppContextProvider extends Component {
       email: email
     };
 
-    const response = await axios.post(`${BACKEND_URL}/register`, body);
-    const user = JSON.stringify(response.data.user);
-    localStorage.setItem('token', response.data.jwt_token);
-    localStorage.setItem('user', user);
-    this.setState({ authenticated: true, user: response.data.user });
-  }; // handleSignUp
+    try {
+      const response = await axios.post(`${BACKEND_URL}/register`, body);
+      const user = JSON.stringify(response.data.user);
+      localStorage.setItem('token', response.data.jwt_token);
+      localStorage.setItem('user', user);
+      this.setState({ authenticated: true, user: response.data.user });
+    } catch (e) {
+      if (e.response.status === 500) {
+        this.setState({
+          failedSignUp: true
+        });
+        console.log(this.state.failedSignUp);
+      }
+      }
+    };
 
   toggleCountryPanel = () => {
     this.setState({ countryPanelIsOpen: !this.state.countryPanelIsOpen });
