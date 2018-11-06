@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import ChangeEmailError from './ChangeEmailError';
 import './ChangeEmail.css';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -9,7 +10,8 @@ class ChangeEmail extends Component {
   state = {
     show: false,
     currentPassword: '',
-    newEmail: ''
+    newEmail: '',
+    emailError: ''
   };
 
   toggleShow = () => {
@@ -21,6 +23,18 @@ class ChangeEmail extends Component {
     e.preventDefault();
     // TODO: Error handling
     const { currentPassword, newEmail } = this.state;
+
+    if (!currentPassword || !newEmail) {
+      return this.setState({
+        emailError: 'Please complete the form'
+      });
+    }
+
+    if (currentPassword.length < 6) {
+      return this.setState({
+        emailError: 'Invalid Password'
+      });
+    }
 
     try {
       const token = localStorage.getItem('token');
@@ -90,6 +104,7 @@ class ChangeEmail extends Component {
               type="submit"
               placeholder="Submit"
             />
+            <ChangeEmailError error={this.state.emailError} />
           </form>
         )}
       </div>
