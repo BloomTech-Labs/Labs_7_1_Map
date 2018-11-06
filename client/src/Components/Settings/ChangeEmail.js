@@ -9,12 +9,19 @@ class ChangeEmail extends Component {
   state = {
     show: false,
     currentPassword: '',
-    newEmail: ''
+    newEmail: '',
+    emailError: '',
+    emailValid: false,
+    passwordValid: false,
   };
 
   toggleShow = () => {
     this.setState({ show: !this.state.show });
   };
+
+  handleErrorChecking = () => {
+    if (this.)
+  }
 
   // handleSubmit for ChangeEmail
   handleSubmit = async e => {
