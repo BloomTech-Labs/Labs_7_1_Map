@@ -102,7 +102,7 @@ module.exports = {
       }
     } catch (err) {
       // if (DEV) console.log(err);
-      return res.status(500).json({ error: 'failed user creation' });
+      return res.status(500).json({ error: err });
     }
   }, // create_user
 
