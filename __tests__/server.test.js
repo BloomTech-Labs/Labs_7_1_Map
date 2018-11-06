@@ -320,6 +320,39 @@ describe('User', () => {
         expect(updateNote.status).toBe(401);
       });
     });
+
+    describe('/api/country_scratched', () => {
+      const new_scratched_status = {
+        country_code: 'CHN',
+        status_code: 0,
+        name: 'China'
+      };
+
+      beforeEach(async () => {
+        const { jwt_token } = initialTestUser.body;
+        const response = await request(server)
+          .post('/api/country_status')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send(new_scratched_status);
+      });
+
+      it('successfully updates scratched status for an existing country', async () => {
+        const { jwt_token } = initialTestUser.body;
+
+        const updateNote = await request(server)
+          .post('/api/country_scratched')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send({
+            country_code: 'CHN',
+            name: 'China',
+            scratched: true
+          });
+
+        expect(updateNote.status).toBe(200);
+        expect(updateNote.body.countries[0].scratched).toBe(true);
+
+      })
+    })
   });
 
   describe('GET routes', () => {
