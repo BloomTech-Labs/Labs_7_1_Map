@@ -20,19 +20,16 @@ module.exports = {
   change_email: async (req, res) => {
     try {
       // update email address stored on DB
-      // passport passes on the correct user based on the JWT supplied
+      // passport passes on req.user based on the JWT supplied
       const response = await User.findOneAndUpdate(
         { username: req.user.username },
         { email: req.body.new_email },
         { new: true }
       );
 
-      console.log(response);
-      if (response)
-        return res
-          .status(200)
-          .json({ message: 'Email was updated successfully!' });
-      else return res.status(400).json({ message: 'Failed to update email!' });
+      return response.email === req.body.new_email.toLowerCase()
+        ? res.status(200).json({ message: 'Email was updated successfully!' })
+        : res.status(400).json({ message: 'Failed to update email!' });
     } catch (err) {
       if (DEV) console.log(err);
       return res.status(500).json({ error: 'Failed to change email!' });
@@ -194,7 +191,7 @@ module.exports = {
         username: updatedUser.username,
         preferences: updatedUser.preferences,
         countries: updatedUser.countries
-      }
+      };
 
       return res.status(200).json(response);
     } catch (err) {
