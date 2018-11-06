@@ -70,7 +70,7 @@ class LogInBay extends React.Component {
   };
   //------------------------------------------------------
 
-  handleSignUpSubmit = async (event) => {
+  handleSignUpSubmit = async event => {
     event.preventDefault();
     await this.props.resetAppStateError();
     // setTimeout(this.handleErrorChecks, 500);

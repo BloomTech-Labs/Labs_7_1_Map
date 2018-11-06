@@ -175,7 +175,6 @@ export class AppContextProvider extends Component {
         options
       );
 
-
       // Clear the countries array on state first (whilst keeping the rest of the user data)
       // This is needed so React re-renders an existing country's updated status color
       // It is a workaround for the following issue:
