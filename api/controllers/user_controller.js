@@ -19,16 +19,20 @@ const validate_new_user = ({ username, password, email }) => {
 module.exports = {
   change_email: async (req, res) => {
     try {
-      const { username, new_email } = req.body;
-
-      // update email
-      await User.findOneAndUpdate(
-        { username },
-        { email: new_email },
+      // update email address stored on DB
+      // passport passes on the correct user based on the JWT supplied
+      const response = await User.findOneAndUpdate(
+        { username: req.user.username },
+        { email: req.body.new_email },
         { new: true }
       );
 
-      return res.status(200).json({ message: 'Email was updated successfully!' });
+      console.log(response);
+      if (response)
+        return res
+          .status(200)
+          .json({ message: 'Email was updated successfully!' });
+      else return res.status(400).json({ message: 'Failed to update email!' });
     } catch (err) {
       if (DEV) console.log(err);
       return res.status(500).json({ error: 'Failed to change email!' });
@@ -37,25 +41,29 @@ module.exports = {
 
   change_password: async (req, res) => {
     try {
-      const { username, new_password } = req.body;
+      const { new_password } = req.body;
 
-      const user = await User.findOne({ username });
+      const user = await User.findOne({ username: req.user.username });
 
       // Check if password is the same as the old before updating
       if (await user.check_password(new_password)) {
-        return res.status(400).json({ error: 'New password is the same as the old!' });
+        return res
+          .status(400)
+          .json({ error: 'New password is the same as the old!' });
       } else {
         // hash new password (mongoose doesn't support pre update hooks)
         const password_hash = await argon2.hash(new_password);
 
         // update password
         await User.findOneAndUpdate(
-          { username },
+          { username: req.user.username },
           { password: password_hash },
           { new: true }
         );
 
-        return res.status(200).json({ message: 'Password was updated successfully!' });
+        return res
+          .status(200)
+          .json({ message: 'Password was updated successfully!' });
       }
     } catch (err) {
       if (DEV) console.log(err);
@@ -82,7 +90,11 @@ module.exports = {
         // user creation was successful, send a jwt_token back
         return res.status(200).json({
           jwt_token: make_token(created_user),
-          user: { id: created_user._id, username: created_user.username, countries: created_user.countries }
+          user: {
+            id: created_user._id,
+            username: created_user.username,
+            countries: created_user.countries
+          }
         });
       } else {
         if (DEV) console.log(err);
@@ -90,7 +102,7 @@ module.exports = {
       }
     } catch (err) {
       // if (DEV) console.log(err);
-      return res.status(500).json({ error: 'failed user creation' });
+      return res.status(500).json({ error: err });
     }
   }, // create_user
 
@@ -141,7 +153,7 @@ module.exports = {
   login: async (req, res) => {
     try {
       // we only reach here because we are authenticated
-      const { id, username, countries, preferences } = req.user
+      const { id, username, countries, preferences } = req.user;
       const user = {
         id,
         username,
@@ -156,20 +168,18 @@ module.exports = {
   }, // login
 
   update_preferences: async (req, res) => {
-    // req.body.preferences should be an object with properties for each setting
-    //  e.g. { theme: 'light', autoscratch: true }
-    const { username, preferences } = req.body;
-
     try {
-      // Return an error if a username or valid preferences object is not provided
-      if (!username || !preferences) {
+      // req.body.preferences should be an object with properties for each setting
+      //  e.g. { theme: 'light', autoscratch: true }
+      const { preferences } = req.body;
+      if (!preferences) {
         return res
           .status(400)
-          .send({ error: 'You did not provide a username or preferences!' });
+          .send({ error: 'You did not provide updated preferences!' });
       }
 
       const updatedUser = await User.findOneAndUpdate(
-        { username },
+        { username: req.user.username },
         { preferences },
         { new: true }
       );

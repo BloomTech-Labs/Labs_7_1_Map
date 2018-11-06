@@ -22,8 +22,10 @@ export class AppContextProvider extends Component {
       geoInfo: {}
     },
     failedLogin: false,
+    failedSignUp: false,
     currentCountryStatus: null,
-    countryPanelIsOpen: false
+    countryPanelIsOpen: false,
+    failedSignUpMessage: ''
   };
 
   async componentDidMount() {
@@ -173,7 +175,6 @@ export class AppContextProvider extends Component {
         options
       );
 
-
       // Clear the countries array on state first (whilst keeping the rest of the user data)
       // This is needed so React re-renders an existing country's updated status color
       // It is a workaround for the following issue:
@@ -221,22 +222,36 @@ export class AppContextProvider extends Component {
     clearLocalstorage();
   }; // handleSignOut
 
-  handleSignUp = async e => {
-    e.preventDefault();
-
+  handleSignUp = async (username, email, password) => {
     // TODO: Error handling
     const body = {
-      username: e.target.username.value,
-      password: e.target.password.value,
-      email: e.target.email.value
+      username: username,
+      password: password,
+      email: email
     };
 
-    const response = await axios.post(`${BACKEND_URL}/register`, body);
-    const user = JSON.stringify(response.data.user);
-    localStorage.setItem('token', response.data.jwt_token);
-    localStorage.setItem('user', user);
-    this.setState({ authenticated: true, user: response.data.user });
-  }; // handleSignUp
+    try {
+      const response = await axios.post(`${BACKEND_URL}/register`, body);
+      const user = JSON.stringify(response.data.user);
+      localStorage.setItem('token', response.data.jwt_token);
+      localStorage.setItem('user', user);
+      this.setState({ authenticated: true, user: response.data.user });
+    } catch (e) {
+      if (e.response.status === 500) {
+        this.setState({
+          failedSignUp: true,
+          failedSignUpMessage: 'Username or password already in use!'
+        });
+      }
+    }
+  };
+
+  resetAppStateError = () => {
+    this.setState({
+      failedSignUp: false,
+      failedSignUpMessage: ''
+    });
+  };
 
   toggleCountryPanel = () => {
     this.setState({ countryPanelIsOpen: !this.state.countryPanelIsOpen });
@@ -254,6 +269,7 @@ export class AppContextProvider extends Component {
           handleSignUp: this.handleSignUp,
           handleSliderMove: this.handleSliderMove,
           handleUpdatePreferences: this.handleUpdatePreferences,
+          resetAppStateError: this.resetAppStateError,
           toggleCountryPanel: this.toggleCountryPanel,
           updateCurrentCountry: this.handleUpdateCurrentCountry,
           updateUserPosition: this.handleUpdateUserPosition
