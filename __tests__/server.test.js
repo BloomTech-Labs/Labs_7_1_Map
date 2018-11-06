@@ -274,6 +274,52 @@ describe('User', () => {
         expect(response.body.countries).toBeUndefined();
       });
     });
+
+    describe('/api/country_notes', () => {
+      const new_country_status = {
+        country_code: 'CHN',
+        status_code: 1,
+        name: 'China'
+      };
+
+      beforeEach(async () => {
+        const { jwt_token } = initialTestUser.body;
+        const response = await request(server)
+          .post('/api/country_status')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send(new_country_status);
+      });
+
+      it('successfully updates notes for a country', async () => {
+        const { jwt_token } = initialTestUser.body;
+
+        const updateNote = await request(server)
+          .post('/api/country_notes')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send({
+            country_code: 'CHN',
+            name: 'China',
+            notes: 'New note contents'
+          });
+
+        expect(updateNote.status).toBe(200);
+        expect(updateNote.body.countries[0].notes).toEqual('New note contents');
+      });
+
+      it('fails if no token is provided', async () => {
+        const { jwt_token } = initialTestUser.body;
+
+        const updateNote = await request(server)
+          .post('/api/country_notes')
+          .send({
+            country_code: 'CHN',
+            name: 'China',
+            notes: 'This should not get saved'
+          });
+
+        expect(updateNote.status).toBe(401);
+      });
+    });
   });
 
   describe('GET routes', () => {
