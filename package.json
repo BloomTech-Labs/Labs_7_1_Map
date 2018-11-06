@@ -4,7 +4,7 @@
   "description": "Scratch-N-Map",
   "main": "app.js",
   "scripts": {
-    "test": "jest --watch --verbose",
+    "test": "jest --watch=all --verbose",
     "start": "nodemon app.js",
     "heroku-postbuild": "cd client && npm install && npm run build && cd .."
   },

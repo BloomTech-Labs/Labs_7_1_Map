@@ -70,10 +70,11 @@ class LogInBay extends React.Component {
   };
   //------------------------------------------------------
 
-  handleSignUpSubmit = event => {
+  handleSignUpSubmit = async (event) => {
     event.preventDefault();
-    this.props.resetAppStateError();
-    setTimeout(this.handleErrorChecks, 500);
+    await this.props.resetAppStateError();
+    // setTimeout(this.handleErrorChecks, 500);
+    this.handleErrorChecks();
   };
 
   //created above because i couldn't figure out how to set up resetAppStateError() and handleErrorChecks as promises
