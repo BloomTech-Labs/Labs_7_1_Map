@@ -124,6 +124,7 @@ export class AppContextProvider extends Component {
   };
 
   handleChangeNote = e => {
+    console.log(e.target.name, e.target.value)
     const currentCountry = { ...this.state.currentCountry };
     currentCountry[e.target.name] = e.target.value;
     this.setState({ currentCountry });
@@ -131,14 +132,13 @@ export class AppContextProvider extends Component {
 
   handleScratched = async () => {
     try {
-      const { user, currentCountry } = this.state;
+      const { currentCountry } = this.state;
 
       const body = {
-        username: user.username,
         country_code: currentCountry.code,
         name: currentCountry.info.name,
         scratched: true,
-        notes: currentCountry.notes
+        // notes: currentCountry.notes
       };
 
       const options = {
@@ -152,6 +152,7 @@ export class AppContextProvider extends Component {
       );
 
       currentCountry.scratched = true;
+      console.log(response.data)
       this.setState({
         currentCountry,
         currentCountryStatus: 0,
@@ -211,15 +212,15 @@ export class AppContextProvider extends Component {
   // Called in BorderBay.js
   handleSliderMove = async value => {
     try {
-      const { user, currentCountry } = this.state;
+      const { currentCountry } = this.state;
 
       const body = {
-        username: user.username,
+        // username: user.username,
         country_code: currentCountry.code,
         name: currentCountry.info.name,
         status_code: value,
-        scratched: currentCountry.scratched,
-        notes: currentCountry.notes
+        // scratched: currentCountry.scratched,
+        // notes: currentCountry.notes
       };
       const options = {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -292,7 +293,7 @@ export class AppContextProvider extends Component {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       };
 
-      const response = await axios.post(`${BACKEND_URL}/notes`, body, options);
+      const response = await axios.post(`${BACKEND_URL}/country_notes`, body, options);
 
       currentCountry.editNoteMode = false;
       this.setState({
