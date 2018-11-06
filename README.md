@@ -75,7 +75,6 @@ Engineering Team:
 - Edward Manda
 - David Morales
 - Nalee Riddell
-- Sneha Thadani
 - Nikhil Kamineni
 
 Project Manager
