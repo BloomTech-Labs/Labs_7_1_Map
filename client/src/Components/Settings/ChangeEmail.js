@@ -12,8 +12,6 @@ class ChangeEmail extends Component {
     currentPassword: '',
     newEmail: '',
     emailError: '',
-    emailValid: false,
-    passwordValid: false
   };
 
   toggleShow = () => {
@@ -30,6 +28,12 @@ class ChangeEmail extends Component {
       return this.setState({
         emailError: 'Please complete the form'
       });
+    }
+
+    if (currentPassword.length < 6) {
+      return this.setState({
+        emailError: 'Invalid Password'
+      })
     }
 
     try {
