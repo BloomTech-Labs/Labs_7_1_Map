@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import ChangeEmailError from './ChangeEmailError';
 import './ChangeEmail.css';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -9,7 +10,8 @@ class ChangeEmail extends Component {
   state = {
     show: false,
     currentPassword: '',
-    newEmail: ''
+    newEmail: '',
+    emailError: ''
   };
 
   toggleShow = () => {
@@ -19,15 +21,18 @@ class ChangeEmail extends Component {
   // handleSubmit for ChangeEmail
   handleSubmit = async e => {
     e.preventDefault();
-    // TODO: Error handling
-    const { currentPassword, newEmail } = this.state;
+    const { newEmail } = this.state;
+
+    if (!newEmail) {
+      return this.setState({
+        emailError: 'Please complete the form'
+      });
+    }
 
     try {
       const token = localStorage.getItem('token');
 
       const body = {
-        username: this.props.user.username,
-        password: currentPassword,
         new_email: newEmail
       };
 
@@ -74,22 +79,23 @@ class ChangeEmail extends Component {
               />
             </div>
 
-            <div className="ChangeEmail__currentPassword">
-              <h5>Current Password</h5>
-              <input
-                type="password"
-                name="currentPassword"
-                placeholder="Current Password"
-                value={this.state.currentPassword}
-                onChange={e => this.handleChange(e)}
-              />
-            </div>
+            {/* <div className="ChangeEmail__currentPassword"> */}
+            {/*   <h5>Current Password</h5> */}
+            {/*   <input */}
+            {/*     type="password" */}
+            {/*     name="currentPassword" */}
+            {/*     placeholder="Current Password" */}
+            {/*     value={this.state.currentPassword} */}
+            {/*     onChange={e => this.handleChange(e)} */}
+            {/*   /> */}
+            {/* </div> */}
 
             <input
               className="ChangeEmail__submit"
               type="submit"
               placeholder="Submit"
             />
+            <ChangeEmailError error={this.state.emailError} />
           </form>
         )}
       </div>

@@ -22,8 +22,10 @@ export class AppContextProvider extends Component {
       editNoteMode: false
     },
     failedLogin: false,
+    failedSignUp: false,
     currentCountryStatus: null,
-    countryPanelIsOpen: false
+    countryPanelIsOpen: false,
+    failedSignUpMessage: ''
   };
 
   async componentDidMount() {
@@ -307,6 +309,7 @@ export class AppContextProvider extends Component {
     try {
       const body = { username: this.state.user.username, preferences };
 
+// <<<<<<< HEAD
       const options = {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       };
@@ -350,6 +353,38 @@ export class AppContextProvider extends Component {
       }
     );
   }; // hasGeolocation
+// =======
+  handleSignUp = async (username, email, password) => {
+    // TODO: Error handling
+    const body = {
+      username: username,
+      password: password,
+      email: email
+    };
+
+    try {
+      const response = await axios.post(`${BACKEND_URL}/register`, body);
+      const user = JSON.stringify(response.data.user);
+      localStorage.setItem('token', response.data.jwt_token);
+      localStorage.setItem('user', user);
+      this.setState({ authenticated: true, user: response.data.user });
+    } catch (e) {
+      if (e.response.status === 500) {
+        this.setState({
+          failedSignUp: true,
+          failedSignUpMessage: 'Username or password already in use!'
+        });
+      }
+    }
+  };
+
+  resetAppStateError = () => {
+    this.setState({
+      failedSignUp: false,
+      failedSignUpMessage: ''
+    });
+  };
+// >>>>>>> master
 
   isScratched = countryCode => {
     let scratched = false;
@@ -394,6 +429,8 @@ export class AppContextProvider extends Component {
           handleUpdateNotes: this.handleUpdateNotes,
           handleUpdatePreferences: this.handleUpdatePreferences,
           turnOnEditNote: this.turnOnEditNote,
+          resetAppStateError: this.resetAppStateError,
+          toggleCountryPanel: this.toggleCountryPanel,
           updateCurrentCountry: this.handleUpdateCurrentCountry,
           updateUserPosition: this.handleUpdateUserPosition
         }}

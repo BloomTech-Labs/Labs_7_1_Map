@@ -11,9 +11,15 @@ const {
 
 //below handles the status change of country
 const {
-  handle_scratched,
+// <<<<<<< HEAD
+//   handle_scratched,
+//   handle_status,
+//   update_notes
+// =======
   handle_status,
-  update_notes
+  handle_notes,
+  handle_scratched
+// >>>>>>> master
 } = require('./controllers/statusController');
 
 const passport = require('./utils/passport');
@@ -58,14 +64,19 @@ module.exports = server => {
     .route('/api/facebook_callback')
     .get(facebook_authentication_callback, facebook_loggedIn);
 
-  // Country Status Route
+  // Update country on User routes
   server.route('/api/country_status').post(protected_route, handle_status);
-  server
-    .route('/api/country_scratched')
-    .post(protected_route, handle_scratched);
-  server.route('/api/notes').post(protected_route, update_notes);
+// <<<<<<< HEAD
+//   server
+//     .route('/api/country_scratched')
+//     .post(protected_route, handle_scratched);
+//   server.route('/api/notes').post(protected_route, update_notes);
+// =======
+  server.route('/api/country_notes').post(protected_route, handle_notes);
+  server.route('/api/country_scratched').post(protected_route, handle_scratched);
+// >>>>>>> master
 
-  // Update settings
+  // Update User settings routes
   server.route('/api/change_password').put(protected_route, change_password);
   server.route('/api/change_email').put(protected_route, change_email);
   server

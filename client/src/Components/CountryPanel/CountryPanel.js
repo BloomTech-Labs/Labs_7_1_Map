@@ -12,7 +12,9 @@ const CountryPanel = () => {
     <div className="CountryPanel">
       <AppContextConsumer>
         {value =>
-          value && value.AppState.countryPanelIsOpen ? (
+          value &&
+          value.AppState.countryPanelIsOpen &&
+          value.AppState.currentCountry.info ? (
             <div className="Card ">
               <div className="Card_Header">
                 <span>{value.AppState.currentCountry.info.emoji}</span>

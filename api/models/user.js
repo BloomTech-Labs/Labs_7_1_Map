@@ -48,7 +48,7 @@ const UserSchema = new Schema(
         status_code: {
           type: Number,
           default: 0
-        }, //0, 1, 2, 3, 4, 5
+        }, //0, 1, 2, 3, 4
         notes: {
           type: String,
           default: ''
@@ -63,7 +63,7 @@ const UserSchema = new Schema(
       theme: {
         type: String,
         required: true,
-        default: 'dark'
+        default: 'watercolor'
       },
       autoscratch: {
         type: Boolean,
