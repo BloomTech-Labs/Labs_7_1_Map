@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import ChangePasswordError from './ChangePasswordError';
 import './ChangePassword.css';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -127,6 +128,7 @@ class ChangePassword extends Component {
               placeholder="Submit"
               className="ChangePassword__submit"
             />
+            <ChangePasswordError error={this.state.changePasswordError} />
           </form>
         )}
       </div>
