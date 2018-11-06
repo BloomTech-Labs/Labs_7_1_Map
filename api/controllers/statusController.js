@@ -52,12 +52,18 @@ module.exports = {
       // If country is found on user, update the country's code with the status_code in req.body
       if (findCountryOnUser) {
         try {
-          const newDoc = await User.findOneAndUpdate(
+          const updatedUser = await User.findOneAndUpdate(
             findUserCountryConditions,
             editCountryQuery,
             options
           );
-          return res.status(200).json(newDoc);
+
+          const response = {
+            username: updatedUser.username,
+            countries: updatedUser.countries,
+          }
+
+          return res.status(200).json(response);
         } catch (err) {
           if (DEV) console.log(err);
           return res
