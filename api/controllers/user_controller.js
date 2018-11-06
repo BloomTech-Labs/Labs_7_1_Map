@@ -127,9 +127,15 @@ module.exports = {
     try {
       const id = req.params.id;
       if (!id) res.status(400).json({ error: 'ID is a required parameter' });
-      const foundUser = await User.findById(id);
-      const user = { id: req.user._id, username: req.user.username }; // add the things you need to send
-      return res.status(200).json(foundUser);
+      // const foundUser = await User.findById(id);
+      const user = {
+        id: req.user._id,
+        username: req.user.username,
+        email: req.user.email,
+        countries: req.user.countries,
+        preferences: req.user.preferences
+      }; // add the things you need to send
+      return res.status(200).json(user);
     } catch (err) {
       if (DEV) console.log(err);
       return res.status(500).json({ error: 'Failed to get user!' });

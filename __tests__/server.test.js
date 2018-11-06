@@ -275,7 +275,7 @@ describe('User', () => {
       });
     });
 
-    describe('/api/country_notes', () => {
+    describe('/country_notes', () => {
       const new_country_status = {
         country_code: 'CHN',
         status_code: 1,
@@ -355,7 +355,7 @@ describe('User', () => {
       });
     });
 
-    describe('/api/country_scratched', () => {
+    describe('/country_scratched', () => {
       const new_scratched_status = {
         country_code: 'CHN',
         status_code: 0,
@@ -456,7 +456,7 @@ describe('User', () => {
 
         expect(newUser).toBeDefined();
         expect(jwt_token).toBeDefined();
-        expect(getUser.body._id).toBe(user.id);
+        expect(getUser.body.id).toBe(user.id);
         expect(getUser.body.countries).toBeDefined();
         expect(getUser.body.preferences).toBeDefined();
         expect(getUser.body.username).toBe('getuser1');
