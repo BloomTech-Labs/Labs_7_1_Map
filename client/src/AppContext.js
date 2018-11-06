@@ -310,7 +310,6 @@ export class AppContextProvider extends Component {
     try {
       const body = { username: this.state.user.username, preferences };
 
-// <<<<<<< HEAD
       const options = {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       };
@@ -354,7 +353,7 @@ export class AppContextProvider extends Component {
       }
     );
   }; // hasGeolocation
-// =======
+
   handleSignUp = async (username, email, password) => {
     // TODO: Error handling
     const body = {
@@ -385,7 +384,6 @@ export class AppContextProvider extends Component {
       failedSignUpMessage: ''
     });
   };
-// >>>>>>> master
 
   isScratched = countryCode => {
     let scratched = false;
