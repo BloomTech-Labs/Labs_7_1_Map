@@ -141,28 +141,32 @@ describe('User', () => {
       });
 
       it('fails if email is not unique', async () => {
-        const user1 = {
-          username: 'Frodo',
-          password: 'pasdfsadfasdfsdf',
-          email: 'lotr@gmail.com'
-        };
-
-        const user2 = {
+        const newUser = {
           username: 'Gandalf',
           password: 'kljdaljkgsd',
-          email: 'lotr@gmail.com'
+          email: 'email@email.com' // same email as initialTestUser
         };
 
-        const response1 = await request(server)
+        const response = await request(server)
           .post('/api/register')
-          .send(user1);
+          .send(newUser);
 
-        const response2 = await request(server)
+        expect(response.status).toBe(500);
+      });
+
+      it('fails if email is not valid', async () => {
+        const user = {
+          username: 'Frodo',
+          password: 'pasdfsadfasdfsdf',
+          email: 'lotr@gmail' // invalid email address
+        };
+
+        const response = await request(server)
           .post('/api/register')
-          .send(user2);
+          .send(user);
 
-        expect(response1.status).toBe(200);
-        expect(response2.status).toBe(500);
+        expect(response.status).toBe(400);
+        expect(response.body.error).toEqual('Email is not valid!');
       });
     });
 
@@ -440,7 +444,6 @@ describe('User', () => {
           .reverse()
           .join('');
 
-
         const updateNote = await request(server)
           .post('/api/country_notes')
           .set('Authorization', `Bearer ${jwt_token}`)
@@ -549,6 +552,19 @@ describe('User', () => {
         );
       });
 
+      it('fails if email is invalid', async () => {
+        const { jwt_token } = initialTestUser.body;
+
+        const response = await request(server)
+          .put('/api/change_email')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send({ new_email: 'newEmail@email' });
+
+        expect(response.status).toBe(400);
+        expect(response.body.password).toBeUndefined();
+        expect(response.body.error).toEqual('Not a valid email address!');
+      });
+
       it('fails if no token is provided', async () => {
         const { jwt_token } = initialTestUser.body;
 
@@ -589,7 +605,9 @@ describe('User', () => {
 
         expect(response.status).toBe(200);
         expect(response.body.password).toBeUndefined();
-        expect(response.body.message).toEqual('Password was updated successfully!');
+        expect(response.body.message).toEqual(
+          'Password was updated successfully!'
+        );
       });
 
       it('fails if no token is provided', async () => {

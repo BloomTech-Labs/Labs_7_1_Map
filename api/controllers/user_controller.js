@@ -28,7 +28,7 @@ module.exports = {
   change_email: async (req, res) => {
     try {
       if (!validate_email(req.body.new_email))
-        res.status(400).json({ error: 'Not a valid email address!' });
+        return res.status(400).json({ error: 'Not a valid email address!' });
 
       // Update email address stored on DB
       // Passport passes on req.user based on the JWT supplied
