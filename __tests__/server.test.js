@@ -649,14 +649,14 @@ describe('User', () => {
     });
 
     describe('/update_preferences', () => {
-      it('successfully updates preferences', async () => {
-        const updatedPreferences = {
-          preferences: {
-            theme: 'light',
-            autoscratch: false
-          }
-        };
+      const updatedPreferences = {
+        preferences: {
+          theme: 'light',
+          autoscratch: false
+        }
+      };
 
+      it('successfully updates preferences', async () => {
         const response = await request(server)
           .put(`/api/update_preferences`)
           .set('Authorization', `Bearer ${initialTestUser.body.jwt_token}`)
@@ -670,13 +670,6 @@ describe('User', () => {
       });
 
       it('fails if no token is provided', async () => {
-        const updatedPreferences = {
-          preferences: {
-            theme: 'light',
-            autoscratch: false
-          }
-        };
-
         const response = await request(server)
           .put(`/api/update_preferences`)
           .send(updatedPreferences);
@@ -688,13 +681,6 @@ describe('User', () => {
 
       it('fails if invalid token is provided', async () => {
         const invalid_token = initialTestUser.body.jwt_token.slice(1);
-        const updatedPreferences = {
-          preferences: {
-            theme: 'light',
-            autoscratch: false
-          }
-        };
-
         const response = await request(server)
           .put(`/api/update_preferences`)
           .set('Authorization', `Bearer ${invalid_token}`)
@@ -710,6 +696,17 @@ describe('User', () => {
           .put(`/api/update_preferences`)
           .set('Authorization', `Bearer ${initialTestUser.body.jwt_token}`)
           .send({});
+
+        expect(response.status).toBe(400);
+        expect(response.body.username).toBeUndefined();
+        expect(response.body.preferences).toBeUndefined();
+      });
+
+      it('fails if preferences is not valid', async () => {
+        const response = await request(server)
+          .put(`/api/update_preferences`)
+          .set('Authorization', `Bearer ${initialTestUser.body.jwt_token}`)
+          .send({ preferences: { theme: 'light' } });
 
         expect(response.status).toBe(400);
         expect(response.body.username).toBeUndefined();
