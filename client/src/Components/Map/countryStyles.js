@@ -67,16 +67,6 @@ const styleLivedIn = {
   fillOpacity: 0.3
 };
 
-const styleHome = {
-  // status_code: 5
-  stroke: true,
-  color: 'green',
-  opacity: 0.2,
-  fill: true,
-  fillColor: 'green',
-  fillOpacity: 0.3
-};
-
 // Export country status styles as an object so they can be
 // easily used in Map components render function
 const countryStatusStyles = {

@@ -19,9 +19,6 @@ const settings = {
   finishPercent: 95
 };
 
-// Find a better place to put this perhaps?
-const statusColors = ['gray', 'purple', 'yellow', 'red', 'blue'];
-
 const draw = (context, canvasWidth, canvasHeight, bounds, geometry, color) => {
   context.fillStyle = color || '#333';
 
