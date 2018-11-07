@@ -19,13 +19,14 @@ const settings = {
 };
 
 const draw = (context, canvasWidth, canvasHeight, bounds, geometry) => {
-  //context.fillStyle = '#333';
+  context.fillStyle = '#333';
 
   // determine the scale
   const xScale = canvasWidth / Math.abs(bounds.xMax - bounds.xMin);
   const yScale = canvasHeight / Math.abs(bounds.yMax - bounds.yMin);
   const scale = xScale < yScale ? xScale : yScale;
 
+  // Handles countries made up of a single connected polygon
   if (geometry.type === 'Polygon') {
     const coordinates = geometry.coordinates[0];
     coordinates
@@ -41,8 +42,12 @@ const draw = (context, canvasWidth, canvasHeight, bounds, geometry) => {
           context.lineTo(point[0], point[1]);
         }
       });
-    context.stroke();
-  } else if (geometry.type === 'MultiPolygon') {
+    context.closePath();
+    context.fill();
+    // context.stroke();
+  }
+  // Handles countries made up of multiple unconnected polygons
+  else if (geometry.type === 'MultiPolygon') {
     //multiPolygonBoundingBox(geometry.coordinates);
     const shape = geometry.coordinates;
     shape.forEach((polygon, i) => {
@@ -60,7 +65,9 @@ const draw = (context, canvasWidth, canvasHeight, bounds, geometry) => {
             context.lineTo(point[0], point[1]);
           }
         });
-      context.stroke();
+      context.closePath();
+      context.fill();
+      // context.stroke();
     });
   } else {
     console.log('NONE Drawn');
