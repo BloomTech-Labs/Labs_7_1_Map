@@ -19,20 +19,24 @@ const validate_new_user = ({ username, password, email }) => {
 module.exports = {
   change_email: async (req, res) => {
     try {
-      // update email address stored on DB
-      // passport passes on req.user based on the JWT supplied
-      const response = await User.findOneAndUpdate(
-        { username: req.user.username },
-        { email: req.body.new_email },
-        { new: true }
-      );
+      // TODO: Implement better email validation
+      // Naive validation.
+      if (req.body.new_email.length < 5) {
+        // Update email address stored on DB
+        // Passport passes on req.user based on the JWT supplied
+        const response = await User.findOneAndUpdate(
+          { username: req.user.username },
+          { email: req.body.new_email },
+          { new: true }
+        );
 
-      return response.email === req.body.new_email.toLowerCase()
-        ? res.status(200).json({ message: 'Email was updated successfully!' })
-        : res.status(400).json({ message: 'Failed to update email!' });
+        return response.email === req.body.new_email.toLowerCase()
+          ? res.status(200).json({ message: 'Email was updated successfully!' })
+          : res.status(400).json({ message: 'Failed to update email!' });
+      }
     } catch (err) {
       if (DEV) console.log(err);
-      return res.status(500).json({ error: 'Failed to change email!' });
+      return res.status(500).json({ error: 'Internal server error!' });
     }
   }, // change_email
 
