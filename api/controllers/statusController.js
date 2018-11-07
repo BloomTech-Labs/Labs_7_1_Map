@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const DEV = process.env.DEV || true;
 
 /*
 Route for this is '/api/country_status'
@@ -63,6 +64,7 @@ module.exports = {
           const response = {
             username: updatedUser.username,
             countries: updatedUser.countries,
+            preferences: updatedUser.preferences
           }
 
           return res.status(200).json(response);
@@ -86,6 +88,7 @@ module.exports = {
           const response = {
             username: updatedUser.username,
             countries: updatedUser.countries,
+            preferences: updatedUser.preferences
           }
 
           return res.status(201).json(response);
@@ -138,6 +141,7 @@ module.exports = {
           const response = {
             username: updatedUser.username,
             countries: updatedUser.countries,
+            preferences: updatedUser.preferences
           }
 
           return res.status(200).json(response);
@@ -160,6 +164,7 @@ module.exports = {
           const response = {
             username: updatedUser.username,
             countries: updatedUser.countries,
+            preferences: updatedUser.preferences
           }
 
           return res.status(201).json(response);
@@ -211,6 +216,7 @@ module.exports = {
           const response = {
             username: updatedUser.username,
             countries: updatedUser.countries,
+            preferences: updatedUser.preferences
           }
 
           return res.status(200).json(response);
@@ -234,6 +240,7 @@ module.exports = {
           const response = {
             username: updatedUser.username,
             countries: updatedUser.countries,
+            preferences: updatedUser.preferences
           }
 
           return res.status(201).json(response);

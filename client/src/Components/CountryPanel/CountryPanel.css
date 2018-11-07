@@ -1,44 +1,26 @@
 .CountryPanel {
   position: fixed;
-  display: flex;
-  flex-direction: column;
-  bottom: 0px;
-  left: 0px;
+  bottom: 10px;
+  left: 10px;
   z-index: 11;
   background-color: #f5f5dc;
+  border-radius: 1px;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2), 1px 1px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
   animation: Settings 0.5s all;
   transition-property: all;
   transition-duration: 0.8s;
 }
 .CountryPanel .Card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  padding: 0.2rem;
 }
 .CountryPanel .Card .Card_Header {
   display: flex;
   justify-content: space-between;
-  padding-right: 0.2rem;
-  align-items: center;
-  width: 100%;
-  background: beige;
-}
-.CountryPanel .Card .Card_Header .Header_Country-Name {
-  display: flex;
-  justify-content: center;
-  width: 100%;
   align-items: center;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
-.CountryPanel .Card .Card_Header .Header_Country-Name span {
-  margin-right: 0.5rem;
-}
-.CountryPanel .Card .Card_Header .Header_Country-Name .closeCountryPanelIcon {
-  /* css for this */
-  border: 3px solid red;
-}
-.CountryPanel .Card .Card_Header .Header_Country-Name .closeCountryPanelIcon:hover {
+.CountryPanel .Card .Card_Header .closeCountryPanelIcon:hover {
   cursor: pointer;
   color: red;
 }

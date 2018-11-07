@@ -5,6 +5,8 @@ import { AppContextConsumer } from '../../AppContext';
 import FailedSignUpPopUp from './FailedSignUpPopUp';
 import './LogInBay.css';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 const SignUpModalStyles = {
   content: {
     display: 'flex',
@@ -73,11 +75,8 @@ class LogInBay extends React.Component {
   handleSignUpSubmit = async event => {
     event.preventDefault();
     await this.props.resetAppStateError();
-    // setTimeout(this.handleErrorChecks, 500);
     this.handleErrorChecks();
   };
-
-  //created above because i couldn't figure out how to set up resetAppStateError() and handleErrorChecks as promises
 
   handleErrorChecks = () => {
     const {
@@ -94,25 +93,25 @@ class LogInBay extends React.Component {
       !signupPassword2
     ) {
       return this.setState({
-        signupErrorResponse: 'Please fill all fields before submitting', //if all fields are not filled in
+        signupErrorResponse: 'Please fill all fields before submitting',
         errorExists: true
       });
     } else {
       if (signupPassword1 !== signupPassword2) {
         return this.setState({
-          signupErrorResponse: 'Passwords do not match', //if passwords do not match
+          signupErrorResponse: 'Passwords do not match',
           errorExists: true
         });
       }
       if (signupPassword1.length < 6) {
         return this.setState({
-          signupErrorResponse: 'Password must be a minimum of 6 characters', //if password is not long enough
+          signupErrorResponse: 'Password must be a minimum of 6 characters',
           errorExists: true
         });
       }
       if (signupUsername === signupPassword1) {
         return this.setState({
-          signupErrorResponse: 'Password cannot be the same as username!', //if password is same as username
+          signupErrorResponse: 'Password cannot be the same as username!',
           errorExists: true
         });
       }
@@ -131,7 +130,10 @@ class LogInBay extends React.Component {
               <input type="password" placeholder="Password" name="password" />
               <input type="submit" />
             </form>
-            <a href="http://localhost:8000/api/facebook_login">
+            <br />
+            <p> - or -</p>
+            <br />
+            <a href={`${BACKEND_URL}/facebook_login`}>
               Login with Facebook
             </a>
             <br />

@@ -11,9 +11,9 @@ const {
 
 //below handles the status change of country
 const {
-  handle_status,
   handle_notes,
-  handle_scratched
+  handle_scratched,
+  handle_status
 } = require('./controllers/statusController');
 
 const passport = require('./utils/passport');
@@ -70,6 +70,6 @@ module.exports = server => {
     .route('/api/update_preferences')
     .put(protected_route, update_preferences);
 
-  server.route('/api/get_user/:id').get(protected_route, get_user);
+  server.route('/api/get_user').get(protected_route, get_user);
   server.route('/api/get_users/').get(get_users); // TODO: protect this route one
 };
