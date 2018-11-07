@@ -177,8 +177,10 @@ describe('User', () => {
         expect(response.status).toBe(200);
         expect(response.body.password).toBeUndefined();
         expect(response.body.user).toBeDefined();
-        expect(response.body.user.id).toBeDefined();
+        expect(response.body.user._id).toBeDefined();
         expect(response.body.user.username).toBeDefined();
+        expect(response.body.user.countries).toBeDefined();
+        expect(response.body.user.preferences).toBeDefined();
         expect(response.body.jwt_token).toBeDefined();
       });
 
