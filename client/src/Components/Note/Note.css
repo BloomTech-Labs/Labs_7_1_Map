@@ -1,49 +1,42 @@
-.Edit-Note {
-  background: beige;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+.Note {
+  border: 1px solid #000000;
+  max-width: 320px;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.2rem;
 }
-.Edit-Note .Edit-Note__Form {
-  width: 100%;
-  margin-bottom: 60px;
+.Note .Notes__ViewMode .ViewMode__add {
+  color: gray;
+  margin-right: 0.2rem;
 }
-.Edit-Note .Edit-Note__Form .Form__Top {
-  width: 100%;
-}
-.Edit-Note .Edit-Note__Form .Form__Top .Top__Text-Create {
-  width: 100%;
-  height: 75%;
-  padding: 12px 20px;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  background-color: #f8f8f8;
-  resize: none;
-  margin-top: 10px;
-}
-.Edit-Note .Edit-Note__Form .Form__Bottom {
-  margin-top: 2px;
-  display: flex;
-  height: 30%;
-}
-.Edit-Note .Edit-Note__Form .Form__Bottom button {
-  height: 30px;
-}
-.Edit-Note .Edit-Note__Form .Form__Bottom .Edit-Note__Messagebox {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  margin-left: 12px;
-}
-.View-Note {
-  background: beige;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  width: 100%;
+.Note .Notes__ViewMode .ViewMode__add:hover {
   cursor: pointer;
-  height: 200px;
+  color: green;
+}
+.Note .Notes__ViewMode .ViewMode__edit {
+  position: absolute;
+  right: 3px;
+  margin-right: 0.2rem;
+  color: gray;
+}
+.Note .Notes__ViewMode .ViewMode__edit:hover {
+  cursor: pointer;
+  color: blue;
+}
+.Note .Notes__EditMode .EditMode__save {
+  position: absolute;
+  right: 5px;
+  margin-right: 0.2rem;
+  color: gray;
+}
+.Note .Notes__EditMode .EditMode__save:hover {
+  cursor: pointer;
+  color: blue;
+}
+.Note .Notes__EditMode textarea {
+  width: 100%;
+  height: 100px;
+  padding: 5px;
+  resize: none;
+  font-size: 0.9rem;
 }

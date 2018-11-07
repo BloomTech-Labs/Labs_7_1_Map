@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const DEV = process.env.DEV || true;
 
 /*
 Route for this is '/api/country_status'
@@ -10,6 +11,8 @@ Expects a json object with the following structure:
     name: '' (name of country)
   }
 */
+
+// TODO: A lot of duplicate code written in these functions. Refactor to eliminate some repition.
 
 module.exports = {
   handle_status: async (req, res) => {
@@ -52,12 +55,19 @@ module.exports = {
       // If country is found on user, update the country's code with the status_code in req.body
       if (findCountryOnUser) {
         try {
-          const newDoc = await User.findOneAndUpdate(
+          const updatedUser = await User.findOneAndUpdate(
             findUserCountryConditions,
             editCountryQuery,
             options
           );
-          return res.status(200).json(newDoc);
+
+          const response = {
+            username: updatedUser.username,
+            countries: updatedUser.countries,
+            preferences: updatedUser.preferences
+          }
+
+          return res.status(200).json(response);
         } catch (err) {
           if (DEV) console.log(err);
           return res
@@ -69,17 +79,24 @@ module.exports = {
       // If country does not exist on user, create a new object with the status_code in req.body
       else {
         try {
-          const newDoc = await User.findOneAndUpdate(
+          const updatedUser = await User.findOneAndUpdate(
             { username },
             createCountryQuery,
             options
           );
-          return res.status(201).json(newDoc);
+
+          const response = {
+            username: updatedUser.username,
+            countries: updatedUser.countries,
+            preferences: updatedUser.preferences
+          }
+
+          return res.status(201).json(response);
         } catch (err) {
           if (DEV) console.log(err);
           return res
             .status(409)
-            .json({ error: 'Failed to create new country!' });
+            .json({ error: 'Failed to create a new country and update status!' });
         }
       }
     } catch (err) {
@@ -121,12 +138,18 @@ module.exports = {
             options
           );
 
-          return res.status(200).json(updatedUser);
+          const response = {
+            username: updatedUser.username,
+            countries: updatedUser.countries,
+            preferences: updatedUser.preferences
+          }
+
+          return res.status(200).json(response);
         } catch (err) {
           if (DEV) console.log(err);
           return res
             .status(400)
-            .json({ error: 'failure to update country notes' });
+            .json({ error: 'Failed to updates notes!' });
         }
       }
       // If country does not exist on user, create a new object with the info in req.body
@@ -137,11 +160,94 @@ module.exports = {
             createCountryQuery,
             options
           );
-          return res.status(201).json(updatedUser);
+
+          const response = {
+            username: updatedUser.username,
+            countries: updatedUser.countries,
+            preferences: updatedUser.preferences
+          }
+
+          return res.status(201).json(response);
         } catch (err) {
           return res
             .status(409)
-            .json({ error: 'Failed to create new country!' });
+            .json({ error: 'Failed to create a new country and update notes!' });
+        }
+      }
+    } catch (err) {
+      if (DEV) console.log(err);
+      return res.status(500).json({ error: 'Internal server error!' });
+    }
+  },
+
+  handle_scratched: async (req, res) => {
+    try {
+      const { country_code, name, scratched } = req.body;
+      const username = req.user.username;
+
+      // Conditions to find if a country exists on a User
+      const findUserCountryConditions = {
+        $and: [{ username }, { countries: { $elemMatch: { country_code } } }]
+      };
+
+      //below are operators
+      const editCountryQuery = { $set: { 'countries.$.scratched': scratched } };
+
+      const createCountryQuery = {
+        $push: {
+          countries: { country_code, name, scratched }
+        }
+      };
+
+      const options = { new: true };
+
+      // Check if the User already has the country in it's countries array
+      const findCountryOnUser = await User.findOne(findUserCountryConditions);
+
+      if (findCountryOnUser) {
+        try {
+          // update the country in user
+          const updatedUser = await User.findOneAndUpdate(
+            findUserCountryConditions,
+            editCountryQuery,
+            options
+          );
+
+          const response = {
+            username: updatedUser.username,
+            countries: updatedUser.countries,
+            preferences: updatedUser.preferences
+          }
+
+          return res.status(200).json(response);
+        } catch (err) {
+          if (DEV) console.log(err);
+          return res
+            .status(400)
+            .json({ error: 'Failed to update scratched status!' });
+        }
+      }
+
+      // If country does not exist on user, create a new object with the info in req.body
+      else {
+        try {
+          const updatedUser = await User.findOneAndUpdate(
+            { username },
+            createCountryQuery,
+            options
+          );
+
+          const response = {
+            username: updatedUser.username,
+            countries: updatedUser.countries,
+            preferences: updatedUser.preferences
+          }
+
+          return res.status(201).json(response);
+        } catch (err) {
+          return res
+            .status(409)
+            .json({ error: 'Failed to create a new country and update scratched status!' });
         }
       }
     } catch (err) {

@@ -15,7 +15,6 @@ import { mapTilesUrls, markerIcon, bounds } from './mapSetup.js';
 
 import './Map.css';
 
-
 class MapComponent extends Component {
   state = {
     zoom: 2,
@@ -31,7 +30,7 @@ class MapComponent extends Component {
 
     // This can be removed once popup is not needed since
     // the lat/lng in local state isn't required by anything else.
-    this.setState({ ...e.latlng });
+    //this.setState({ ...e.latlng });
 
     // Update AppContext with the info of the currently selected country
     this.props.updateCurrentCountry(countryCode, countryInfo);

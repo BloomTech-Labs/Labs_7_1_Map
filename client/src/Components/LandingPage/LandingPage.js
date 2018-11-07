@@ -10,10 +10,9 @@ import Logo from '../../logo.png';
 import './LandingPage.css';
 
 const LandingPage = props => {
-  var PopUp;
+  let PopUp;
   if (props.failedLogin === true) {
     PopUp = <FailedLoginPopUp />;
-    console.log('failure!!!!!');
   } else {
     PopUp = <div> </div>;
   }

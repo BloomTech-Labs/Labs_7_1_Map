@@ -21,7 +21,7 @@ const CountryPanel = () => {
                 <span>{value.AppState.currentCountry.info.name}</span>
                 <FontAwesomeIcon
                   className="closeCountryPanelIcon"
-                  onClick={value.toggleCountryPanel}
+                  onClick={value.closeCountryPanel}
                   icon="times"
                 />
               </div>
@@ -31,10 +31,21 @@ const CountryPanel = () => {
                     ? value.currentCountryInfo.geometry
                     : null
                 }
+                closeCountryPanel={value.closeCountryPanel}
                 handleSliderMove={value.handleSliderMove}
+                handleScratched={value.handleScratched}
                 currentCountryStatus={value.AppState.currentCountryStatus}
+                scratched={value.AppState.currentCountry.scratched}
               />
-              <Note user={value.AppState.user} />
+              {value.AppState.currentCountry.scratched ? (
+                <Note
+                  country={value.AppState.currentCountry}
+                  handleChangeNote={value.handleChangeNote}
+                  handleUpdateNotes={value.handleUpdateNotes}
+                  turnOnEditNote={value.turnOnEditNote}
+                />
+              ) : null}
+
               <FriendList user={value.AppState.user} />
             </div>
           ) : null

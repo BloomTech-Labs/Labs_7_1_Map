@@ -4,9 +4,7 @@ const argon2 = require('argon2');
 const DEV = process.env.DEV || null;
 
 const Schema = mongoose.Schema;
-const ObjectIdSchema = Schema.Types.ObjectId;
 
-// define a user schema
 const UserSchema = new Schema(
   {
     username: {
@@ -48,7 +46,7 @@ const UserSchema = new Schema(
         status_code: {
           type: Number,
           default: 0
-        }, //0, 1, 2, 3, 4
+        }, // 0, 1, 2, 3, 4 (represents the status options for a country)
         notes: {
           type: String,
           default: ''
@@ -71,19 +69,13 @@ const UserSchema = new Schema(
         default: false
       }
     }
-    // social: [
-    //   {
-    //     provider: String,
-    //     id: String
-    //   }
-    // ]
   },
-  {
-    timestamps: true
-  }
+  { timestamps: true }
 );
 
-// hash password
+// Hash password before registering a new user
+// Mongoose does not support pre-update hooks so password is hashed in
+// `user_controller.js` when updating an existing user
 UserSchema.pre('save', async function(next) {
   try {
     this.password = await argon2.hash(this.password);
@@ -95,7 +87,7 @@ UserSchema.pre('save', async function(next) {
   }
 });
 
-// check password
+// Validate a plain text password with the hash stored in DB
 UserSchema.methods.check_password = async function(entered_password) {
   try {
     return await argon2.verify(this.password, entered_password);
@@ -106,5 +98,4 @@ UserSchema.methods.check_password = async function(entered_password) {
   }
 };
 
-// export the user schema
 module.exports = mongoose.model('User', UserSchema);

@@ -50,6 +50,7 @@ class Dashboard extends Component {
                 updateCurrentCountry={value.updateCurrentCountry}
                 currentCountry={value.AppState.currentCountry}
                 user={value.AppState.user}
+                scratched={value.AppState.scratched}
               />
             );
           }}
