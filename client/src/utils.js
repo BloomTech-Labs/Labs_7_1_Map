@@ -27,7 +27,7 @@ export function getCountryInfoFromCode(countryCode) {
 export function clearLocalstorage() {
   // delete the tokens from the browser
   localStorage.removeItem('token');
-  localStorage.removeItem('user');
+  // localStorage.removeItem('user');
 }
 
 export const polygonBoundingBox = coordinates => {

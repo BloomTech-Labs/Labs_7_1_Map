@@ -33,16 +33,15 @@ export class AppContextProvider extends Component {
     try {
       // Retrieve token and user stored in local storage
       const token = localStorage.getItem('token');
-      const user = await JSON.parse(localStorage.getItem('user'));
 
-      if (token && user) {
+      if (token) {
         const requestOptions = {
           headers: { Authorization: `Bearer ${token}` }
         };
 
         // Get the user info from DB
         const response = await axios.get(
-          `${BACKEND_URL}/get_user/${user.id}`,
+          `${BACKEND_URL}/get_user`,
           requestOptions
         );
 
@@ -171,9 +170,7 @@ export class AppContextProvider extends Component {
     };
     try {
       const response = await axios.post(`${BACKEND_URL}/login`, body);
-      const user = await JSON.stringify(response.data.user);
       localStorage.setItem('token', response.data.jwt_token);
-      localStorage.setItem('user', user);
       this.setState({
         authenticated: true,
         user: { ...response.data.user }
@@ -200,9 +197,7 @@ export class AppContextProvider extends Component {
     };
 
     const response = await axios.post(`${BACKEND_URL}/register`, body);
-    const user = JSON.stringify(response.data.user);
     localStorage.setItem('token', response.data.jwt_token);
-    localStorage.setItem('user', user);
     this.setState({
       authenticated: true,
       user: response.data.user
@@ -215,12 +210,9 @@ export class AppContextProvider extends Component {
       const { currentCountry } = this.state;
 
       const body = {
-        // username: user.username,
         country_code: currentCountry.code,
         name: currentCountry.info.name,
-        status_code: value,
-        // scratched: currentCountry.scratched,
-        // notes: currentCountry.notes
+        status_code: value
       };
       const options = {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -239,7 +231,6 @@ export class AppContextProvider extends Component {
       //    - This is because React does not detect changes in nested objects
       //    - Clearing the countries array first will cause the geojson layer to re-render
       // TODO: Refactor to store users' countries as an array on AppState (not inside user)
-
       const currentUserInfo = this.state.user;
       currentUserInfo.countries = [];
       this.setState({ user: currentUserInfo });
@@ -364,9 +355,7 @@ export class AppContextProvider extends Component {
 
     try {
       const response = await axios.post(`${BACKEND_URL}/register`, body);
-      const user = JSON.stringify(response.data.user);
       localStorage.setItem('token', response.data.jwt_token);
-      localStorage.setItem('user', user);
       this.setState({ authenticated: true, user: response.data.user });
     } catch (e) {
       if (e.response.status === 500) {
