@@ -40,6 +40,12 @@ module.exports = {
     try {
       const { new_password } = req.body;
 
+      // Check if password is long enough
+      if (new_password.length < 6)
+        return res
+          .status(400)
+          .json({ error: 'Password needs to be at least characters!' });
+
       const user = await User.findOne({ username: req.user.username });
 
       // Check if password is the same as the old before updating
@@ -47,11 +53,12 @@ module.exports = {
         return res
           .status(400)
           .json({ error: 'New password is the same as the old!' });
-      } else {
-        // hash new password (mongoose doesn't support pre update hooks)
+      }
+      // Hash new password here (mongoose doesn't support pre update hooks)
+      else {
         const password_hash = await argon2.hash(new_password);
 
-        // update password
+        // Update password
         await User.findOneAndUpdate(
           { username: req.user.username },
           { password: password_hash },
@@ -109,6 +116,7 @@ module.exports = {
       const user = {
         id: req.user.id,
         username: req.user.username,
+        preferences: req.user.preferences,
         countries: req.user.countries
       }; // add the things you need to send
       return res.status(200).json({ jwt_token: make_token(req.user), user });
@@ -122,7 +130,7 @@ module.exports = {
 
   get_user: async (req, res) => {
     try {
-      // If a valid token was provided, Passport will find the user and added 
+      // If a valid token was provided, Passport will find the user and added
       // it to the request as req.user without the password field
       return req.user
         ? res.status(200).json(req.user)
@@ -150,7 +158,6 @@ module.exports = {
   login: async (req, res) => {
     try {
       // we only reach here because we are authenticated
-      console.log(req.user)
       const { _id, username, email, countries, preferences } = req.user;
       const user = {
         _id,
@@ -159,7 +166,6 @@ module.exports = {
         countries,
         preferences
       }; // add the things you need to send
-      console.log(user)
       return res.status(200).json({ jwt_token: make_token(req.user), user });
     } catch (err) {
       if (DEV) console.log(err);
