@@ -1,9 +1,9 @@
+const http = require('http');
 const mongoose = require('mongoose');
 const MongodbMemoryServer = require('mongodb-memory-server').MongoMemoryServer;
 const request = require('supertest');
 const server = require('../server');
 const { make_token } = require('../api/utils/auth');
-const http = require('http');
 
 const PORT = 9000;
 const mongod = new MongodbMemoryServer();
@@ -35,8 +35,10 @@ describe('User', () => {
   };
 
   beforeEach(async () => {
+    // Start up the test server before each test
     testServer.listen(PORT);
 
+    // Save an initial test user before each test
     initialTestUser = await request(server)
       .post('/api/register')
       .send(initialTestUserInfo);
@@ -45,10 +47,9 @@ describe('User', () => {
   afterEach(async () => {
     // Clear test DB after each test
     const collections = await mongoose.connection.db.collections();
+    for (let collection of collections) await collection.remove();
 
-    for (let collection of collections) {
-      await collection.remove();
-    }
+    // Close the test server after each test
     testServer.close();
   });
 
@@ -472,7 +473,7 @@ describe('User', () => {
         expect(newUser).toBeDefined();
         expect(jwt_token).toBeDefined();
         expect(getUser.body.password).toBeUndefined();
-        expect(getUser.body.id).toBeDefined();
+        expect(getUser.body._id).toBeDefined();
         expect(getUser.body.countries).toBeDefined();
         expect(getUser.body.preferences).toBeDefined();
         expect(getUser.body.username).toBe('getuser1');

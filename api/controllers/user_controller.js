@@ -122,20 +122,14 @@ module.exports = {
 
   get_user: async (req, res) => {
     try {
-      const id = req.user._id;
-      const foundUser = await User.findById(id);
-      if (!foundUser) return res.status(500).json({error: 'Failed to get user!'})
-      const user = {
-        id: req.user._id,
-        username: req.user.username,
-        email: req.user.email,
-        countries: req.user.countries,
-        preferences: req.user.preferences
-      }; // add the things you need to send
-      return res.status(200).json(user);
+      // If a valid token was provided, Passport will find the user and added 
+      // it to the request as req.user without the password field
+      return req.user
+        ? res.status(200).json(req.user)
+        : res.status(400).json({ error: 'Invalid token!' });
     } catch (err) {
       if (DEV) console.log(err);
-      return res.status(500).json({ error: 'Failed to get user!' });
+      return res.status(500).json({ error: 'Internal server error!' });
     }
   }, // get_user
 
