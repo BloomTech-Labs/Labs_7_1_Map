@@ -1,9 +1,9 @@
+const http = require('http');
 const mongoose = require('mongoose');
 const MongodbMemoryServer = require('mongodb-memory-server').MongoMemoryServer;
 const request = require('supertest');
 const server = require('../server');
 const { make_token } = require('../api/utils/auth');
-const http = require('http');
 
 const PORT = 9000;
 const mongod = new MongodbMemoryServer();
@@ -35,8 +35,10 @@ describe('User', () => {
   };
 
   beforeEach(async () => {
+    // Start up the test server before each test
     testServer.listen(PORT);
 
+    // Save an initial test user before each test
     initialTestUser = await request(server)
       .post('/api/register')
       .send(initialTestUserInfo);
@@ -45,10 +47,9 @@ describe('User', () => {
   afterEach(async () => {
     // Clear test DB after each test
     const collections = await mongoose.connection.db.collections();
+    for (let collection of collections) await collection.remove();
 
-    for (let collection of collections) {
-      await collection.remove();
-    }
+    // Close the test server after each test
     testServer.close();
   });
 
@@ -140,28 +141,32 @@ describe('User', () => {
       });
 
       it('fails if email is not unique', async () => {
-        const user1 = {
-          username: 'Frodo',
-          password: 'pasdfsadfasdfsdf',
-          email: 'lotr@gmail.com'
-        };
-
-        const user2 = {
+        const newUser = {
           username: 'Gandalf',
           password: 'kljdaljkgsd',
-          email: 'lotr@gmail.com'
+          email: 'email@email.com' // same email as initialTestUser
         };
 
-        const response1 = await request(server)
+        const response = await request(server)
           .post('/api/register')
-          .send(user1);
+          .send(newUser);
 
-        const response2 = await request(server)
+        expect(response.status).toBe(500);
+      });
+
+      it('fails if email is not valid', async () => {
+        const user = {
+          username: 'Frodo',
+          password: 'pasdfsadfasdfsdf',
+          email: 'lotr@gmail' // invalid email address
+        };
+
+        const response = await request(server)
           .post('/api/register')
-          .send(user2);
+          .send(user);
 
-        expect(response1.status).toBe(200);
-        expect(response2.status).toBe(500);
+        expect(response.status).toBe(400);
+        expect(response.body.error).toEqual('Email is not valid!');
       });
     });
 
@@ -176,8 +181,10 @@ describe('User', () => {
         expect(response.status).toBe(200);
         expect(response.body.password).toBeUndefined();
         expect(response.body.user).toBeDefined();
-        expect(response.body.user.id).toBeDefined();
+        expect(response.body.user._id).toBeDefined();
         expect(response.body.user.username).toBeDefined();
+        expect(response.body.user.countries).toBeDefined();
+        expect(response.body.user.preferences).toBeDefined();
         expect(response.body.jwt_token).toBeDefined();
       });
 
@@ -437,7 +444,6 @@ describe('User', () => {
           .reverse()
           .join('');
 
-
         const updateNote = await request(server)
           .post('/api/country_notes')
           .set('Authorization', `Bearer ${jwt_token}`)
@@ -472,7 +478,7 @@ describe('User', () => {
         expect(newUser).toBeDefined();
         expect(jwt_token).toBeDefined();
         expect(getUser.body.password).toBeUndefined();
-        expect(getUser.body.id).toBeDefined();
+        expect(getUser.body._id).toBeDefined();
         expect(getUser.body.countries).toBeDefined();
         expect(getUser.body.preferences).toBeDefined();
         expect(getUser.body.username).toBe('getuser1');
@@ -546,6 +552,19 @@ describe('User', () => {
         );
       });
 
+      it('fails if email is invalid', async () => {
+        const { jwt_token } = initialTestUser.body;
+
+        const response = await request(server)
+          .put('/api/change_email')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send({ new_email: 'newEmail@email' });
+
+        expect(response.status).toBe(400);
+        expect(response.body.password).toBeUndefined();
+        expect(response.body.error).toEqual('Not a valid email address!');
+      });
+
       it('fails if no token is provided', async () => {
         const { jwt_token } = initialTestUser.body;
 
@@ -586,7 +605,23 @@ describe('User', () => {
 
         expect(response.status).toBe(200);
         expect(response.body.password).toBeUndefined();
-        expect(response.body.message).toEqual('Password was updated successfully!');
+        expect(response.body.message).toEqual(
+          'Password was updated successfully!'
+        );
+      });
+
+      it('fails if password is invalid', async () => {
+        const { jwt_token } = initialTestUser.body;
+        const response = await request(server)
+          .put('/api/change_password')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send({ new_password: '65432' });
+
+        expect(response.status).toBe(400);
+        expect(response.body.password).toBeUndefined();
+        expect(response.body.error).toEqual(
+          'Password needs to be at least 6 characters!'
+        );
       });
 
       it('fails if no token is provided', async () => {
@@ -628,14 +663,14 @@ describe('User', () => {
     });
 
     describe('/update_preferences', () => {
-      it('successfully updates preferences', async () => {
-        const updatedPreferences = {
-          preferences: {
-            theme: 'light',
-            autoscratch: false
-          }
-        };
+      const updatedPreferences = {
+        preferences: {
+          theme: 'light',
+          autoscratch: false
+        }
+      };
 
+      it('successfully updates preferences', async () => {
         const response = await request(server)
           .put(`/api/update_preferences`)
           .set('Authorization', `Bearer ${initialTestUser.body.jwt_token}`)
@@ -649,13 +684,6 @@ describe('User', () => {
       });
 
       it('fails if no token is provided', async () => {
-        const updatedPreferences = {
-          preferences: {
-            theme: 'light',
-            autoscratch: false
-          }
-        };
-
         const response = await request(server)
           .put(`/api/update_preferences`)
           .send(updatedPreferences);
@@ -667,13 +695,6 @@ describe('User', () => {
 
       it('fails if invalid token is provided', async () => {
         const invalid_token = initialTestUser.body.jwt_token.slice(1);
-        const updatedPreferences = {
-          preferences: {
-            theme: 'light',
-            autoscratch: false
-          }
-        };
-
         const response = await request(server)
           .put(`/api/update_preferences`)
           .set('Authorization', `Bearer ${invalid_token}`)
@@ -689,6 +710,17 @@ describe('User', () => {
           .put(`/api/update_preferences`)
           .set('Authorization', `Bearer ${initialTestUser.body.jwt_token}`)
           .send({});
+
+        expect(response.status).toBe(400);
+        expect(response.body.username).toBeUndefined();
+        expect(response.body.preferences).toBeUndefined();
+      });
+
+      it('fails if preferences is not valid', async () => {
+        const response = await request(server)
+          .put(`/api/update_preferences`)
+          .set('Authorization', `Bearer ${initialTestUser.body.jwt_token}`)
+          .send({ preferences: { theme: 'light' } });
 
         expect(response.status).toBe(400);
         expect(response.body.username).toBeUndefined();

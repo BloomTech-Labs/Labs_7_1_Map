@@ -24,18 +24,13 @@ const local_strategy = new LocalStrategy(async (username, password, done) => {
     if (found) {
       // if a user is found, verify password
       const valid = await found.check_password(password);
-      if (valid) {
-        // authenticated, so pass on some of the user fields
 
-        return done(null, found);
-      } else {
-        // wrong password
-        return done(null, false, { message: 'Incorrect credentials.' });
-      }
-    } else {
-      // username not found
-      return done(null, false, { message: 'Incorrect credentials.' });
+      return valid
+        ? done(null, found) // Return found user if PW is a match
+        : done(null, false, { message: 'Incorrect credentials.' });
     }
+    // username not found
+    else return done(null, false, { message: 'Incorrect credentials.' });
   } catch (err) {
     if (DEV) console.log(err);
     return done(null, false, { message: 'Internal Error.' });
@@ -51,13 +46,10 @@ const jwtOptions = {
 
 const jwt_strategy = new JwtStrategy(jwtOptions, async (payload, done) => {
   try {
-    // get a user using the id
+    // Find a user using the info encoded in the JWT payload
     const found = await User.findById(payload.sub).select('-password');
-    if (found) {
-      return done(null, found); // found user
-    } else {
-      return done(null, false); // not found
-    }
+    // If a user was found return it, else return false
+    return found ? done(null, found) : done(null, false);
   } catch (err) {
     if (DEV) console.log(err);
     return done(null, false, { message: 'Internal Error.' });
@@ -106,7 +98,6 @@ const facebook_strategy = new FacebookStrategy(FACEBOOK_OPTIONS, async function(
       };
 
       // find by email, if found, update else create
-
       const found_by_email = await User.findOne({ email });
       if (found_by_email) {
         const updated_user = await User.findOneAndUpdate(
