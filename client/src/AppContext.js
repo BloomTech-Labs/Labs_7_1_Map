@@ -173,7 +173,8 @@ export class AppContextProvider extends Component {
       localStorage.setItem('token', response.data.jwt_token);
       this.setState({
         authenticated: true,
-        user: { ...response.data.user }
+        user: { ...response.data.user },
+        failedLogin: false
       });
     } catch (e) {
       // failed async
