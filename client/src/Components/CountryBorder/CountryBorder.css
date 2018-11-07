@@ -5,6 +5,10 @@
   align-items: center;
   border: 1px solid black;
 }
+.CountryBorder .ScratchCard__Container {
+  border: 3px solid red;
+  cursor: url(coincursor.png), auto;
+}
 .CountryBorder .CountryBorder__Slider {
   width: 100%;
 }
