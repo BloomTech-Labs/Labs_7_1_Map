@@ -55,7 +55,7 @@ module.exports = {
       if (new_password.length < 6)
         return res
           .status(400)
-          .json({ error: 'Password needs to be at least characters!' });
+          .json({ error: 'Password needs to be at least 6 characters!' });
 
       const user = await User.findOne({ username: req.user.username });
 

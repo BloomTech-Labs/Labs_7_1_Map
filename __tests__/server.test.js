@@ -610,6 +610,20 @@ describe('User', () => {
         );
       });
 
+      it('fails if password is invalid', async () => {
+        const { jwt_token } = initialTestUser.body;
+        const response = await request(server)
+          .put('/api/change_password')
+          .set('Authorization', `Bearer ${jwt_token}`)
+          .send({ new_password: '65432' });
+
+        expect(response.status).toBe(400);
+        expect(response.body.password).toBeUndefined();
+        expect(response.body.error).toEqual(
+          'Password needs to be at least 6 characters!'
+        );
+      });
+
       it('fails if no token is provided', async () => {
         const response = await request(server)
           .put('/api/change_password')
