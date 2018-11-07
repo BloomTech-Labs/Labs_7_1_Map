@@ -14,6 +14,9 @@
   align-items: center;
   padding: 0.2rem 0;
 }
+.CountryBorder .ScratchCard__Container {
+  cursor: url(coincursor.png), auto;
+}
 .CountryBorder .CountryBorder__SliderContainer .Slider {
   width: 90%;
 }
