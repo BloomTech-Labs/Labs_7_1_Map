@@ -122,9 +122,10 @@ module.exports = {
 
   get_user: async (req, res) => {
     try {
-      const id = req.params.id;
-      if (!id) res.status(400).json({ error: 'ID is a required parameter' });
-      // const foundUser = await User.findById(id);
+      const id = req.user._id;
+      // if (!id) res.status(400).json({ error: 'ID is a required parameter' });
+      const foundUser = await User.findById(id);
+      if (!foundUser) return res.status(500).json({error: 'Failed to get user!'})
       const user = {
         id: req.user._id,
         username: req.user.username,

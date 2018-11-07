@@ -463,16 +463,16 @@ describe('User', () => {
         const newUser = await request(server)
           .post('/api/register')
           .send(testUserInfo);
-        const { jwt_token, user } = newUser.body;
+        const { jwt_token } = newUser.body;
 
         const getUser = await request(server)
-          .get(`/api/get_user/${user.id}`)
+          .get('/api/get_user')
           .set('Authorization', `Bearer ${jwt_token}`);
 
         expect(newUser).toBeDefined();
         expect(jwt_token).toBeDefined();
         expect(getUser.body.password).toBeUndefined();
-        expect(getUser.body.id).toBe(user.id);
+        expect(getUser.body.id).toBeDefined();
         expect(getUser.body.countries).toBeDefined();
         expect(getUser.body.preferences).toBeDefined();
         expect(getUser.body.username).toBe('getuser1');
@@ -488,14 +488,14 @@ describe('User', () => {
         const newUser = await request(server)
           .post('/api/register')
           .send(testUserInfo);
-        const { jwt_token, user } = newUser.body;
+        const { jwt_token } = newUser.body;
 
-        const getUser = await request(server).get(`/api/get_user/${user._id}`);
+        const getUser = await request(server).get('/api/get_user');
 
         expect(newUser).toBeDefined();
         expect(jwt_token).toBeDefined();
         expect(getUser.status).toBe(401);
-        expect(getUser.body._id).toBeUndefined();
+        expect(getUser.body.id).toBeUndefined();
         expect(getUser.body.username).toBeUndefined();
         expect(getUser.body.email).toBeUndefined();
       });
@@ -509,16 +509,16 @@ describe('User', () => {
         const newUser = await request(server)
           .post('/api/register')
           .send(testUserInfo);
-        const { jwt_token, user } = newUser.body;
+        const { jwt_token } = newUser.body;
 
         const getUser = await request(server)
-          .get(`/api/get_user/${user._id}`)
+          .get('/api/get_user')
           .set('Authorization', `Bearer ${jwt_token.slice(1)}`);
 
         expect(newUser).toBeDefined();
         expect(jwt_token).toBeDefined();
         expect(getUser.status).toBe(401);
-        expect(getUser.body._id).toBeUndefined();
+        expect(getUser.body.id).toBeUndefined();
         expect(getUser.body.username).toBeUndefined();
         expect(getUser.body.email).toBeUndefined();
       });
