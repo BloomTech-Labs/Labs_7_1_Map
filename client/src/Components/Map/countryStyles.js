@@ -84,8 +84,7 @@ const countryStatusStyles = {
   1: styleWishlist,
   2: styleTransited,
   3: styleVisited,
-  4: styleLivedIn,
-  5: styleHome
+  4: styleLivedIn
 };
 
 module.exports = {

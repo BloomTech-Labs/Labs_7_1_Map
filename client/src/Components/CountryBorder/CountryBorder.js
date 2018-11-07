@@ -3,6 +3,7 @@ import Slider from 'rc-slider/lib/Slider';
 import ScratchCard from 'react-scratchcard';
 
 import { getBoundingBox } from '../../utils';
+import { countryStatusStyles } from '../Map/countryStyles.js';
 
 import './CountryBorder.css';
 import 'rc-slider/assets/index.css';
@@ -18,8 +19,11 @@ const settings = {
   finishPercent: 95
 };
 
-const draw = (context, canvasWidth, canvasHeight, bounds, geometry) => {
-  context.fillStyle = '#333';
+// Find a better place to put this perhaps?
+const statusColors = ['gray', 'purple', 'yellow', 'red', 'blue'];
+
+const draw = (context, canvasWidth, canvasHeight, bounds, geometry, color) => {
+  context.fillStyle = color || '#333';
 
   // determine the scale
   const xScale = canvasWidth / Math.abs(bounds.xMax - bounds.xMin);
@@ -111,6 +115,11 @@ export default class CountryBorder extends Component {
     this.drawBorder();
   }
   drawBorder = () => {
+    // Get the correct fill color based on status. Need to check if 
+    // this.props.currentCountryStatus exists to prevent any crashes
+    const color = this.props.currentCountryStatus
+      ? countryStatusStyles[this.props.currentCountryStatus].color
+      : 'black';
     const canvas = this.refs.canvas;
     const context = canvas.getContext('2d');
     context.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -121,16 +130,13 @@ export default class CountryBorder extends Component {
         canvasWidth,
         canvasHeight,
         getBoundingBox(this.props.geometry),
-        this.props.geometry
+        this.props.geometry,
+        color
       );
     } else {
       this.props.closeCountryPanel();
     }
   };
-
-  log(marks) {
-    console.log(marks); //eslint-disable-line
-  }
 
   render() {
     const notScratched = !this.props.scratched ? true : false;
