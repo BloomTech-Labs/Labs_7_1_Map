@@ -14,10 +14,10 @@ function validate_new_user({ username, password, email }) {
   }
 
   if (!validate_email(email)) return { error: 'Email is not valid!' };
-  return null; // no error, so return an empty object
+  return null;
 }
 
-// Check if aa provided email address is valid
+// Check if a provided email address is valid
 function validate_email(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
@@ -87,9 +87,8 @@ module.exports = {
   }, // change_password
 
   create_user: async (req, res) => {
+    // Check if the provided user info is valid
     const errorCheck = validate_new_user(req.body);
-
-    // found an error, terminate
     if (errorCheck) return res.status(400).json({ error: errorCheck.error });
 
     try {
@@ -113,7 +112,7 @@ module.exports = {
       }
     } catch (err) {
       if (DEV) console.log(err);
-      return res.status(500).json({ error: err });
+      return res.status(500).json({ error: 'Internal server error!' });
     }
   }, // create_user
 
@@ -128,9 +127,7 @@ module.exports = {
       }; // add the things you need to send
       return res.status(200).json({ jwt_token: make_token(req.user), user });
     } catch (err) {
-      if (DEV) {
-        console.log(err);
-      }
+      if (DEV) console.log(err);
       return res.status(500).json({ error: 'Internal server error!' });
     }
   }, // facebook_login
@@ -182,31 +179,40 @@ module.exports = {
 
   update_preferences: async (req, res) => {
     try {
+      // Error handling
       // req.body.preferences should be an object with properties for each setting
       //  e.g. { theme: 'light', autoscratch: true }
       const { preferences } = req.body;
-      if (!preferences) {
+      if (!preferences)
         return res
           .status(400)
-          .send({ error: 'You did not provide updated preferences!' });
-      }
+          .json({ error: 'You did not provide updated preferences!' });
 
+      if (
+        preferences.theme === undefined ||
+        preferences.autoscratch === undefined
+      )
+        return res
+          .status(400)
+          .json({ error: 'The updated preferences are not valid!' });
+
+      // Update user's preferences
       const updatedUser = await User.findOneAndUpdate(
         { username: req.user.username },
         { preferences },
         { new: true }
       );
 
-      const response = {
+      return res.status(200).json({
+        _id: updatedUser._id,
         username: updatedUser.username,
+        email: updatedUser.email,
         preferences: updatedUser.preferences,
         countries: updatedUser.countries
-      };
-
-      return res.status(200).json(response);
+      });
     } catch (err) {
       if (DEV) console.log(err);
-      return res.status(500).send({ error: 'Failed to update preferences' });
+      return res.status(500).send({ error: 'Internal server error!' });
     }
   } // update_preferences
 }; // module.exports
