@@ -15,7 +15,6 @@
   padding: 0.2rem 0;
 }
 .CountryBorder .ScratchCard__Container {
-  border: 3px solid red;
   cursor: url(coincursor.png), auto;
 }
 .CountryBorder .CountryBorder__SliderContainer .Slider {
