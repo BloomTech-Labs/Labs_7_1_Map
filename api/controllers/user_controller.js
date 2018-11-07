@@ -1,6 +1,6 @@
 const argon2 = require('argon2');
 const User = require('../models/user');
-const { make_token } = require('../utils/auth');
+const { make_token, validate_email } = require('../utils/auth');
 
 const DEV = process.env.DEV || true;
 
@@ -19,9 +19,7 @@ const validate_new_user = ({ username, password, email }) => {
 module.exports = {
   change_email: async (req, res) => {
     try {
-      // TODO: Implement better email validation
-      // Naive validation.
-      if (req.body.new_email.length < 5) {
+      if (validate_email(req.body.new_email)) {
         // Update email address stored on DB
         // Passport passes on req.user based on the JWT supplied
         const response = await User.findOneAndUpdate(
