@@ -3,10 +3,10 @@ import React from 'react';
 import { AppContextConsumer } from '../../AppContext';
 
 import LogInBay from './LogInBay';
+import Animation from './Animation';
 import FailedLoginPopUp from './FailedLoginPopUp';
 import Footer from '../Footer/Footer';
 
-import Logo from '../../logo.png';
 import './LandingPage.css';
 
 const LandingPage = props => {
@@ -27,8 +27,8 @@ const LandingPage = props => {
           <div className="Content__Left">
             <h3 className="Left__Tagline">
               <div className="Tagline__Phrase">
-                <p>Track where youve been.</p>
-                <p>Plan where youll go.</p>
+                <p>Track where you've been.</p>
+                <p>Plan where you'll go.</p>
               </div>
             </h3>
             <div className="Left__LoginBayContainer">
@@ -49,7 +49,9 @@ const LandingPage = props => {
             </div>
           </div>
           <div className="Content__Right">
-            <div className="Right__Animation"/>
+            <div className="Right__Animation">
+              <Animation />
+            </div>
           </div>
         </div>
         <div className="Container__Footer">

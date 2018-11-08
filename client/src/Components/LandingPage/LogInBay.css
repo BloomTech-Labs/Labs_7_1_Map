@@ -1,6 +1,7 @@
 .LogInBay {
-  padding: 20px;
-  flex-flow: column nowrap;
+  border: 3px solid salmon;
+  display: flex;
+  justify-content: flex-end;
 }
 .LogInBay .LogInForm {
   display: flex;
@@ -8,6 +9,7 @@
   align-items: center;
   height: auto;
   width: 200px;
+  border: 1px solid red;
 }
 .LogInBay .LogInForm input {
   margin: 5px;
