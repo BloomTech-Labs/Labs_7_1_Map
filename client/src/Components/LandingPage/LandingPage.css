@@ -1,19 +1,69 @@
 .LandingPage {
   color: white;
+  width: 100%;
+  height: 100vh;
+}
+.LandingPage .LandingPage__Container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   width: 100%;
   height: 100vh;
   background-color: #0099ff;
   background-position: center;
   background-size: cover;
 }
-.LandingPage .LandingPage__Tagline {
-  margin-bottom: 30px;
+.LandingPage .LandingPage__Container .Container__Header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid blue;
+  width: 100%;
+  height: 15vh;
 }
-.LandingPage .LandingPage__Header {
-  font-size: 2em;
-  margin: 20px;
+.LandingPage .LandingPage__Container .Container__Header .Header__Title {
+  border: 1px solid teal;
+  font-size: 2rem;
+  margin-left: 3%;
+}
+.LandingPage .LandingPage__Container .Container__Content {
+  width: 100%;
+  border: 1px solid black;
+}
+.LandingPage .LandingPage__Container .Container__Content .Content__Left {
+  border: 1px solid red;
+  width: 50%;
+}
+.LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__Tagline {
+  height: 30vh;
+  border: 1px solid green;
+  display: flex;
+  justify-content: flex-end;
+}
+.LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__Tagline .Tagline__Phrase {
+  border: 2px solid pink;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__Tagline .Tagline__Phrase p {
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+  margin: 10px 0;
+}
+.LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__LoginBayContainer {
+  border: 1px solid darkgoldenrod;
+}
+.LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__LoginBayContainer .LoginBayContainer__LoginBay {
+  border: 1px solid magenta;
+}
+.LandingPage .LandingPage__Container .Container__Content .Content__Right {
+  border: 1px solid black;
+  width: 50%;
+}
+.LandingPage .LandingPage__Container .Container__Content .Content__Right .Right__Animation {
+  border: 1px solid indigo;
+}
+.LandingPage .LandingPage__Container .Container__Footer {
+  border: 1px solid purple;
 }
