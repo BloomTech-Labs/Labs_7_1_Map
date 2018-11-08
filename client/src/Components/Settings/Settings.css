@@ -14,13 +14,13 @@
   transition-property: all;
   transition-duration: 0.8s;
 }
+.Settings .Settings__Header {
+  font-size: 2em;
+  font-family: Pacifico, serif;
+}
 .Settings-closed {
   right: -300px;
 }
 .Settings-open {
   right: 0px;
-}
-.Settings-open .Settings__Header {
-  font-size: 2em;
-  font-family: Pacifico, serif;
 }

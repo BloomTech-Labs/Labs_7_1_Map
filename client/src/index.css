@@ -1,14 +1,14 @@
 @font-face {
-  font-family: 'Fanwood Text';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Fanwood Text'), local('FanwoodText-Regular'), url(https://fonts.gstatic.com/s/fanwoodtext/v7/3XFtErwl05Ad_vSCF6Fq7xX2Qtzc.ttf) format('truetype');
-}
-@font-face {
   font-family: 'Pacifico';
   font-style: normal;
   font-weight: 400;
   src: local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/s/pacifico/v12/FwZY7-Qmy14u9lezJ-6H6Mw.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxP.ttf) format('truetype');
 }
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
@@ -118,7 +118,7 @@ section {
 }
 body {
   line-height: 1;
-  font-face: 'Fanwood Text', sans-serif;
+  font-family: Roboto, sans-serif;
 }
 ol,
 ul {
