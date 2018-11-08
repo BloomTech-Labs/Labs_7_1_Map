@@ -17,21 +17,3 @@
   margin-right: 10px;
   display: inline-block;
 }
-.Legend .NoInterest__gray {
-  background-color: gray;
-}
-.Legend .Wishlist__purple {
-  background-color: purple;
-}
-.Legend .Transited__yellow {
-  background-color: yellow;
-}
-.Legend .Visited__red {
-  background-color: red;
-}
-.Legend .Lived__blue {
-  background-color: blue;
-}
-.Legend .Home__green {
-  background-color: green;
-}
