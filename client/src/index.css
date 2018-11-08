@@ -142,7 +142,8 @@ table {
 h1 {
   font-family: 'Pacifico', sans-serif;
 }
-input button {
+button,
+input {
   font-family: inherit;
   font-size: 1em;
 }

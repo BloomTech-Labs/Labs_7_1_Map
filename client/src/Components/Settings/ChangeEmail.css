@@ -8,7 +8,7 @@
   cursor: pointer;
 }
 .ChangeEmail h1:hover {
-  color: maroon;
+  color: blue;
 }
 .ChangeEmail .Settings__ChangeEmail {
   display: flex;

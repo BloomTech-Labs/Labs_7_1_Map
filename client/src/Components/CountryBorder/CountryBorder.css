@@ -1,7 +1,7 @@
 .CountryBorder {
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
-  background: rgba(100, 99, 99, 0.2);
+  color: white;
   padding-bottom: 1rem;
 }
 .CountryBorder .ScratchCard__Container {

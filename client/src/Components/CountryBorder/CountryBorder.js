@@ -78,7 +78,12 @@ const draw = (context, canvasWidth, canvasHeight, bounds, geometry, color) => {
 export default class CountryBorder extends Component {
   state = {
     marks: {
-      0: 'None',
+      0: {
+        style: {
+          color: 'white'
+        },
+        label: 'None'
+      },
       1: {
         style: {
           color: 'purple'

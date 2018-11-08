@@ -39,30 +39,18 @@
   cursor: pointer;
 }
 .Nav .MenuItem:hover {
-  color: orangered;
+  color: blue;
 }
 .Nav .Center__friends {
-  font-size: 30px;
-}
-.Nav .Center__friends:hover {
-  outline: 2px solid red;
+  font-size: 20px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0);
 }
 .Nav .Center__friends:focus {
-  outline: 2px solid green;
-}
-.Nav .Center__search {
-  cursor: text;
-  font-size: 30px;
-  width: 150px;
-}
-.Nav .Center__search:hover {
-  outline: 2px solid red;
-}
-.Nav .Center__search:focus {
-  outline: 2px solid green;
+  outline: none;
 }
 .Nav .Right__signout {
-  color: orangered;
+  color: blue;
 }
 .Nav .Right__signout:hover {
   color: orange;
