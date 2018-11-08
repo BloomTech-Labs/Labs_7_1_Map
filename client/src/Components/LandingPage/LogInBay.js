@@ -124,7 +124,8 @@ class LogInBay extends React.Component {
       <AppContextConsumer>
         {({ handleSignIn }) => (
           <div className="LogInBay">
-            <form className="LogInBay__LogInForm" onSubmit={handleSignIn}>
+          <div className="LogInBay__Container">
+            <form className="Container__LogInForm" onSubmit={handleSignIn}>
               Sign In
               <input type="text" placeholder="Username" name="username" />
               <input type="password" placeholder="Password" name="password" />
@@ -133,11 +134,12 @@ class LogInBay extends React.Component {
 
             <button
               type="button"
-              className="LogInBay__Button"
+              className="Container__Button"
               onClick={this.handleOpenModal}
             >
               Sign Up
             </button>
+            </div>
 
             <ReactModal
               id="SignUpModal"
