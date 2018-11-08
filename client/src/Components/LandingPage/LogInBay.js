@@ -124,30 +124,22 @@ class LogInBay extends React.Component {
       <AppContextConsumer>
         {({ handleSignIn }) => (
           <div className="LogInBay">
-            <form className="LogInForm" onSubmit={handleSignIn}>
-              Sign In
-              <input type="text" placeholder="Username" name="username" />
-              <input type="password" placeholder="Password" name="password" />
-              <input type="submit" className="LogInBay__LogInButton"/>
-            </form>
-            {/* <br /> */}
-            {/* <p> - or -</p> */}
-            {/* <br /> */}
-            {/* <a href={`${BACKEND_URL}/facebook_login`}> */}
-            {/*   Login with Facebook */}
-            {/* </a> */}
-            <br />
-            <p> - or -</p>
-            <br />
+            <div className="LogInBay__Container">
+              <form className="Container__LogInForm" onSubmit={handleSignIn}>
+                Sign In
+                <input type="text" placeholder="Username" name="username" />
+                <input type="password" placeholder="Password" name="password" />
+                <input type="submit" className="Container__LogInButton" />
+              </form>
 
-            <button
-              type="button"
-              className="LogInBay__Button"
-              onClick={this.handleOpenModal}
-            >
-              Sign Up
-            </button>
-
+              <button
+                type="button"
+                className="Container__Button"
+                onClick={this.handleOpenModal}
+              >
+                Sign Up
+              </button>
+            </div>
             <ReactModal
               id="SignUpModal"
               style={SignUpModalStyles}

@@ -53,6 +53,7 @@
   margin: 10px 0;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__LoginBayContainer {
+  margin-top: 10vh;
   border: 1px solid darkgoldenrod;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__LoginBayContainer .LoginBayContainer__LoginBay {

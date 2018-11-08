@@ -1,38 +1,32 @@
 .LogInBay {
   border: 3px solid salmon;
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
 }
-.LogInBay .LogInForm {
+.LogInBay .LogInBay__Container {
+  width: 45%;
   display: flex;
-  flex-flow: column nowrap;
+  flex-direction: column;
   align-items: center;
-  height: auto;
-  width: 200px;
+}
+.LogInBay .LogInBay__Container .Container__LogInForm {
   border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
-.LogInBay .LogInForm input {
-  margin: 5px;
-  padding: 10px;
-  height: auto;
-  width: auto;
-  border-radius: 5px;
-}
-.LogInBay .LogInForm input[type='submit'] {
+.LogInBay .LogInBay__Container .Container__LogInForm input[type='submit'] {
   padding: 5px 15px;
   cursor: pointer;
   border-radius: 5px;
 }
-.LogInBay .LogInBay__Button {
-  height: 30px;
-  width: auto;
-  padding: 5px 15px;
+.LogInBay .LogInBay__Container .Container__Button {
   cursor: pointer;
-  border-radius: 5px;
 }
-.LogInBay .LogInBay__Button:focus {
+.LogInBay .LogInBay__Container .Container__Button:focus {
   border: none;
 }
-.LogInBay .LogInBay__Button:active {
+.LogInBay .LogInBay__Container .Container__Button:active {
   border: none;
 }

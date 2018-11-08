@@ -2,41 +2,34 @@
   // background-color: rgba(100, 100, 100, 0.5);
   border: 3px solid salmon;
   display: flex;
-  justify-content: flex-end;
-
-  .LogInForm {
+  flex-direction: column;
+  align-items: flex-end;
+  .LogInBay__Container {
+    width: 45%;
     display: flex;
-    flex-flow: column nowrap;
+    flex-direction: column;
     align-items: center;
-    height: auto;
-    width: 200px;
-    border: 1px solid red;
-    input {
-      margin: 5px;
-      padding: 10px;
-      width: auto;
-      height: auto;
-      width: auto;
-      border-radius: 5px;
+    .Container__LogInForm {
+      border: 1px solid red;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      input {
+      }
+      input[type='submit'] {
+        padding: 5px 15px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
     }
-    input[type='submit'] {
-      padding: 5px 15px;
+    .Container__Button {
       cursor: pointer;
-      border-radius: 5px;
-    }
-  }
-
-  .LogInBay__Button {
-    height: 30px;
-    width: auto;
-    padding: 5px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    &:focus {
-      border: none;
-    }
-    &:active {
-      border: none;
+      &:focus {
+        border: none;
+      }
+      &:active {
+        border: none;
+      }
     }
   }
 }
