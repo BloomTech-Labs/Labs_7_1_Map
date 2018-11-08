@@ -419,7 +419,6 @@ export class AppContextProvider extends Component {
           handleUpdatePreferences: this.handleUpdatePreferences,
           turnOnEditNote: this.turnOnEditNote,
           resetAppStateError: this.resetAppStateError,
-          toggleCountryPanel: this.toggleCountryPanel,
           updateCurrentCountry: this.handleUpdateCurrentCountry,
           updateUserPosition: this.handleUpdateUserPosition
         }}

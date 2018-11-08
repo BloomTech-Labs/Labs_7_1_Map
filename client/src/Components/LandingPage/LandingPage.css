@@ -1,5 +1,4 @@
 .LandingPage {
-  color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,9 +10,11 @@
   background-size: cover;
 }
 .LandingPage .LandingPage__Tagline {
+  color: white;
   margin-bottom: 30px;
 }
 .LandingPage .LandingPage__Header {
+  color: white;
   font-size: 2em;
   margin: 20px;
 }

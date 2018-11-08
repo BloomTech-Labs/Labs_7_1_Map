@@ -1,9 +1,13 @@
 .LogInBay {
-  // background-color: rgba(100, 100, 100, 0.5);
+  background-color: rgba(100, 100, 100, 0.5);
+  border-radius: 10px;
   padding: 20px;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+  .LoginBay__divider {
+    color: white;
+  }
 
   .LogInForm {
     display: flex;
@@ -11,6 +15,10 @@
     align-items: center;
     height: auto;
     width: 200px;
+    label {
+      color: white;
+      font-weight: bold;
+    }
     input {
       margin: 5px;
       padding: 10px;
