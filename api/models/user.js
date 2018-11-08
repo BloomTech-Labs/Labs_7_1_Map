@@ -61,7 +61,7 @@ const UserSchema = new Schema(
       theme: {
         type: String,
         required: true,
-        default: 'watercolor'
+        default: 'standard'
       },
       autoscratch: {
         type: Boolean,

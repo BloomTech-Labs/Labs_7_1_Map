@@ -24,7 +24,6 @@ class Preferences extends Component {
         : 'dark';
     return (
       <div className="Settings__Preferences">
-        <h1>Preferences</h1>
         <div className="Preferences__theme">
           <h5>Theme</h5>
           <select

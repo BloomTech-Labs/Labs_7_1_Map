@@ -3,19 +3,36 @@
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  border: 2px dotted red;
 }
 .LogInBay .LogInForm {
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  height: 100px;
+  height: auto;
   width: 200px;
 }
 .LogInBay .LogInForm input {
   margin: 5px;
+  padding: 10px;
+  height: auto;
+  width: auto;
+  border-radius: 5px;
 }
-.LogInBay .LogInBay__SignUpButton {
+.LogInBay .LogInForm input[type='submit'] {
+  padding: 5px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.LogInBay .LogInBay__Button {
   height: 30px;
-  width: 60px;
+  width: auto;
+  padding: 5px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.LogInBay .LogInBay__Button:focus {
+  border: none;
+}
+.LogInBay .LogInBay__Button:active {
+  border: none;
 }

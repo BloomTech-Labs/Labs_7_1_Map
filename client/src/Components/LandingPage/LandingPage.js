@@ -18,8 +18,8 @@ const LandingPage = props => {
   }
   return (
     <div className="LandingPage">
-      <img src={Logo} alt="logo" className="LandingPage__Logo" />
-
+      {/* <img src={Logo} alt="logo" className="LandingPage__Logo" /> */}
+      <h1 className="LandingPage__Header">MapScratcher</h1>
       <h3 className="LandingPage__Tagline">
         Scratch the Itch to Track Your Trips
       </h3>

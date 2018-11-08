@@ -18,7 +18,7 @@ import './Map.css';
 class MapComponent extends Component {
   state = {
     zoom: 2,
-    mapTile: mapTilesUrls.dark,
+    mapTile: mapTilesUrls.standard,
     countryHover: null
   };
 
