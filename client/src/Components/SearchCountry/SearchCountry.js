@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import world from 'country-data';
 import { getCountryCodeFromName } from '../../utils.js';
 
+import './SearchCountry.css';
+
 class SearchCountry extends Component {
   state = {
     formValue: ''
@@ -23,14 +25,14 @@ class SearchCountry extends Component {
     return (
       <form className="SearchCountry" onSubmit={this.handleSearchSubmit}>
         <input
-          className="MenuItem Center__search"
+          className="SearchCountry__input"
           type="search"
           name="search"
           value={this.formValue}
           placeholder="Search Countries..."
           onChange={e => this.handleSearchChange(e)}
         />
-        <input type="submit" />
+        {/* <input type="submit" /> */}
       </form>
     );
   }

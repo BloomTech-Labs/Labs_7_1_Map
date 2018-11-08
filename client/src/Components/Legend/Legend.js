@@ -19,7 +19,7 @@ const Legend = () => {
       </div>
       <div className="Legend__Visited">
         <span className="Visited__red"  style={{ "backgroundColor": colorPalette[3] }}/>
-        Vistied
+        Visited
       </div>
       <div className="Legend__Lived">
         <span className="Lived__blue"  style={{ "backgroundColor": colorPalette[4] }}/>

@@ -2,9 +2,9 @@ const colorPalette = {
   0: 'gray',
   1: '#6C596E', // wishlist
   2: '#43915F', // transited
-  3: '#A62639', // vistied
-  4: '#4B88A2' // livedIn
-}
+  3: '#A62639', // visited
+  4: '#427AA1' // livedIn
+};
 
 // Styles for the highlight of a clicked on country
 const styleSelected = {

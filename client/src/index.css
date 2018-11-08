@@ -119,6 +119,8 @@ section {
 body {
   line-height: 1;
   font-family: Roboto, sans-serif;
+  color: gray;
+  background-color: #BFBDC1;
 }
 ol,
 ul {
@@ -144,9 +146,11 @@ h1 {
 }
 button,
 input {
-  font-family: inherit;
+  font-family: Roboto, sans-serif;
   font-size: 1em;
   color: inherit;
+  padding: 8px;
+  border: 1px solid rgba(200, 200, 200, 0.6);
 }
 select,
 option {
