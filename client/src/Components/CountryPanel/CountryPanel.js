@@ -18,7 +18,7 @@ const CountryPanel = () => {
             <div className="Card ">
               <div className="Card_Header">
                 <span>{value.AppState.currentCountry.info.emoji}</span>
-                <span>{value.AppState.currentCountry.info.name}</span>
+                <h1>{value.AppState.currentCountry.info.name}</h1>
                 <FontAwesomeIcon
                   className="closeCountryPanelIcon"
                   onClick={value.closeCountryPanel}

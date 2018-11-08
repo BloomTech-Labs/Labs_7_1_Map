@@ -17,7 +17,7 @@ import './Map.css';
 
 class MapComponent extends Component {
   state = {
-    zoom: 2,
+    zoom: 3,
     mapTile: mapTilesUrls.standard,
     countryHover: null
   };
@@ -55,7 +55,7 @@ class MapComponent extends Component {
   render() {
     const position = this.props.userPosition
       ? [this.props.userPosition.lat, this.props.userPosition.lng]
-      : [0, 0]; // Arbitrary value, can be changed to something else
+      : [0, 20]; // Arbitrary value, can be changed to something else
 
     const theme =
       this.props.user && this.props.user.preferences
@@ -68,7 +68,7 @@ class MapComponent extends Component {
         zoom={this.state.zoom}
         className="MapComponent"
         minZoom={2}
-        maxZoom={12}
+        // maxZoom={12}
         maxBounds={bounds}
         onClick={this.handleClick}
         onMouseMove={this.handleMove}

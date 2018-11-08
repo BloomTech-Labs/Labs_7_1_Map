@@ -80,7 +80,7 @@ export default class CountryBorder extends Component {
     marks: {
       0: {
         style: {
-          color: 'white'
+          color: 'gray'
         },
         label: 'None'
       },
