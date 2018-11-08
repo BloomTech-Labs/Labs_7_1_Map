@@ -90,7 +90,7 @@ class ChangePassword extends Component {
   render() {
     return (
       <div className="ChangePassword">
-        <h4 onClick={() => this.toggleShow()}>Change Password...</h4>
+        <h1 onClick={() => this.toggleShow()}>Change Password...</h1>
         {this.state.show && (
           <form
             onSubmit={this.handleSubmit}

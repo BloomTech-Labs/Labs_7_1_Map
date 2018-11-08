@@ -65,7 +65,7 @@ class ChangeEmail extends Component {
   render() {
     return (
       <div className="ChangeEmail">
-        <h4 onClick={() => this.toggleShow()}>Change Email...</h4>
+        <h1 onClick={() => this.toggleShow()}>Change Email...</h1>
         {this.state.show && (
           <form onSubmit={this.handleSubmit} className="Settings__ChangeEmail">
             <div className="ChangeEmail__newEmail">
@@ -78,17 +78,6 @@ class ChangeEmail extends Component {
                 onChange={e => this.handleChange(e)}
               />
             </div>
-
-            {/* <div className="ChangeEmail__currentPassword"> */}
-            {/*   <h5>Current Password</h5> */}
-            {/*   <input */}
-            {/*     type="password" */}
-            {/*     name="currentPassword" */}
-            {/*     placeholder="Current Password" */}
-            {/*     value={this.state.currentPassword} */}
-            {/*     onChange={e => this.handleChange(e)} */}
-            {/*   /> */}
-            {/* </div> */}
 
             <input
               className="ChangeEmail__submit"

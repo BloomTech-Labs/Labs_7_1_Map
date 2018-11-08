@@ -24,7 +24,7 @@ class Settings extends Component {
                 : 'Settings Settings-closed'
             }
           >
-            <h1>Settings</h1>
+            <div className="Settings__Header">Settings</div>
             <Preferences
               user={AppState.user}
               handleUpdatePreferences={handleUpdatePreferences}

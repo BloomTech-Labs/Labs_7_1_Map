@@ -15,7 +15,7 @@ const Nav = props => {
     <AppContextConsumer>
       {({ handleSignOut }) => (
         <div className="Nav">
-          <div className="Nav__title">Scratch-N-Map</div>
+          <h1 className="Nav__title">Scratch-N-Map</h1>
 
           <div className="Nav__Center">
             <select
