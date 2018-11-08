@@ -1,91 +1,56 @@
-:root {
-	--black: #000000;
-	--darkGrey: #777777;
-	--malachite: #20bf55;
-	--royal: #0b4f6c;
-	--silver: #dddddd;
-	--sky: #01baef;
-	--slate: #eaeaea;
-	--white: #ffffff;
-	--blue: #007bff;
-	--indigo: #6610f2;
-	--purple: #6f42c1;
-	--pink: #e83e8c;
-	--red: #dc3545;
-	--orange: #fd7e14;
-	--yellow: #ffc107;
-	--green: #28a745;
-	--teal: #20c997;
-	--cyan: #17a2b8;
-	--white: #fff;
-	--gray: #6c757d;
-	--gray-dark: #343a40;
-	--primary: #007bff;
-	--secondary: #6c757d;
-	--success: #28a745;
-	--info: #17a2b8;
-	--warning: #ffc107;
-	--danger: #dc3545;
-	--light: #f8f9fa;
-	--dark: #343a40;
-	--breakpoint-xs: 0;
-	--breakpoint-sm: 576px;
-	--breakpoint-md: 768px;
-	--breakpoint-lg: 992px;
-	--breakpoint-xl: 1200px;
-	--font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif,
-		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-	--font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-}
+@import url('https://fonts.googleapis.com/css?family=Roboto|Pacifico');
 
-* {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em,
+img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u,
+i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table,
+caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details,
+embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby,
+section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu,
+nav, section {
+  display: block;
 }
 
 body {
-	font-family: sans-serif;
-	display: grid;
-	height: 100vh;
+  line-height: 1;
+  font-family: Roboto, sans-serif;
+}
+ol, ul {
+  list-style: none;
 }
 
-a {
-	text-decoration: none;
+blockquote, q {
+  quotes: none;
 }
 
-.danger {
-	color: var(--red);
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none;
 }
 
-.bold {
-	font-weight: 700;
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
-.mobile {
-	display: none;
+h1 {
+  font-family: 'Pacifico', sans-serif;
 }
-
-.tablet {
-	display: none;
-}
-
-@media only screen and (max-width: 900px) {
-	.desktop {
-		display: none;
-	}
-
-	.tablet {
-		display: flex;
-	}
-}
-
-@media only screen and (max-width: 740px) {
-	.desktop {
-		display: none;
-	}
-
-	.mobile {
-		display: inline-block;
-	}
+button, input {
+    font-family: inherit;
+    font-size: 1em;
 }

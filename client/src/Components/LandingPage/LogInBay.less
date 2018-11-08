@@ -1,23 +1,42 @@
 .LogInBay {
+  // background-color: rgba(100, 100, 100, 0.5);
   padding: 20px;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  border: 2px dotted red;
 
   .LogInForm {
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    height: 100px;
+    height: auto;
     width: 200px;
     input {
       margin: 5px;
+      padding: 10px;
+      width: auto;
+      height: auto;
+      width: auto;
+      border-radius: 5px;
+    }
+    input[type='submit'] {
+      padding: 5px 15px;
+      cursor: pointer;
+      border-radius: 5px;
     }
   }
 
-  .LogInBay__SignUpButton {
+  .LogInBay__Button {
     height: 30px;
-    width: 60px;
+    width: auto;
+    padding: 5px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    &:focus {
+      border: none;
+    }
+    &:active {
+      border: none;
+    }
   }
 }

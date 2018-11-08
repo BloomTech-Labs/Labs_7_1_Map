@@ -4,11 +4,11 @@
   align-items: center;
   margin: 20px;
 }
-.ChangeEmail h4 {
+.ChangeEmail h1 {
   cursor: pointer;
 }
-.ChangeEmail h4:hover {
-  color: maroon;
+.ChangeEmail h1:hover {
+  color: blue;
 }
 .ChangeEmail .Settings__ChangeEmail {
   display: flex;
