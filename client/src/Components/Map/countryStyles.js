@@ -1,8 +1,9 @@
 const colorPalette = {
-  wishlist: '#6C596E',
-  transited: 'yellow',
-  visited: '#A62639',
-  livedIn: '#4B88A2'
+  0: 'gray',
+  1: '#6C596E', // wishlist
+  2: '#43915F', // transited
+  3: '#A62639', // vistied
+  4: '#4B88A2' // livedIn
 }
 
 // Styles for the highlight of a clicked on country
@@ -36,7 +37,7 @@ const styleWishlist = {
   // status_code: 1
   stroke: false,
   fill: true,
-  fillColor: colorPalette.wishlist,
+  fillColor: colorPalette[1],
   fillOpacity: 1
 };
 
@@ -44,7 +45,7 @@ const styleTransited = {
   // status_code: 1
   stroke: false,
   fill: true,
-  fillColor: colorPalette.transited,
+  fillColor: colorPalette[2],
   fillOpacity: 1
 };
 
@@ -52,7 +53,7 @@ const styleVisited = {
   // status_code: 3
   stroke: false,
   fill: true,
-  fillColor: colorPalette.visited,
+  fillColor: colorPalette[3],
   fillOpacity: 1
 };
 
@@ -60,7 +61,7 @@ const styleLivedIn = {
   // status_code: 4
   stroke: false,
   fill: true,
-  fillColor: colorPalette.livedIn,
+  fillColor: colorPalette[4],
   fillOpacity: 1
 };
 

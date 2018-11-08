@@ -73,6 +73,7 @@ class MapComponent extends Component {
         onClick={this.handleClick}
         onMouseMove={this.handleMove}
         onZoomend={this.handleZoomend}
+        zoomControl={false}
       >
         <TileLayer
           attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"

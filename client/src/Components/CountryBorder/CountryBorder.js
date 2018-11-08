@@ -3,7 +3,7 @@ import Slider from 'rc-slider/lib/Slider';
 import ScratchCard from 'react-scratchcard';
 
 import { getBoundingBox } from '../../utils';
-import { countryStatusStyles } from '../Map/countryStyles.js';
+import { colorPalette } from '../Map/countryStyles.js';
 
 import './CountryBorder.css';
 import 'rc-slider/assets/index.css';
@@ -86,41 +86,44 @@ export default class CountryBorder extends Component {
       },
       1: {
         style: {
-          color: 'purple'
+          color: colorPalette[1]
         },
         label: 'Wishlist'
       },
       2: {
         style: {
-          color: 'yellow'
+          color: colorPalette[2]
         },
         label: 'Transited'
       },
       3: {
         style: {
-          color: 'red'
+          color: colorPalette[3]
         },
         label: 'Visited'
       },
       4: {
         style: {
-          color: 'blue'
+          color: colorPalette[4]
         },
         label: 'Lived'
       }
     }
   };
+
   componentDidMount() {
     this.drawBorder();
   }
+
   componentDidUpdate() {
     this.drawBorder();
   }
+
   drawBorder = () => {
     // Get the correct fill color based on status. Need to check if 
     // this.props.currentCountryStatus exists to prevent any crashes
     const color = this.props.currentCountryStatus
-      ? countryStatusStyles[this.props.currentCountryStatus].color
+      ? colorPalette[this.props.currentCountryStatus]
       : 'black';
     const canvas = this.refs.canvas;
     const context = canvas.getContext('2d');
