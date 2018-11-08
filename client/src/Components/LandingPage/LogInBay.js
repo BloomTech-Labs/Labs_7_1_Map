@@ -124,22 +124,21 @@ class LogInBay extends React.Component {
       <AppContextConsumer>
         {({ handleSignIn }) => (
           <div className="LogInBay">
-            <div className="LogInBay__Container">
-              <form className="Container__LogInForm" onSubmit={handleSignIn}>
-                Sign In
-                <input type="text" placeholder="Username" name="username" />
-                <input type="password" placeholder="Password" name="password" />
-                <input type="submit" className="Container__LogInButton" />
-              </form>
+            <form className="LogInBay__LogInForm" onSubmit={handleSignIn}>
+              Sign In
+              <input type="text" placeholder="Username" name="username" />
+              <input type="password" placeholder="Password" name="password" />
+              <input type="submit" className="LogInBay__LogInButton"/>
+            </form>
 
-              <button
-                type="button"
-                className="Container__Button"
-                onClick={this.handleOpenModal}
-              >
-                Sign Up
-              </button>
-            </div>
+            <button
+              type="button"
+              className="LogInBay__Button"
+              onClick={this.handleOpenModal}
+            >
+              Sign Up
+            </button>
+
             <ReactModal
               id="SignUpModal"
               style={SignUpModalStyles}
@@ -190,3 +189,4 @@ class LogInBay extends React.Component {
 }
 
 export default LogInBay;
+

@@ -16,6 +16,11 @@
   flex-direction: column;
   width: 100%;
 }
+.LogInBay .LogInBay__Container .Container__LogInForm input {
+  font-size: 1 rem;
+  width: 50%;
+  border: none;
+}
 .LogInBay .LogInBay__Container .Container__LogInForm input[type='submit'] {
   padding: 5px 15px;
   cursor: pointer;
