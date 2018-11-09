@@ -18,7 +18,7 @@ class Settings extends Component {
     return (
       <AppContextConsumer>
         {({ AppState, handleUpdatePreferences }) => {
-          const currentTheme = AppState.user.preferences.theme;
+          const currentTheme = AppState.user.preferences ? AppState.user.preferences.theme : 'standard';
           return (
             <div
               className={

@@ -15,13 +15,15 @@ const Nav = props => {
   return (
     <AppContextConsumer>
       {({ handleSignOut, AppState }) => {
-        const currentTheme = AppState.user.preferences.theme;
+        const currentTheme = AppState.user.preferences
+          ? AppState.user.preferences.theme
+          : 'standard';
         return (
           <div
             className="Nav"
             style={{
               backgroundColor: themeColors.background[currentTheme],
-              color: themeColors.color[AppState.user.preferences.theme]
+              color: themeColors.color[currentTheme]
             }}
           >
             <h1 className="Nav__title">MapScratcher</h1>

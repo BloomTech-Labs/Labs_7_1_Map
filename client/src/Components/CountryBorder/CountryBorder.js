@@ -125,7 +125,7 @@ export default class CountryBorder extends Component {
       : 'black';
     const canvas = this.refs.canvas;
     const context = canvas.getContext('2d');
-    context.clearRect(0, 0, canvasWidth, canvasHeight);
+    if (context) context.clearRect(0, 0, canvasWidth, canvasHeight);
     // only draw if we have the geometry
     if (this.props.geometry) {
       draw(

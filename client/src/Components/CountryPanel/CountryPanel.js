@@ -12,7 +12,10 @@ const CountryPanel = () => {
   return (
     <AppContextConsumer>
       {value => {
-        const currentTheme = value.AppState.user.preferences.theme;
+        const currentTheme =
+          value && value.AppState.user.preferences
+            ? value.AppState.user.preferences.theme
+            : 'standard';
         return value && value.AppState.currentCountry.info ? (
           <div
             style={{
