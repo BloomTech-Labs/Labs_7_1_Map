@@ -3,6 +3,7 @@ import world from 'country-data';
 import { getCountryCodeFromName } from '../../utils.js';
 
 import './SearchCountry.css';
+import themeColors from '../themeColors.js';
 
 class SearchCountry extends Component {
   state = {
@@ -31,8 +32,8 @@ class SearchCountry extends Component {
           value={this.formValue}
           placeholder="Search Countries..."
           onChange={e => this.handleSearchChange(e)}
+          style={{ backgroundColor: themeColors.background[this.props.theme] }}
         />
-        {/* <input type="submit" /> */}
       </form>
     );
   }

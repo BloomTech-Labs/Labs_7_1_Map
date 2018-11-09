@@ -37,6 +37,7 @@ class Dashboard extends Component {
             <SearchCountry
               updateCurrentCountry={value.updateCurrentCountry}
               handleSearchSubmit={this.handleSearchSubmit}
+              theme={value.AppState.user.preferences.theme}
             />
           )}
         </AppContextConsumer>

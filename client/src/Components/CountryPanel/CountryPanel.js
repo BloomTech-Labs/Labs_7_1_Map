@@ -6,14 +6,20 @@ import CountryBorder from '../CountryBorder/CountryBorder';
 import Note from '../Note/Note';
 import FriendList from '../Friends/FriendList';
 import './CountryPanel.css';
+import themeColors from '../themeColors.js';
 
 const CountryPanel = () => {
   return (
     <AppContextConsumer>
       {value =>
-        value &&
-        value.AppState.currentCountry.info ? (
+        value && value.AppState.currentCountry.info ? (
           <div
+            style={{
+              backgroundColor:
+                themeColors.background[
+                  value.AppState.user.preferences.theme
+                ]
+            }}
             className={
               value.AppState.countryPanelIsOpen
                 ? 'CountryPanel CountryPanel-open'

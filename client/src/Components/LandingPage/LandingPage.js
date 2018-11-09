@@ -6,7 +6,6 @@ import LogInBay from './LogInBay';
 import FailedLoginPopUp from './FailedLoginPopUp';
 import Footer from '../Footer/Footer';
 
-import Logo from '../../logo.png';
 import './LandingPage.css';
 
 const LandingPage = props => {
@@ -18,7 +17,6 @@ const LandingPage = props => {
   }
   return (
     <div className="LandingPage">
-      {/* <img src={Logo} alt="logo" className="LandingPage__Logo" /> */}
       <h1 className="LandingPage__Header">MapScratcher</h1>
       <h3 className="LandingPage__Tagline">
         Scratch the Itch to Track Your Trips

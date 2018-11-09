@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppContextConsumer } from '../../AppContext';
 import './Nav.css';
+import themeColors from '../themeColors.js';
 
 const friendsDummyData = [
   'My Travels',
@@ -13,8 +14,11 @@ const friendsDummyData = [
 const Nav = props => {
   return (
     <AppContextConsumer>
-      {({ handleSignOut }) => (
-        <div className="Nav">
+      {({ handleSignOut, AppState }) => (
+        <div
+          className="Nav"
+          style={{ backgroundColor: themeColors.background[AppState.user.preferences.theme] }}
+        >
           <h1 className="Nav__title">MapScratcher</h1>
 
           <div className="Nav__Center">

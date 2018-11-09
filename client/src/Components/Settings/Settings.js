@@ -6,6 +6,7 @@ import ChangePassword from './ChangePassword';
 import Preferences from './Preferences';
 
 import './Settings.css';
+import themeColors from '../themeColors.js';
 
 class Settings extends Component {
   state = {
@@ -23,6 +24,7 @@ class Settings extends Component {
                 ? 'Settings Settings-open'
                 : 'Settings Settings-closed'
             }
+            style={{ backgroundColor: themeColors.background[AppState.user.preferences.theme] }}
           >
             <div className="Settings__Header">Settings</div>
             <Preferences
