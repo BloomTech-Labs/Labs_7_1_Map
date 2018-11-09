@@ -126,10 +126,10 @@ class LogInBay extends React.Component {
           <div className="LogInBay">
           <div className="LogInBay__Container">
             <form className="Container__LogInForm" onSubmit={handleSignIn}>
-              Sign In
+              Login with your account:
               <input type="text" placeholder="Username" name="username" />
               <input type="password" placeholder="Password" name="password" />
-              <input type="submit" className="LogInBay__LogInButton"/>
+              <input type="submit" className="LogInBay__LogInButton" value="Login"/>
             </form>
 
             <button
@@ -137,7 +137,7 @@ class LogInBay extends React.Component {
               className="Container__Button"
               onClick={this.handleOpenModal}
             >
-              Sign Up
+              New? Sign Up
             </button>
             </div>
 

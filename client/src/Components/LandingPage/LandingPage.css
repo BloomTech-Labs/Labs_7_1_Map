@@ -31,7 +31,8 @@
   width: 50%;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__Tagline {
-  height: 30vh;
+  margin-top: 13vh;
+  height: 25 vh;
   display: flex;
   justify-content: flex-end;
 }
