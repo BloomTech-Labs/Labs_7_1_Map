@@ -32,7 +32,10 @@ class SearchCountry extends Component {
           value={this.formValue}
           placeholder="Search Countries..."
           onChange={e => this.handleSearchChange(e)}
-          style={{ backgroundColor: themeColors.background[this.props.theme] }}
+          style={{
+            backgroundColor: themeColors.background[this.props.theme],
+            color: themeColors.color[this.props.theme]
+          }}
         />
       </form>
     );

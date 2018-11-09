@@ -1,9 +1,9 @@
 const themeColors = {
   background: {
     light: '#EEE',
-    dark: 'gray',
-    watercolor: 'beige',
-    toner: 'gray',
+    dark: '#444',
+    watercolor: '#DCC',
+    toner: '#222',
     standard: 'white'
   },
   color: {

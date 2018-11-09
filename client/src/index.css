@@ -158,3 +158,6 @@ option {
   font-size: 1em;
   color: inherit;
 }
+::placeholder {
+  color: inherit;
+}

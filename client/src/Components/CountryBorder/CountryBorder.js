@@ -12,7 +12,7 @@ import travellingImg from '../../travelling.jpg';
 const canvasWidth = 300;
 const canvasHeight = 150;
 
-const settings = {
+const scratchcardSettings = {
   width: canvasWidth,
   height: canvasHeight,
   image: travellingImg,
@@ -70,8 +70,6 @@ const draw = (context, canvasWidth, canvasHeight, bounds, geometry, color) => {
       context.fill();
       // context.stroke();
     });
-  } else {
-    console.log('NONE Drawn');
   }
 };
 
@@ -139,43 +137,34 @@ export default class CountryBorder extends Component {
         color
       );
     }
-    // else {
-    //   this.props.closeCountryPanel();
-    // }
   };
 
   render() {
-    let countryBorderMap;
-    if (this.props.scratched) {
-      countryBorderMap = (
-        <React.Fragment>
-          <canvas
-            ref="canvas"
-            className="CountryBorder__Canvas"
-            width={canvasWidth}
-            height={canvasHeight}
-          />
-        </React.Fragment>
-      );
-    } else {
-      countryBorderMap = (
-        <ScratchCard
-          className="CountryBorder__Canvas"
-          {...settings}
-          onComplete={this.props.handleScratched}
-        >
-          <canvas
-            ref="canvas"
-            className="CountryBorder__Border"
-            width={canvasWidth}
-            height={canvasHeight}
-          />
-        </ScratchCard>
-      );
-    }
     return (
       <div className="CountryBorder">
-        {countryBorderMap}
+        {this.props.scratched ? (
+          <React.Fragment>
+            <canvas
+              ref="canvas"
+              className="CountryBorder__Canvas"
+              width={canvasWidth}
+              height={canvasHeight}
+            />
+          </React.Fragment>
+        ) : (
+          <ScratchCard
+            className="CountryBorder__Canvas"
+            {...scratchcardSettings}
+            onComplete={this.props.handleScratched}
+          >
+            <canvas
+              ref="canvas"
+              className="CountryBorder__Border"
+              width={canvasWidth}
+              height={canvasHeight}
+            />
+          </ScratchCard>
+        )}
         <div className="CountryBorder__SliderContainer">
           <Slider
             className="Slider"
