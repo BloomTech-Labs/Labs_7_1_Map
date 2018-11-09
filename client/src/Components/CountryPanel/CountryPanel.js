@@ -9,16 +9,22 @@ import './CountryPanel.css';
 
 const CountryPanel = () => {
   return (
-    <div className="CountryPanel">
-      <AppContextConsumer>
-        {value =>
-          value &&
-          value.AppState.countryPanelIsOpen &&
-          value.AppState.currentCountry.info ? (
+    <AppContextConsumer>
+      {value =>
+        value &&
+        value.AppState.countryPanelIsOpen &&
+        value.AppState.currentCountry.info ? (
+          <div
+            className={
+              value.AppState.countryPanelIsOpen
+                ? 'CountryPanel CountryPanel-open'
+                : 'CountryPanel CountryPanel-closed'
+            }
+          >
             <div className="Card ">
               <div className="Card_Header">
                 <span>{value.AppState.currentCountry.info.emoji}</span>
-                <span>{value.AppState.currentCountry.info.name}</span>
+                <h1>{value.AppState.currentCountry.info.name}</h1>
                 <FontAwesomeIcon
                   className="closeCountryPanelIcon"
                   onClick={value.closeCountryPanel}
@@ -48,10 +54,10 @@ const CountryPanel = () => {
 
               <FriendList user={value.AppState.user} />
             </div>
-          ) : null
-        }
-      </AppContextConsumer>
-    </div>
+          </div>
+        ) : null
+      }
+    </AppContextConsumer>
   );
 };
 

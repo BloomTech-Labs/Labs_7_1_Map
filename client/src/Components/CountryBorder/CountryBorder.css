@@ -1,8 +1,7 @@
 .CountryBorder {
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
-  color: white;
-  padding-bottom: 1rem;
+  padding-bottom: 30px;
 }
 .CountryBorder .ScratchCard__Container {
   cursor: url(coincursor.png), auto;
@@ -21,5 +20,5 @@
   padding: 0.2rem 0;
 }
 .CountryBorder .CountryBorder__SliderContainer .Slider {
-  width: 90%;
+  width: 85%;
 }

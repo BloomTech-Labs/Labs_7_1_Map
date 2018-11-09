@@ -17,7 +17,7 @@ import './Map.css';
 
 class MapComponent extends Component {
   state = {
-    zoom: 2,
+    zoom: 3,
     mapTile: mapTilesUrls.standard,
     countryHover: null
   };
@@ -27,10 +27,6 @@ class MapComponent extends Component {
     const countryCode = await wc([e.latlng.lng, e.latlng.lat]);
 
     const countryInfo = getCountryInfoFromCode(countryCode);
-
-    // This can be removed once popup is not needed since
-    // the lat/lng in local state isn't required by anything else.
-    //this.setState({ ...e.latlng });
 
     // Update AppContext with the info of the currently selected country
     this.props.updateCurrentCountry(countryCode, countryInfo);
@@ -55,7 +51,7 @@ class MapComponent extends Component {
   render() {
     const position = this.props.userPosition
       ? [this.props.userPosition.lat, this.props.userPosition.lng]
-      : [0, 0]; // Arbitrary value, can be changed to something else
+      : [0, 20]; // Arbitrary value, can be changed to something else
 
     const theme =
       this.props.user && this.props.user.preferences
@@ -68,11 +64,12 @@ class MapComponent extends Component {
         zoom={this.state.zoom}
         className="MapComponent"
         minZoom={2}
-        maxZoom={12}
+        // maxZoom={12}
         maxBounds={bounds}
         onClick={this.handleClick}
         onMouseMove={this.handleMove}
         onZoomend={this.handleZoomend}
+        zoomControl={false}
       >
         <TileLayer
           attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"

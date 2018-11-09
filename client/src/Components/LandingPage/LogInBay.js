@@ -125,7 +125,7 @@ class LogInBay extends React.Component {
         {({ handleSignIn }) => (
           <div className="LogInBay">
             <form className="LogInForm" onSubmit={handleSignIn}>
-              Sign In
+              <label htmlFor="">SIGN IN</label>
               <input type="text" placeholder="Username" name="username" />
               <input type="password" placeholder="Password" name="password" />
               <input type="submit" className="LogInBay__LogInButton"/>
@@ -137,7 +137,7 @@ class LogInBay extends React.Component {
             {/*   Login with Facebook */}
             {/* </a> */}
             <br />
-            <p> - or -</p>
+            <p className="LoginBay__divider"> - or -</p>
             <br />
 
             <button

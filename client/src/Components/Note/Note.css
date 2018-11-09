@@ -1,5 +1,5 @@
 .Note {
-  max-width: 320px;
+  width: 100%;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   padding: 0.2rem;
@@ -12,9 +12,8 @@
   color: green;
 }
 .Note .Notes__ViewMode .ViewMode__edit {
-  position: absolute;
+  position: relative;
   right: 3px;
-  margin-right: 0.2rem;
 }
 .Note .Notes__ViewMode .ViewMode__edit:hover {
   cursor: pointer;
@@ -23,7 +22,6 @@
 .Note .Notes__EditMode .EditMode__save {
   position: absolute;
   right: 5px;
-  margin-right: 0.2rem;
 }
 .Note .Notes__EditMode .EditMode__save:hover {
   cursor: pointer;

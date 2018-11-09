@@ -7,8 +7,8 @@
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
-  font-weight: 400;
-  src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu4mxP.ttf) format('truetype');
+  font-weight: 300;
+  src: local('Roboto Light'), local('Roboto-Light'), url(https://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmSU5fBBc9.ttf) format('truetype');
 }
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
@@ -119,6 +119,8 @@ section {
 body {
   line-height: 1;
   font-family: Roboto, sans-serif;
+  color: gray;
+  background-color: #BFBDC1;
 }
 ol,
 ul {
@@ -144,6 +146,15 @@ h1 {
 }
 button,
 input {
+  font-family: Roboto, sans-serif;
+  font-size: 1em;
+  color: inherit;
+  padding: 8px;
+  border: 1px solid rgba(200, 200, 200, 0.6);
+}
+select,
+option {
   font-family: inherit;
   font-size: 1em;
+  color: inherit;
 }

@@ -41,11 +41,11 @@ const Nav = props => {
               className="MenuItem Right__settings"
               onClick={() => props.toggleSettings()}
             >
-              Settings
+              SETTINGS
             </div>
 
             <div className="MenuItem Right__signout" onClick={handleSignOut}>
-              Sign Out
+              SIGN OUT
             </div>
           </div>
         </div>

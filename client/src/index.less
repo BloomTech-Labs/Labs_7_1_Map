@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto|Pacifico');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300|Pacifico');
 
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
@@ -28,7 +28,10 @@ nav, section {
 body {
   line-height: 1;
   font-family: Roboto, sans-serif;
+  color: gray;
+  background-color: #BFBDC1;
 }
+
 ol, ul {
   list-style: none;
 }
@@ -50,7 +53,18 @@ table {
 h1 {
   font-family: 'Pacifico', sans-serif;
 }
+
 button, input {
-    font-family: inherit;
-    font-size: 1em;
+  font-family: Roboto, sans-serif;
+  font-size: 1em;
+  color: inherit;
+  padding: 8px;
+  border: 1px solid rgba(200, 200, 200, 0.6);
+  // color: gray;
+}
+
+select, option {
+  font-family: inherit;
+  font-size: 1em;
+  color: inherit
 }
