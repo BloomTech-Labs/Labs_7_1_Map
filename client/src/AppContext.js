@@ -24,6 +24,7 @@ export class AppContextProvider extends Component {
     failedLogin: false,
     failedSignUp: false,
     currentCountryStatus: null,
+    showingSettings: false,
     countryPanelIsOpen: false,
     failedSignUpMessage: ''
   };
@@ -68,6 +69,10 @@ export class AppContextProvider extends Component {
       this.getLocationUsingIP(); // geo location not available on device
     }
   } // componentDidMount
+
+  toggleSettings = () => {
+    this.setState({ showingSettings: !this.state.showingSettings });
+  };
 
   closeCountryPanel = () => {
     this.setState({
@@ -424,7 +429,8 @@ export class AppContextProvider extends Component {
           turnOnEditNote: this.turnOnEditNote,
           resetAppStateError: this.resetAppStateError,
           updateCurrentCountry: this.handleUpdateCurrentCountry,
-          updateUserPosition: this.handleUpdateUserPosition
+          updateUserPosition: this.handleUpdateUserPosition,
+          toggleSettings: this.toggleSettings
         }}
       >
         {this.props.children}

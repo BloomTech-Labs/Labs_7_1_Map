@@ -29,9 +29,6 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="Dashboard">
-        <Nav toggleSettings={this.toggleSettings} />
-        <CountryPanel />
-        <Legend />
         <AppContextConsumer>
           {value => {
             const currentTheme =
@@ -39,34 +36,29 @@ class Dashboard extends Component {
                 ? value.AppState.user.preferences.theme
                 : 'standard';
             return (
-              <SearchCountry
-                updateCurrentCountry={value.updateCurrentCountry}
-                handleSearchSubmit={this.handleSearchSubmit}
-                theme={currentTheme}
-              />
+              <React.Fragment>
+                <Nav toggleSettings={value.toggleSettings} />
+                <CountryPanel />
+                <Legend />
+                <SearchCountry
+                  updateCurrentCountry={value.updateCurrentCountry}
+                  handleSearchSubmit={this.handleSearchSubmit}
+                  theme={currentTheme}
+                />
+                <Map
+                  userPosition={value.AppState.userPosition}
+                  updateUserPosition={value.updateUserPosition}
+                  searchCountry={this.state.searchCountry}
+                  updateCurrentCountry={value.updateCurrentCountry}
+                  currentCountry={value.AppState.currentCountry}
+                  user={value.AppState.user}
+                  scratched={value.AppState.scratched}
+                />
+                <Settings showingSettings={value.AppState.showingSettings} />
+              </React.Fragment>
             );
           }}
         </AppContextConsumer>
-        <AppContextConsumer>
-          {value => {
-            return (
-              <Map
-                userPosition={value.AppState.userPosition}
-                updateUserPosition={value.updateUserPosition}
-                searchCountry={this.state.searchCountry}
-                updateCurrentCountry={value.updateCurrentCountry}
-                currentCountry={value.AppState.currentCountry}
-                user={value.AppState.user}
-                scratched={value.AppState.scratched}
-              />
-            );
-          }}
-        </AppContextConsumer>
-
-        <Settings
-          onClick={this.toggleSettings}
-          showingSettings={this.state.showingSettings}
-        />
       </div>
     );
   }
