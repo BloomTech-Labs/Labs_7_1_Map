@@ -22,22 +22,26 @@
   border: none;
   height: 3.4vh;
   padding-left: 3%;
-  background-color: #23CE6B;
+  background-color: #23ce6b;
 }
 .LogInBay .LogInBay__Container .Container__LogInForm input[type='submit'] {
   padding: 5px 15px;
   cursor: pointer;
   color: white;
   width: 100%;
+  height: 4vh;
   -webkit-box-shadow: 0 3px 2px #424242;
   -moz-box-shadow: 0 3px 2px #424242;
   box-shadow: 0 3px 2px #424242;
 }
-.LogInBay .LogInBay__Container .Container__LogInForm input[type=text] {
+.LogInBay .LogInBay__Container .Container__LogInForm input[type='submit']:hover {
+  background-color: #20c16b;
+}
+.LogInBay .LogInBay__Container .Container__LogInForm input[type='text'] {
   background-color: white;
   color: grey;
 }
-.LogInBay .LogInBay__Container .Container__LogInForm input[type=password] {
+.LogInBay .LogInBay__Container .Container__LogInForm input[type='password'] {
   background-color: white;
   color: grey;
 }
