@@ -1,6 +1,6 @@
 .LogInBay {
-  background-color: rgba(100, 100, 100, 0.5);
-  border-radius: 10px;
+  background-color: rgba(100, 100, 100, 0.3);
+  border-radius: 5px;
   padding: 20px;
   display: flex;
   flex-flow: column nowrap;
@@ -15,11 +15,13 @@
     align-items: center;
     height: auto;
     width: 200px;
+    color: white;
     label {
       color: white;
       font-weight: bold;
     }
     input {
+      color: white;
       margin: 5px;
       padding: 10px;
       width: auto;
@@ -28,18 +30,25 @@
       border-radius: 5px;
     }
     input[type='submit'] {
+      color: white;
       padding: 5px 15px;
       cursor: pointer;
       border-radius: 5px;
     }
+    ::placeholder {
+    color: #CCC;
+    opacity: 1;
+}
   }
 
   .LogInBay__Button {
+    color: white;
     height: 30px;
     width: auto;
     padding: 5px 15px;
     cursor: pointer;
     border-radius: 5px;
+    border: none;
     &:focus {
       border: none;
     }

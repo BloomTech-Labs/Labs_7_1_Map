@@ -5,7 +5,9 @@ import './Footer.css';
 const Footer = () => {
   return (
     <div className="Footer">
-      <p className="Footer-Copyright">Scratch N Map 2018</p>
+      <p className="Footer-Copyright" style={{ padding: '3px 8px' }}>
+        MapScratcher 2018
+      </p>
     </div>
   );
 };

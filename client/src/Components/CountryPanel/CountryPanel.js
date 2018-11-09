@@ -6,15 +6,22 @@ import CountryBorder from '../CountryBorder/CountryBorder';
 import Note from '../Note/Note';
 import FriendList from '../Friends/FriendList';
 import './CountryPanel.css';
+import themeColors from '../themeColors.js';
 
 const CountryPanel = () => {
   return (
     <AppContextConsumer>
-      {value =>
-        value &&
-        value.AppState.countryPanelIsOpen &&
-        value.AppState.currentCountry.info ? (
+      {value => {
+        const currentTheme =
+          value && value.AppState.user.preferences
+            ? value.AppState.user.preferences.theme
+            : 'standard';
+        return value && value.AppState.currentCountry.info ? (
           <div
+            style={{
+              backgroundColor: themeColors.background[currentTheme],
+              color: themeColors.color[currentTheme]
+            }}
             className={
               value.AppState.countryPanelIsOpen
                 ? 'CountryPanel CountryPanel-open'
@@ -55,8 +62,8 @@ const CountryPanel = () => {
               <FriendList user={value.AppState.user} />
             </div>
           </div>
-        ) : null
-      }
+        ) : null;
+      }}
     </AppContextConsumer>
   );
 };

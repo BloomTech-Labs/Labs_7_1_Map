@@ -33,12 +33,19 @@ class Dashboard extends Component {
         <CountryPanel />
         <Legend />
         <AppContextConsumer>
-          {value => (
-            <SearchCountry
-              updateCurrentCountry={value.updateCurrentCountry}
-              handleSearchSubmit={this.handleSearchSubmit}
-            />
-          )}
+          {value => {
+            const currentTheme =
+              value && value.AppState.user.preferences
+                ? value.AppState.user.preferences.theme
+                : 'standard';
+            return (
+              <SearchCountry
+                updateCurrentCountry={value.updateCurrentCountry}
+                handleSearchSubmit={this.handleSearchSubmit}
+                theme={currentTheme}
+              />
+            );
+          }}
         </AppContextConsumer>
         <AppContextConsumer>
           {value => {

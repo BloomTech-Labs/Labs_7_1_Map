@@ -248,6 +248,10 @@ export class AppContextProvider extends Component {
 
   // Update state with currently selected country, called in Map.js
   handleUpdateCurrentCountry = (code, info) => {
+    console.log(code);
+    if (!code)
+      return this.closeCountryPanel();
+
     const geoInfo = getCountryShapeFromCode(code);
     const scratched = this.isScratched(code);
     const notes = this.getCurrentCountryNotes(code);

@@ -120,7 +120,6 @@ body {
   line-height: 1;
   font-family: Roboto, sans-serif;
   color: gray;
-  background-color: #BFBDC1;
 }
 ol,
 ul {
@@ -151,10 +150,17 @@ input {
   color: inherit;
   padding: 8px;
   border: 1px solid rgba(200, 200, 200, 0.6);
+  background-color: inherit;
 }
 select,
 option {
   font-family: inherit;
   font-size: 1em;
   color: inherit;
+}
+::placeholder {
+  color: inherit;
+}
+div {
+  border-radius: 3px;
 }

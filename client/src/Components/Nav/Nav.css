@@ -7,7 +7,6 @@
   padding: 10px 30px;
   width: 90vw;
   height: 50px;
-  background-color: white;
   position: fixed;
   top: 0px;
   left: 0px;
@@ -45,18 +44,14 @@
   letter-spacing: 0.1em;
 }
 .Nav .MenuItem:hover {
-  color: #064789;
+  color: orange;
 }
 .Nav .Center__friends {
   font-size: 20px;
-  color: gray;
   background-color: rgba(0, 0, 0, 0);
 }
 .Nav .Center__friends:focus {
   outline: none;
-}
-.Nav .Right__signout {
-  color: #4B88A2;
 }
 .Nav .Right__signout:hover {
   color: orange;
