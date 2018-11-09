@@ -26,6 +26,7 @@
 }
 .CountryPanel-closed {
   visibility: hidden;
+  left: -400px;
   opacity: 0;
 }
 .CountryPanel-open {
