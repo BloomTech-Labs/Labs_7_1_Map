@@ -138,9 +138,10 @@ export default class CountryBorder extends Component {
         this.props.geometry,
         color
       );
-    } else {
-      this.props.closeCountryPanel();
     }
+    // else {
+    //   this.props.closeCountryPanel();
+    // }
   };
 
   render() {

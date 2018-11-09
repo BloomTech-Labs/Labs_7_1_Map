@@ -7,9 +7,9 @@
   color: gray;
   border-radius: 1px;
   box-shadow: -3px 3px 2px 2px rgba(0, 0, 0, 0.2);
-  // animation: CountryPanel 0.5s all;
-  // transition-property: all;
-  // transition-duration: 0.8s;
+  animation: CountryPanel 0.3s all;
+  transition-property: all;
+  transition-duration: 0.5s;
   padding: 10px;
   width: 35%;
 
@@ -35,9 +35,13 @@
 }
 
 .CountryPanel-closed {
-  left: -320px;
+  // left: -320px;
+  visibility: hidden;
+  opacity: 0
 }
 
 .CountryPanel-open {
+  visibility: visible;
   left: 20px;
+  opacity: 1
 }

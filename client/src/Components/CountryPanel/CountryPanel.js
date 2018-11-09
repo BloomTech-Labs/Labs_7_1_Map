@@ -12,7 +12,6 @@ const CountryPanel = () => {
     <AppContextConsumer>
       {value =>
         value &&
-        value.AppState.countryPanelIsOpen &&
         value.AppState.currentCountry.info ? (
           <div
             className={
