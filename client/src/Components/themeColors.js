@@ -1,10 +1,17 @@
 const themeColors = {
   background: {
-    standard: 'white',
-    light: 'white',
+    light: '#EEE',
     dark: 'gray',
-    watercolor: 'white',
-    toner: 'white'
+    watercolor: 'beige',
+    toner: 'gray',
+    standard: 'white'
+  },
+  color: {
+    light: 'gray',
+    dark: 'white',
+    watercolor: 'black',
+    toner: 'white',
+    standard: 'gray'
   }
 };
 

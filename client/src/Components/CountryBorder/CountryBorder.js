@@ -51,7 +51,7 @@ const draw = (context, canvasWidth, canvasHeight, bounds, geometry, color) => {
   else if (geometry.type === 'MultiPolygon') {
     //multiPolygonBoundingBox(geometry.coordinates);
     const shape = geometry.coordinates;
-    shape.forEach((polygon, i) => {
+    shape.forEach(polygon => {
       const coordinates = polygon[0];
       coordinates
         .map(point => [
@@ -120,7 +120,7 @@ export default class CountryBorder extends Component {
   }
 
   drawBorder = () => {
-    // Get the correct fill color based on status. Need to check if 
+    // Get the correct fill color based on status. Need to check if
     // this.props.currentCountryStatus exists to prevent any crashes
     const color = this.props.currentCountryStatus
       ? colorPalette[this.props.currentCountryStatus]
@@ -145,10 +145,9 @@ export default class CountryBorder extends Component {
   };
 
   render() {
-    const notScratched = !this.props.scratched ? true : false;
-    let counrtyBorderMap;
+    let countryBorderMap;
     if (this.props.scratched) {
-      counrtyBorderMap = (
+      countryBorderMap = (
         <React.Fragment>
           <canvas
             ref="canvas"
@@ -159,7 +158,7 @@ export default class CountryBorder extends Component {
         </React.Fragment>
       );
     } else {
-      counrtyBorderMap = (
+      countryBorderMap = (
         <ScratchCard
           className="CountryBorder__Canvas"
           {...settings}
@@ -176,7 +175,7 @@ export default class CountryBorder extends Component {
     }
     return (
       <div className="CountryBorder">
-        {counrtyBorderMap}
+        {countryBorderMap}
         <div className="CountryBorder__SliderContainer">
           <Slider
             className="Slider"
@@ -187,7 +186,7 @@ export default class CountryBorder extends Component {
             onChange={this.props.handleSliderMove}
             defaultValue={0}
             value={this.props.currentCountryStatus}
-            disabled={notScratched}
+            disabled={!this.props.scratched}
           />
         </div>
       </div>

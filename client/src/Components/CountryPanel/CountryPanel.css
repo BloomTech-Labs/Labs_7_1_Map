@@ -10,7 +10,7 @@
   transition-property: all;
   transition-duration: 0.5s;
   padding: 10px;
-  width: 35%;
+  width: 300px;
 }
 .CountryPanel .Card .Card_Header {
   display: flex;

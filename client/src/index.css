@@ -150,6 +150,7 @@ input {
   color: inherit;
   padding: 8px;
   border: 1px solid rgba(200, 200, 200, 0.6);
+  background-color: inherit;
 }
 select,
 option {

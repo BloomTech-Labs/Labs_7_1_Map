@@ -11,14 +11,13 @@ import themeColors from '../themeColors.js';
 const CountryPanel = () => {
   return (
     <AppContextConsumer>
-      {value =>
-        value && value.AppState.currentCountry.info ? (
+      {value => {
+        const currentTheme = value.AppState.user.preferences.theme;
+        return value && value.AppState.currentCountry.info ? (
           <div
             style={{
-              backgroundColor:
-                themeColors.background[
-                  value.AppState.user.preferences.theme
-                ]
+              backgroundColor: themeColors.background[currentTheme],
+              color: themeColors.color[currentTheme]
             }}
             className={
               value.AppState.countryPanelIsOpen
@@ -60,8 +59,8 @@ const CountryPanel = () => {
               <FriendList user={value.AppState.user} />
             </div>
           </div>
-        ) : null
-      }
+        ) : null;
+      }}
     </AppContextConsumer>
   );
 };

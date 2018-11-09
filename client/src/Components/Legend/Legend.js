@@ -7,12 +7,14 @@ import { AppContextConsumer } from '../../AppContext.js';
 const Legend = () => {
   return (
     <AppContextConsumer>
-      {({ AppState }) => (
+      {({ AppState }) => {
+        const currentTheme = AppState.user.preferences.theme
+        return (
         <div
           className="Legend"
           style={{
-            backgroundColor:
-              themeColors.background[AppState.user.preferences.theme]
+            backgroundColor: themeColors.background[currentTheme],
+            color: themeColors.color[currentTheme]
           }}
         >
           <div className="Legend__Wishlist">
@@ -44,7 +46,7 @@ const Legend = () => {
             Lived
           </div>
         </div>
-      )}
+      )}}
     </AppContextConsumer>
   );
 };
