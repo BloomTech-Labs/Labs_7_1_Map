@@ -10,19 +10,29 @@ import themeColors from '../themeColors.js';
 
 class Settings extends Component {
   state = {
-    showingEmail: false,
-    showingPassword: false
+    showingChangeEmail: false,
+    showingChangePassword: false
+  };
+
+  handleChangeEmailClick = () => {
+    this.setState({ showingChangeEmail: !this.state.showingChangeEmail });
+  };
+
+  handleChangePasswordClick = () => {
+    this.setState({ showingChangePassword: !this.state.showingChangePassword });
   };
 
   render() {
     return (
       <AppContextConsumer>
         {({ AppState, handleUpdatePreferences }) => {
-          const currentTheme = AppState.user.preferences ? AppState.user.preferences.theme : 'standard';
+          const currentTheme = AppState.user.preferences
+            ? AppState.user.preferences.theme
+            : 'standard';
           return (
             <div
               className={
-                this.props.showingSettings
+                AppState.showingSettings
                   ? 'Settings Settings-open'
                   : 'Settings Settings-closed'
               }
@@ -36,8 +46,16 @@ class Settings extends Component {
                 user={AppState.user}
                 handleUpdatePreferences={handleUpdatePreferences}
               />
-              <ChangeEmail user={AppState.user} />
-              <ChangePassword user={AppState.user} />
+              <ChangeEmail
+                user={AppState.user}
+                handleChangeEmailClick={this.handleChangeEmailClick}
+                showingChangeEmail={this.state.showingChangeEmail}
+              />
+              <ChangePassword
+                user={AppState.user}
+                handleChangePasswordClick={this.handleChangePasswordClick}
+                showingChangePassword={this.state.showingChangePassword}
+              />
             </div>
           );
         }}
