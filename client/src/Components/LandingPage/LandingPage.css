@@ -2,7 +2,6 @@
   color: white;
   width: 100%;
   height: 100vh;
-  border: 1px solid black;
 }
 .LandingPage .LandingPage__Container {
   display: flex;
@@ -10,7 +9,6 @@
   width: 100%;
   height: 100vh;
   background-color: #0099ff;
-  border: 1px solid black;
   background-position: center;
   background-size: cover;
 }
@@ -20,47 +18,40 @@
   justify-content: center;
   width: 100%;
   height: 11vh;
-  border: 1px solid black;
 }
 .LandingPage .LandingPage__Container .Container__Header .Header__Title {
   font-size: 2rem;
   margin-left: 3%;
-  border: 1px solid black;
 }
 .LandingPage .LandingPage__Container .Container__Content {
   display: flex;
   width: 100%;
-  border: 1px solid black;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Left {
   width: 50%;
-  border: 1px solid black;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__Tagline {
   margin-top: 13vh;
   height: 25 vh;
   display: flex;
   justify-content: flex-end;
-  border: 1px solid black;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__Tagline .Tagline__Phrase {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  border: 1px solid black;
+  align-items: flex-end;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__Tagline .Tagline__Phrase p {
   font-size: 1.6rem;
   letter-spacing: 2px;
   margin: 10px 0;
-  border: 1px solid black;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__LoginBayContainer {
   margin-top: 10vh;
-  border: 1px solid black;
+  display: flex;
+  flex-direction: row-reverse;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Right {
   width: 50%;
-  border: 1px solid black;
 }

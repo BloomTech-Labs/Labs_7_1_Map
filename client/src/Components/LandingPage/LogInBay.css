@@ -2,17 +2,15 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  border: 1px solid green;
+  width: 40%;
 }
 .LogInBay .LogInBay__Container {
-  border: 1px solid green;
-  width: 40%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .LogInBay .LogInBay__Container .Container__LogInForm {
-  border: 1px solid green;
   display: flex;
   flex-direction: column;
   width: 100%;
