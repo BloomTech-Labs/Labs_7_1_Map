@@ -15,11 +15,27 @@ class Settings extends Component {
   };
 
   handleChangeEmailClick = () => {
-    this.setState({ showingChangeEmail: !this.state.showingChangeEmail });
+    if (this.state.showingChangePassword)
+      this.setState({
+        showingChangePassword: false,
+        showingChangeEmail: !this.state.showingChangeEmail
+      });
+    else
+      this.setState({
+        showingChangeEmail: !this.state.showingChangeEmail
+      });
   };
 
   handleChangePasswordClick = () => {
-    this.setState({ showingChangePassword: !this.state.showingChangePassword });
+    if (this.state.showingChangeEmail)
+      this.setState({
+        showingChangeEmail: false,
+        showingChangePassword: !this.state.showingChangePassword
+      });
+    else
+      this.setState({
+        showingChangePassword: !this.state.showingChangePassword
+      });
   };
 
   render() {
