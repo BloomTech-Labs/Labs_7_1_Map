@@ -27,7 +27,7 @@ class SearchCountry extends Component {
       <form className="SearchCountry" onSubmit={this.handleSearchSubmit}>
         <input
           className="SearchCountry__input"
-          type="search"
+          type="text"
           name="search"
           value={this.formValue}
           placeholder="Search Countries..."
