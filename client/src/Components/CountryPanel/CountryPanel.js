@@ -23,7 +23,7 @@ const CountryPanel = () => {
               color: themeColors.color[currentTheme]
             }}
             className={
-              value.AppState.countryPanelIsOpen
+              value.AppState.showingCountryPanel
                 ? 'CountryPanel CountryPanel-open'
                 : 'CountryPanel CountryPanel-closed'
             }

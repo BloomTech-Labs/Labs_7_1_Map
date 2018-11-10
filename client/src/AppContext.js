@@ -25,7 +25,7 @@ export class AppContextProvider extends Component {
     failedSignUp: false,
     currentCountryStatus: null,
     showingSettings: false,
-    countryPanelIsOpen: false,
+    showingCountryPanel: false,
     failedSignUpMessage: ''
   };
 
@@ -46,16 +46,11 @@ export class AppContextProvider extends Component {
           requestOptions
         );
 
-        if (response.status === 200) {
+        if (response.status === 200)
           this.setState({
             authenticated: true,
             user: { ...response.data }
           });
-        } else {
-          clearLocalstorage(); // response was not 200
-        }
-      } else {
-        clearLocalstorage(); // token or user not in localstorage
       }
     } catch (e) {
       // failed async
@@ -76,7 +71,7 @@ export class AppContextProvider extends Component {
 
   closeCountryPanel = () => {
     this.setState({
-      countryPanelIsOpen: false
+      showingCountryPanel: false
     });
   }; // closeCountryPanel
 
@@ -128,7 +123,7 @@ export class AppContextProvider extends Component {
   };
 
   handleChangeNote = e => {
-    console.log(e.target.name, e.target.value)
+    console.log(e.target.name, e.target.value);
     const currentCountry = { ...this.state.currentCountry };
     currentCountry[e.target.name] = e.target.value;
     this.setState({ currentCountry });
@@ -141,7 +136,7 @@ export class AppContextProvider extends Component {
       const body = {
         country_code: currentCountry.code,
         name: currentCountry.info.name,
-        scratched: true,
+        scratched: true
         // notes: currentCountry.notes
       };
 
@@ -156,7 +151,7 @@ export class AppContextProvider extends Component {
       );
 
       currentCountry.scratched = true;
-      console.log(response.data)
+      console.log(response.data);
       this.setState({
         currentCountry,
         currentCountryStatus: 0,
@@ -253,9 +248,7 @@ export class AppContextProvider extends Component {
 
   // Update state with currently selected country, called in Map.js
   handleUpdateCurrentCountry = (code, info) => {
-    console.log(code);
-    if (!code)
-      return this.closeCountryPanel();
+    if (!code) return this.closeCountryPanel();
 
     const geoInfo = getCountryShapeFromCode(code);
     const scratched = this.isScratched(code);
@@ -272,7 +265,7 @@ export class AppContextProvider extends Component {
     };
     this.setState({
       currentCountry,
-      countryPanelIsOpen: true
+      showingCountryPanel: true
     });
     this.setState({
       currentCountryStatus: this.getCurrentCountryStatus()
@@ -294,7 +287,11 @@ export class AppContextProvider extends Component {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       };
 
-      const response = await axios.post(`${BACKEND_URL}/country_notes`, body, options);
+      const response = await axios.post(
+        `${BACKEND_URL}/country_notes`,
+        body,
+        options
+      );
 
       currentCountry.editNoteMode = false;
       this.setState({
@@ -321,20 +318,11 @@ export class AppContextProvider extends Component {
         options
       );
       if (response.status === 200) {
-        console.log(
-          'Preferences were updated successfully!',
-          response.status,
-          response.data
-        );
         this.setState({ user: response.data });
       }
 
       if (response.status === 400)
-        console.log(
-          'Preferences failed to update!',
-          response.status,
-          response.body
-        );
+        console.error('Preferences failed to update!');
     } catch (err) {
       console.error('There was an error trying to update preferences!');
     }
