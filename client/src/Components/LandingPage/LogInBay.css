@@ -2,14 +2,17 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  border: 1px solid green;
 }
 .LogInBay .LogInBay__Container {
+  border: 1px solid green;
   width: 40%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .LogInBay .LogInBay__Container .Container__LogInForm {
+  border: 1px solid green;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -56,9 +59,56 @@
   font-size: 17px;
   margin-top: 20px;
 }
+.LogInBay .LogInBay__Container .Container__Button:hover {
+  transform: scale(1.03);
+}
 .LogInBay .LogInBay__Container .Container__Button:focus {
   border: none;
 }
 .LogInBay .LogInBay__Container .Container__Button:active {
   border: none;
+}
+.Modal__Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 6vh;
+  font-family: 'Pacifico', sans-serif;
+  margin-bottom: 2vh;
+}
+.Modal__Header .closeSignUp {
+  color: lightcoral;
+  cursor: pointer;
+}
+.Modal__Form {
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  justify-content: space-between;
+}
+.Modal__Form input:focus {
+  outline: none;
+}
+.Modal__Form input[type="text"] {
+  border: none;
+  border-bottom: 1px solid grey;
+}
+.Modal__Form input[type="email"] {
+  border: none;
+  border-bottom: 1px solid grey;
+}
+.Modal__Form input[type="password"] {
+  border: none;
+  border-bottom: 1px solid grey;
+}
+.Modal__Form input[type="submit"] {
+  border: none;
+  background-color: #23ce6b;
+  color: white;
+  height: 4vh;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.Modal__Form input[type="submit"]:hover {
+  background-color: #20c16b;
 }

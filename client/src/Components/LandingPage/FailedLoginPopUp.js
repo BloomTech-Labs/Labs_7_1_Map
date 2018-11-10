@@ -6,8 +6,9 @@ export default class FailedLoginPopUp extends Component {
     return (
       <div className="FailedLoginPopUp">
         <div className="FailedLoginPopUp__container">
-          Failed to login, please check your login credentials.
+          Incorrect Credentials
         </div>
+        <div className="arrowleft"/>
       </div>
     );
   }
