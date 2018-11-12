@@ -12,18 +12,11 @@ import './Dashboard.css';
 
 class Dashboard extends Component {
   state = {
-    showingSettings: false,
-    searchCountry: ''
+    showingSettings: false
   };
 
   toggleSettings = () => {
     this.setState({ showingSettings: !this.state.showingSettings });
-  };
-
-  handleSearchSubmit = e => {
-    e.preventDefault();
-    const searchQuery = e.target.search.value;
-    this.setState({ searchCountry: searchQuery });
   };
 
   render() {
@@ -42,7 +35,7 @@ class Dashboard extends Component {
                 <Legend />
                 <SearchCountry
                   updateCurrentCountry={value.updateCurrentCountry}
-                  handleSearchSubmit={this.handleSearchSubmit}
+                  handleSearchSubmit={value.handleSearchSubmit}
                   theme={currentTheme}
                 />
                 <Map

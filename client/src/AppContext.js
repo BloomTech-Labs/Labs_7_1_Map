@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { clearLocalstorage, getCountryShapeFromCode } from './utils.js';
+import world from 'country-data';
+import {
+  clearLocalstorage,
+  getCountryShapeFromCode,
+  getCountryCodeFromName
+} from './utils.js';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -24,6 +29,7 @@ export class AppContextProvider extends Component {
     failedLogin: false,
     failedSignUp: false,
     currentCountryStatus: null,
+    searchCountry: '',
     showingSettings: false,
     showingCountryPanel: false,
     failedSignUpMessage: ''
@@ -247,7 +253,7 @@ export class AppContextProvider extends Component {
   }; // handleSliderMove
 
   // Update state with currently selected country, called in Map.js
-  handleUpdateCurrentCountry = (code, info) => {
+  updateCurrentCountry = async (code, info) => {
     if (!code) return this.closeCountryPanel();
 
     const geoInfo = getCountryShapeFromCode(code);
@@ -263,13 +269,20 @@ export class AppContextProvider extends Component {
       notes,
       editNoteMode: false
     };
-    this.setState({
+    await this.setState({
       currentCountry,
       showingCountryPanel: true
     });
-    this.setState({
+    await this.setState({
       currentCountryStatus: this.getCurrentCountryStatus()
     });
+  };
+
+  handleSearchSubmit = e => {
+    e.preventDefault();
+    const countryCode = getCountryCodeFromName(e.target.search.value);
+    const countryInfo = world.countries[countryCode];
+    this.updateCurrentCountry(countryCode, countryInfo);
   };
 
   handleUpdateNotes = async () => {
@@ -407,18 +420,19 @@ export class AppContextProvider extends Component {
           closeCountryPanel: this.closeCountryPanel,
           currentCountryInfo: this.state.currentCountry.geoInfo,
           handleChangeNote: this.handleChangeNote,
+          handleScratched: this.handleScratched,
+          handleSearchSubmit: this.handleSearchSubmit,
           handleSignIn: this.handleSignIn,
           handleSignOut: this.handleSignOut,
           handleSignUp: this.handleSignUp,
           handleSliderMove: this.handleSliderMove,
-          handleScratched: this.handleScratched,
           handleUpdateNotes: this.handleUpdateNotes,
           handleUpdatePreferences: this.handleUpdatePreferences,
-          turnOnEditNote: this.turnOnEditNote,
           resetAppStateError: this.resetAppStateError,
-          updateCurrentCountry: this.handleUpdateCurrentCountry,
-          updateUserPosition: this.handleUpdateUserPosition,
-          toggleSettings: this.toggleSettings
+          toggleSettings: this.toggleSettings,
+          turnOnEditNote: this.turnOnEditNote,
+          updateCurrentCountry: this.updateCurrentCountry,
+          updateUserPosition: this.handleUpdateUserPosition
         }}
       >
         {this.props.children}
