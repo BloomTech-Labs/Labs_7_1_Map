@@ -149,7 +149,7 @@ input {
   font-size: 1em;
   color: inherit;
   padding: 10px;
-  border: 1px solid rgba(200, 200, 200, 0.6);
+  border: 1px solid #AAA;
   background-color: inherit;
 }
 select,

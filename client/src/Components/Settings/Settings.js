@@ -54,7 +54,8 @@ class Settings extends Component {
               }
               style={{
                 backgroundColor: themeColors.background[currentTheme],
-                color: themeColors.color[currentTheme]
+                color: themeColors.color[currentTheme],
+                border: `1px solid ${themeColors.color[currentTheme]}`
               }}
             >
               <div className="Settings__Header">Settings</div>

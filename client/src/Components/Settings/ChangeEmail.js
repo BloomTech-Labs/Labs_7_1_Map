@@ -65,12 +65,12 @@ class ChangeEmail extends Component {
         </h1>
         {this.props.showingChangeEmail && (
           <form onSubmit={this.handleSubmit} className="Settings__ChangeEmail">
-            <div className="ChangeEmail__newEmail">
-              <h5>New Email</h5>
+            <div className="ChangeEmail__NewEmail">
+              <h5 id="NewEmail__header">New Email</h5>
               <input
                 type="text"
                 name="newEmail"
-                placeholder="New Email"
+                // placeholder="New Email"
                 value={this.state.newEmail}
                 onChange={e => this.handleChange(e)}
               />

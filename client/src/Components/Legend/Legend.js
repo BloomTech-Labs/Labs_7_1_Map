@@ -17,7 +17,8 @@ const Legend = () => {
             className="Legend"
             style={{
               backgroundColor: themeColors.background[currentTheme],
-              color: themeColors.color[currentTheme]
+              color: themeColors.color[currentTheme],
+              border: `1px solid ${themeColors.color[currentTheme]}`
             }}
           >
             <div className="Legend__Wishlist">
