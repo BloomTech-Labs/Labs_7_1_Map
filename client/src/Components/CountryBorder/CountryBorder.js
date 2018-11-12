@@ -118,11 +118,12 @@ export default class CountryBorder extends Component {
   }
 
   drawBorder = () => {
-    // Get the correct fill color based on status. Need to check if
-    // this.props.currentCountryStatus exists to prevent any crashes
+    // Get the correct fill color based on status.
+    // Check if this.props.currentCountryStatus exists to prevent any crashes
     const color = this.props.currentCountryStatus
       ? colorPalette[this.props.currentCountryStatus]
       : 'black';
+    // TODO: Fix deprecation warning
     const canvas = this.refs.canvas;
     const context = canvas.getContext('2d');
     if (context) context.clearRect(0, 0, canvasWidth, canvasHeight);

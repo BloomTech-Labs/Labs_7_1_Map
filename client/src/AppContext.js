@@ -98,9 +98,7 @@ export class AppContextProvider extends Component {
 
   // Get the status_code of a country saved on user if it exists
   // Otherwise, return 0
-  getCurrentCountryStatus = () => {
-    // TODO: This function could probably just call setState here
-    // instead of doing that in the function that uses it
+  updateCurrentCountryStatus = async () => {
     const currentCountryCode = this.state.currentCountry.code;
     const userCountries = [...this.state.user.countries];
 
@@ -109,9 +107,10 @@ export class AppContextProvider extends Component {
         country => currentCountryCode === country.country_code
       );
 
-      return findCountry ? findCountry.status_code : 0;
+      const currentCountryStatus = findCountry ? findCountry.status_code : 0;
+      await this.setState({ currentCountryStatus });
     }
-  }; // getCurrentCountryStatus
+  }; // updateCurrentCountryStatus
 
   getLocationUsingIP = () => {
     axios
@@ -244,9 +243,7 @@ export class AppContextProvider extends Component {
 
       // Update user data on state with new data from back end
       this.setState({ user: response.data });
-      this.setState({
-        currentCountryStatus: this.getCurrentCountryStatus()
-      });
+      this.updateCurrentCountryStatus();
     } catch (err) {
       console.error('Error updating country status!');
     }
@@ -260,6 +257,12 @@ export class AppContextProvider extends Component {
     const scratched = this.isScratched(code);
     const notes = this.getCurrentCountryNotes(code);
 
+    // Clear currentCountry first to reset scratchcard; otherwise if you scratch
+    // a card and then click on another country, the scratchcard will retain the
+    // scratched state.
+    // TODO: Find a way to reset scratchcard withoout multiple setStates's
+    await this.setState({ currentCountry: {} });
+
     const currentCountry = {
       ...this.state.currentCountry,
       code,
@@ -269,13 +272,12 @@ export class AppContextProvider extends Component {
       notes,
       editNoteMode: false
     };
+
     await this.setState({
       currentCountry,
       showingCountryPanel: true
     });
-    await this.setState({
-      currentCountryStatus: this.getCurrentCountryStatus()
-    });
+    this.updateCurrentCountryStatus();
   };
 
   handleSearchSubmit = e => {
