@@ -5,6 +5,7 @@ import './Note.css';
 
 const Note = props => {
   let display;
+  // If a note is being edited, display input field
   if (props.country.editNoteMode) {
     display = (
       <div className="Notes__EditMode">
@@ -20,31 +21,33 @@ const Note = props => {
         />
       </div>
     );
-  } else {
-    if (props.country.notes) {
-      display = (
-        <div className="Notes__ViewMode">
-          <FontAwesomeIcon
-            className="ViewMode__edit"
-            onClick={props.turnOnEditNote}
-            icon="edit"
-          />
-          <div className="ViewMode__Notes">{props.country.notes}</div>
-        </div>
-      );
-    } else {
-      display = (
-        <div className="Notes__ViewMode">
-          <FontAwesomeIcon
-            className="ViewMode__add"
-            onClick={props.turnOnEditNote}
-            icon="plus-circle"
-          />
-          <span>Add a note</span>
-        </div>
-      );
-    }
+  } 
+  // If a note is not being edited show the note or 'Add a note'
+  else {
+    display = props.country.notes ? (
+      // If a note already exists, display it
+      <div className="Notes__ViewMode">
+        <FontAwesomeIcon
+          className="ViewMode__edit"
+          onClick={props.turnOnEditNote}
+          icon="edit"
+        />
+        <div className="ViewMode__Notes">{props.country.notes}</div>
+      </div>
+    ) : (
+      // If a note doesn't exist, show 'Add a note'
+      <div className="Notes__ViewMode">
+        <FontAwesomeIcon
+          className="ViewMode__add"
+          onClick={props.turnOnEditNote}
+          icon="plus-circle"
+        />
+        <span>Add a note</span>
+      </div>
+    );
   }
+
   return <div className="Note">{display}</div>;
 };
+
 export default Note;

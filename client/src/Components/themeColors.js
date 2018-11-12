@@ -4,14 +4,28 @@ const themeColors = {
     dark: '#444',
     watercolor: '#DCC',
     toner: '#222',
-    standard: 'white'
+    standard: '#FFF'
   },
   color: {
-    light: 'gray',
-    dark: 'white',
-    watercolor: 'black',
-    toner: 'white',
-    standard: 'gray'
+    light: '#808080',
+    dark: '#AAA',
+    watercolor: '#000',
+    toner: '#808080',
+    standard: '#808080'
+  },
+  fontColor: {
+    light: '#808080',
+    dark: '#AAA',
+    watercolor: '#000',
+    toner: '#808080',
+    standard: '#808080'
+  },
+  borderColor: {
+    light: '#808080',
+    dark: '#888',
+    watercolor: '#000',
+    toner: '#808080',
+    standard: '#808080'
   }
 };
 

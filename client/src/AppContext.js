@@ -16,8 +16,6 @@ const AppContext = React.createContext();
 export class AppContextProvider extends Component {
   state = {
     authenticated: false,
-    user: {},
-    userPosition: { lat: 22.28552, lng: 114.15769 },
     currentCountry: {
       code: '',
       info: {},
@@ -26,13 +24,15 @@ export class AppContextProvider extends Component {
       notes: '',
       editNoteMode: false
     },
+    currentCountryStatus: null,
     failedLogin: false,
     failedSignUp: false,
-    currentCountryStatus: null,
+    failedSignUpMessage: '',
     searchCountry: '',
     showingSettings: false,
     showingCountryPanel: false,
-    failedSignUpMessage: ''
+    user: {},
+    userPosition: { lat: 22.28552, lng: 114.15769 }
   };
 
   async componentDidMount() {
@@ -251,7 +251,10 @@ export class AppContextProvider extends Component {
 
   // Update state with currently selected country, called in Map.js
   updateCurrentCountry = async (code, info) => {
-    if (!code) return this.closeCountryPanel();
+    if (!code) {
+      this.setState({ currentCountryStatus: null, currentCountry: {} });
+      return this.closeCountryPanel();
+    }
 
     const geoInfo = getCountryShapeFromCode(code);
     const scratched = this.isScratched(code);

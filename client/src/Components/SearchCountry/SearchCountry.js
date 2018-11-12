@@ -25,8 +25,8 @@ class SearchCountry extends Component {
           onChange={e => this.handleSearchChange(e)}
           style={{
             backgroundColor: themeColors.background[this.props.theme],
-            color: themeColors.color[this.props.theme],
-            border: `1px solid ${themeColors.color[this.props.theme]}`
+            color: themeColors.fontColor[this.props.theme],
+            border: `1px solid ${themeColors.borderColor[this.props.theme]}`
           }}
         />
       </form>
