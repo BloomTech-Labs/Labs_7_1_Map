@@ -1,11 +1,26 @@
 .FailedLoginPopUp {
-  width: 160px;
-  border: teal 1px solid;
-  position: absolute;
-  margin-left: 210px;
-  margin-top: 70px;
-  background: tan;
+  width: 200px;
+  height: 80px;
+  background: white;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  border: none;
+  margin-right: 3%;
+  margin-top: 30px;
 }
 .FailedLoginPopUp .FailedLoginPopUp__container {
-  color: red;
+  width: 100%;
+  color: #ee5151;
+  display: flex;
+  justify-content: center;
+}
+.FailedLoginPopUp .arrowleft {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid white;
+  margin-left: 196px;
 }

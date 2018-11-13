@@ -1,22 +1,58 @@
 .LandingPage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  color: white;
   width: 100%;
   height: 100vh;
-  background-color: #0099ff;
-  background-position: center;
-  background-size: cover;
-
-  .LandingPage__Tagline {
-    color: white;
-    margin-bottom: 30px;
-  }
-
-  .LandingPage__Header {
-    color: white;
-    font-size: 2em;
-    margin: 20px;
+  .LandingPage__Container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    background-color: #0099ff;
+    background-position: center;
+    background-size: cover;
+    .Container__Header {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      height: 140px;
+      .Header__Title {
+        font-size: 2rem;
+        margin-left: 3%;
+      }
+    }
+    .Container__Content {
+      display: flex;
+      width: 100%;
+      .Content__Left {
+        width: 50%;
+        .Left__Tagline {
+          margin-top: 13vh;
+          height: 100px;
+          display: flex;
+          justify-content: flex-end;
+          .Tagline__Phrase {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40%;
+            p {
+              font-size: 1.3rem;
+              letter-spacing: 1.8px;
+              margin: 10px 0;
+            }
+          }
+        }
+        .Left__LoginBayContainer {
+          margin-top: 100px;
+          display: flex;
+          flex-direction: row-reverse;
+        }
+      }
+      .Content__Right {
+        width: 50%;
+      }
+    }
   }
 }

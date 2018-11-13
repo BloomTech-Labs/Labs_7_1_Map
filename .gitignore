@@ -1,5 +1,6 @@
 # Created by https://www.gitignore.io/api/vim,node,macos,linux,windows,reactnative,visualstudiocode
 
+sendgrid.env
 ### Linux ###
 *~
 
@@ -362,3 +363,4 @@ local_data
 .env
 .tern-port
 package-lock.json
+sendgrid.env

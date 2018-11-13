@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactModal from 'react-modal';
 import { AppContextConsumer } from '../../AppContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import FailedSignUpPopUp from './FailedSignUpPopUp';
 import './LogInBay.css';
@@ -10,16 +11,16 @@ import './LogInBay.css';
 const SignUpModalStyles = {
   content: {
     display: 'flex',
-    flexFlow: 'column nowrap',
-    height: '300px',
-    width: '300px',
-    top: '50%',
-    left: '50%',
+    flexFlow: 'column noWrap',
+    height: '410px',
+    width: '20%',
+    top: '55%',
+    left: '40%',
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    border: '3px dashed red'
+    border: '1px solid white'
   }
 };
 
@@ -124,33 +125,26 @@ class LogInBay extends React.Component {
       <AppContextConsumer>
         {({ handleSignIn }) => (
           <div className="LogInBay">
-            <form className="LogInForm" onSubmit={handleSignIn}>
-              <label htmlFor="">SIGN IN</label>
-              <input type="text" placeholder="Username" name="username" />
-              <input type="password" placeholder="Password" name="password" />
-              <input type="submit" className="LogInBay__LogInButton" />
-            </form>
-            {/* <br /> */}
-            {/* <p> - or -</p> */}
-            {/* <br /> */}
-            {/* <a */}
-            {/*   href={`${BACKEND_URL}/facebook_login`} */}
-            {/*   target="_blank" */}
-            {/*   rel="noopener noreferrer" */}
-            {/* > */}
-            {/*   Login with Facebook */}
-            {/* </a> */}
-            <br />
-            <p className="LoginBay__divider"> - or -</p>
-            <br />
+            <div className="LogInBay__Container">
+              <form className="Container__LogInForm" onSubmit={handleSignIn}>
+                Login with your account:
+                <input type="text" placeholder="Username" name="username" />
+                <input type="password" placeholder="Password" name="password" />
+                <input
+                  type="submit"
+                  className="LogInBay__LogInButton"
+                  value="Login"
+                />
+              </form>
 
-            <button
-              type="button"
-              className="LogInBay__Button"
-              onClick={this.handleOpenModal}
-            >
-              Sign Up
-            </button>
+              <button
+                type="button"
+                className="Container__Button"
+                onClick={this.handleOpenModal}
+              >
+                New? Sign Up
+              </button>
+            </div>
 
             <ReactModal
               id="SignUpModal"
@@ -160,8 +154,16 @@ class LogInBay extends React.Component {
               onRequestClose={this.handleCloseModal}
               shouldCloseOnOverlayClick={true}
             >
-              <p>Sign Up</p>
+              <div className="Modal__Header">
+                <h3>Sign Up</h3>
+                <FontAwesomeIcon
+                  className="closeSignUp"
+                  onClick={this.handleCloseModal}
+                  icon="times"
+                />
+              </div>
               <form
+                className="Modal__Form"
                 onSubmit={this.handleSignUpSubmit}
                 style={{ display: 'flex', flexFlow: 'column nowrap' }}
               >
@@ -191,7 +193,6 @@ class LogInBay extends React.Component {
                 />
                 <input type="submit" />
               </form>
-              <button onClick={this.handleCloseModal}>Close Modal</button>
               <FailedSignUpPopUp message={this.state.signupErrorResponse} />
             </ReactModal>
           </div>
