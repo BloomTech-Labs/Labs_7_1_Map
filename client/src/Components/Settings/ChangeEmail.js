@@ -8,14 +8,9 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 class ChangeEmail extends Component {
   state = {
-    show: false,
     currentPassword: '',
     newEmail: '',
     emailError: ''
-  };
-
-  toggleShow = () => {
-    this.setState({ show: !this.state.show });
   };
 
   // handleSubmit for ChangeEmail
@@ -65,15 +60,17 @@ class ChangeEmail extends Component {
   render() {
     return (
       <div className="ChangeEmail">
-        <h1 onClick={() => this.toggleShow()}>Change Email...</h1>
-        {this.state.show && (
+        <h1 onClick={() => this.props.handleChangeEmailClick()}>
+          Change Email...
+        </h1>
+        {this.props.showingChangeEmail && (
           <form onSubmit={this.handleSubmit} className="Settings__ChangeEmail">
-            <div className="ChangeEmail__newEmail">
-              <h5>New Email</h5>
+            <div className="ChangeEmail__NewEmail">
+              <h5 id="NewEmail__header">New Email</h5>
               <input
                 type="text"
                 name="newEmail"
-                placeholder="New Email"
+                // placeholder="New Email"
                 value={this.state.newEmail}
                 onChange={e => this.handleChange(e)}
               />

@@ -3,7 +3,7 @@ import Slider from 'rc-slider/lib/Slider';
 import ScratchCard from 'react-scratchcard';
 
 import { getBoundingBox } from '../../utils';
-import { countryStatusStyles } from '../Map/countryStyles.js';
+import { colorPalette } from '../Map/countryStyles.js';
 
 import './CountryBorder.css';
 import 'rc-slider/assets/index.css';
@@ -12,7 +12,7 @@ import travellingImg from '../../travelling.jpg';
 const canvasWidth = 300;
 const canvasHeight = 150;
 
-const settings = {
+const scratchcardSettings = {
   width: canvasWidth,
   height: canvasHeight,
   image: travellingImg,
@@ -45,13 +45,12 @@ const draw = (context, canvasWidth, canvasHeight, bounds, geometry, color) => {
       });
     context.closePath();
     context.fill();
-    // context.stroke();
   }
   // Handles countries made up of multiple unconnected polygons
   else if (geometry.type === 'MultiPolygon') {
     //multiPolygonBoundingBox(geometry.coordinates);
     const shape = geometry.coordinates;
-    shape.forEach((polygon, i) => {
+    shape.forEach(polygon => {
       const coordinates = polygon[0];
       coordinates
         .map(point => [
@@ -68,10 +67,7 @@ const draw = (context, canvasWidth, canvasHeight, bounds, geometry, color) => {
         });
       context.closePath();
       context.fill();
-      // context.stroke();
     });
-  } else {
-    console.log('NONE Drawn');
   }
 };
 
@@ -80,51 +76,64 @@ export default class CountryBorder extends Component {
     marks: {
       0: {
         style: {
-          color: 'white'
+          color: 'gray',
+          fontWeight: 'bold',
+          textShadow: '1px 0px 0px black'
         },
         label: 'None'
       },
       1: {
         style: {
-          color: 'purple'
+          color: 'purple',
+          fontWeight: 'bold',
+          textShadow: '1px 0px 0px black'
         },
         label: 'Wishlist'
       },
       2: {
         style: {
-          color: 'yellow'
+          color: colorPalette[2],
+          fontWeight: 'bold',
+          textShadow: '1px 0px 0px black'
         },
         label: 'Transited'
       },
       3: {
         style: {
-          color: 'red'
+          color: colorPalette[3],
+          fontWeight: 'bold',
+          textShadow: '1px 0px 0px black'
         },
         label: 'Visited'
       },
       4: {
         style: {
-          color: 'blue'
+          color: colorPalette[4],
+          fontWeight: 'bold',
+          textShadow: '1px 0px 0px black'
         },
         label: 'Lived'
       }
     }
   };
+
   componentDidMount() {
     this.drawBorder();
   }
+
   componentDidUpdate() {
     this.drawBorder();
   }
+
   drawBorder = () => {
-    // Get the correct fill color based on status. Need to check if 
-    // this.props.currentCountryStatus exists to prevent any crashes
+    // Get the correct fill color based on status.
+    // Check if this.props.currentCountryStatus exists to prevent any crashes
     const color = this.props.currentCountryStatus
-      ? countryStatusStyles[this.props.currentCountryStatus].color
+      ? colorPalette[this.props.currentCountryStatus]
       : 'black';
-    const canvas = this.refs.canvas;
+    const canvas = this.refs.canvas; // TODO: Fix deprecation warning
     const context = canvas.getContext('2d');
-    context.clearRect(0, 0, canvasWidth, canvasHeight);
+    if (context) context.clearRect(0, 0, canvasWidth, canvasHeight);
     // only draw if we have the geometry
     if (this.props.geometry) {
       draw(
@@ -135,57 +144,50 @@ export default class CountryBorder extends Component {
         this.props.geometry,
         color
       );
-    } else {
-      this.props.closeCountryPanel();
     }
   };
 
   render() {
-    const notScratched = !this.props.scratched ? true : false;
-    let counrtyBorderMap;
-    if (this.props.scratched) {
-      counrtyBorderMap = (
-        <React.Fragment>
-          <canvas
-            ref="canvas"
-            className="CountryBorder__Canvas"
-            width={canvasWidth}
-            height={canvasHeight}
-          />
-        </React.Fragment>
-      );
-    } else {
-      counrtyBorderMap = (
-        <ScratchCard
-          className="CountryBorder__Canvas"
-          {...settings}
-          onComplete={this.props.handleScratched}
-        >
-          <canvas
-            ref="canvas"
-            className="CountryBorder__Border"
-            width={canvasWidth}
-            height={canvasHeight}
-          />
-        </ScratchCard>
-      );
-    }
     return (
       <div className="CountryBorder">
-        {counrtyBorderMap}
-        <div className="CountryBorder__SliderContainer">
-          <Slider
-            className="Slider"
-            min={0}
-            max={4}
-            marks={this.state.marks}
-            step={null}
-            onChange={this.props.handleSliderMove}
-            defaultValue={0}
-            value={this.props.currentCountryStatus}
-            disabled={notScratched}
-          />
-        </div>
+        {this.props.scratched ? (
+          <React.Fragment>
+            <canvas
+              ref="canvas"
+              className="CountryBorder__Canvas"
+              width={canvasWidth}
+              height={canvasHeight}
+            />
+          </React.Fragment>
+        ) : (
+          <ScratchCard
+            className="CountryBorder__Canvas"
+            {...scratchcardSettings}
+            onComplete={this.props.handleScratched}
+          >
+            <canvas
+              ref="canvas"
+              className="CountryBorder__Border"
+              width={canvasWidth}
+              height={canvasHeight}
+            />
+          </ScratchCard>
+        )}
+        {this.props.scratched && (
+          <div className="CountryBorder__SliderContainer">
+            <Slider
+              className="Slider"
+              min={0}
+              max={4}
+              marks={this.state.marks}
+              step={null}
+              onChange={this.props.handleSliderMove}
+              defaultValue={0}
+              value={this.props.currentCountryStatus}
+              disabled={!this.props.scratched}
+            />
+          </div>
+        )}
       </div>
     );
   }

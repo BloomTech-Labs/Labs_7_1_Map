@@ -1,3 +1,11 @@
+const colorPalette = {
+  0: 'gray',
+  1: '#6C596E', // wishlist
+  2: '#43915F', // transited
+  3: '#A62639', // visited
+  4: '#427AA1' // livedIn
+};
+
 // Styles for the highlight of a clicked on country
 const styleSelected = {
   stroke: true,
@@ -19,52 +27,42 @@ const styleHover = {
 // Styles for country based on status_code
 const styleOther = {
   // status_code: 0
-  stroke: true,
-  color: 'gray',
-  opacity: 0.2,
+  stroke: false,
   fill: true,
   fillColor: 'gray',
-  fillOpacity: 0.3
+  fillOpacity: 0
 };
 
 const styleWishlist = {
   // status_code: 1
-  stroke: true,
-  color: 'purple',
-  opacity: 0.2,
+  stroke: false,
   fill: true,
-  fillColor: 'purple',
-  fillOpacity: 0.3
+  fillColor: colorPalette[1],
+  fillOpacity: 1
 };
 
 const styleTransited = {
   // status_code: 1
-  stroke: true,
-  color: 'yellow',
-  opacity: 0.2,
+  stroke: false,
   fill: true,
-  fillColor: 'yellow',
-  fillOpacity: 0.3
+  fillColor: colorPalette[2],
+  fillOpacity: 1
 };
 
 const styleVisited = {
   // status_code: 3
-  stroke: true,
-  color: 'red',
-  opacity: 0.2,
+  stroke: false,
   fill: true,
-  fillColor: 'red',
-  fillOpacity: 0.3
+  fillColor: colorPalette[3],
+  fillOpacity: 1
 };
 
 const styleLivedIn = {
   // status_code: 4
-  stroke: true,
-  color: 'blue',
-  opacity: 0.2,
+  stroke: false,
   fill: true,
-  fillColor: 'blue',
-  fillOpacity: 0.3
+  fillColor: colorPalette[4],
+  fillOpacity: 1
 };
 
 // Export country status styles as an object so they can be
@@ -78,6 +76,7 @@ const countryStatusStyles = {
 };
 
 module.exports = {
+  colorPalette,
   styleSelected,
   styleHover,
   countryStatusStyles

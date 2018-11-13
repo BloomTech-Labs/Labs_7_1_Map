@@ -2,13 +2,13 @@
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  margin: 20px;
+  margin: 15px;
 }
 .ChangeEmail h1 {
   cursor: pointer;
 }
 .ChangeEmail h1:hover {
-  color: blue;
+  color: #064789;
 }
 .ChangeEmail .Settings__ChangeEmail {
   display: flex;
@@ -22,6 +22,9 @@
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
+}
+.ChangeEmail .Settings__ChangeEmail #NewEmail__header {
+  padding-bottom: 5px;
 }
 .ChangeEmail .Settings__ChangeEmail .ChangeEmail__submit {
   width: 100px;

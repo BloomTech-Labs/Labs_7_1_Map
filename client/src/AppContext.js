@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { clearLocalstorage, getCountryShapeFromCode } from './utils.js';
+import world from 'country-data';
+import {
+  clearLocalstorage,
+  getCountryShapeFromCode,
+  getCountryCodeFromName
+} from './utils.js';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -11,8 +16,6 @@ const AppContext = React.createContext();
 export class AppContextProvider extends Component {
   state = {
     authenticated: false,
-    user: {},
-    userPosition: { lat: 22.28552, lng: 114.15769 },
     currentCountry: {
       code: '',
       info: {},
@@ -21,11 +24,15 @@ export class AppContextProvider extends Component {
       notes: '',
       editNoteMode: false
     },
+    currentCountryStatus: null,
     failedLogin: false,
     failedSignUp: false,
-    currentCountryStatus: null,
-    countryPanelIsOpen: false,
-    failedSignUpMessage: ''
+    failedSignUpMessage: '',
+    searchCountry: '',
+    showingSettings: false,
+    showingCountryPanel: false,
+    user: {},
+    userPosition: { lat: 22.28552, lng: 114.15769 }
   };
 
   async componentDidMount() {
@@ -45,16 +52,11 @@ export class AppContextProvider extends Component {
           requestOptions
         );
 
-        if (response.status === 200) {
+        if (response.status === 200)
           this.setState({
             authenticated: true,
             user: { ...response.data }
           });
-        } else {
-          clearLocalstorage(); // response was not 200
-        }
-      } else {
-        clearLocalstorage(); // token or user not in localstorage
       }
     } catch (e) {
       // failed async
@@ -69,9 +71,13 @@ export class AppContextProvider extends Component {
     }
   } // componentDidMount
 
+  toggleSettings = () => {
+    this.setState({ showingSettings: !this.state.showingSettings });
+  };
+
   closeCountryPanel = () => {
     this.setState({
-      countryPanelIsOpen: false
+      showingCountryPanel: false
     });
   }; // closeCountryPanel
 
@@ -92,9 +98,7 @@ export class AppContextProvider extends Component {
 
   // Get the status_code of a country saved on user if it exists
   // Otherwise, return 0
-  getCurrentCountryStatus = () => {
-    // TODO: This function could probably just call setState here
-    // instead of doing that in the function that uses it
+  updateCurrentCountryStatus = async () => {
     const currentCountryCode = this.state.currentCountry.code;
     const userCountries = [...this.state.user.countries];
 
@@ -103,9 +107,10 @@ export class AppContextProvider extends Component {
         country => currentCountryCode === country.country_code
       );
 
-      return findCountry ? findCountry.status_code : 0;
+      const currentCountryStatus = findCountry ? findCountry.status_code : 0;
+      await this.setState({ currentCountryStatus });
     }
-  }; // getCurrentCountryStatus
+  }; // updateCurrentCountryStatus
 
   getLocationUsingIP = () => {
     axios
@@ -123,7 +128,7 @@ export class AppContextProvider extends Component {
   };
 
   handleChangeNote = e => {
-    console.log(e.target.name, e.target.value)
+    console.log(e.target.name, e.target.value);
     const currentCountry = { ...this.state.currentCountry };
     currentCountry[e.target.name] = e.target.value;
     this.setState({ currentCountry });
@@ -136,7 +141,7 @@ export class AppContextProvider extends Component {
       const body = {
         country_code: currentCountry.code,
         name: currentCountry.info.name,
-        scratched: true,
+        scratched: true
         // notes: currentCountry.notes
       };
 
@@ -151,7 +156,7 @@ export class AppContextProvider extends Component {
       );
 
       currentCountry.scratched = true;
-      console.log(response.data)
+      console.log(response.data);
       this.setState({
         currentCountry,
         currentCountryStatus: 0,
@@ -238,19 +243,28 @@ export class AppContextProvider extends Component {
 
       // Update user data on state with new data from back end
       this.setState({ user: response.data });
-      this.setState({
-        currentCountryStatus: this.getCurrentCountryStatus()
-      });
+      this.updateCurrentCountryStatus();
     } catch (err) {
       console.error('Error updating country status!');
     }
   }; // handleSliderMove
 
   // Update state with currently selected country, called in Map.js
-  handleUpdateCurrentCountry = (code, info) => {
+  updateCurrentCountry = async (code, info) => {
+    if (!code) {
+      this.setState({ currentCountryStatus: null, currentCountry: {} });
+      return this.closeCountryPanel();
+    }
+
     const geoInfo = getCountryShapeFromCode(code);
     const scratched = this.isScratched(code);
     const notes = this.getCurrentCountryNotes(code);
+
+    // Clear currentCountry first to reset scratchcard; otherwise if you scratch
+    // a card and then click on another country, the scratchcard will retain the
+    // scratched state.
+    // TODO: Find a way to reset scratchcard withoout multiple setStates's
+    await this.setState({ currentCountry: {} });
 
     const currentCountry = {
       ...this.state.currentCountry,
@@ -261,13 +275,19 @@ export class AppContextProvider extends Component {
       notes,
       editNoteMode: false
     };
-    this.setState({
+
+    await this.setState({
       currentCountry,
-      countryPanelIsOpen: true
+      showingCountryPanel: true
     });
-    this.setState({
-      currentCountryStatus: this.getCurrentCountryStatus()
-    });
+    this.updateCurrentCountryStatus();
+  };
+
+  handleSearchSubmit = e => {
+    e.preventDefault();
+    const countryCode = getCountryCodeFromName(e.target.search.value);
+    const countryInfo = world.countries[countryCode];
+    this.updateCurrentCountry(countryCode, countryInfo);
   };
 
   handleUpdateNotes = async () => {
@@ -285,7 +305,11 @@ export class AppContextProvider extends Component {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       };
 
-      const response = await axios.post(`${BACKEND_URL}/country_notes`, body, options);
+      const response = await axios.post(
+        `${BACKEND_URL}/country_notes`,
+        body,
+        options
+      );
 
       currentCountry.editNoteMode = false;
       this.setState({
@@ -312,20 +336,11 @@ export class AppContextProvider extends Component {
         options
       );
       if (response.status === 200) {
-        console.log(
-          'Preferences were updated successfully!',
-          response.status,
-          response.data
-        );
         this.setState({ user: response.data });
       }
 
       if (response.status === 400)
-        console.log(
-          'Preferences failed to update!',
-          response.status,
-          response.body
-        );
+        console.error('Preferences failed to update!');
     } catch (err) {
       console.error('There was an error trying to update preferences!');
     }
@@ -410,17 +425,18 @@ export class AppContextProvider extends Component {
           closeCountryPanel: this.closeCountryPanel,
           currentCountryInfo: this.state.currentCountry.geoInfo,
           handleChangeNote: this.handleChangeNote,
+          handleScratched: this.handleScratched,
+          handleSearchSubmit: this.handleSearchSubmit,
           handleSignIn: this.handleSignIn,
           handleSignOut: this.handleSignOut,
           handleSignUp: this.handleSignUp,
           handleSliderMove: this.handleSliderMove,
-          handleScratched: this.handleScratched,
           handleUpdateNotes: this.handleUpdateNotes,
           handleUpdatePreferences: this.handleUpdatePreferences,
-          turnOnEditNote: this.turnOnEditNote,
           resetAppStateError: this.resetAppStateError,
-          toggleCountryPanel: this.toggleCountryPanel,
-          updateCurrentCountry: this.handleUpdateCurrentCountry,
+          toggleSettings: this.toggleSettings,
+          turnOnEditNote: this.turnOnEditNote,
+          updateCurrentCountry: this.updateCurrentCountry,
           updateUserPosition: this.handleUpdateUserPosition
         }}
       >

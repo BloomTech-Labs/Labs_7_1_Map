@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import themeColors from '../themeColors.js';
 import './Preferences.css';
 
 class Preferences extends Component {
@@ -18,7 +19,7 @@ class Preferences extends Component {
   };
 
   render() {
-    const theme =
+    const currentTheme =
       this.props.user && this.props.user.preferences
         ? this.props.user.preferences.theme
         : 'dark';
@@ -28,9 +29,14 @@ class Preferences extends Component {
           <h5>Theme</h5>
           <select
             className="Theme"
-            defaultValue={theme}
+            defaultValue={currentTheme}
             name="theme"
             onChange={this.handleChange}
+            style={{
+              backgroundColor: themeColors.background[currentTheme],
+              color: themeColors.fontColor[currentTheme],
+              border: `1px solid ${themeColors.borderColor[currentTheme]}`
+            }}
           >
             <option value="light">light</option>
             <option value="dark">dark</option>

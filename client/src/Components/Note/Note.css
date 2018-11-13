@@ -1,5 +1,7 @@
 .Note {
+  border: 1px solid #000000;
   max-width: 320px;
+  width: 90%;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   padding: 0.2rem;
@@ -12,7 +14,7 @@
   color: green;
 }
 .Note .Notes__ViewMode .ViewMode__edit {
-  position: absolute;
+  position: relative;
   right: 3px;
   margin-right: 0.2rem;
 }

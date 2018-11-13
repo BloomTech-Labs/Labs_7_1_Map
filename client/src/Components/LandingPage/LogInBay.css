@@ -14,15 +14,15 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 20vh;
+  height: 160px;
   justify-content: space-between;
 }
 .LogInBay .LogInBay__Container .Container__LogInForm input {
   font-size: 1 rem;
-  width: 97%;
+  width: 95%;
   border: none;
-  height: 3.4vh;
-  padding-left: 3%;
+  height: 14px;
+  padding-left: 2%;
   background-color: #23ce6b;
 }
 .LogInBay .LogInBay__Container .Container__LogInForm input[type='submit'] {
@@ -30,7 +30,7 @@
   cursor: pointer;
   color: white;
   width: 100%;
-  height: 4vh;
+  height: 35px;
   -webkit-box-shadow: 0 3px 2px #424242;
   -moz-box-shadow: 0 3px 2px #424242;
   box-shadow: 0 3px 2px #424242;
@@ -103,7 +103,7 @@
   border: none;
   background-color: #23ce6b;
   color: white;
-  height: 4vh;
+  height: 40px;
   cursor: pointer;
   margin-bottom: 10px;
 }

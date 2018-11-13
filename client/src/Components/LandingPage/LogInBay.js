@@ -12,9 +12,9 @@ const SignUpModalStyles = {
   content: {
     display: 'flex',
     flexFlow: 'column noWrap',
-    height: '45vh',
+    height: '410px',
     width: '20%',
-    top: '47%',
+    top: '55%',
     left: '40%',
     right: 'auto',
     bottom: 'auto',

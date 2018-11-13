@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import world from 'country-data';
-import { getCountryCodeFromName } from '../../utils.js';
+
+import themeColors from '../themeColors.js';
+import './SearchCountry.css';
 
 class SearchCountry extends Component {
   state = {
@@ -12,25 +13,22 @@ class SearchCountry extends Component {
     this.setState({ formValue: e.target.value });
   };
 
-  handleSearchSubmit = e => {
-    e.preventDefault();
-    const countryCode = getCountryCodeFromName(e.target.search.value);
-    const countryInfo = world.countries[countryCode];
-    this.props.updateCurrentCountry(countryCode, countryInfo);
-  };
-
   render() {
     return (
-      <form className="SearchCountry" onSubmit={this.handleSearchSubmit}>
+      <form className="SearchCountry" onSubmit={this.props.handleSearchSubmit}>
         <input
-          className="MenuItem Center__search"
-          type="search"
+          className="SearchCountry__input"
+          type="text"
           name="search"
           value={this.formValue}
           placeholder="Search Countries..."
           onChange={e => this.handleSearchChange(e)}
+          style={{
+            backgroundColor: themeColors.background[this.props.theme],
+            color: themeColors.fontColor[this.props.theme],
+            border: `1px solid ${themeColors.borderColor[this.props.theme]}`
+          }}
         />
-        <input type="submit" />
       </form>
     );
   }

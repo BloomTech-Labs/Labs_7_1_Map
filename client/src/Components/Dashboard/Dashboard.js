@@ -12,54 +12,46 @@ import './Dashboard.css';
 
 class Dashboard extends Component {
   state = {
-    showingSettings: false,
-    searchCountry: ''
+    showingSettings: false
   };
 
   toggleSettings = () => {
     this.setState({ showingSettings: !this.state.showingSettings });
   };
 
-  handleSearchSubmit = e => {
-    e.preventDefault();
-    const searchQuery = e.target.search.value;
-    this.setState({ searchCountry: searchQuery });
-  };
-
   render() {
     return (
       <div className="Dashboard">
-        <Nav toggleSettings={this.toggleSettings} />
-        <CountryPanel />
-        <Legend />
-        <AppContextConsumer>
-          {value => (
-            <SearchCountry
-              updateCurrentCountry={value.updateCurrentCountry}
-              handleSearchSubmit={this.handleSearchSubmit}
-            />
-          )}
-        </AppContextConsumer>
         <AppContextConsumer>
           {value => {
+            const currentTheme =
+              value && value.AppState.user.preferences
+                ? value.AppState.user.preferences.theme
+                : 'standard';
             return (
-              <Map
-                userPosition={value.AppState.userPosition}
-                updateUserPosition={value.updateUserPosition}
-                searchCountry={this.state.searchCountry}
-                updateCurrentCountry={value.updateCurrentCountry}
-                currentCountry={value.AppState.currentCountry}
-                user={value.AppState.user}
-                scratched={value.AppState.scratched}
-              />
+              <React.Fragment>
+                <Nav toggleSettings={value.toggleSettings} />
+                <CountryPanel />
+                <Legend />
+                <SearchCountry
+                  updateCurrentCountry={value.updateCurrentCountry}
+                  handleSearchSubmit={value.handleSearchSubmit}
+                  theme={currentTheme}
+                />
+                <Map
+                  userPosition={value.AppState.userPosition}
+                  updateUserPosition={value.updateUserPosition}
+                  searchCountry={this.state.searchCountry}
+                  updateCurrentCountry={value.updateCurrentCountry}
+                  currentCountry={value.AppState.currentCountry}
+                  user={value.AppState.user}
+                  scratched={value.AppState.scratched}
+                />
+                <Settings showingSettings={value.AppState.showingSettings} />
+              </React.Fragment>
             );
           }}
         </AppContextConsumer>
-
-        <Settings
-          onClick={this.toggleSettings}
-          showingSettings={this.state.showingSettings}
-        />
       </div>
     );
   }

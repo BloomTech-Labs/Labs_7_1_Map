@@ -1,15 +1,11 @@
 .FriendList {
   display: flex;
-  justify-content: center;
-  border: 1px solid black;
   width: 100%;
   height: 90px;
   overflow: hidden;
+  padding: 7px 20px;
 }
 .FriendList .FriendList_List {
-  display: grid;
-  grid-template-columns: 50% 50%;
   width: 100%;
-  margin: 5px;
   padding: 7px 20px;
 }

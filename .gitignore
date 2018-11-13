@@ -1,5 +1,6 @@
 # Created by https://www.gitignore.io/api/vim,node,macos,linux,windows,reactnative,visualstudiocode
 
+sendgrid.env
 ### Linux ###
 *~
 
