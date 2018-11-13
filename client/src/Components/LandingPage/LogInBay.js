@@ -128,12 +128,16 @@ class LogInBay extends React.Component {
               <label htmlFor="">SIGN IN</label>
               <input type="text" placeholder="Username" name="username" />
               <input type="password" placeholder="Password" name="password" />
-              <input type="submit" className="LogInBay__LogInButton"/>
+              <input type="submit" className="LogInBay__LogInButton" />
             </form>
             {/* <br /> */}
             {/* <p> - or -</p> */}
             {/* <br /> */}
-            {/* <a href={`${BACKEND_URL}/facebook_login`}> */}
+            {/* <a */}
+            {/*   href={`${BACKEND_URL}/facebook_login`} */}
+            {/*   target="_blank" */}
+            {/*   rel="noopener noreferrer" */}
+            {/* > */}
             {/*   Login with Facebook */}
             {/* </a> */}
             <br />
