@@ -362,3 +362,4 @@ local_data
 .env
 .tern-port
 package-lock.json
+sendgrid.env

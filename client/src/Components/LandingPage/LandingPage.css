@@ -17,7 +17,7 @@
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  height: 11vh;
+  height: 12vh;
 }
 .LandingPage .LandingPage__Container .Container__Header .Header__Title {
   font-size: 2rem;
@@ -29,22 +29,26 @@
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Left {
   width: 50%;
+  border: 1px solid red;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__Tagline {
   margin-top: 13vh;
   height: 25 vh;
   display: flex;
   justify-content: flex-end;
+  border: 1px solid red;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__Tagline .Tagline__Phrase {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
+  border: 1px solid red;
+  width: 40%;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__Tagline .Tagline__Phrase p {
-  font-size: 1.6rem;
-  letter-spacing: 2px;
+  font-size: 1.3rem;
+  letter-spacing: 1.8px;
   margin: 10px 0;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__LoginBayContainer {
