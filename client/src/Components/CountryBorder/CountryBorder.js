@@ -45,7 +45,6 @@ const draw = (context, canvasWidth, canvasHeight, bounds, geometry, color) => {
       });
     context.closePath();
     context.fill();
-    // context.stroke();
   }
   // Handles countries made up of multiple unconnected polygons
   else if (geometry.type === 'MultiPolygon') {
@@ -68,7 +67,6 @@ const draw = (context, canvasWidth, canvasHeight, bounds, geometry, color) => {
         });
       context.closePath();
       context.fill();
-      // context.stroke();
     });
   }
 };
@@ -78,31 +76,41 @@ export default class CountryBorder extends Component {
     marks: {
       0: {
         style: {
-          color: 'gray'
+          color: 'gray',
+          fontWeight: 'bold',
+          textShadow: '1px 0px 0px black'
         },
         label: 'None'
       },
       1: {
         style: {
-          color: colorPalette[1]
+          color: 'purple',
+          fontWeight: 'bold',
+          textShadow: '1px 0px 0px black'
         },
         label: 'Wishlist'
       },
       2: {
         style: {
-          color: colorPalette[2]
+          color: colorPalette[2],
+          fontWeight: 'bold',
+          textShadow: '1px 0px 0px black'
         },
         label: 'Transited'
       },
       3: {
         style: {
-          color: colorPalette[3]
+          color: colorPalette[3],
+          fontWeight: 'bold',
+          textShadow: '1px 0px 0px black'
         },
         label: 'Visited'
       },
       4: {
         style: {
-          color: colorPalette[4]
+          color: colorPalette[4],
+          fontWeight: 'bold',
+          textShadow: '1px 0px 0px black'
         },
         label: 'Lived'
       }
@@ -118,12 +126,12 @@ export default class CountryBorder extends Component {
   }
 
   drawBorder = () => {
-    // Get the correct fill color based on status. Need to check if
-    // this.props.currentCountryStatus exists to prevent any crashes
+    // Get the correct fill color based on status.
+    // Check if this.props.currentCountryStatus exists to prevent any crashes
     const color = this.props.currentCountryStatus
       ? colorPalette[this.props.currentCountryStatus]
       : 'black';
-    const canvas = this.refs.canvas;
+    const canvas = this.refs.canvas; // TODO: Fix deprecation warning
     const context = canvas.getContext('2d');
     if (context) context.clearRect(0, 0, canvasWidth, canvasHeight);
     // only draw if we have the geometry
@@ -165,19 +173,21 @@ export default class CountryBorder extends Component {
             />
           </ScratchCard>
         )}
-        <div className="CountryBorder__SliderContainer">
-          <Slider
-            className="Slider"
-            min={0}
-            max={4}
-            marks={this.state.marks}
-            step={null}
-            onChange={this.props.handleSliderMove}
-            defaultValue={0}
-            value={this.props.currentCountryStatus}
-            disabled={!this.props.scratched}
-          />
-        </div>
+        {this.props.scratched && (
+          <div className="CountryBorder__SliderContainer">
+            <Slider
+              className="Slider"
+              min={0}
+              max={4}
+              marks={this.state.marks}
+              step={null}
+              onChange={this.props.handleSliderMove}
+              defaultValue={0}
+              value={this.props.currentCountryStatus}
+              disabled={!this.props.scratched}
+            />
+          </div>
+        )}
       </div>
     );
   }

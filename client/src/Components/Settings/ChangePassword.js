@@ -8,15 +8,10 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 class ChangePassword extends Component {
   state = {
-    show: false,
     currentPassword: '',
     newPassword: '',
     confirmNewPassword: '',
     changePasswordError: ''
-  };
-
-  toggleShow = () => {
-    this.setState({ show: !this.state.show });
   };
 
   handleChange = e => {
@@ -32,35 +27,28 @@ class ChangePassword extends Component {
 
     const { currentPassword, newPassword, confirmNewPassword } = this.state;
 
-    if ((!currentPassword || !newPassword, !confirmNewPassword)) {
+    // Error handling
+    if ((!currentPassword || !newPassword, !confirmNewPassword))
       return this.setState({
         changePasswordError: 'Please complete the form'
       });
-    }
-    if (currentPassword.length < 6) {
+
+    if (currentPassword.length < 6)
       return this.setState({
         changePasswordError: 'Current password is invalid'
       });
-    }
-    if (newPassword !== confirmNewPassword) {
+
+    if (newPassword !== confirmNewPassword)
       return this.setState({
         changePasswordError: 'Passwords do not match'
       });
-    }
-    if (newPassword.length < 6) {
+
+    if (newPassword.length < 6)
       return this.setState({
         changePasswordError: 'Password must be at least 6 characters long'
       });
-    }
 
-    // Error handling
-    // TODO: Notify user of errors
-    if (!currentPassword) return console.error('Enter your current password!'); // eslint-disable-line
-    if (newPassword !== confirmNewPassword)
-      return console.error('Passwords do not match!'); // eslint-disable-line
-    if (newPassword.length < 6)
-      return console.error('Password needs to be at least 6 characters!'); // eslint-disable-line
-
+    // If no errors caught, make call to back end
     try {
       const url = `${BACKEND_URL}/change_password`;
       const body = {
@@ -80,6 +68,7 @@ class ChangePassword extends Component {
         confirmNewPassword: '',
         show: false
       });
+      // TODO: notify user of success
       console.log('Password updated successfully', response.data);
     } catch (err) {
       // TODO: Notify user of errors
@@ -90,8 +79,8 @@ class ChangePassword extends Component {
   render() {
     return (
       <div className="ChangePassword">
-        <h1 onClick={() => this.toggleShow()}>Change Password...</h1>
-        {this.state.show && (
+        <h1 onClick={() => this.props.handleChangePasswordClick()}>Change Password...</h1>
+        {this.props.showingChangePassword && (
           <form
             onSubmit={this.handleSubmit}
             className="Settings__ChangePassword"

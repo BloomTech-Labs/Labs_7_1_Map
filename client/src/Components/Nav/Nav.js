@@ -23,7 +23,8 @@ const Nav = props => {
             className="Nav"
             style={{
               backgroundColor: themeColors.background[currentTheme],
-              color: themeColors.color[currentTheme]
+              color: themeColors.fontColor[currentTheme],
+              border: `1px solid ${themeColors.borderColor[currentTheme]}`
             }}
           >
             <h1 className="Nav__title">MapScratcher</h1>
