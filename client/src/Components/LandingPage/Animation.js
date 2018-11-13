@@ -5,9 +5,13 @@ export default class Animation extends Component {
   render() {
     return (
       <div>
-        <div class="frame">
-          <div class="plane-container">
-            <a href="http://customer.io/" target="_blank">
+        <div className="frame">
+          <div className="plane-container">
+            <a
+              href="http://customer.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <svg
                 version="1.1"
                 xmlns="http://www.w3.org/2000/svg"
@@ -17,9 +21,9 @@ export default class Animation extends Component {
                 width="1131.53px"
                 height="379.304px"
                 viewBox="0 0 1131.53 379.304"
-                enable-background="new 0 0 1131.53 379.304"
+                enableBackground="new 0 0 1131.53 379.304"
                 // xml:space="preserve"
-                class="plane"
+                className="plane"
               >
                 <polygon
                   fill="#D8D8D8"

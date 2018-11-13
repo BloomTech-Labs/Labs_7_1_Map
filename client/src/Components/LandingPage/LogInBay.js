@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import FailedSignUpPopUp from './FailedSignUpPopUp';
 import './LogInBay.css';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+// const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const SignUpModalStyles = {
   content: {
