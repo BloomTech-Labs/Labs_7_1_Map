@@ -41,6 +41,12 @@ module.exports = server => {
     res.sendFile(path.join(__dirname + '/utils/landing.html'));
   });
 
+  // Send the site's privacy policy 
+  // Needed for facebook integration (set in the FB developer dashboard)
+  server.get('/api/privacy_policy', (req, res) => {
+    res.sendFile(path.join(__dirname + '/utils/privacy_policy.html'));
+  });
+
   // User Login Routes
   server.get('/api/entry', protected_route, (req, res) => {
     res.status(200).json({ msg: 'Entry allowed' });
@@ -61,7 +67,9 @@ module.exports = server => {
   // Update country on User routes
   server.route('/api/country_status').post(protected_route, handle_status);
   server.route('/api/country_notes').post(protected_route, handle_notes);
-  server.route('/api/country_scratched').post(protected_route, handle_scratched);
+  server
+    .route('/api/country_scratched')
+    .post(protected_route, handle_scratched);
 
   // Update User settings routes
   server.route('/api/change_password').put(protected_route, change_password);

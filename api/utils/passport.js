@@ -61,7 +61,7 @@ passport.use(jwt_strategy); // using the jwt strategy
 // load the credentials
 const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
 const FACE_APP_SECRET = process.env.FACE_APP_SECRET;
-const FACEBOOK_APP_CALLBACK_URL_URL =
+const FACEBOOK_APP_CALLBACK_URL =
   process.env.FACEBOOK_APP_CALLBACK_URL ||
   'http://localhost:8000/api/facebook_callback';
 
@@ -69,7 +69,7 @@ const FACEBOOK_APP_CALLBACK_URL_URL =
 const FACEBOOK_OPTIONS = {
   clientID: FACEBOOK_APP_ID,
   clientSecret: FACE_APP_SECRET,
-  callbackURL: FACEBOOK_APP_CALLBACK_URL_URL,
+  callbackURL: FACEBOOK_APP_CALLBACK_URL,
   profileFields: ['id', 'emails', 'name']
 };
 
@@ -97,7 +97,7 @@ const facebook_strategy = new FacebookStrategy(FACEBOOK_OPTIONS, async function(
         first_name: profile.name.givenName
       };
 
-      // find by email, if found, update else create
+      // find by email, if found update user
       const found_by_email = await User.findOne({ email });
       if (found_by_email) {
         const updated_user = await User.findOneAndUpdate(
@@ -106,8 +106,9 @@ const facebook_strategy = new FacebookStrategy(FACEBOOK_OPTIONS, async function(
           { new: true }
         );
         return done(null, updated_user);
-      } else {
-        // create user
+      }
+      // create user if it does not exist
+      else {
         const new_user = new User({
           email,
           username: email,

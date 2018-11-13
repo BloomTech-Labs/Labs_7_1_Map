@@ -5,7 +5,7 @@ import { AppContextConsumer } from '../../AppContext';
 import FailedSignUpPopUp from './FailedSignUpPopUp';
 import './LogInBay.css';
 
-// const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const SignUpModalStyles = {
   content: {
@@ -128,14 +128,18 @@ class LogInBay extends React.Component {
               <label htmlFor="">SIGN IN</label>
               <input type="text" placeholder="Username" name="username" />
               <input type="password" placeholder="Password" name="password" />
-              <input type="submit" className="LogInBay__LogInButton"/>
+              <input type="submit" className="LogInBay__LogInButton" />
             </form>
-            {/* <br /> */}
-            {/* <p> - or -</p> */}
-            {/* <br /> */}
-            {/* <a href={`${BACKEND_URL}/facebook_login`}> */}
-            {/*   Login with Facebook */}
-            {/* </a> */}
+            <br />
+            <p> - or -</p>
+            <br />
+            <a
+              href={`${BACKEND_URL}/facebook_login`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Login with Facebook
+            </a>
             <br />
             <p className="LoginBay__divider"> - or -</p>
             <br />
