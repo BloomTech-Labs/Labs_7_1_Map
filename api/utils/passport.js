@@ -61,9 +61,7 @@ passport.use(jwt_strategy); // using the jwt strategy
 // load the credentials
 const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
 const FACE_APP_SECRET = process.env.FACE_APP_SECRET;
-const FACEBOOK_APP_CALLBACK_URL =
-  process.env.FACEBOOK_APP_CALLBACK_URL ||
-  'http://localhost:8000/api/facebook_callback';
+const FACEBOOK_APP_CALLBACK_URL = process.env.FACEBOOK_APP_CALLBACK_URL
 
 // define the options object using the credentials object
 const FACEBOOK_OPTIONS = {
@@ -81,6 +79,8 @@ const facebook_strategy = new FacebookStrategy(FACEBOOK_OPTIONS, async function(
   done
 ) {
   try {
+    console.log('facebook_strategy - try');
+    console.log(accessToken, profile)
     const found = await User.findOne({ 'facebook.id': profile.id });
 
     if (found) {
@@ -119,6 +119,7 @@ const facebook_strategy = new FacebookStrategy(FACEBOOK_OPTIONS, async function(
       }
     }
   } catch (err) {
+    console.log('facebook_strategy - catch');
     if (DEV) console.log(err);
     return done(null, false, { message: 'Internal Error.' });
   }

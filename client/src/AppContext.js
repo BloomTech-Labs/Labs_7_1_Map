@@ -96,22 +96,6 @@ export class AppContextProvider extends Component {
     return notes;
   }; // getCurrentCountryNotes
 
-  // Get the status_code of a country saved on user if it exists
-  // Otherwise, return 0
-  updateCurrentCountryStatus = async () => {
-    const currentCountryCode = this.state.currentCountry.code;
-    const userCountries = [...this.state.user.countries];
-
-    if (userCountries) {
-      const findCountry = userCountries.find(
-        country => currentCountryCode === country.country_code
-      );
-
-      const currentCountryStatus = findCountry ? findCountry.status_code : 0;
-      await this.setState({ currentCountryStatus });
-    }
-  }; // updateCurrentCountryStatus
-
   getLocationUsingIP = () => {
     axios
       .get('https://ipapi.co/json')
@@ -132,6 +116,21 @@ export class AppContextProvider extends Component {
     const currentCountry = { ...this.state.currentCountry };
     currentCountry[e.target.name] = e.target.value;
     this.setState({ currentCountry });
+  };
+
+  handleFacebookLogin = async () => {
+    console.log('FB Login attempted');
+    const options = {
+      headers: {
+        'Upgrade-Insecure-Requests': 1,
+        Connection: 'keep-alive',
+        Host: '381352b4.ngrok.io',
+        Accept:
+          'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+      }
+    };
+    const response = await axios.get(`${BACKEND_URL}/facebook_login`);
+    console.log(response);
   };
 
   handleScratched = async () => {
@@ -248,40 +247,6 @@ export class AppContextProvider extends Component {
       console.error('Error updating country status!');
     }
   }; // handleSliderMove
-
-  // Update state with currently selected country, called in Map.js
-  updateCurrentCountry = async (code, info) => {
-    if (!code) {
-      this.setState({ currentCountryStatus: null, currentCountry: {} });
-      return this.closeCountryPanel();
-    }
-
-    const geoInfo = getCountryShapeFromCode(code);
-    const scratched = this.isScratched(code);
-    const notes = this.getCurrentCountryNotes(code);
-
-    // Clear currentCountry first to reset scratchcard; otherwise if you scratch
-    // a card and then click on another country, the scratchcard will retain the
-    // scratched state.
-    // TODO: Find a way to reset scratchcard withoout multiple setStates's
-    await this.setState({ currentCountry: {} });
-
-    const currentCountry = {
-      ...this.state.currentCountry,
-      code,
-      info,
-      geoInfo,
-      scratched,
-      notes,
-      editNoteMode: false
-    };
-
-    await this.setState({
-      currentCountry,
-      showingCountryPanel: true
-    });
-    this.updateCurrentCountryStatus();
-  };
 
   handleSearchSubmit = e => {
     e.preventDefault();
@@ -411,6 +376,56 @@ export class AppContextProvider extends Component {
     });
   };
 
+  // Update state with currently selected country, called in Map.js
+  updateCurrentCountry = async (code, info) => {
+    if (!code) {
+      this.setState({ currentCountryStatus: null, currentCountry: {} });
+      return this.closeCountryPanel();
+    }
+
+    const geoInfo = getCountryShapeFromCode(code);
+    const scratched = this.isScratched(code);
+    const notes = this.getCurrentCountryNotes(code);
+
+    // Clear currentCountry first to reset scratchcard; otherwise if you scratch
+    // a card and then click on another country, the scratchcard will retain the
+    // scratched state.
+    // TODO: Find a way to reset scratchcard withoout multiple setStates's
+    await this.setState({ currentCountry: {} });
+
+    const currentCountry = {
+      ...this.state.currentCountry,
+      code,
+      info,
+      geoInfo,
+      scratched,
+      notes,
+      editNoteMode: false
+    };
+
+    await this.setState({
+      currentCountry,
+      showingCountryPanel: true
+    });
+    this.updateCurrentCountryStatus();
+  };
+
+  // Get the status_code of a country saved on user if it exists
+  // Otherwise, return 0
+  updateCurrentCountryStatus = async () => {
+    const currentCountryCode = this.state.currentCountry.code;
+    const userCountries = [...this.state.user.countries];
+
+    if (userCountries) {
+      const findCountry = userCountries.find(
+        country => currentCountryCode === country.country_code
+      );
+
+      const currentCountryStatus = findCountry ? findCountry.status_code : 0;
+      await this.setState({ currentCountryStatus });
+    }
+  }; // updateCurrentCountryStatus
+
   // Update the user's geolocation position
   updateUserPosition = (lat, lng) => {
     this.setState({ userPosition: { lng, lat } });
@@ -425,6 +440,7 @@ export class AppContextProvider extends Component {
           closeCountryPanel: this.closeCountryPanel,
           currentCountryInfo: this.state.currentCountry.geoInfo,
           handleChangeNote: this.handleChangeNote,
+          handleFacebookLogin: this.handleFacebookLogin,
           handleScratched: this.handleScratched,
           handleSearchSubmit: this.handleSearchSubmit,
           handleSignIn: this.handleSignIn,

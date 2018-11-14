@@ -123,7 +123,7 @@ class LogInBay extends React.Component {
   render() {
     return (
       <AppContextConsumer>
-        {({ handleSignIn }) => (
+        {({ handleSignIn, handleFacebookLogin }) => (
           <div className="LogInBay">
             <div className="LogInBay__Container">
               <form className="Container__LogInForm" onSubmit={handleSignIn}>
@@ -136,6 +136,15 @@ class LogInBay extends React.Component {
                   value="Login"
                 />
               </form>
+
+              <a href="https://381352b4.ngrok.io/api/facebook_login">Login with Facebook</a>
+              <button
+                type="button"
+                className="Continer__Button"
+                onClick={handleFacebookLogin}
+              >
+                Login with Facebook
+              </button>
 
               <button
                 type="button"

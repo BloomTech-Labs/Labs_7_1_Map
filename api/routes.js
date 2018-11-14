@@ -25,13 +25,14 @@ const protected_route = passport.authenticate('jwt', { session: false });
 
 // facebook strategy
 const facebook_authentication = passport.authenticate('facebook', {
-  scope: ['email', 'user_friends'],
+  scope: ['email'],
   session: false
 });
 
 const facebook_authentication_callback = passport.authenticate('facebook', {
   session: false,
-  failureRedirect: '/api'
+  successRedirect: 'http://localhost:3000',
+  failureRedirect: 'http://localhost:3000'
 });
 
 // export the routes
@@ -41,7 +42,7 @@ module.exports = server => {
     res.sendFile(path.join(__dirname + '/utils/landing.html'));
   });
 
-  // Send the site's privacy policy 
+  // Send the site's privacy policy
   // Needed for facebook integration (set in the FB developer dashboard)
   server.get('/api/privacy_policy', (req, res) => {
     res.sendFile(path.join(__dirname + '/utils/privacy_policy.html'));
@@ -59,7 +60,9 @@ module.exports = server => {
 
   server.route('/api/login').post(authenticate, login);
   server.route('/api/register').post(create_user);
-  server.route('/api/facebook_login').get(facebook_authentication);
+  server
+    .route('/api/facebook_login')
+    .get(facebook_authentication, facebook_loggedIn);
   server
     .route('/api/facebook_callback')
     .get(facebook_authentication_callback, facebook_loggedIn);

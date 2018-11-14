@@ -117,15 +117,18 @@ module.exports = {
   }, // create_user
 
   facebook_loggedIn: async (req, res) => {
+    console.log('facebook_loggedIn')
     try {
       // we only reach here because we are authenticated
       const user = {
         id: req.user.id,
         username: req.user.username,
         preferences: req.user.preferences,
-        countries: req.user.countries
+        countries: req.user.countries,
+        facebook: req.user.facebook
       }; // add the things you need to send
-      return res.status(200).json({ jwt_token: make_token(req.user), user });
+      return res.redirect(`http://localhost:3000?token=${req.user.facebook.accessToken}`);
+      // return res.status(200).json({ jwt_token: make_token(req.user), user });
     } catch (err) {
       if (DEV) console.log(err);
       return res.status(500).json({ error: 'Internal server error!' });
