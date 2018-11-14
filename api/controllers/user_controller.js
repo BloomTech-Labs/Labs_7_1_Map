@@ -127,7 +127,9 @@ module.exports = {
         countries: req.user.countries,
         facebook: req.user.facebook
       }; // add the things you need to send
-      return res.redirect(`http://localhost:3000?token=${req.user.facebook.accessToken}`);
+
+      const jwt_token = make_token(req.user)
+      return res.redirect(`http://localhost:3000?token=${jwt_token}`);
       // return res.status(200).json({ jwt_token: make_token(req.user), user });
     } catch (err) {
       if (DEV) console.log(err);
