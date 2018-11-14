@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import FailedSignUpPopUp from './FailedSignUpPopUp';
 import './LogInBay.css';
 
-// const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const SignUpModalStyles = {
   content: {
@@ -123,7 +123,7 @@ class LogInBay extends React.Component {
   render() {
     return (
       <AppContextConsumer>
-        {({ handleSignIn, handleFacebookLogin }) => (
+        {({ handleSignIn }) => (
           <div className="LogInBay">
             <div className="LogInBay__Container">
               <form className="Container__LogInForm" onSubmit={handleSignIn}>
@@ -137,14 +137,7 @@ class LogInBay extends React.Component {
                 />
               </form>
 
-              <a href="https://381352b4.ngrok.io/api/facebook_login">Login with Facebook</a>
-              <button
-                type="button"
-                className="Continer__Button"
-                onClick={handleFacebookLogin}
-              >
-                Login with Facebook
-              </button>
+              <a href={`${BACKEND_URL}/facebook_login`} className="Container__Button">Login with Facebook</a>
 
               <button
                 type="button"

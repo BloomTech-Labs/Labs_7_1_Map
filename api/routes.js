@@ -31,8 +31,8 @@ const facebook_authentication = passport.authenticate('facebook', {
 
 const facebook_authentication_callback = passport.authenticate('facebook', {
   session: false,
-  successRedirect: 'http://localhost:3000',
-  failureRedirect: 'http://localhost:3000'
+  successRedirect: '/',
+  failureRedirect: '/api/login_failure'
 });
 
 // export the routes

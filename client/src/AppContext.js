@@ -36,6 +36,7 @@ export class AppContextProvider extends Component {
   };
 
   async componentDidMount() {
+    console.log(window.location.search);
     // Check if a user is already logged in
     try {
       // Retrieve token and user stored in local storage
@@ -116,21 +117,6 @@ export class AppContextProvider extends Component {
     const currentCountry = { ...this.state.currentCountry };
     currentCountry[e.target.name] = e.target.value;
     this.setState({ currentCountry });
-  };
-
-  handleFacebookLogin = async () => {
-    console.log('FB Login attempted');
-    const options = {
-      headers: {
-        'Upgrade-Insecure-Requests': 1,
-        Connection: 'keep-alive',
-        Host: '381352b4.ngrok.io',
-        Accept:
-          'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
-      }
-    };
-    const response = await axios.get(`${BACKEND_URL}/facebook_login`);
-    console.log(response);
   };
 
   handleScratched = async () => {
@@ -440,7 +426,6 @@ export class AppContextProvider extends Component {
           closeCountryPanel: this.closeCountryPanel,
           currentCountryInfo: this.state.currentCountry.geoInfo,
           handleChangeNote: this.handleChangeNote,
-          handleFacebookLogin: this.handleFacebookLogin,
           handleScratched: this.handleScratched,
           handleSearchSubmit: this.handleSearchSubmit,
           handleSignIn: this.handleSignIn,
