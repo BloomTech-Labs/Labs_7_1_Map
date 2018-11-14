@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import FailedSignUpPopUp from './FailedSignUpPopUp';
 import './LogInBay.css';
+import facebookButton from '../../facebook-login.png';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -137,8 +138,12 @@ class LogInBay extends React.Component {
                 />
               </form>
 
-              <a href={`${BACKEND_URL}/facebook_login`} className="Container__Button">Login with Facebook</a>
-
+              <a
+                href={`${BACKEND_URL}/facebook_login`}
+                className="Container__Button"
+              >
+                <img src={facebookButton} alt="Login with Facebook" style={{width: '100%'}}/>
+              </a>
               <button
                 type="button"
                 className="Container__Button"
