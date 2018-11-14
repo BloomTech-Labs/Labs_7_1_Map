@@ -36,6 +36,10 @@ export class AppContextProvider extends Component {
   };
 
   async componentDidMount() {
+    if (window.location.search) {
+      localStorage.setItem('token', window.location.search.slice(7));
+      window.location = 'http://localhost:3000';
+    } 
     // Check if a user is already logged in
     try {
       // Retrieve token and user stored in local storage
@@ -95,22 +99,6 @@ export class AppContextProvider extends Component {
     }
     return notes;
   }; // getCurrentCountryNotes
-
-  // Get the status_code of a country saved on user if it exists
-  // Otherwise, return 0
-  updateCurrentCountryStatus = async () => {
-    const currentCountryCode = this.state.currentCountry.code;
-    const userCountries = [...this.state.user.countries];
-
-    if (userCountries) {
-      const findCountry = userCountries.find(
-        country => currentCountryCode === country.country_code
-      );
-
-      const currentCountryStatus = findCountry ? findCountry.status_code : 0;
-      await this.setState({ currentCountryStatus });
-    }
-  }; // updateCurrentCountryStatus
 
   getLocationUsingIP = () => {
     axios
@@ -249,40 +237,6 @@ export class AppContextProvider extends Component {
     }
   }; // handleSliderMove
 
-  // Update state with currently selected country, called in Map.js
-  updateCurrentCountry = async (code, info) => {
-    if (!code) {
-      this.setState({ currentCountryStatus: null, currentCountry: {} });
-      return this.closeCountryPanel();
-    }
-
-    const geoInfo = getCountryShapeFromCode(code);
-    const scratched = this.isScratched(code);
-    const notes = this.getCurrentCountryNotes(code);
-
-    // Clear currentCountry first to reset scratchcard; otherwise if you scratch
-    // a card and then click on another country, the scratchcard will retain the
-    // scratched state.
-    // TODO: Find a way to reset scratchcard withoout multiple setStates's
-    await this.setState({ currentCountry: {} });
-
-    const currentCountry = {
-      ...this.state.currentCountry,
-      code,
-      info,
-      geoInfo,
-      scratched,
-      notes,
-      editNoteMode: false
-    };
-
-    await this.setState({
-      currentCountry,
-      showingCountryPanel: true
-    });
-    this.updateCurrentCountryStatus();
-  };
-
   handleSearchSubmit = e => {
     e.preventDefault();
     const countryCode = getCountryCodeFromName(e.target.search.value);
@@ -410,6 +364,56 @@ export class AppContextProvider extends Component {
       currentCountry
     });
   };
+
+  // Update state with currently selected country, called in Map.js
+  updateCurrentCountry = async (code, info) => {
+    if (!code) {
+      this.setState({ currentCountryStatus: null, currentCountry: {} });
+      return this.closeCountryPanel();
+    }
+
+    const geoInfo = getCountryShapeFromCode(code);
+    const scratched = this.isScratched(code);
+    const notes = this.getCurrentCountryNotes(code);
+
+    // Clear currentCountry first to reset scratchcard; otherwise if you scratch
+    // a card and then click on another country, the scratchcard will retain the
+    // scratched state.
+    // TODO: Find a way to reset scratchcard withoout multiple setStates's
+    await this.setState({ currentCountry: {} });
+
+    const currentCountry = {
+      ...this.state.currentCountry,
+      code,
+      info,
+      geoInfo,
+      scratched,
+      notes,
+      editNoteMode: false
+    };
+
+    await this.setState({
+      currentCountry,
+      showingCountryPanel: true
+    });
+    this.updateCurrentCountryStatus();
+  };
+
+  // Get the status_code of a country saved on user if it exists
+  // Otherwise, return 0
+  updateCurrentCountryStatus = async () => {
+    const currentCountryCode = this.state.currentCountry.code;
+    const userCountries = [...this.state.user.countries];
+
+    if (userCountries) {
+      const findCountry = userCountries.find(
+        country => currentCountryCode === country.country_code
+      );
+
+      const currentCountryStatus = findCountry ? findCountry.status_code : 0;
+      await this.setState({ currentCountryStatus });
+    }
+  }; // updateCurrentCountryStatus
 
   // Update the user's geolocation position
   updateUserPosition = (lat, lng) => {
