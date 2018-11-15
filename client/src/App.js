@@ -16,13 +16,7 @@ class App extends Component {
             {value.AppState.authenticated ? (
               <Dashboard />
             ) : (
-              <AppContextConsumer>
-                {value => {
-                  return (
-                    <LandingPage failedLogin={value.AppState.failedLogin} />
-                  );
-                }}
-              </AppContextConsumer>
+              <LandingPage failedLogin={value.AppState.failedLogin} />
             )}
           </div>
         )}
