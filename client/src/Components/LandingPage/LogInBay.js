@@ -54,23 +54,28 @@ class LogInBay extends React.Component {
 
   handleCloseModal = () => {
     this.setState({ showModal: false });
+    this.resetFailedSignUp();
   };
 
   //These update state when signup fields are changed
   handleChangeSignUpUsername = event => {
+    this.resetFailedSignUp();
     this.setState({ signupUsername: event.target.value });
   };
 
   handleChangeSignUpEmail = event => {
     this.setState({ signupEmail: event.target.value });
+    this.resetFailedSignUp();
   };
 
   handleChangeSignUpPassword1 = event => {
     this.setState({ signupPassword1: event.target.value });
+    this.resetFailedSignUp();
   };
 
   handleChangeSignUpPassword2 = event => {
     this.setState({ signupPassword2: event.target.value });
+    this.resetFailedSignUp();
   };
   //------------------------------------------------------
 
@@ -80,6 +85,16 @@ class LogInBay extends React.Component {
     if (this.props.failedLogin) {
       this.props.resetFailedLogin();
     }
+  };
+
+  //reset failed signup message
+  //will be called whenever a user types in the signup field or exits out
+  resetFailedSignUp = () => {
+    if (this.signupErrorResponse !== '') {
+      this.setState({
+        signupErrorResponse: ''
+      });
+    };
   };
 
   handleSignUpSubmit = async event => {
