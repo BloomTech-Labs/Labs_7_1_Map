@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Map, TileLayer, Marker, GeoJSON } from 'react-leaflet';
 import wc from 'which-country';
 import geojson from './countries.geo.json';
@@ -130,5 +131,15 @@ class MapComponent extends Component {
     );
   }
 } // MapComponent
+
+MapComponent.propTypes = {
+  userPosition: PropTypes.object,
+  updateUserPosition: PropTypes.func,
+  SearchCountry: PropTypes.string,
+  updateCurrentCountry: PropTypes.func,
+  currentCountry: PropTypes.object,
+  user: PropTypes.object,
+  scratched: PropTypes.bool
+};
 
 export default MapComponent;

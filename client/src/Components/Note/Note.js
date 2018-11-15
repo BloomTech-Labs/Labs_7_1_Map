@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './Note.css';
@@ -48,6 +49,13 @@ const Note = props => {
   }
 
   return <div className="Note">{display}</div>;
+};
+
+Note.propTypes = {
+  country: PropTypes.object,
+  handleChangeNote: PropTypes.func,
+  handleUpdateNote: PropTypes.func,
+  turnOnEditNote: PropTypes.func
 };
 
 export default Note;

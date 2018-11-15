@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import themeColors from '../themeColors.js';
 import './Preferences.css';
@@ -62,6 +63,11 @@ class Preferences extends Component {
       </div>
     );
   }
+}
+
+Preferences.propTypes = {
+  user: PropTypes.object,
+  handleUpdatePreferences: PropTypes.any
 }
 
 export default Preferences;

@@ -68,4 +68,8 @@ const Nav = props => {
   );
 };
 
+Nav.propTypes = {
+  toggleSettings: PropTypes.func
+};
+
 export default Nav;
