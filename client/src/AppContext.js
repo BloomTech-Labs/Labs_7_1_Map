@@ -28,6 +28,7 @@ export class AppContextProvider extends Component {
     failedLogin: false,
     failedSignUp: false,
     failedSignUpMessage: '',
+    friends: [],
     searchCountry: '',
     showingSettings: false,
     showingCountryPanel: false,
@@ -39,6 +40,7 @@ export class AppContextProvider extends Component {
     // Check if a JWT is added as a query string in URL from the Facebook redirect
     // If it exists, store the token in localStorage and redirect to main page
     // and the user will be automatically logged in taken to their dashboard
+    // TODO: Implement a more secure way of logging the user into app after FB login
     if (window.location.search) {
       localStorage.setItem('token', window.location.search.slice(7));
       window.location = '/';
@@ -62,10 +64,19 @@ export class AppContextProvider extends Component {
 
         // Update state if the user was retrieved from the DB
         if (response.status === 200)
-          this.setState({
+          await this.setState({
             authenticated: true,
             user: { ...response.data }
           });
+      }
+
+      // Get a users facebook friends if they signed up with facebook
+      if (this.state.user.facebook) {
+        const { id, accessToken } = this.state.user.facebook;
+        const facebookResponse = await axios.get(
+          `https://graph.facebook.com/${id}/friends?access_token=${accessToken}`
+        );
+        await this.setState({ friends: facebookResponse.data.data });
       }
     } catch (e) {
       // failed async
@@ -75,15 +86,19 @@ export class AppContextProvider extends Component {
     // Ask for user location if browser is compatible
     if ('geolocation' in navigator) {
       this.hasGeolocation();
-    } else {
-      this.getLocationUsingIP(); // geo location not available on device
+    }
+    // Attempt to get location based on IP if geolocation is not supported
+    else {
+      this.getLocationUsingIP();
     }
   } // componentDidMount
 
+  // Open/Close settings panel. Called in Nav.js
   toggleSettings = () => {
     this.setState({ showingSettings: !this.state.showingSettings });
-  };
+  }; // toggleSettings
 
+  // Close CountryPanel
   closeCountryPanel = () => {
     this.setState({
       showingCountryPanel: false
@@ -149,7 +164,6 @@ export class AppContextProvider extends Component {
       );
 
       currentCountry.scratched = true;
-      console.log(response.data);
       this.setState({
         currentCountry,
         currentCountryStatus: 0,
