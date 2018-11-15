@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import ChangePasswordError from './ChangePasswordError';
@@ -128,6 +129,12 @@ class ChangePassword extends Component {
       </div>
     );
   }
+}
+
+ChangePassword.propTypes = {
+  user: PropTypes.object,
+  handleChangePasswordClick: PropTypes.func,
+  showingChangePassword: PropTypes.bool
 }
 
 export default ChangePassword;

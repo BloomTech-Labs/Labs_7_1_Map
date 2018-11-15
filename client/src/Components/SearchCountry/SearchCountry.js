@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import themeColors from '../themeColors.js';
 import './SearchCountry.css';
@@ -33,5 +34,11 @@ class SearchCountry extends Component {
     );
   }
 }
+
+SearchCountry.propTypes = {
+  updateCurrentCountry: PropTypes.func,
+  handleSearchSubmit: PropTypes.func,
+  theme: PropTypes.string
+};
 
 export default SearchCountry;

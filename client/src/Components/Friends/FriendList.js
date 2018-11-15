@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './FriendList.css';
 
@@ -13,6 +14,10 @@ const FriendList = props => {
       </div>
     </div>
   );
+};
+
+FriendList.propTypes = {
+  user: PropTypes.object
 };
 
 export default FriendList;

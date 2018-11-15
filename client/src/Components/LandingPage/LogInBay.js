@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 import { AppContextConsumer } from '../../AppContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -208,5 +209,12 @@ class LogInBay extends React.Component {
     );
   }
 }
+
+LogInBay.propTypes = {
+  failedSignUp: PropTypes.bool,
+  handleSignUp: PropTypes.func,
+  failedSignUpMessage: PropTypes.string,
+  resetAppStateError: PropTypes.func
+};
 
 export default LogInBay;

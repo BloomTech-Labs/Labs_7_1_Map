@@ -10,6 +10,7 @@
     "country-data": "0.0.31",
     "leaflet": "^1.3.4",
     "point-in-polygon": "^1.0.1",
+    "prop-types": "^15.6.2",
     "rbush": "^2.0.2",
     "rc-align": "^2.4.3",
     "rc-slider": "^8.6.3",
