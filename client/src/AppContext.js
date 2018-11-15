@@ -71,6 +71,7 @@ export class AppContextProvider extends Component {
       }
 
       // Get a users facebook friends if they signed up with facebook
+      // TODO: Move this over to the backend so this is only called upon login
       if (this.state.user.facebook) {
         const { id, accessToken } = this.state.user.facebook;
         const facebookResponse = await axios.get(
