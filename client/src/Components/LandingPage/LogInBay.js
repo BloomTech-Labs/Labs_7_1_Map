@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 import { AppContextConsumer } from '../../AppContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -49,6 +50,7 @@ class LogInBay extends React.Component {
   //above, most of these states are updated by typing into the field
 
   handleOpenModal = () => {
+    this.resetFailedLogin();
     this.setState({ showModal: true });
   };
 
@@ -73,6 +75,14 @@ class LogInBay extends React.Component {
     this.setState({ signupPassword2: event.target.value });
   };
   //------------------------------------------------------
+
+  //Reset failed login popup
+  //This will be called when a user changes their current login information or click sign up
+  resetFailedLogin = () => {
+    if (this.props.failedLogin) {
+      this.props.resetFailedLogin();
+    }
+  };
 
   handleSignUpSubmit = async event => {
     event.preventDefault();
@@ -129,8 +139,18 @@ class LogInBay extends React.Component {
             <div className="LogInBay__Container">
               <form className="Container__LogInForm" onSubmit={handleSignIn}>
                 Login with your account:
-                <input type="text" placeholder="Username" name="username" />
-                <input type="password" placeholder="Password" name="password" />
+                <input
+                  type="text"
+                  placeholder="Username"
+                  name="username"
+                  onChange={this.resetFailedLogin}
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  onChange={this.resetFailedLogin}
+                />
                 <input
                   type="submit"
                   className="LogInBay__LogInButton"
@@ -142,7 +162,11 @@ class LogInBay extends React.Component {
                 href={`${BACKEND_URL}/facebook_login`}
                 className="Container__Button"
               >
-                <img src={facebookButton} alt="Login with Facebook" style={{width: '100%'}}/>
+                <img
+                  src={facebookButton}
+                  alt="Login with Facebook"
+                  style={{ width: '100%' }}
+                />
               </a>
               <button
                 type="button"
@@ -208,5 +232,12 @@ class LogInBay extends React.Component {
     );
   }
 }
+
+LogInBay.propTypes = {
+  failedSignUp: PropTypes.bool,
+  handleSignUp: PropTypes.func,
+  failedSignUpMessage: PropTypes.string,
+  resetAppStateError: PropTypes.func
+};
 
 export default LogInBay;

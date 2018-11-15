@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 
 export default class ChangePasswordError extends Component {
   render() {
@@ -9,3 +10,7 @@ export default class ChangePasswordError extends Component {
     )
   }
 }
+
+ChangePasswordError.propTypes = {
+  error: PropTypes.string
+};

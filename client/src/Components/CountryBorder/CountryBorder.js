@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Slider from 'rc-slider/lib/Slider';
 import ScratchCard from 'react-scratchcard';
 
@@ -192,3 +193,12 @@ export default class CountryBorder extends Component {
     );
   }
 }
+
+CountryBorder.propTypes = {
+  geometry: PropTypes.object,
+  closeCountryPanel: PropTypes.func,
+  handleSliderMove: PropTypes.func,
+  handleScratched: PropTypes.func,
+  currentCountryStatus: PropTypes.any,
+  scratched: PropTypes.bool
+};

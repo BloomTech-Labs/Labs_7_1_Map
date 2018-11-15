@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { AppContextConsumer } from '../../AppContext';
 import ChangeEmail from './ChangeEmail';
@@ -80,5 +81,9 @@ class Settings extends Component {
     );
   }
 }
+
+Settings.propTypes = {
+  showingSettings: PropTypes.bool
+};
 
 export default Settings;

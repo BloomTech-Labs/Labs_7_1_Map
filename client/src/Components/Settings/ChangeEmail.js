@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import ChangeEmailError from './ChangeEmailError';
@@ -88,5 +89,11 @@ class ChangeEmail extends Component {
     );
   }
 } // ChangeEmail component
+
+ChangeEmail.propTypes = {
+  user: PropTypes.object,
+  handleChangeEmailClick: PropTypes.func,
+  showingChangeEmail: PropTypes.bool
+};
 
 export default ChangeEmail;

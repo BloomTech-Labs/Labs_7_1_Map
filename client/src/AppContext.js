@@ -175,6 +175,14 @@ export class AppContextProvider extends Component {
     }
   };
 
+  //this is used to reset the error message that pops up upon failure to sign in correctly
+  //will be called if a user types into the login field or clicks sign up
+  resetFailedLogin = () => {
+    this.setState({
+      failedLogin: false
+    });
+  };
+
   handleSignIn = async e => {
     e.preventDefault();
     const body = {
@@ -186,8 +194,7 @@ export class AppContextProvider extends Component {
       localStorage.setItem('token', response.data.jwt_token);
       this.setState({
         authenticated: true,
-        user: { ...response.data.user },
-        failedLogin: false
+        user: { ...response.data.user }
       });
     } catch (e) {
       // failed async
@@ -448,6 +455,7 @@ export class AppContextProvider extends Component {
           authenticated: this.state.authenticated,
           closeCountryPanel: this.closeCountryPanel,
           currentCountryInfo: this.state.currentCountry.geoInfo,
+          resetFailedLogin: this.resetFailedLogin,
           handleChangeNote: this.handleChangeNote,
           handleScratched: this.handleScratched,
           handleSearchSubmit: this.handleSearchSubmit,

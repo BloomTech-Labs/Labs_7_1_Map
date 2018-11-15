@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppContextConsumer } from '../../AppContext';
+import PropTypes from 'prop-types';
 import './Nav.css';
 import themeColors from '../themeColors.js';
 
@@ -60,6 +61,10 @@ const Nav = props => {
       }}
     </AppContextConsumer>
   );
+};
+
+Nav.propTypes = {
+  toggleSettings: PropTypes.func
 };
 
 export default Nav;

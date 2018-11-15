@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './FailedSignUpPopUp.css';
 
 export default class FailedSignUpPopUp extends Component {
@@ -6,3 +7,7 @@ export default class FailedSignUpPopUp extends Component {
     return <div className="FailedSignUpPopUp">{this.props.message}</div>;
   }
 }
+
+FailedSignUpPopUp.propTypes = {
+  message: PropTypes.string
+};

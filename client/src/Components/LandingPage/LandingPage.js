@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { AppContextConsumer } from '../../AppContext';
 
@@ -41,6 +42,8 @@ const LandingPage = props => {
                       handleSignUp={value.handleSignUp}
                       failedSignUpMessage={value.AppState.failedSignUpMessage}
                       resetAppStateError={value.resetAppStateError}
+                      failedLogin={value.AppState.failedLogin}
+                      resetFailedLogin={value.resetFailedLogin}
                     />
                   );
                 }}
@@ -60,6 +63,10 @@ const LandingPage = props => {
       </div>
     </div>
   );
+}
+
+LandingPage.propTypes = {
+  failedLogin: PropTypes.bool
 };
 
 export default LandingPage;
