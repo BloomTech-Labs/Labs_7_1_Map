@@ -129,7 +129,8 @@ module.exports = {
       }; // add the things you need to send
 
       const jwt_token = make_token(req.user)
-      return res.redirect(`http://localhost:3000?token=${jwt_token}`);
+      const redirectURL = DEV ? `http://localhost:3000?token=${jwt_token}` : `/?token=${jwt_token}`
+      return res.redirect(redirectURL);
       // return res.status(200).json({ jwt_token: make_token(req.user), user });
     } catch (err) {
       if (DEV) console.log(err);

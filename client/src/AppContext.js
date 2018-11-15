@@ -38,8 +38,8 @@ export class AppContextProvider extends Component {
   async componentDidMount() {
     if (window.location.search) {
       localStorage.setItem('token', window.location.search.slice(7));
-      window.location = 'http://localhost:3000';
-    } 
+      window.location = '/';
+    }
     // Check if a user is already logged in
     try {
       // Retrieve token and user stored in local storage
