@@ -41,6 +41,8 @@ const LandingPage = props => {
                       handleSignUp={value.handleSignUp}
                       failedSignUpMessage={value.AppState.failedSignUpMessage}
                       resetAppStateError={value.resetAppStateError}
+                      failedLogin={value.AppState.failedLogin}
+                      resetFailedLogin={value.resetFailedLogin}
                     />
                   );
                 }}
