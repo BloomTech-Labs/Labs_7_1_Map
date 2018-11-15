@@ -3,7 +3,11 @@
   justify-content: center;
   color: red;
   font-size: 14px;
-  margin-top: 55px;
-  position: absolute;
-  margin-top: 370px;
+}
+.Fill {
+  display: flex;
+  justify-content: center;
+  color: red;
+  font-size: 14px;
+  visibility: hidden;
 }

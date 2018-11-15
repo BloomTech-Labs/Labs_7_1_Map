@@ -14,9 +14,9 @@ const SignUpModalStyles = {
   content: {
     display: 'flex',
     flexFlow: 'column noWrap',
-    height: '410px',
+    height: '440px',
     width: '20%',
-    top: '55%',
+    top: '50%',
     left: '40%',
     right: 'auto',
     bottom: 'auto',
@@ -222,9 +222,9 @@ class LogInBay extends React.Component {
                   name="confirmPassword"
                   onChange={this.handleChangeSignUpPassword2}
                 />
+                <FailedSignUpPopUp message={this.state.signupErrorResponse} />
                 <input type="submit" />
               </form>
-              <FailedSignUpPopUp message={this.state.signupErrorResponse} />
             </ReactModal>
           </div>
         )}
