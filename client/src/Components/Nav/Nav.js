@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppContextConsumer } from '../../AppContext';
+import PropTypes from 'prop-types';
 import './Nav.css';
 import themeColors from '../themeColors.js';
 
