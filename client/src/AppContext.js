@@ -37,16 +37,16 @@ export class AppContextProvider extends Component {
   };
 
   async componentDidMount() {
-    // Check if a JWT is added as a query string in URL from the Facebook redirect
+    // Check if a JWT is added as a query string in URL from the Facebook redirect.
     // If it exists, store the token in localStorage and redirect to main page
-    // and the user will be automatically logged in taken to their dashboard
-    // TODO: Implement a more secure way of logging the user into app after FB login
+    // and the user will be automatically logged in taken to their dashboard.
+    // TODO: Looks into how secure the current implementation is and come up with a new one if warranted.
     if (window.location.search) {
       localStorage.setItem('token', window.location.search.slice(7));
       window.location = '/';
     }
 
-    // Check if a user is already logged in i.e. a JWT token exists in localStorage
+    // Check if a JWT token exists in localStorage
     try {
       // Retrieve token and user stored in local storage
       const token = localStorage.getItem('token');

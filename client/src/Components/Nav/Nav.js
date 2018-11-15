@@ -35,17 +35,12 @@ const Nav = props => {
                 id=""
                 className="MenuItem Center__friends"
               >
-                {friendsDummyData.map((friend, i) => {
-                  return i === 0 ? (
-                    <option value="My Travels" key={i}>
-                      My Travels
-                    </option>
-                  ) : (
-                    <option value={friend} key={i}>
-                      {friend}
-                    </option>
-                  );
-                })}
+                <option value="My Travels">My Travels</option>
+                {AppState.friends.map(friend => (
+                  <option value={friend} key={friend.id}>
+                    {friend.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="Nav__Right">
