@@ -36,14 +36,12 @@ class LogInBay extends React.Component {
     signupPassword1: '',
     signupPassword2: '',
     signupErrorResponse: '',
-    errorExists: false
   };
 
   componentDidUpdate = prevProps => {
     if (prevProps.failedSignUp !== this.props.failedSignUp) {
       this.setState({
         signupErrorResponse: this.props.failedSignUpMessage,
-        errorExists: this.props.failedSignUp
       });
     }
   };
@@ -106,25 +104,21 @@ class LogInBay extends React.Component {
     ) {
       return this.setState({
         signupErrorResponse: 'Please fill all fields before submitting',
-        errorExists: true
       });
     } else {
       if (signupPassword1 !== signupPassword2) {
         return this.setState({
           signupErrorResponse: 'Passwords do not match',
-          errorExists: true
         });
       }
       if (signupPassword1.length < 6) {
         return this.setState({
           signupErrorResponse: 'Password must be a minimum of 6 characters',
-          errorExists: true
         });
       }
       if (signupUsername === signupPassword1) {
         return this.setState({
           signupErrorResponse: 'Password cannot be the same as username!',
-          errorExists: true
         });
       }
       this.props.handleSignUp(signupUsername, signupEmail, signupPassword1);
