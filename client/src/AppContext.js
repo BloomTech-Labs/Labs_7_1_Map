@@ -175,7 +175,6 @@ export class AppContextProvider extends Component {
         country_code: currentCountry.code,
         name: currentCountry.info.name,
         scratched: true
-        // notes: currentCountry.notes
       };
 
       const options = {
@@ -400,8 +399,8 @@ export class AppContextProvider extends Component {
     });
   };
 
-  //this is used to reset the error message that pops up upon failure to sign in correctly
-  //will be called if a user types into the login field or clicks sign up
+  // This is used to reset the error message shown upon failure to sign in
+  // Will be called if a user types into the login field or clicks sign up
   resetFailedLogin = () => {
     this.setState({
       failedLogin: false
