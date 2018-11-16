@@ -38,9 +38,10 @@ export class AppContextProvider extends Component {
 
   async componentDidMount() {
     // Check if a JWT is added as a query string in URL from the Facebook redirect.
-    // If it exists, store the token in localStorage and redirect to main page
-    // and the user will be automatically logged in taken to their dashboard.
-    // TODO: Looks into how secure the current implementation is and come up with a new one if warranted.
+    // If it exists, store the token in localStorage and redirect to main page.
+    // The user will then be automatically logged in and taken to their dashboard.
+    // TODO: Look into how secure the current implementation is and come up with a new one if warranted.
+    //       May need to refactor auth system to use cookies.
     if (window.location.search) {
       localStorage.setItem('token', window.location.search.slice(7));
       window.location = '/';

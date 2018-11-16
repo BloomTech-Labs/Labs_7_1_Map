@@ -142,6 +142,22 @@ module.exports = {
     }
   }, // facebook_login
 
+  get_friends_countries: async (req, res) => {
+    try {
+      console.log(req.query.id);
+      const user = await User.findOne({ 'facebook.id': req.query.id });
+
+      return user.facebook.id === req.query.id
+        ? res.status(200).json(user.countries)
+        : res
+            .status(400)
+            .json({ error: 'No user was found with that facebook ID!' });
+    } catch (err) {
+      if (DEV) console.log(err);
+      res.status(500).json({ error: 'Internal server error!' });
+    }
+  },
+
   get_user: async (req, res) => {
     try {
       // If a valid token was provided, Passport will find the user and added
