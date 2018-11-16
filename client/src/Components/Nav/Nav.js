@@ -7,7 +7,7 @@ import themeColors from '../themeColors.js';
 const Nav = props => {
   return (
     <AppContextConsumer>
-      {({ handleSignOut, AppState }) => {
+      {({ handleFriendsDropdown, handleSignOut, AppState }) => {
         const currentTheme = AppState.user.preferences
           ? AppState.user.preferences.theme
           : 'standard';
@@ -27,10 +27,11 @@ const Nav = props => {
                 name="My Travels"
                 id=""
                 className="MenuItem Center__friends"
+                onChange={handleFriendsDropdown}
               >
-                <option value="My Travels">My Travels</option>
+                <option value="user">My Travels</option>
                 {AppState.friends.map(friend => (
-                  <option value={friend} key={friend.id}>
+                  <option value={friend.id} key={friend.id}>
                     {friend.name}
                   </option>
                 ))}

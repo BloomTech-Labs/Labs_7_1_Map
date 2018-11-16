@@ -134,10 +134,37 @@ export class AppContextProvider extends Component {
   };
 
   handleChangeNote = e => {
-    console.log(e.target.name, e.target.value);
     const currentCountry = { ...this.state.currentCountry };
     currentCountry[e.target.name] = e.target.value;
     this.setState({ currentCountry });
+  };
+
+  handleFriendsDropdown = async e => {
+    try {
+      const id = e.target.value;
+      if (id === 'user')
+        return await this.setState({ friendBeingViewed: null });
+      else {
+        const options = {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        };
+        const friendsCountries = await axios.get(
+          `${BACKEND_URL}/get_friends_countries?id=${id}`,
+          options
+        );
+
+        if (friendsCountries) {
+          console.log(friendsCountries);
+          return this.setState({ friendBeingViewed: friendsCountries });
+        }
+        // TODO: Add error handling if a getting a friends countries failed
+        else console.error('Failed to get that friends countries!'); //eslint-disable-line
+      }
+    } catch (err) {
+      return console.log(err); // eslint-disable-line
+    }
   };
 
   handleScratched = async () => {
@@ -459,6 +486,7 @@ export class AppContextProvider extends Component {
           currentCountryInfo: this.state.currentCountry.geoInfo,
           resetFailedLogin: this.resetFailedLogin,
           handleChangeNote: this.handleChangeNote,
+          handleFriendsDropdown: this.handleFriendsDropdown,
           handleScratched: this.handleScratched,
           handleSearchSubmit: this.handleSearchSubmit,
           handleSignIn: this.handleSignIn,
