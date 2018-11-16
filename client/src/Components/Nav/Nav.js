@@ -4,14 +4,6 @@ import PropTypes from 'prop-types';
 import './Nav.css';
 import themeColors from '../themeColors.js';
 
-const friendsDummyData = [
-  'My Travels',
-  'Friend 1',
-  'Friend 2',
-  'Friend 3',
-  'Friend 4'
-];
-
 const Nav = props => {
   return (
     <AppContextConsumer>
