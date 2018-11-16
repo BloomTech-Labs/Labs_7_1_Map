@@ -29,6 +29,7 @@ export class AppContextProvider extends Component {
     failedSignUp: false,
     failedSignUpMessage: '',
     friends: [],
+    friendBeingViewed: null,
     searchCountry: '',
     showingSettings: false,
     showingCountryPanel: false,
@@ -94,11 +95,6 @@ export class AppContextProvider extends Component {
       this.getLocationUsingIP();
     }
   } // componentDidMount
-
-  // Open/Close settings panel. Called in Nav.js
-  toggleSettings = () => {
-    this.setState({ showingSettings: !this.state.showingSettings });
-  }; // toggleSettings
 
   // Close CountryPanel
   closeCountryPanel = () => {
@@ -174,14 +170,6 @@ export class AppContextProvider extends Component {
     } catch (err) {
       console.error('Error updating scratched for country!');
     }
-  };
-
-  //this is used to reset the error message that pops up upon failure to sign in correctly
-  //will be called if a user types into the login field or clicks sign up
-  resetFailedLogin = () => {
-    this.setState({
-      failedLogin: false
-    });
   };
 
   handleSignIn = async e => {
@@ -365,13 +353,6 @@ export class AppContextProvider extends Component {
     }
   };
 
-  resetAppStateError = () => {
-    this.setState({
-      failedSignUp: false,
-      failedSignUpMessage: ''
-    });
-  };
-
   isScratched = countryCode => {
     let scratched = false;
     const userCountries = [...this.state.user.countries];
@@ -384,6 +365,26 @@ export class AppContextProvider extends Component {
     }
     return scratched;
   };
+
+  resetAppStateError = () => {
+    this.setState({
+      failedSignUp: false,
+      failedSignUpMessage: ''
+    });
+  };
+
+  //this is used to reset the error message that pops up upon failure to sign in correctly
+  //will be called if a user types into the login field or clicks sign up
+  resetFailedLogin = () => {
+    this.setState({
+      failedLogin: false
+    });
+  };
+
+  // Open/Close settings panel. Called in Nav.js
+  toggleSettings = () => {
+    this.setState({ showingSettings: !this.state.showingSettings });
+  }; // toggleSettings
 
   turnOnEditNote = () => {
     const currentCountry = { ...this.state.currentCountry };
