@@ -150,14 +150,14 @@ export class AppContextProvider extends Component {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
         };
-        const friendsCountries = await axios.get(
+        const response = await axios.get(
           `${BACKEND_URL}/get_friends_countries?id=${id}`,
           options
         );
 
-        if (friendsCountries) {
-          console.log(friendsCountries);
-          return this.setState({ friendBeingViewed: friendsCountries });
+        if (response.status === 200) {
+          console.log(response.data);
+          return this.setState({ friendBeingViewed: response.data });
         }
         // TODO: Add error handling if a getting a friends countries failed
         else console.error('Failed to get that friends countries!'); //eslint-disable-line
