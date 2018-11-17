@@ -16,7 +16,7 @@ const CountryPanel = () => {
           value && value.AppState.user.preferences
             ? value.AppState.user.preferences.theme
             : 'standard';
-        return value && value.AppState.currentCountry.info ? (
+        return value && value.AppState.currentCountry ? (
           <div
             style={{
               backgroundColor: themeColors.background[currentTheme],
@@ -31,8 +31,12 @@ const CountryPanel = () => {
           >
             <div className="Card ">
               <div className="Card_Header">
-                <span>{value.AppState.currentCountry.info.emoji}</span>
-                <h1>{value.AppState.currentCountry.info.name}</h1>
+                {value.AppState.currentCountry.info && (
+                  <React.Fragment>
+                    <span>{value.AppState.currentCountry.info.emoji}</span>
+                    <h1>{value.AppState.currentCountry.info.name}</h1>
+                  </React.Fragment>
+                )}
                 <FontAwesomeIcon
                   className="closeCountryPanelIcon"
                   onClick={value.closeCountryPanel}

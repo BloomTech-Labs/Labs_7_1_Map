@@ -437,12 +437,19 @@ export class AppContextProvider extends Component {
 
   // Update state with currently selected country, called in Map.js
   updateCurrentCountry = async (code, info) => {
+    // If a user clicks on something that is not a country:
+    //  - Close the country panel
+    //  - Update the currentCountryStatus after CSS transition is complete
     if (!code) {
-      this.setState({ currentCountryStatus: null, currentCountry: {} });
-      return this.closeCountryPanel();
+      await this.closeCountryPanel();
+      setTimeout(
+        () => this.setState({ currentCountryStatus: null, currentCountry: {} }),
+        500 // This should be the same as the transition length set in CountryPanel.less
+      );
+      return;
     }
 
-    const geoInfo = getCountryShapeFromCode(code);
+    const geoInfo = await getCountryShapeFromCode(code);
     const scratched = this.isScratched(code);
     const notes = this.getCurrentCountryNotes(code);
 
