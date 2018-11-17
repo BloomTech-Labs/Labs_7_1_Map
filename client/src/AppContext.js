@@ -121,19 +121,18 @@ export class AppContextProvider extends Component {
     return notes;
   }; // getCurrentCountryNotes
 
-  getLocationUsingIP = () => {
-    axios
-      .get('https://ipapi.co/json')
-      .then(response => {
+  getLocationUsingIP = async () => {
+    try {
+      const response = await axios.get('https://ipapi.co/json');
+
+      if (response.status === 200)
         this.updateUserPosition(
           response.data.latitude,
           response.data.longitude
         );
-      })
-      .catch(err => {
-        // error
-        console.log(err);
-      });
+    } catch (err) {
+      console.error('Failed to get location using IP!', err); // eslint-disable-line
+    }
   };
 
   handleChangeNote = e => {
@@ -197,7 +196,7 @@ export class AppContextProvider extends Component {
         user: response.data
       });
     } catch (err) {
-      console.error('Error updating scratched for country!');
+      console.error('Error updating scratched for country!'); // eslint-disable-line
     }
   };
 
@@ -278,7 +277,7 @@ export class AppContextProvider extends Component {
       this.setState({ user: response.data });
       this.updateCurrentCountryStatus();
     } catch (err) {
-      console.error('Error updating country status!');
+      console.error('Error updating country status!'); // eslint-disable-line
     }
   }; // handleSliderMove
 
@@ -316,7 +315,7 @@ export class AppContextProvider extends Component {
         user: response.data
       });
     } catch (err) {
-      console.error('Error updating notes for country!');
+      console.error('Error updating notes for country!'); // eslint-disable-line
     }
   };
 
@@ -339,9 +338,9 @@ export class AppContextProvider extends Component {
       }
 
       if (response.status === 400)
-        console.error('Preferences failed to update!');
+        console.error('Preferences failed to update!'); // eslint-disable-line
     } catch (err) {
-      console.error('There was an error trying to update preferences!');
+      console.error('There was an error trying to update preferences!'); // eslint-disable-line
     }
   }; // update_preferences
 
