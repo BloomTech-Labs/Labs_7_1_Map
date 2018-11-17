@@ -5,10 +5,7 @@ import wc from 'which-country';
 
 import { AppContextConsumer } from '../../AppContext';
 import geojson from './countries.geo.json';
-import {
-  getCountryShapeFromCode,
-  getCountryInfoFromCode
-} from '../../utils.js';
+import { getCountryShapeFromCode } from '../../utils.js';
 import {
   styleSelected,
   styleHover,
