@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+import wc from 'which-country';
 import world from 'country-data';
 import {
   clearLocalstorage,
-  getCountryShapeFromCode,
-  getCountryCodeFromName
+  getCountryInfoFromCode,
+  getCountryCodeFromName,
+  getCountryShapeFromCode
 } from './utils.js';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -140,6 +143,7 @@ export class AppContextProvider extends Component {
   };
 
   handleFriendsDropdown = async e => {
+    this.closeCountryPanel();
     try {
       const id = e.target.value;
       if (id === 'user')
@@ -156,7 +160,6 @@ export class AppContextProvider extends Component {
         );
 
         if (response.status === 200) {
-          console.log(response.data);
           return this.setState({ friendBeingViewed: response.data });
         }
         // TODO: Add error handling if a getting a friends countries failed
@@ -357,6 +360,19 @@ export class AppContextProvider extends Component {
     );
   }; // hasGeolocation
 
+  // Called in Map.js
+  handleMapClick = async e => {
+    if (this.state.friendBeingViewed === null) {
+      // Get the country code of the location clicked on, e.g. 'MEX'
+      const countryCode = await wc([e.latlng.lng, e.latlng.lat]);
+
+      const countryInfo = getCountryInfoFromCode(countryCode);
+
+      // Update AppContext with the info of the currently selected country
+      this.updateCurrentCountry(countryCode, countryInfo);
+    }
+  };
+
   handleSignUp = async (username, email, password) => {
     // TODO: Error handling
     const body = {
@@ -486,6 +502,7 @@ export class AppContextProvider extends Component {
           resetFailedLogin: this.resetFailedLogin,
           handleChangeNote: this.handleChangeNote,
           handleFriendsDropdown: this.handleFriendsDropdown,
+          handleMapClick: this.handleMapClick,
           handleScratched: this.handleScratched,
           handleSearchSubmit: this.handleSearchSubmit,
           handleSignIn: this.handleSignIn,
@@ -506,5 +523,9 @@ export class AppContextProvider extends Component {
     );
   }
 }
+
+AppContextProvider.propTypes = {
+  children: PropTypes.any
+};
 
 export const AppContextConsumer = AppContext.Consumer;

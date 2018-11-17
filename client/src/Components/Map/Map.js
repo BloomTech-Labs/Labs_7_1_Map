@@ -25,18 +25,6 @@ class MapComponent extends Component {
     countryHover: null
   };
 
-  handleClick = async e => {
-    if (this.props.friendBeingViewed === null) {
-      // Get the country code of the location clicked on
-      const countryCode = await wc([e.latlng.lng, e.latlng.lat]);
-
-      const countryInfo = getCountryInfoFromCode(countryCode);
-
-      // Update AppContext with the info of the currently selected country
-      this.props.updateCurrentCountry(countryCode, countryInfo);
-    }
-  };
-
   handleMove = e => {
     // Get the country code of the location hovered over
     const country = wc([e.latlng.lng, e.latlng.lat]);
@@ -73,7 +61,7 @@ class MapComponent extends Component {
             minZoom={2}
             // maxZoom={12}
             maxBounds={bounds}
-            onClick={this.handleClick}
+            onClick={value.handleMapClick}
             onMouseMove={this.handleMove}
             onZoomend={this.handleZoomend}
             zoomControl={false}
@@ -159,7 +147,6 @@ class MapComponent extends Component {
 } // MapComponent
 
 MapComponent.propTypes = {
-  updateCurrentCountry: PropTypes.func,
   userPosition: PropTypes.object,
   user: PropTypes.object
 };
