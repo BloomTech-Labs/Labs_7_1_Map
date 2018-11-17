@@ -43,6 +43,7 @@ class Dashboard extends Component {
                   updateCurrentCountry={value.updateCurrentCountry}
                   userPosition={value.AppState.userPosition}
                   user={value.AppState.user}
+                  friendBeingViewed={value.AppState.friendBeingViewed}
                 />
                 <Settings showingSettings={value.AppState.showingSettings} />
               </React.Fragment>

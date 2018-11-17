@@ -26,13 +26,15 @@ class MapComponent extends Component {
   };
 
   handleClick = async e => {
-    // Get the country code of the location clicked on
-    const countryCode = await wc([e.latlng.lng, e.latlng.lat]);
+    if (this.props.friendBeingViewed === null) {
+      // Get the country code of the location clicked on
+      const countryCode = await wc([e.latlng.lng, e.latlng.lat]);
 
-    const countryInfo = getCountryInfoFromCode(countryCode);
+      const countryInfo = getCountryInfoFromCode(countryCode);
 
-    // Update AppContext with the info of the currently selected country
-    this.props.updateCurrentCountry(countryCode, countryInfo);
+      // Update AppContext with the info of the currently selected country
+      this.props.updateCurrentCountry(countryCode, countryInfo);
+    }
   };
 
   handleMove = e => {
@@ -139,7 +141,7 @@ class MapComponent extends Component {
                 return <GeoJSON key={i} data={countryShape} style={style} />;
               })}
 
-              { /* Render a pin at the users coordinates, if available */ }
+            {/* Render a pin at the users coordinates, if available */}
             {value.AppState.userPosition &&
               !value.AppState.friendBeingViewed && (
                 <Marker
