@@ -24,10 +24,11 @@ class Dashboard extends Component {
       <div className="Dashboard">
         <AppContextConsumer>
           {value => {
-            const currentTheme =
+            const theme =
               value && value.AppState.user.preferences
                 ? value.AppState.user.preferences.theme
                 : 'standard';
+
             return (
               <React.Fragment>
                 <Nav toggleSettings={value.toggleSettings} />
@@ -36,16 +37,12 @@ class Dashboard extends Component {
                 <SearchCountry
                   updateCurrentCountry={value.updateCurrentCountry}
                   handleSearchSubmit={value.handleSearchSubmit}
-                  theme={currentTheme}
+                  theme={theme}
                 />
                 <Map
-                  userPosition={value.AppState.userPosition}
-                  updateUserPosition={value.updateUserPosition}
-                  searchCountry={this.state.searchCountry}
                   updateCurrentCountry={value.updateCurrentCountry}
-                  currentCountry={value.AppState.currentCountry}
+                  userPosition={value.AppState.userPosition}
                   user={value.AppState.user}
-                  scratched={value.AppState.scratched}
                 />
                 <Settings showingSettings={value.AppState.showingSettings} />
               </React.Fragment>
