@@ -84,6 +84,7 @@ class MapComponent extends Component {
             {/* Layers that will be active when a country is CLICKED */}
             {/* Produces a layer for each country in the geojson file */}
             {value.AppState.currentCountry &&
+              !value.AppState.friendBeingViewed &&
               geojson.features.map(
                 feature =>
                   // Layer is only rendered if the clicked on country ID is the same
@@ -98,20 +99,23 @@ class MapComponent extends Component {
 
             {/* Layers that will be active when a country is HOVERED */}
             {/* Produces a layer for each country in the geojson file */}
-            {geojson.features.map(
-              feature =>
-                // Layer is only rendered if the clicked on country ID is the same
-                this.state.countryHover === feature.id && (
-                  <GeoJSON
-                    key={feature.id}
-                    data={getCountryShapeFromCode(feature.id)}
-                    style={styleHover}
-                  />
-                )
-            )}
+            {!value.AppState.friendBeingViewed &&
+              geojson.features.map(
+                feature =>
+                  // Layer is only rendered if the clicked on country ID is the same
+                  this.state.countryHover === feature.id && (
+                    <GeoJSON
+                      key={feature.id}
+                      data={getCountryShapeFromCode(feature.id)}
+                      style={styleHover}
+                    />
+                  )
+              )}
 
             {/* Render a layer for each country saved in user's 'countries' array */}
-            {value.AppState.user && value.AppState.user.countries
+            {value.AppState.user &&
+            value.AppState.user.countries &&
+            !value.AppState.friendBeingViewed
               ? value.AppState.user.countries.map((country, i) => {
                   const { country_code, status_code } = country;
                   // get geojson shape using helper function in `utils.js`
@@ -123,14 +127,28 @@ class MapComponent extends Component {
                 })
               : null}
 
-            {value.AppState.userPosition && (
-              <Marker
-                position={position}
-                icon={markerIcon}
-                opacity={0.8}
-                className="userPosition"
-              />
-            )}
+            {/* Render a layer for each country in `friendBeingViewed` */}
+            {value.AppState.friendBeingViewed &&
+              value.AppState.friendBeingViewed.map((country, i) => {
+                const { country_code, status_code } = country;
+                // get geojson shape using helper function in `utils.js`
+                const countryShape = getCountryShapeFromCode(country_code);
+                // Get the corresponding style from status code from `countryStyles.js`
+                const style = countryStatusStyles[status_code];
+                // render geojson layer with the correct shape and style
+                return <GeoJSON key={i} data={countryShape} style={style} />;
+              })}
+
+              { /* Render a pin at the users coordinates, if available */ }
+            {value.AppState.userPosition &&
+              !value.AppState.friendBeingViewed && (
+                <Marker
+                  position={position}
+                  icon={markerIcon}
+                  opacity={0.8}
+                  className="userPosition"
+                />
+              )}
           </Map>
         )}
       </AppContextConsumer>
