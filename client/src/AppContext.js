@@ -67,7 +67,7 @@ export class AppContextProvider extends Component {
           requestOptions
         );
 
-        // Update state if the user was retrieved from the DB
+        // Update state with user data if it was successfully retrieved from DB
         if (response.status === 200)
           await this.setState({
             authenticated: true,
@@ -76,13 +76,16 @@ export class AppContextProvider extends Component {
       }
 
       // Get a users facebook friends if they signed up with facebook
-      // TODO: Move this over to the backend so this is only called upon login
       if (this.state.user.facebook) {
-        const { id, accessToken } = this.state.user.facebook;
-        const facebookResponse = await axios.get(
-          `https://graph.facebook.com/${id}/friends?access_token=${accessToken}`
-        );
-        await this.setState({ friends: facebookResponse.data.data });
+        try {
+          const { id, accessToken } = this.state.user.facebook;
+          const facebookResponse = await axios.get(
+            `https://graph.facebook.com/${id}/friends?access_token=${accessToken}`
+          );
+          await this.setState({ friends: facebookResponse.data.data });
+        } catch (err) {
+          console.error('Failed to get facebook friends!'); // eslint-disable-line
+        }
       }
     } catch (e) {
       // failed async
@@ -196,7 +199,7 @@ export class AppContextProvider extends Component {
         user: response.data
       });
     } catch (err) {
-      console.error('Error updating scratched for country!'); // eslint-disable-line
+      console.error('Error updating scratched country!'); // eslint-disable-line
     }
   };
 
