@@ -146,6 +146,7 @@ module.exports = {
     try {
       const { friends, country_code } = req.body;
       // Query to find all users that have a country matching the given country_code
+      // TODO: Could probably user the `$in` operator here to avoid the logic below
       const findUserCountryConditions = {
         $and: [
           {},
@@ -155,6 +156,7 @@ module.exports = {
         ]
       };
 
+      // Find all users that have the country matching the country_code saved
       let usersWithCountry = await User.find(findUserCountryConditions).lean();
 
       const friendIDs = friends.map(friend => friend.id);
