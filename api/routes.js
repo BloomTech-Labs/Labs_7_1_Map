@@ -9,7 +9,7 @@ const {
   get_users,
   login,
   update_preferences
-} = require('./controllers/user_controller');
+} = require('./controllers/userController');
 
 //below handles the status change of country
 const {
