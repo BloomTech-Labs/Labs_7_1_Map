@@ -144,7 +144,6 @@ module.exports = {
 
   get_friends_countries: async (req, res) => {
     try {
-      console.log(req.query.id);
       const user = await User.findOne({ 'facebook.id': req.query.id });
 
       if (!user)
@@ -160,8 +159,9 @@ module.exports = {
   },
 
   get_user: async (req, res) => {
+    console.log(req.user)
     try {
-      // If a valid token was provided, Passport will find the user and added
+      // If a valid token was provided, Passport will find the user and add
       // it to the request as req.user without the password field
       return req.user
         ? res.status(200).json(req.user)
@@ -189,7 +189,6 @@ module.exports = {
   login: async (req, res) => {
     try {
       // we only reach here because we are authenticated
-      console.log(req.user);
       const { _id, username, email, countries, preferences } = req.user;
       const user = {
         _id,
