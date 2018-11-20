@@ -145,36 +145,29 @@ module.exports = {
   get_country_friends: async (req, res) => {
     try {
       const { friends, country_code } = req.body;
+      const friendIDs = friends.map(friend => friend.id);
+
       // Query to find all users that have a country matching the given country_code
-      // TODO: Could probably user the `$in` operator here to avoid the logic below
-      const findUserCountryConditions = {
-        $and: [
-          {},
-          {
-            countries: { $elemMatch: { country_code } }
-          }
-        ]
+      const conditions = {
+        'facebook.id': { $in: friendIDs },
+        countries: { $elemMatch: { country_code } }
       };
 
       // Find all users that have the country matching the country_code saved
-      let usersWithCountry = await User.find(findUserCountryConditions).lean();
+      let usersWithCountry = await User.find(conditions).lean();
 
-      const friendIDs = friends.map(friend => friend.id);
-      usersWithCountry = usersWithCountry
-        // Filter results to only include those users that match the provided FB id's
-        .filter(user => {
-          if (user.facebook) return friendIDs.includes(user.facebook.id);
-          else return false;
-        })
-        // Map to an object with just the friend name and country status
-        .map(user => {
-          const name = `${user.facebook.first_name} ${user.facebook.last_name}`;
-          const country = user.countries.find(
-            country => country.country_code === country_code
-          );
-          return { name, status: country.status_code  };
-        });
+      // Map to an object with just the friend name and country status
+      usersWithCountry = usersWithCountry.map(user => {
+        const country = user.countries.find(
+          country => country.country_code === country_code
+        );
+        return {
+          name: `${user.facebook.first_name} ${user.facebook.last_name}`,
+          status: country.status_code
+        };
+      });
 
+      // Return an array of objects containing the friend name and country status
       res.status(200).json(usersWithCountry);
     } catch (err) {
       if (DEV) console.log(err);
