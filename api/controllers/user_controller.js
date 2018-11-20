@@ -142,6 +142,8 @@ module.exports = {
     }
   }, // facebook_login
 
+  // Receives a country_code and array of facebook friends
+  // Returns an array of friends that have the matching country
   get_country_friends: async (req, res) => {
     try {
       const { friends, country_code } = req.body;
@@ -154,6 +156,7 @@ module.exports = {
       };
 
       // Find all users that have the country matching the country_code saved
+      // `lean()` is used to return a plain javascript object instead of a MongooseDocument (so the array methods below can be used ) 
       let usersWithCountry = await User.find(conditions).lean();
 
       // Map to an object with just the friend name and country status
@@ -168,7 +171,7 @@ module.exports = {
       });
 
       // Return an array of objects containing the friend name and country status
-      res.status(200).json(usersWithCountry);
+      return res.status(200).json(usersWithCountry);
     } catch (err) {
       if (DEV) console.log(err);
       return res.status(500).json({ error: 'Internal server error!' });
