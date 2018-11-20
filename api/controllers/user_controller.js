@@ -142,6 +142,45 @@ module.exports = {
     }
   }, // facebook_login
 
+  get_country_friends: async (req, res) => {
+    try {
+      const { friends, country_code } = req.body;
+      // Query to find all users that have a country matching the given country_code
+      const findUserCountryConditions = {
+        $and: [
+          {},
+          {
+            countries: { $elemMatch: { country_code } }
+          }
+        ]
+      };
+
+      let usersWithCountry = await User.find(findUserCountryConditions).lean();
+
+      const friendIDs = friends.map(friend => friend.id);
+      usersWithCountry = usersWithCountry
+        // Filter results to only include those users that match the provided FB id's
+        .filter(user => {
+          if (user.facebook) return friendIDs.includes(user.facebook.id);
+          else return false;
+        })
+        // Map to an object with just the friend name and country status
+        .map(user => {
+          const name = `${user.facebook.first_name} ${user.facebook.last_name}`;
+          const country = user.countries.find(
+            country => country.country_code === country_code
+          );
+          return { name, status: country.status_code  };
+        });
+
+      res.status(200).json(usersWithCountry);
+    } catch (err) {
+      if (DEV) console.log(err);
+      return res.status(500).json({ error: 'Internal server error!' });
+    }
+  },
+
+  // Get all the countries for a given friend's id
   get_friends_countries: async (req, res) => {
     try {
       const user = await User.findOne({ 'facebook.id': req.query.id });
@@ -158,8 +197,8 @@ module.exports = {
     }
   },
 
+  // Get the data for a user based on the provided JWT
   get_user: async (req, res) => {
-    console.log(req.user)
     try {
       // If a valid token was provided, Passport will find the user and add
       // it to the request as req.user without the password field

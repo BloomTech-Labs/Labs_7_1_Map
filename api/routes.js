@@ -3,6 +3,7 @@ const {
   change_password,
   create_user,
   facebook_loggedIn,
+  get_country_friends,
   get_friends_countries,
   get_user,
   get_users,
@@ -80,4 +81,5 @@ module.exports = server => {
   server.route('/api/get_user').get(protected_route, get_user);
   server.route('/api/get_users/').get(get_users); // TODO: protect this route one
   server.route('/api/get_friends_countries').get(get_friends_countries);
+  server.route('/api/get_country_friends').post(protected_route, get_country_friends);
 };
