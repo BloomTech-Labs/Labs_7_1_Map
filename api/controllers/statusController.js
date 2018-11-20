@@ -98,11 +98,9 @@ module.exports = {
           return res.status(201).json(response);
         } catch (err) {
           if (DEV) console.log(err);
-          return res
-            .status(409)
-            .json({
-              error: 'Failed to create a new country and update status!'
-            });
+          return res.status(409).json({
+            error: 'Failed to create a new country and update status!'
+          });
         }
       }
     } catch (err) {
@@ -177,11 +175,9 @@ module.exports = {
 
           return res.status(201).json(response);
         } catch (err) {
-          return res
-            .status(409)
-            .json({
-              error: 'Failed to create a new country and update notes!'
-            });
+          return res.status(409).json({
+            error: 'Failed to create a new country and update notes!'
+          });
         }
       }
     } catch (err) {
@@ -259,12 +255,9 @@ module.exports = {
 
           return res.status(201).json(response);
         } catch (err) {
-          return res
-            .status(409)
-            .json({
-              error:
-                'Failed to create a new country and update scratched status!'
-            });
+          return res.status(409).json({
+            error: 'Failed to create a new country and update scratched status!'
+          });
         }
       }
     } catch (err) {

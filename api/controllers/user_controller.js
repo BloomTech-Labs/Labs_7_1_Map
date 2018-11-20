@@ -148,9 +148,11 @@ module.exports = {
       const user = await User.findOne({ 'facebook.id': req.query.id });
 
       if (!user)
-        return res.status(400).json({ error: 'No users with that Facebook ID!' });
+        return res
+          .status(400)
+          .json({ error: 'No users with that Facebook ID!' });
       else if (user.facebook.id === req.query.id)
-        return res.status(200).json(user.countries)
+        return res.status(200).json(user.countries);
     } catch (err) {
       if (DEV) console.log(err);
       res.status(500).json({ error: 'Internal server error!' });
@@ -187,6 +189,7 @@ module.exports = {
   login: async (req, res) => {
     try {
       // we only reach here because we are authenticated
+      console.log(req.user);
       const { _id, username, email, countries, preferences } = req.user;
       const user = {
         _id,
@@ -195,6 +198,9 @@ module.exports = {
         countries,
         preferences
       }; // add the things you need to send
+
+      if (req.user.facebook) user.facebook = req.user.facebook;
+
       return res.status(200).json({ jwt_token: make_token(req.user), user });
     } catch (err) {
       if (DEV) console.log(err);
@@ -228,13 +234,16 @@ module.exports = {
         { new: true }
       );
 
-      return res.status(200).json({
-        _id: updatedUser._id,
+      const response = {
         username: updatedUser.username,
         email: updatedUser.email,
         preferences: updatedUser.preferences,
         countries: updatedUser.countries
-      });
+      };
+
+      if (updatedUser.facebook) response.facebook = updatedUser.facebook;
+
+      return res.status(200).json(response);
     } catch (err) {
       if (DEV) console.log(err);
       return res.status(500).send({ error: 'Internal server error!' });
