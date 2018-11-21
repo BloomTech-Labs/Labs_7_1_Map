@@ -109,6 +109,12 @@ export class AppContextProvider extends Component {
     });
   }; // closeCountryPanel
 
+  // Get a list of friends that also have the country saved
+  // Only called if user has signed up with Facebook
+  getCountryFriends = code => {
+    console.log(code)
+  }
+
   // Get the notes of a country saved on user
   getCurrentCountryNotes = code => {
     let notes = '';
@@ -509,6 +515,7 @@ export class AppContextProvider extends Component {
           closeCountryPanel: this.closeCountryPanel,
           currentCountryInfo: this.state.currentCountry.geoInfo,
           resetFailedLogin: this.resetFailedLogin,
+          getCountryFriends: this.getCountryFriends,
           handleChangeNote: this.handleChangeNote,
           handleFriendsDropdown: this.handleFriendsDropdown,
           handleMapClick: this.handleMapClick,
