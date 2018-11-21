@@ -14,9 +14,9 @@ const SignUpModalStyles = {
   content: {
     display: 'flex',
     flexFlow: 'column noWrap',
-    height: '410px',
+    height: '440px',
     width: '20%',
-    top: '55%',
+    top: '50%',
     left: '40%',
     right: 'auto',
     bottom: 'auto',
@@ -36,14 +36,12 @@ class LogInBay extends React.Component {
     signupPassword1: '',
     signupPassword2: '',
     signupErrorResponse: '',
-    errorExists: false
   };
 
   componentDidUpdate = prevProps => {
     if (prevProps.failedSignUp !== this.props.failedSignUp) {
       this.setState({
         signupErrorResponse: this.props.failedSignUpMessage,
-        errorExists: this.props.failedSignUp
       });
     }
   };
@@ -56,23 +54,28 @@ class LogInBay extends React.Component {
 
   handleCloseModal = () => {
     this.setState({ showModal: false });
+    this.resetFailedSignUp();
   };
 
   //These update state when signup fields are changed
   handleChangeSignUpUsername = event => {
+    this.resetFailedSignUp();
     this.setState({ signupUsername: event.target.value });
   };
 
   handleChangeSignUpEmail = event => {
     this.setState({ signupEmail: event.target.value });
+    this.resetFailedSignUp();
   };
 
   handleChangeSignUpPassword1 = event => {
     this.setState({ signupPassword1: event.target.value });
+    this.resetFailedSignUp();
   };
 
   handleChangeSignUpPassword2 = event => {
     this.setState({ signupPassword2: event.target.value });
+    this.resetFailedSignUp();
   };
   //------------------------------------------------------
 
@@ -82,6 +85,16 @@ class LogInBay extends React.Component {
     if (this.props.failedLogin) {
       this.props.resetFailedLogin();
     }
+  };
+
+  //reset failed signup message
+  //will be called whenever a user types in the signup field or exits out
+  resetFailedSignUp = () => {
+    if (this.signupErrorResponse !== '') {
+      this.setState({
+        signupErrorResponse: ''
+      });
+    };
   };
 
   handleSignUpSubmit = async event => {
@@ -106,25 +119,21 @@ class LogInBay extends React.Component {
     ) {
       return this.setState({
         signupErrorResponse: 'Please fill all fields before submitting',
-        errorExists: true
       });
     } else {
       if (signupPassword1 !== signupPassword2) {
         return this.setState({
           signupErrorResponse: 'Passwords do not match',
-          errorExists: true
         });
       }
       if (signupPassword1.length < 6) {
         return this.setState({
           signupErrorResponse: 'Password must be a minimum of 6 characters',
-          errorExists: true
         });
       }
       if (signupUsername === signupPassword1) {
         return this.setState({
           signupErrorResponse: 'Password cannot be the same as username!',
-          errorExists: true
         });
       }
       this.props.handleSignUp(signupUsername, signupEmail, signupPassword1);
@@ -222,9 +231,9 @@ class LogInBay extends React.Component {
                   name="confirmPassword"
                   onChange={this.handleChangeSignUpPassword2}
                 />
+                <FailedSignUpPopUp message={this.state.signupErrorResponse} />
                 <input type="submit" />
               </form>
-              <FailedSignUpPopUp message={this.state.signupErrorResponse} />
             </ReactModal>
           </div>
         )}
