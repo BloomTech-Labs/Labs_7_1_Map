@@ -3,6 +3,7 @@ const {
   change_password,
   create_user,
   facebook_loggedIn,
+  get_friends_countries,
   get_user,
   get_users,
   login,
@@ -48,16 +49,10 @@ module.exports = server => {
     res.sendFile(path.join(__dirname + '/utils/privacy_policy.html'));
   });
 
-  // User Login Routes
-  server.get('/api/entry', protected_route, (req, res) => {
-    res.status(200).json({ msg: 'Entry allowed' });
-  });
-
-  // test route
+  // Authentication
   server.get('/api/login_failure', (req, res) => {
-    res.status(400).json({ msg: 'Failed to login in' });
+    res.status(400).json({ msg: 'Failed to login in' }); // TODO: Create login failure page
   });
-
   server.route('/api/login').post(authenticate, login);
   server.route('/api/register').post(create_user);
   server
@@ -81,6 +76,8 @@ module.exports = server => {
     .route('/api/update_preferences')
     .put(protected_route, update_preferences);
 
+  // Retrieve user data
   server.route('/api/get_user').get(protected_route, get_user);
   server.route('/api/get_users/').get(get_users); // TODO: protect this route one
+  server.route('/api/get_friends_countries').get(get_friends_countries);
 };

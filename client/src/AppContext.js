@@ -28,6 +28,7 @@ export class AppContextProvider extends Component {
     failedLogin: false,
     failedSignUp: false,
     failedSignUpMessage: '',
+    friends: [],
     searchCountry: '',
     showingSettings: false,
     showingCountryPanel: false,
@@ -36,11 +37,17 @@ export class AppContextProvider extends Component {
   };
 
   async componentDidMount() {
+    // Check if a JWT is added as a query string in URL from the Facebook redirect.
+    // If it exists, store the token in localStorage and redirect to main page.
+    // The user will then be automatically logged in and taken to their dashboard.
+    // TODO: Look into how secure the current implementation is and come up with a new one if warranted.
+    //       May need to refactor auth system to use cookies.
     if (window.location.search) {
       localStorage.setItem('token', window.location.search.slice(7));
-      window.location = 'http://localhost:3000';
-    } 
-    // Check if a user is already logged in
+      window.location = '/';
+    }
+
+    // Check if a JWT token exists in localStorage
     try {
       // Retrieve token and user stored in local storage
       const token = localStorage.getItem('token');
@@ -56,11 +63,22 @@ export class AppContextProvider extends Component {
           requestOptions
         );
 
+        // Update state if the user was retrieved from the DB
         if (response.status === 200)
-          this.setState({
+          await this.setState({
             authenticated: true,
             user: { ...response.data }
           });
+      }
+
+      // Get a users facebook friends if they signed up with facebook
+      // TODO: Move this over to the backend so this is only called upon login
+      if (this.state.user.facebook) {
+        const { id, accessToken } = this.state.user.facebook;
+        const facebookResponse = await axios.get(
+          `https://graph.facebook.com/${id}/friends?access_token=${accessToken}`
+        );
+        await this.setState({ friends: facebookResponse.data.data });
       }
     } catch (e) {
       // failed async
@@ -70,15 +88,19 @@ export class AppContextProvider extends Component {
     // Ask for user location if browser is compatible
     if ('geolocation' in navigator) {
       this.hasGeolocation();
-    } else {
-      this.getLocationUsingIP(); // geo location not available on device
+    }
+    // Attempt to get location based on IP if geolocation is not supported
+    else {
+      this.getLocationUsingIP();
     }
   } // componentDidMount
 
+  // Open/Close settings panel. Called in Nav.js
   toggleSettings = () => {
     this.setState({ showingSettings: !this.state.showingSettings });
-  };
+  }; // toggleSettings
 
+  // Close CountryPanel
   closeCountryPanel = () => {
     this.setState({
       showingCountryPanel: false
@@ -144,7 +166,6 @@ export class AppContextProvider extends Component {
       );
 
       currentCountry.scratched = true;
-      console.log(response.data);
       this.setState({
         currentCountry,
         currentCountryStatus: 0,

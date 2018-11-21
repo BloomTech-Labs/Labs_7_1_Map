@@ -116,8 +116,9 @@ module.exports = {
     }
   }, // create_user
 
+  // Successful FB login is eventually redirected here
   facebook_loggedIn: async (req, res) => {
-    console.log('facebook_loggedIn')
+    console.log('facebook_loggedIn');
     try {
       // we only reach here because we are authenticated
       const user = {
@@ -128,14 +129,34 @@ module.exports = {
         facebook: req.user.facebook
       }; // add the things you need to send
 
-      const jwt_token = make_token(req.user)
-      return res.redirect(`http://localhost:3000?token=${jwt_token}`);
-      // return res.status(200).json({ jwt_token: make_token(req.user), user });
+      // Create a JWT and redirect with token in query string
+      // Client will extract and save token to localStorage
+      const jwt_token = make_token(req.user);
+      const redirectURL = DEV
+        ? `http://localhost:3000?token=${jwt_token}`
+        : `/?token=${jwt_token}`;
+      return res.redirect(redirectURL);
     } catch (err) {
       if (DEV) console.log(err);
       return res.status(500).json({ error: 'Internal server error!' });
     }
   }, // facebook_login
+
+  get_friends_countries: async (req, res) => {
+    try {
+      console.log(req.query.id);
+      const user = await User.findOne({ 'facebook.id': req.query.id });
+
+      return user.facebook.id === req.query.id
+        ? res.status(200).json(user.countries)
+        : res
+            .status(400)
+            .json({ error: 'No user was found with that facebook ID!' });
+    } catch (err) {
+      if (DEV) console.log(err);
+      res.status(500).json({ error: 'Internal server error!' });
+    }
+  },
 
   get_user: async (req, res) => {
     try {
