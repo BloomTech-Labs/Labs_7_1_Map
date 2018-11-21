@@ -147,11 +147,10 @@ module.exports = {
       console.log(req.query.id);
       const user = await User.findOne({ 'facebook.id': req.query.id });
 
-      return user.facebook.id === req.query.id
-        ? res.status(200).json(user.countries)
-        : res
-            .status(400)
-            .json({ error: 'No user was found with that facebook ID!' });
+      if (!user)
+        return res.status(400).json({ error: 'No users with that Facebook ID!' });
+      else if (user.facebook.id === req.query.id)
+        return res.status(200).json(user.countries)
     } catch (err) {
       if (DEV) console.log(err);
       res.status(500).json({ error: 'Internal server error!' });

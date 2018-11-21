@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+import wc from 'which-country';
 import world from 'country-data';
 import {
   clearLocalstorage,
-  getCountryShapeFromCode,
-  getCountryCodeFromName
+  getCountryInfoFromCode,
+  getCountryCodeFromName,
+  getCountryShapeFromCode
 } from './utils.js';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -29,6 +32,7 @@ export class AppContextProvider extends Component {
     failedSignUp: false,
     failedSignUpMessage: '',
     friends: [],
+    friendBeingViewed: null,
     searchCountry: '',
     showingSettings: false,
     showingCountryPanel: false,
@@ -63,7 +67,7 @@ export class AppContextProvider extends Component {
           requestOptions
         );
 
-        // Update state if the user was retrieved from the DB
+        // Update state with user data if it was successfully retrieved from DB
         if (response.status === 200)
           await this.setState({
             authenticated: true,
@@ -72,13 +76,16 @@ export class AppContextProvider extends Component {
       }
 
       // Get a users facebook friends if they signed up with facebook
-      // TODO: Move this over to the backend so this is only called upon login
       if (this.state.user.facebook) {
-        const { id, accessToken } = this.state.user.facebook;
-        const facebookResponse = await axios.get(
-          `https://graph.facebook.com/${id}/friends?access_token=${accessToken}`
-        );
-        await this.setState({ friends: facebookResponse.data.data });
+        try {
+          const { id, accessToken } = this.state.user.facebook;
+          const facebookResponse = await axios.get(
+            `https://graph.facebook.com/${id}/friends?access_token=${accessToken}`
+          );
+          await this.setState({ friends: facebookResponse.data.data });
+        } catch (err) {
+          console.error('Failed to get facebook friends!'); // eslint-disable-line
+        }
       }
     } catch (e) {
       // failed async
@@ -94,11 +101,6 @@ export class AppContextProvider extends Component {
       this.getLocationUsingIP();
     }
   } // componentDidMount
-
-  // Open/Close settings panel. Called in Nav.js
-  toggleSettings = () => {
-    this.setState({ showingSettings: !this.state.showingSettings });
-  }; // toggleSettings
 
   // Close CountryPanel
   closeCountryPanel = () => {
@@ -122,26 +124,52 @@ export class AppContextProvider extends Component {
     return notes;
   }; // getCurrentCountryNotes
 
-  getLocationUsingIP = () => {
-    axios
-      .get('https://ipapi.co/json')
-      .then(response => {
+  getLocationUsingIP = async () => {
+    try {
+      const response = await axios.get('https://ipapi.co/json');
+
+      if (response.status === 200)
         this.updateUserPosition(
           response.data.latitude,
           response.data.longitude
         );
-      })
-      .catch(err => {
-        // error
-        console.log(err);
-      });
+    } catch (err) {
+      console.error('Failed to get location using IP!', err); // eslint-disable-line
+    }
   };
 
   handleChangeNote = e => {
-    console.log(e.target.name, e.target.value);
     const currentCountry = { ...this.state.currentCountry };
     currentCountry[e.target.name] = e.target.value;
     this.setState({ currentCountry });
+  };
+
+  handleFriendsDropdown = async e => {
+    this.closeCountryPanel();
+    try {
+      const id = e.target.value;
+      if (id === 'user')
+        return await this.setState({ friendBeingViewed: null });
+      else {
+        const options = {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        };
+        const response = await axios.get(
+          `${BACKEND_URL}/get_friends_countries?id=${id}`,
+          options
+        );
+
+        if (response.status === 200) {
+          return this.setState({ friendBeingViewed: response.data });
+        }
+        // TODO: Add error handling if a getting a friends countries failed
+        else console.error('Failed to get that friends countries!'); //eslint-disable-line
+      }
+    } catch (err) {
+      return console.log(err); // eslint-disable-line
+    }
   };
 
   handleScratched = async () => {
@@ -152,7 +180,6 @@ export class AppContextProvider extends Component {
         country_code: currentCountry.code,
         name: currentCountry.info.name,
         scratched: true
-        // notes: currentCountry.notes
       };
 
       const options = {
@@ -172,16 +199,8 @@ export class AppContextProvider extends Component {
         user: response.data
       });
     } catch (err) {
-      console.error('Error updating scratched for country!');
+      console.error('Error updating scratched country!'); // eslint-disable-line
     }
-  };
-
-  //this is used to reset the error message that pops up upon failure to sign in correctly
-  //will be called if a user types into the login field or clicks sign up
-  resetFailedLogin = () => {
-    this.setState({
-      failedLogin: false
-    });
   };
 
   handleSignIn = async e => {
@@ -261,7 +280,7 @@ export class AppContextProvider extends Component {
       this.setState({ user: response.data });
       this.updateCurrentCountryStatus();
     } catch (err) {
-      console.error('Error updating country status!');
+      console.error('Error updating country status!'); // eslint-disable-line
     }
   }; // handleSliderMove
 
@@ -299,7 +318,7 @@ export class AppContextProvider extends Component {
         user: response.data
       });
     } catch (err) {
-      console.error('Error updating notes for country!');
+      console.error('Error updating notes for country!'); // eslint-disable-line
     }
   };
 
@@ -322,9 +341,9 @@ export class AppContextProvider extends Component {
       }
 
       if (response.status === 400)
-        console.error('Preferences failed to update!');
+        console.error('Preferences failed to update!'); // eslint-disable-line
     } catch (err) {
-      console.error('There was an error trying to update preferences!');
+      console.error('There was an error trying to update preferences!'); // eslint-disable-line
     }
   }; // update_preferences
 
@@ -342,6 +361,19 @@ export class AppContextProvider extends Component {
       }
     );
   }; // hasGeolocation
+
+  // Called in Map.js
+  handleMapClick = async e => {
+    if (this.state.friendBeingViewed === null) {
+      // Get the country code of the location clicked on, e.g. 'MEX'
+      const countryCode = await wc([e.latlng.lng, e.latlng.lat]);
+
+      const countryInfo = getCountryInfoFromCode(countryCode);
+
+      // Update AppContext with the info of the currently selected country
+      this.updateCurrentCountry(countryCode, countryInfo);
+    }
+  };
 
   handleSignUp = async (username, email, password) => {
     // TODO: Error handling
@@ -365,13 +397,6 @@ export class AppContextProvider extends Component {
     }
   };
 
-  resetAppStateError = () => {
-    this.setState({
-      failedSignUp: false,
-      failedSignUpMessage: ''
-    });
-  };
-
   isScratched = countryCode => {
     let scratched = false;
     const userCountries = [...this.state.user.countries];
@@ -385,6 +410,26 @@ export class AppContextProvider extends Component {
     return scratched;
   };
 
+  resetAppStateError = () => {
+    this.setState({
+      failedSignUp: false,
+      failedSignUpMessage: ''
+    });
+  };
+
+  // This is used to reset the error message shown upon failure to sign in
+  // Will be called if a user types into the login field or clicks sign up
+  resetFailedLogin = () => {
+    this.setState({
+      failedLogin: false
+    });
+  };
+
+  // Open/Close settings panel. Called in Nav.js
+  toggleSettings = () => {
+    this.setState({ showingSettings: !this.state.showingSettings });
+  }; // toggleSettings
+
   turnOnEditNote = () => {
     const currentCountry = { ...this.state.currentCountry };
     currentCountry.editNoteMode = true;
@@ -395,12 +440,19 @@ export class AppContextProvider extends Component {
 
   // Update state with currently selected country, called in Map.js
   updateCurrentCountry = async (code, info) => {
+    // If a user clicks on something that is not a country:
+    //  - Close the country panel
+    //  - Update the currentCountryStatus after CSS transition is complete
     if (!code) {
-      this.setState({ currentCountryStatus: null, currentCountry: {} });
-      return this.closeCountryPanel();
+      await this.closeCountryPanel();
+      setTimeout(
+        () => this.setState({ currentCountryStatus: null, currentCountry: {} }),
+        500 // This should be the same as the transition length set in CountryPanel.less
+      );
+      return;
     }
 
-    const geoInfo = getCountryShapeFromCode(code);
+    const geoInfo = await getCountryShapeFromCode(code);
     const scratched = this.isScratched(code);
     const notes = this.getCurrentCountryNotes(code);
 
@@ -458,6 +510,8 @@ export class AppContextProvider extends Component {
           currentCountryInfo: this.state.currentCountry.geoInfo,
           resetFailedLogin: this.resetFailedLogin,
           handleChangeNote: this.handleChangeNote,
+          handleFriendsDropdown: this.handleFriendsDropdown,
+          handleMapClick: this.handleMapClick,
           handleScratched: this.handleScratched,
           handleSearchSubmit: this.handleSearchSubmit,
           handleSignIn: this.handleSignIn,
@@ -478,5 +532,9 @@ export class AppContextProvider extends Component {
     );
   }
 }
+
+AppContextProvider.propTypes = {
+  children: PropTypes.any
+};
 
 export const AppContextConsumer = AppContext.Consumer;

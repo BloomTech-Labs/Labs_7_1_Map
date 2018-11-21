@@ -7,7 +7,7 @@ import themeColors from '../themeColors.js';
 const Nav = props => {
   return (
     <AppContextConsumer>
-      {({ handleSignOut, AppState }) => {
+      {({ handleFriendsDropdown, handleSignOut, AppState }) => {
         const currentTheme = AppState.user.preferences
           ? AppState.user.preferences.theme
           : 'standard';
@@ -23,18 +23,23 @@ const Nav = props => {
             <h1 className="Nav__title">MapScratcher</h1>
 
             <div className="Nav__Center">
-              <select
-                name="My Travels"
-                id=""
-                className="MenuItem Center__friends"
-              >
-                <option value="My Travels">My Travels</option>
-                {AppState.friends.map(friend => (
-                  <option value={friend} key={friend.id}>
-                    {friend.name}
-                  </option>
-                ))}
-              </select>
+              {AppState.user.facebook ? (
+                <select
+                  name="My Travels"
+                  id=""
+                  className="MenuItem Center__friends"
+                  onChange={handleFriendsDropdown}
+                >
+                  <option value="user">My Travels</option>
+                  {AppState.friends.map(friend => (
+                    <option value={friend.id} key={friend.id}>
+                      {friend.name}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <h1>My Travels</h1>
+              )}
             </div>
             <div className="Nav__Right">
               <div
