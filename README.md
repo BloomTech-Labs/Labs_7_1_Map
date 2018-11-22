@@ -1,17 +1,40 @@
-# Scratch-N-Map
+# MapScratcher
 
-(Lambda Labs 7.1)
- - Live site: https://scratch-n-map.herokuapp.com/ 
+- Live site: https://scratch-n-map.herokuapp.com/
 
 - Wireframes: https://balsamiq.cloud/snv27r3/pdmo5as/rFFE9
 
+# Table of contents
+
+1. [About](#about)
+1. [Features](#features)
+1. [Code Style](#code-style)
+1. [Dependencies](#dependencies)
+1. [Contributers](#contributers)
+1. [Context API usage](#context-api)
+
+<a name="about" /></a>
+## About
+
+This project was built by Lambda School students for their capstone project. It is a web version of a 'scratch off world map' that were popular back in the day where a player would scratch off countries they have visited, lived in, or would like to visit.
+
+<a name="features"></a>
+## Features
+- Option to create a user account on the app, or to signup with Facebook
+- 'Scratch card' feature that requires you to scratch off a card to save a country
+- Countries are color coded based on status ('Wishlist', 'Visited', 'Lived')
+- Save and display personal notes for each country
+- Facebook friends that are using the app will show up in each country's 'card'
+- View a Facebook friends map.
+
+
+<a name="code-style"></a>
 ## Code style
 
 - Single quotes
 - 2 spaces indentation
 - async/await
-- PropTypes
-- Spaces within single-line objects
+- Spaces within single-line objects e.g. `obj = { key: 'value' }`
 
 ### Naming conventions:
 
@@ -35,9 +58,11 @@ const AwesomePerson = () => {
 };
 ```
 
+<a name="dependencies"></a>
 ## Dependencies
 
 Front End
+
 - react
 - leaflet
 - react-leaflet
@@ -45,6 +70,7 @@ Front End
 - axios
 
 Back End
+
 - argon2
 - express
 - mongoose
@@ -68,20 +94,22 @@ Dev Dependencies
 - Prettier
 - Jest
 
+<a name="contributers"></a>
 ## Contributers
 
 Engineering Team:
 
-- Edward Manda
-- David Morales
 - Nalee Riddell
 - Nikhil Kamineni
+- Edward Manda
+- David Morales
 
 Project Manager
-
 - Punit Rawal
 
+<a name="context-api"></a>
 ## Context API Usage
+
 ### AppContext.js usage
 
 The React Context API is initiated here and the provider and consumer are export
@@ -110,6 +138,7 @@ export const AppContextConsumer = AppContext.Consumer;
 ```
 
 ### index.js
+
 The Provider is hooked up here
 
 ```js
@@ -130,7 +159,8 @@ ReactDOM.render(
 );
 ```
 
-### Example of a component using the consumer 
+### Example of a component using the consumer
+
 The component using a consumer
 
 ```js
@@ -158,10 +188,13 @@ class App extends Component {
 export default App;
 ```
 
+<a name="deployment"></a>
 ## Deployment
+
 Front and back end is deployed on Heroku. Deploying is as simple as running `git push heroku master`, assuming you are logged in with the right credentials.
 
 Steps:
+
 1. Login to Heroku with the command `heroku login` while in the project folder. You should then be prompted to enter the login credentials.
 
 1. Make sure you have the master branch checked out (`git checkout master`)
@@ -170,8 +203,9 @@ Steps:
 
 1. Deploy the master branch by running `git push heroku master`
 
-1. If you need to deploy a branch other than the master, you can do so with the command `git push heroku <branch-name>:master`. 
-E.g. if you want to deploy a branch named 'deployment' to heroku:
-  ```shell
-  $ git push heroku deployment:master
-  ```
+1. If you need to deploy a branch other than the master, you can do so with the command `git push heroku <branch-name>:master`.
+   E.g. if you want to deploy a branch named 'deployment' to heroku:
+
+```shell
+$ git push heroku deployment:master
+```
