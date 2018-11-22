@@ -7,11 +7,13 @@
 # Table of contents
 
 1. [About](#about)
-1. [Features](#features)
-1. [Code Style](#code-style)
-1. [Dependencies](#dependencies)
-1. [Contributers](#contributers)
-1. [Context API usage](#context-api)
+    1. [Features](#features)
+    1. [Contributers](#contributers)
+1. [Developement](#development)
+    1. [Code Style](#code-style)
+    1. [Dependencies](#dependencies)
+    1. [Context API](#context-api)
+    1. [Deployment](#deployment)
 
 <a name="about" /></a>
 ## About
@@ -19,7 +21,7 @@
 This project was built by Lambda School students for their capstone project. It is a web version of a 'scratch off world map' that were popular back in the day where a player would scratch off countries they have visited, lived in, or would like to visit.
 
 <a name="features"></a>
-## Features
+### Features
 - Option to create a user account on the app, or to signup with Facebook
 - 'Scratch card' feature that requires you to scratch off a card to save a country
 - Countries are color coded based on status ('Wishlist', 'Visited', 'Lived')
@@ -27,6 +29,21 @@ This project was built by Lambda School students for their capstone project. It 
 - Facebook friends that are using the app will show up in each country's 'card'
 - View a Facebook friends map.
 
+<a name="contributers"></a>
+### Contributers
+
+Engineering Team:
+
+- Nalee Riddell
+- Nikhil Kamineni
+- Edward Manda
+- David Morales
+
+Project Manager
+- Punit Rawal
+
+<a name="development"></a>
+# Development
 
 <a name="code-style"></a>
 ## Code style
@@ -72,43 +89,33 @@ Front End
 Back End
 
 - argon2
-- express
-- mongoose
-- cors
-- helmet
-- morgan
 - axios
-- passport
-- passport-local
-- passport-jwt
-- passport-facebook
-- jsonwebtoken
+- cors
 - dotenv
+- express
+- helmet
+- jsonwebtoken
+- mongodb-memory-server
+- mongoose
+- morgan
+- node-gyp
+- passport
+- passport-facebook
+- passport-jwt
+- passport-local
 
 Dev Dependencies
 
-- ESLint
+- eslint
 - eslint-config-prettier
 - eslint-plugin-react (client only)
 - eslint-plugin-node (server only)
-- Prettier
-- Jest
-
-<a name="contributers"></a>
-## Contributers
-
-Engineering Team:
-
-- Nalee Riddell
-- Nikhil Kamineni
-- Edward Manda
-- David Morales
-
-Project Manager
-- Punit Rawal
+- prettier
+- jest
+- supertest
 
 <a name="context-api"></a>
-## Context API Usage
+## Context API
 
 ### AppContext.js usage
 
