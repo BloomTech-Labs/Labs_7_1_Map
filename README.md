@@ -4,25 +4,26 @@
 
 - Wireframes: https://balsamiq.cloud/snv27r3/pdmo5as/rFFE9
 
-# Table of contents
+## Table of contents
 
 1. [About](#about)
     1. [Features](#features)
     1. [Contributers](#contributers)
 1. [Developement](#development)
+    1. [Tech Stack](#tech-stack)
     1. [Code Style](#code-style)
     1. [Dependencies](#dependencies)
     1. [Context API](#context-api)
     1. [Deployment](#deployment)
 
 <a name="about" /></a>
-## About
+# About
 
-This project was built by Lambda School students for their capstone project. It is a web version of a 'scratch off world map' that were popular back in the day where a player would scratch off countries they have visited, lived in, or would like to visit.
+This project was built by Lambda School students for their capstone project. It is a web version of a 'scratch off world map' game that was popular back in the day where a player would scratch off countries they have visited, lived in, or would like to visit.
 
 <a name="features"></a>
 ### Features
-- Option to create a user account on the app, or to signup with Facebook
+- Option to create a user account on the app, or to signup/login with Facebook
 - 'Scratch card' feature that requires you to scratch off a card to save a country
 - Countries are color coded based on status ('Wishlist', 'Visited', 'Lived')
 - Save and display personal notes for each country
@@ -45,12 +46,22 @@ Project Manager
 <a name="development"></a>
 # Development
 
+<a name="tech-stack"></a>
+## Tech Stack
+
+This app uses the MERN stack, with Leaflet powering the interactive maps.
+
+- MongoDB: We decided to use a NoSQL database as we anticipated our models changing quite a bit as we didn't have as muchtime to plan as would have been ideal. We also didn't anticipate needing lots of models with strict relationships between them.
+- React: It was clear that this would be a SPA (single page app) and would have a heavy visual element due to the interactive maps being the focus. React is known for being very fast and well suited to SPA's. This made it a good fit for our front end.
+- Node/Express: This was a natural fit with MongoDB and React. Our frontend would be able to easily consume JSON data from our backend without having to do any data conversion. Some very useful and well supported libraries like Mongoose and Passport also made this choice worthwhile.
+
+
 <a name="code-style"></a>
 ## Code style
 
 - Single quotes
 - 2 spaces indentation
-- async/await
+- async/await over then/catch
 - Spaces within single-line objects e.g. `obj = { key: 'value' }`
 
 ### Naming conventions:
@@ -119,7 +130,7 @@ Dev Dependencies
 
 ### AppContext.js usage
 
-The React Context API is initiated here and the provider and consumer are export
+The React Context API is used for state management. Global state that multiple components need to access will be defined in `AppContext.js` and consumed by any children component
 
 ```js
 import React, { Component } from 'react';
@@ -181,10 +192,10 @@ class App extends Component {
   render() {
     return (
       <AppContextConsumer>
-        {props => (
+        {value => (
           <div className="App">
             <Signup />
-            Here is the data from the global {props.AppState.greet}
+            Here is the data from the global {value.AppState.greet}
           </div>
         )}
       </AppContextConsumer>
