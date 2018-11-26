@@ -56,6 +56,7 @@ This app uses the MERN stack, with Leaflet powering the interactive maps.
 - MongoDB: We decided to use a NoSQL database as we anticipated our models changing quite a bit as we didn't have as muchtime to plan as would have been ideal. We also didn't anticipate needing lots of models with strict relationships between them.
 - React: It was clear that this would be a SPA (single page app) and would have a heavy visual element due to the interactive maps being the focus. React is known for being very fast and well suited to SPA's. This made it a good fit for our front end.
 - Node/Express: This was a natural fit with MongoDB and React. Our frontend would be able to easily consume JSON data from our backend without having to do any data conversion. Some very useful and well supported libraries like Mongoose and Passport also made this choice worthwhile.
+- Leaflet: While there are some very powerful and featureful map frameworks like Map Box or Google Maps, we decided to use Leaflet as it was completely free and open source. It also seemed to be widely used and well supported. In fact, Leaflet is actually by Map Box so if we wanted to eventually make use of those features it would, theoretically, be a relatively painless transition.
 
 
 <a name="code-style"></a>
