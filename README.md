@@ -15,6 +15,7 @@
     1. [Dependencies](#dependencies)
     1. [Context API](#context-api)
     1. [Deployment](#deployment)
+1. [Contributing](#contributing)
 
 <a name="about" /></a>
 # About
@@ -29,6 +30,7 @@ This project was built by Lambda School students for their capstone project. It 
 - Save and display personal notes for each country
 - Facebook friends that are using the app will show up in each country's 'card'
 - View a Facebook friends map.
+- Choice of different map tiles and matching UI themes.
 
 <a name="contributers"></a>
 ### Contributers
@@ -226,4 +228,39 @@ Steps:
 
 ```shell
 $ git push heroku deployment:master
+```
+
+<a name="contributing"></a>
+# Contributing
+Contributions are welcome! The instructions below should let you get the app up and running on a development environment.
+However, due to the nature of Facebook development it may not be possible for others to make contributions that involve that functionality. If you want to work on features involving that please get in touch.
+
+## Setup
+1. Clone this repo
+1. Create a .env file inside the root folder (see below for contents)
+1. Create a .env files inste the `client` folder (see below for contents)
+1. Run `npm install` inside the root folder
+1. Run `npm install` inside the `client` folder
+1. Run `npm start` inside the root folder
+1. Run `npm start` inside the `client` folder
+
+There are separate test suites for the front and back end. To run them simply use the command `npm test` in either the root folder (back end) or the `client` folder (front end).
+
+`/.env`
+```
+SECRET=<your-secret-here>
+PORT=<your-port-here>
+
+FACEBOOK_APP_ID=<facebook-app-id-here>
+FACE_APP_SECRET=<facebook-secret-here>
+FACEBOOK_APP_CALLBACK_URL=<your-backend-url-here>/api/facebook_login
+DEV=on
+
+```
+
+`/client/.env`
+```
+REACT_APP_DEV=true
+REACT_APP_BACKEND_URL=<your-backend-url-here>/api
+SKIP_PREFLIGHT_CHECK=true
 ```
