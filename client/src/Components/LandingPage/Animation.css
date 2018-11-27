@@ -1,8 +1,8 @@
 .airplane_container {
   height: 550px;
-  margin-left: 10%;
+  margin-left: 6%;
   width: 60%;
-  margin-top: 12px;
+  margin-top: 26px;
 }
 .airplane_container .airplane_container__svg {
   margin-left: 10%;
