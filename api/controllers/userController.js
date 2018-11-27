@@ -118,7 +118,6 @@ module.exports = {
 
   // Successful FB login is eventually redirected here
   facebook_loggedIn: async (req, res) => {
-    console.log('facebook_loggedIn');
     try {
       // we only reach here because we are authenticated
       const user = {
@@ -156,7 +155,7 @@ module.exports = {
       };
 
       // Find all users that have the country matching the country_code saved
-      // `lean()` is used to return a plain javascript object instead of a MongooseDocument (so the array methods below can be used ) 
+      // `lean()` is used to return a plain javascript object instead of a MongooseDocument (so the array methods below can be used )
       let usersWithCountry = await User.find(conditions).lean();
 
       // Map to an object with just the friend name and country status
@@ -235,7 +234,9 @@ module.exports = {
         preferences
       }; // add the things you need to send
 
-      if (req.user.facebook) user.facebook = req.user.facebook;
+      // Only attach the FB object to response if it contains valid data
+      const { id, accessToken, refreshToken, } = req.user.facebook;
+      if (id && accessToken && refreshToken) user.facebook = req.user.facebook;
 
       return res.status(200).json({ jwt_token: make_token(req.user), user });
     } catch (err) {
