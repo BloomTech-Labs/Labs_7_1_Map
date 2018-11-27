@@ -1,10 +1,18 @@
 const colorPalette = {
   0: 'gray',
-  1: '#6C596E', // wishlist
-  2: '#43915F', // transited
-  3: '#A62639', // visited
-  4: '#427AA1' // livedIn
+  1: '#6C596E', // Wishlist
+  2: '#43915F', // Transited
+  3: '#A62639', // Visited
+  4: '#427AA1' // Lived
 };
+
+const labels = {
+  0: 'None',
+  1: 'Wishlist',
+  2: 'Transited',
+  3: 'Visited',
+  4: 'Lived'
+}
 
 // Styles for the highlight of a clicked on country
 const styleSelected = {
@@ -77,6 +85,7 @@ const countryStatusStyles = {
 
 module.exports = {
   colorPalette,
+  labels,
   styleSelected,
   styleHover,
   countryStatusStyles
