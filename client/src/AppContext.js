@@ -103,8 +103,8 @@ export class AppContextProvider extends Component {
   } // componentDidMount
 
   // Close CountryPanel
-  closeCountryPanel = () => {
-    this.setState({
+  closeCountryPanel = async () => {
+    await this.setState({
       showingCountryPanel: false
     });
   }; // closeCountryPanel
@@ -118,7 +118,6 @@ export class AppContextProvider extends Component {
         country_code: this.state.currentCountry.code
       };
 
-      console.log(this.state.currentCountry);
       const options = {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       };
@@ -129,7 +128,7 @@ export class AppContextProvider extends Component {
         body,
         options
       );
-      console.log(response);
+
       this.setState({
         currentCountry: {
           ...this.state.currentCountry,
@@ -180,9 +179,14 @@ export class AppContextProvider extends Component {
     this.closeCountryPanel();
     try {
       const id = e.target.value;
-      if (id === 'user')
-        return await this.setState({ friendBeingViewed: null });
+      if (id === 'user') return this.setState({ friendBeingViewed: null });
       else {
+        // Set friendBeingViewed to empty array to fix following bug:
+        //    Switching to a different friends map view would not render a country if
+        //    it was also rendered on the user's own map.
+        //    Most likely a limitation with Leaflet so there may not be a better solution.
+        this.setState({ friendBeingViewed: [] });
+
         const options = {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -194,7 +198,10 @@ export class AppContextProvider extends Component {
         );
 
         if (response.status === 200) {
-          return this.setState({ friendBeingViewed: response.data });
+          return this.setState({
+            friendBeingViewed: response.data,
+            currentCountry: {}
+          });
         }
         // TODO: Add error handling if a getting a friends countries failed
         else console.error('Failed to get that friends countries!'); //eslint-disable-line
