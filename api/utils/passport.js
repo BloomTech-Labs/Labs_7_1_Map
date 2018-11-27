@@ -79,8 +79,6 @@ const facebook_strategy = new FacebookStrategy(FACEBOOK_OPTIONS, async function(
   done
 ) {
   try {
-    console.log('facebook_strategy - try');
-    console.log(accessToken, profile)
     const found = await User.findOne({ 'facebook.id': profile.id });
 
     if (found) {
@@ -119,7 +117,6 @@ const facebook_strategy = new FacebookStrategy(FACEBOOK_OPTIONS, async function(
       }
     }
   } catch (err) {
-    console.log('facebook_strategy - catch');
     if (DEV) console.log(err);
     return done(null, false, { message: 'Internal Error.' });
   }

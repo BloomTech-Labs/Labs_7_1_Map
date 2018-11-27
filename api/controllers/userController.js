@@ -118,7 +118,6 @@ module.exports = {
 
   // Successful FB login is eventually redirected here
   facebook_loggedIn: async (req, res) => {
-    console.log('facebook_loggedIn');
     try {
       // we only reach here because we are authenticated
       const user = {
@@ -142,24 +141,63 @@ module.exports = {
     }
   }, // facebook_login
 
+  // Receives a country_code and array of facebook friends
+  // Returns an array of friends that have the matching country
+  get_country_friends: async (req, res) => {
+    try {
+      const { friends, country_code } = req.body;
+      const friendIDs = friends.map(friend => friend.id);
+
+      // Query to find all users that have a country matching the given country_code
+      const conditions = {
+        'facebook.id': { $in: friendIDs },
+        countries: { $elemMatch: { country_code } }
+      };
+
+      // Find all users that have the country matching the country_code saved
+      // `lean()` is used to return a plain javascript object instead of a MongooseDocument (so the array methods below can be used )
+      let usersWithCountry = await User.find(conditions).lean();
+
+      // Map to an object with just the friend name and country status
+      usersWithCountry = usersWithCountry.map(user => {
+        const country = user.countries.find(
+          country => country.country_code === country_code
+        );
+        return {
+          name: `${user.facebook.first_name} ${user.facebook.last_name}`,
+          status: country.status_code
+        };
+      });
+
+      // Return an array of objects containing the friend name and country status
+      return res.status(200).json(usersWithCountry);
+    } catch (err) {
+      if (DEV) console.log(err);
+      return res.status(500).json({ error: 'Internal server error!' });
+    }
+  },
+
+  // Get all the countries for a given friend's id
   get_friends_countries: async (req, res) => {
     try {
-      console.log(req.query.id);
       const user = await User.findOne({ 'facebook.id': req.query.id });
 
       if (!user)
-        return res.status(400).json({ error: 'No users with that Facebook ID!' });
+        return res
+          .status(400)
+          .json({ error: 'No users with that Facebook ID!' });
       else if (user.facebook.id === req.query.id)
-        return res.status(200).json(user.countries)
+        return res.status(200).json(user.countries);
     } catch (err) {
       if (DEV) console.log(err);
       res.status(500).json({ error: 'Internal server error!' });
     }
   },
 
+  // Get the data for a user based on the provided JWT
   get_user: async (req, res) => {
     try {
-      // If a valid token was provided, Passport will find the user and added
+      // If a valid token was provided, Passport will find the user and add
       // it to the request as req.user without the password field
       return req.user
         ? res.status(200).json(req.user)
@@ -195,6 +233,11 @@ module.exports = {
         countries,
         preferences
       }; // add the things you need to send
+
+      // Only attach the FB object to response if it contains valid data
+      const { id, accessToken, refreshToken, } = req.user.facebook;
+      if (id && accessToken && refreshToken) user.facebook = req.user.facebook;
+
       return res.status(200).json({ jwt_token: make_token(req.user), user });
     } catch (err) {
       if (DEV) console.log(err);
@@ -228,13 +271,16 @@ module.exports = {
         { new: true }
       );
 
-      return res.status(200).json({
-        _id: updatedUser._id,
+      const response = {
         username: updatedUser.username,
         email: updatedUser.email,
         preferences: updatedUser.preferences,
         countries: updatedUser.countries
-      });
+      };
+
+      if (updatedUser.facebook) response.facebook = updatedUser.facebook;
+
+      return res.status(200).json(response);
     } catch (err) {
       if (DEV) console.log(err);
       return res.status(500).send({ error: 'Internal server error!' });

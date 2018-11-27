@@ -65,7 +65,9 @@ module.exports = {
             username: updatedUser.username,
             countries: updatedUser.countries,
             preferences: updatedUser.preferences
-          }
+          };
+
+          if (updatedUser.facebook) response.facebook = updatedUser.facebook;
 
           return res.status(200).json(response);
         } catch (err) {
@@ -89,14 +91,16 @@ module.exports = {
             username: updatedUser.username,
             countries: updatedUser.countries,
             preferences: updatedUser.preferences
-          }
+          };
+
+          if (updatedUser.facebook) response.facebook = updatedUser.facebook;
 
           return res.status(201).json(response);
         } catch (err) {
           if (DEV) console.log(err);
-          return res
-            .status(409)
-            .json({ error: 'Failed to create a new country and update status!' });
+          return res.status(409).json({
+            error: 'Failed to create a new country and update status!'
+          });
         }
       }
     } catch (err) {
@@ -142,14 +146,14 @@ module.exports = {
             username: updatedUser.username,
             countries: updatedUser.countries,
             preferences: updatedUser.preferences
-          }
+          };
+
+          if (updatedUser.facebook) response.facebook = updatedUser.facebook;
 
           return res.status(200).json(response);
         } catch (err) {
           if (DEV) console.log(err);
-          return res
-            .status(400)
-            .json({ error: 'Failed to updates notes!' });
+          return res.status(400).json({ error: 'Failed to updates notes!' });
         }
       }
       // If country does not exist on user, create a new object with the info in req.body
@@ -165,13 +169,15 @@ module.exports = {
             username: updatedUser.username,
             countries: updatedUser.countries,
             preferences: updatedUser.preferences
-          }
+          };
+
+          if (updatedUser.facebook) response.facebook = updatedUser.facebook;
 
           return res.status(201).json(response);
         } catch (err) {
-          return res
-            .status(409)
-            .json({ error: 'Failed to create a new country and update notes!' });
+          return res.status(409).json({
+            error: 'Failed to create a new country and update notes!'
+          });
         }
       }
     } catch (err) {
@@ -217,7 +223,9 @@ module.exports = {
             username: updatedUser.username,
             countries: updatedUser.countries,
             preferences: updatedUser.preferences
-          }
+          };
+
+          if (updatedUser.facebook) response.facebook = updatedUser.facebook;
 
           return res.status(200).json(response);
         } catch (err) {
@@ -241,13 +249,15 @@ module.exports = {
             username: updatedUser.username,
             countries: updatedUser.countries,
             preferences: updatedUser.preferences
-          }
+          };
+
+          if (updatedUser.facebook) response.facebook = updatedUser.facebook;
 
           return res.status(201).json(response);
         } catch (err) {
-          return res
-            .status(409)
-            .json({ error: 'Failed to create a new country and update scratched status!' });
+          return res.status(409).json({
+            error: 'Failed to create a new country and update scratched status!'
+          });
         }
       }
     } catch (err) {

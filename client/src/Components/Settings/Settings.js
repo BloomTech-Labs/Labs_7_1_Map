@@ -64,16 +64,20 @@ class Settings extends Component {
                 user={AppState.user}
                 handleUpdatePreferences={handleUpdatePreferences}
               />
-              <ChangeEmail
-                user={AppState.user}
-                handleChangeEmailClick={this.handleChangeEmailClick}
-                showingChangeEmail={this.state.showingChangeEmail}
-              />
-              <ChangePassword
-                user={AppState.user}
-                handleChangePasswordClick={this.handleChangePasswordClick}
-                showingChangePassword={this.state.showingChangePassword}
-              />
+              {!AppState.user.facebook && (
+                <React.Fragment>
+                  <ChangeEmail
+                    user={AppState.user}
+                    handleChangeEmailClick={this.handleChangeEmailClick}
+                    showingChangeEmail={this.state.showingChangeEmail}
+                  />
+                  <ChangePassword
+                    user={AppState.user}
+                    handleChangePasswordClick={this.handleChangePasswordClick}
+                    showingChangePassword={this.state.showingChangePassword}
+                  />
+                </React.Fragment>
+              )}
             </div>
           );
         }}

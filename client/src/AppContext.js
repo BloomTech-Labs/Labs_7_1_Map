@@ -103,11 +103,42 @@ export class AppContextProvider extends Component {
   } // componentDidMount
 
   // Close CountryPanel
-  closeCountryPanel = () => {
-    this.setState({
+  closeCountryPanel = async () => {
+    await this.setState({
       showingCountryPanel: false
     });
   }; // closeCountryPanel
+
+  // Get a list of friends that also have the country saved
+  // Only called if user has signed up with Facebook
+  getCountryFriends = async () => {
+    try {
+      const body = {
+        friends: this.state.friends,
+        country_code: this.state.currentCountry.code
+      };
+
+      const options = {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      };
+
+      // get FB friends
+      const response = await axios.post(
+        `${BACKEND_URL}/get_country_friends`,
+        body,
+        options
+      );
+
+      this.setState({
+        currentCountry: {
+          ...this.state.currentCountry,
+          friends: response.data
+        }
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   // Get the notes of a country saved on user
   getCurrentCountryNotes = code => {
@@ -148,9 +179,14 @@ export class AppContextProvider extends Component {
     this.closeCountryPanel();
     try {
       const id = e.target.value;
-      if (id === 'user')
-        return await this.setState({ friendBeingViewed: null });
+      if (id === 'user') return this.setState({ friendBeingViewed: null });
       else {
+        // Set friendBeingViewed to empty array to fix following bug:
+        //    Switching to a different friends map view would not render a country if
+        //    it was also rendered on the user's own map.
+        //    Most likely a limitation with Leaflet so there may not be a better solution.
+        this.setState({ friendBeingViewed: [] });
+
         const options = {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -162,7 +198,10 @@ export class AppContextProvider extends Component {
         );
 
         if (response.status === 200) {
-          return this.setState({ friendBeingViewed: response.data });
+          return this.setState({
+            friendBeingViewed: response.data,
+            currentCountry: {}
+          });
         }
         // TODO: Add error handling if a getting a friends countries failed
         else console.error('Failed to get that friends countries!'); //eslint-disable-line
@@ -223,7 +262,28 @@ export class AppContextProvider extends Component {
   }; // handleSignIn
 
   handleSignOut = () => {
-    this.setState({ authenticated: false, user: {} });
+    this.setState({
+      authenticated: false,
+      currentCountry: {
+        code: '',
+        info: {},
+        geoInfo: {},
+        scratched: false,
+        notes: '',
+        editNoteMode: false
+      },
+      currentCountryStatus: null,
+      failedLogin: false,
+      failedSignUp: false,
+      failedSignUpMessage: '',
+      friends: [],
+      friendBeingViewed: null,
+      searchCountry: '',
+      showingSettings: false,
+      showingCountryPanel: false,
+      user: {},
+      userPosition: { lat: 22.28552, lng: 114.15769 }
+    });
     clearLocalstorage();
   }; // handleSignOut
 
@@ -465,8 +525,8 @@ export class AppContextProvider extends Component {
     const currentCountry = {
       ...this.state.currentCountry,
       code,
-      info,
       geoInfo,
+      info,
       scratched,
       notes,
       editNoteMode: false
@@ -476,7 +536,9 @@ export class AppContextProvider extends Component {
       currentCountry,
       showingCountryPanel: true
     });
-    this.updateCurrentCountryStatus();
+    await this.updateCurrentCountryStatus();
+
+    if (this.state.user.facebook) await this.getCountryFriends();
   };
 
   // Get the status_code of a country saved on user if it exists
@@ -509,6 +571,7 @@ export class AppContextProvider extends Component {
           closeCountryPanel: this.closeCountryPanel,
           currentCountryInfo: this.state.currentCountry.geoInfo,
           resetFailedLogin: this.resetFailedLogin,
+          getCountryFriends: this.getCountryFriends,
           handleChangeNote: this.handleChangeNote,
           handleFriendsDropdown: this.handleFriendsDropdown,
           handleMapClick: this.handleMapClick,
