@@ -1,107 +1,121 @@
-html,
-body {
-  background-color: #85b9dd;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
+.airplane_container {
+  height: 550px;
+  margin-left: 6%;
+  width: 60%;
+  margin-top: 26px;
 }
-
-* {
-  position: relative;
+.airplane_container .airplane_container__svg {
+  margin-left: 10%;
+  margin-top: 100px;
+  animation-iteration-count: infinite;
+  animation-name: inandout;
+  animation-duration: 20s;
 }
-
-.frame {
-  width: 500px;
-  height: auto;
-  margin: 15% auto 0;
+.airplane_container .cloud1 {
   position: absolute;
-  width: 100%;
-}
-
-svg {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/**
- * Paper Plane
- */
-/*Paper Plane: Container*/
-.plane-container {
-  width: 200px;
-  margin: 10vh 0px 0px 30%;
-  z-index: 3;
-}
- /*Paper Plane: Image*/
-.plane {
-  width: 100%;
-  height: 60px;
-}
-
-/*Paper Plane: Animation*/
-.plane-container {
-  -webkit-animation: paper-plane-scoping 2s alternate infinite;
-  -moz-animation: paper-plane-scoping 2s alternate infinite;
-  animation: paper-plane-scoping 2s alternate infinite;
-
-  -webkit-animation-timing-function: linear;
-  -moz-animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-name: cloud1;
+  animation-duration: 30s;
   animation-timing-function: linear;
+  opacity: .001;
 }
-
-@-webkit-keyframes paper-plane-scoping {
-  0% {
-    -webkit-transform: translateY(0px);
-    -moz-transform: translateY(0px);
-    transform: translateY(0px);
-  }
-  100% {
-    -webkit-transform: translateY(100px);
-    -moz-transform: translateY(100px);
-    transform: translateY(100px);
-  }
+.airplane_container .cloud2 {
+  position: absolute;
+  animation-iteration-count: infinite;
+  margin-left: 40px;
+  animation-name: cloud2;
+  animation-duration: 55s;
+  animation-timing-function: linear;
+  opacity: .001;
+  transform: scale(0.7);
 }
-
-.plane {
-  -webkit-animation-timing-function: ease-in-out;
-  -moz-animation-timing-function: ease-in-out;
-  animation-timing-function: ease-in-out;
-
-  -webkit-animation: paper-plane-soaring 4s forwards infinite;
-  -moz-animation: paper-plane-soaring 4s forwards infinite;
-  animation: paper-plane-soaring 4s forwards infinite;
+.airplane_container .cloud3 {
+  position: absolute;
+  animation-iteration-count: infinite;
+  margin-left: 300px;
+  animation-name: cloud3;
+  animation-duration: 60s;
+  animation-timing-function: linear;
+  opacity: .001;
+  transform: scale(0.6);
 }
-@-webkit-keyframes paper-plane-soaring {
-  0% {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    transform: rotate(0deg);
+.airplane_container .cloud4 {
+  position: absolute;
+  animation-iteration-count: infinite;
+  margin-left: 250px;
+  animation-duration: 35s;
+  animation-name: cloud4;
+  animation-timing-function: linear;
+  opacity: .001;
+}
+@keyframes inandout {
+  19% {
+    transform: scale(0.95);
   }
-  40% {
-    -webkit-transform: rotate(15deg);
-    -moz-transform: rotate(15deg);
-    transform: rotate(15deg);
+  32% {
+    transform: scale(0.99);
   }
-  50% {
-    -webkit-transform: rotate(15deg);
-    -moz-transform: rotate(15deg);
-    transform: rotate(15deg);
+  39% {
+    transform: scale(0.92);
+  }
+  52% {
+    transform: scale(0.95);
   }
   60% {
-    -webkit-transform: rotate(-10deg);
-    -moz-transform: rotate(-10deg);
-    transform: rotate(-10deg);
+    transform: scale(0.94);
   }
-  70% {
-    -webkit-transform: rotate(-10deg);
-    -moz-transform: rotate(-10deg);
-    transform: rotate(-10deg);
+  90% {
+    transform: scale(0.92);
   }
   100% {
-    -webkit-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    transform: rotate(0deg);
+    transform: scale(1);
+  }
+}
+@keyframes cloud1 {
+  20% {
+    opacity: .9;
+  }
+  90% {
+    opacity: .9;
+  }
+  100% {
+    margin-top: 500px;
+    opacity: 0.001;
+  }
+}
+@keyframes cloud2 {
+  10% {
+    opacity: .9;
+  }
+  90% {
+    opacity: .9;
+  }
+  100% {
+    margin-top: 500px;
+    opacity: 0.001;
+  }
+}
+@keyframes cloud3 {
+  10% {
+    opacity: .9;
+  }
+  90% {
+    opacity: .9;
+  }
+  100% {
+    margin-top: 500px;
+    opacity: 0.001;
+  }
+}
+@keyframes cloud4 {
+  18% {
+    opacity: .9;
+  }
+  90% {
+    opacity: .9;
+  }
+  100% {
+    margin-top: 500px;
+    opacity: 0.001;
   }
 }

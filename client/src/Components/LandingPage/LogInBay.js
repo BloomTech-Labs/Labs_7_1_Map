@@ -182,7 +182,7 @@ class LogInBay extends React.Component {
                 className="Container__Button"
                 onClick={this.handleOpenModal}
               >
-                New? Sign Up
+                Sign Up with email
               </button>
             </div>
 
