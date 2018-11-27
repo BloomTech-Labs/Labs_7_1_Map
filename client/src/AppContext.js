@@ -262,7 +262,28 @@ export class AppContextProvider extends Component {
   }; // handleSignIn
 
   handleSignOut = () => {
-    this.setState({ authenticated: false, user: {} });
+    this.setState({
+      authenticated: false,
+      currentCountry: {
+        code: '',
+        info: {},
+        geoInfo: {},
+        scratched: false,
+        notes: '',
+        editNoteMode: false
+      },
+      currentCountryStatus: null,
+      failedLogin: false,
+      failedSignUp: false,
+      failedSignUpMessage: '',
+      friends: [],
+      friendBeingViewed: null,
+      searchCountry: '',
+      showingSettings: false,
+      showingCountryPanel: false,
+      user: {},
+      userPosition: { lat: 22.28552, lng: 114.15769 }
+    });
     clearLocalstorage();
   }; // handleSignOut
 
