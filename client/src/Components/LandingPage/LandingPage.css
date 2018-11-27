@@ -49,7 +49,7 @@
   margin: 10px 0;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__LoginBayContainer {
-  margin-top: 100px;
+  margin-top: 20px;
   display: flex;
   flex-direction: row-reverse;
 }

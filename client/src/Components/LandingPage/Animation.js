@@ -1,42 +1,19 @@
 import React, { Component } from 'react';
 import './Animation.css';
-
+import { ReactComponent as Airplane } from './LandingPageSVG/airplanesvg.svg';
+import { ReactComponent as Cloud1 } from './LandingPageSVG/cloud1.svg';
+import { ReactComponent as Cloud2 } from './LandingPageSVG/cloud2.svg';
+import { ReactComponent as Cloud3 } from './LandingPageSVG/cloud3.svg';
+import { ReactComponent as Cloud4 } from './LandingPageSVG/cloud4.svg';
 export default class Animation extends Component {
   render() {
     return (
-      <div>
-        <div className="frame">
-          <div className="plane-container">
-            <a
-              href="http://customer.io/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <svg
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-                // xmlns:xlink="http://www.w3.org/1999/xlink"
-                x="0px"
-                y="0px"
-                width="1131.53px"
-                height="379.304px"
-                viewBox="0 0 1131.53 379.304"
-                enableBackground="new 0 0 1131.53 379.304"
-                // xml:space="preserve"
-                className="plane"
-              >
-                <polygon
-                  fill="#D8D8D8"
-                  points="72.008,0 274.113,140.173 274.113,301.804 390.796,221.102 601.682,367.302 1131.53,0.223  "
-                />
-                <polygon
-                  fill="#C4C4C3"
-                  points="1131.53,0.223 274.113,140.173 274.113,301.804 390.796,221.102   "
-                />
-              </svg>
-            </a>
-          </div>
-        </div>
+      <div className="airplane_container">
+        <Cloud1 className="cloud1"/>
+        <Cloud2 className="cloud2"/>
+        <Cloud3 className="cloud3"/>
+        <Cloud4 className="cloud4"/>
+        <Airplane className="airplane_container__svg" />
       </div>
     );
   }
