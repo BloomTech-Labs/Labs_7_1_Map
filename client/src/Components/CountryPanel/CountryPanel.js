@@ -64,7 +64,7 @@ const CountryPanel = () => {
                 />
               ) : null}
 
-              <FriendList user={value.AppState.user} />
+              <FriendList />
             </div>
           </div>
         ) : null;

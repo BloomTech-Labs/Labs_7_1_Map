@@ -111,9 +111,35 @@ export class AppContextProvider extends Component {
 
   // Get a list of friends that also have the country saved
   // Only called if user has signed up with Facebook
-  getCountryFriends = code => {
-    console.log(code)
-  }
+  getCountryFriends = async () => {
+    try {
+      const body = {
+        friends: this.state.friends,
+        country_code: this.state.currentCountry.code
+      };
+
+      console.log(this.state.currentCountry);
+      const options = {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      };
+
+      // get FB friends
+      const response = await axios.post(
+        `${BACKEND_URL}/get_country_friends`,
+        body,
+        options
+      );
+      console.log(response);
+      this.setState({
+        currentCountry: {
+          ...this.state.currentCountry,
+          friends: response.data
+        }
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   // Get the notes of a country saved on user
   getCurrentCountryNotes = code => {
@@ -471,8 +497,8 @@ export class AppContextProvider extends Component {
     const currentCountry = {
       ...this.state.currentCountry,
       code,
-      info,
       geoInfo,
+      info,
       scratched,
       notes,
       editNoteMode: false
@@ -482,7 +508,9 @@ export class AppContextProvider extends Component {
       currentCountry,
       showingCountryPanel: true
     });
-    this.updateCurrentCountryStatus();
+    await this.updateCurrentCountryStatus();
+
+    if (this.state.user.facebook) await this.getCountryFriends();
   };
 
   // Get the status_code of a country saved on user if it exists
