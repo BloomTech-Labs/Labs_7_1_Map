@@ -128,12 +128,16 @@ module.exports = {
         facebook: req.user.facebook
       }; // add the things you need to send
 
+      console.log(user)
+
       // Create a JWT and redirect with token in query string
       // Client will extract and save token to localStorage
       const jwt_token = make_token(req.user);
+      console.log(token)
       const redirectURL = DEV
         ? `http://localhost:3000?token=${jwt_token}`
         : `https://scratch-n-map.herokuapp.com/?token=${jwt_token}`;
+      console.log(redirectURL)
       return res.redirect(redirectURL);
     } catch (err) {
       if (DEV) console.log(err);
