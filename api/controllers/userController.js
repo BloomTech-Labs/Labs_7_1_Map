@@ -133,7 +133,7 @@ module.exports = {
       const jwt_token = make_token(req.user);
       const redirectURL = DEV
         ? `http://localhost:3000?token=${jwt_token}`
-        : `/?token=${jwt_token}`;
+        : `https://scratch-n-map.herokuapp.com/?token=${jwt_token}`;
       return res.redirect(redirectURL);
     } catch (err) {
       if (DEV) console.log(err);
