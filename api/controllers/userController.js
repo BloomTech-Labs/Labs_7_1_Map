@@ -118,7 +118,9 @@ module.exports = {
 
   // Successful FB login is eventually redirected here
   facebook_loggedIn: async (req, res) => {
+    console.log('Reached facebook_loggedIn')
     try {
+    console.log('Reached facebook_loggedIn - Try block')
       // we only reach here because we are authenticated
       const user = {
         id: req.user.id,

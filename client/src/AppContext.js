@@ -47,6 +47,7 @@ export class AppContextProvider extends Component {
     // TODO: Look into how secure the current implementation is and come up with a new one if warranted.
     //       May need to refactor auth system to use cookies.
     if (window.location.search) {
+      console.log('Token is present in URL query param')
       localStorage.setItem('token', window.location.search.slice(7));
       window.location = '/';
     }
