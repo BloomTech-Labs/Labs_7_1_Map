@@ -2,7 +2,7 @@ const argon2 = require('argon2');
 const User = require('../models/user');
 const { make_token } = require('../utils/auth');
 
-const DEV = process.env.DEV || true;
+const DEV = process.env.DEV;
 
 // Validate the information entered by a new user
 function validate_new_user({ username, password, email }) {
@@ -132,7 +132,7 @@ module.exports = {
 
       // Create a JWT and redirect with token in query string
       // Client will extract and save token to localStorage
-      const jwt_token = make_token(req.user);
+      const jwt_token = await make_token(req.user);
       console.log(token)
       const redirectURL = DEV
         ? `http://localhost:3000?token=${jwt_token}`
