@@ -33,7 +33,6 @@ const facebook_authentication = passport.authenticate('facebook', {
 
 const facebook_authentication_callback = passport.authenticate('facebook', {
   session: false,
-  successRedirect: '/',
   failureRedirect: '/api/login_failure'
 });
 
