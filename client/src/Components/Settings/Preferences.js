@@ -22,7 +22,10 @@ class Preferences extends Component {
 
   componentDidMount() {
     if (this.props.user && this.props.user.preferences)
-      this.setState({ theme: this.props.user.preferences.theme });
+      this.setState({
+        theme: this.props.user.preferences.theme,
+        autoscratch: this.props.user.preferences.autoscratch
+      });
   }
 
   render() {
@@ -74,6 +77,6 @@ class Preferences extends Component {
 Preferences.propTypes = {
   user: PropTypes.object,
   handleUpdatePreferences: PropTypes.any
-}
+};
 
 export default Preferences;
