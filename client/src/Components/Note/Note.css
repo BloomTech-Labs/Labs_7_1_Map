@@ -16,31 +16,34 @@
 }
 .Note .NoteBrotha {
   width: 100%;
-  border: 1px solid red;
 }
 .Note .NoteBrotha:hover {
   display: flex;
   justify-content: center;
-  align-items: center;
   cursor: pointer;
 }
 .Note .NoteBrotha:hover .Notes__ViewMode {
-  opacity: 0.3;
+  opacity: 0.80;
 }
 .Note .NoteBrotha:hover .Notes__Hover {
-  position: absolute;
   display: block;
+  position: absolute;
+  z-index: 2;
 }
 .Note .NoteBrotha .Notes__Hover {
-  color: Grey;
+  color: white;
   display: none;
+  margin-top: 5px;
 }
 .Note .NoteBrotha .Notes__ViewMode {
-  background-color: tan;
+  background-color: lightgray;
   width: 100%;
+  max-height: 120px;
+  overflow: auto;
 }
 .Note .NoteBrotha .Notes__ViewMode .ViewMode__YourNote {
-  color: darkgreen;
+  color: grey;
+  margin-top: 5px;
 }
 .Note .NoteBrotha .Notes__ViewMode .ViewMode__Notes {
   white-space: pre-wrap;
@@ -53,6 +56,7 @@
   /* Opera 7 */
   word-wrap: break-word;
   /* IE */
+  margin-bottom: 5px;
 }
 .Note .NoteBrotha .Notes__ViewMode .ViewMode__add {
   margin-right: 0.2rem;
@@ -70,7 +74,7 @@
 .Note .Notes__EditMode textarea {
   border: 2px solid green;
   width: 90%;
-  height: 100px;
+  height: 107px;
   padding: 5px;
   resize: none;
   font-size: 0.9rem;
