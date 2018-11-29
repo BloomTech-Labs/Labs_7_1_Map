@@ -51,7 +51,7 @@ const Note = props => {
       <div className="NoteBrotha">
         <div className="Notes__Hover" onClick={props.turnOnEditNote}>Click to edit</div>
         <div className="Notes__ViewMode" onClick={props.turnOnEditNote} style={NoteColor}>
-          <div className="ViewMode__YourNote">Your Note:</div>
+          <div className="ViewMode__YourNote">Note:</div>
           <div className="ViewMode__Notes">{props.country.notes}</div>
         </div>
       </div>
