@@ -27,22 +27,18 @@ const Note = props => {
   else {
     display = props.country.notes ? (
       // If a note already exists, display it
-      <div className="Notes__ViewMode">
-        <FontAwesomeIcon
-          className="ViewMode__edit"
-          onClick={props.turnOnEditNote}
-          icon="edit"
-        />
+      <div className="Notes__ViewMode" onClick={props.turnOnEditNote}>
+        <div className="ViewMode__YourNote">Your Note:</div>
         <div className="ViewMode__Notes">{props.country.notes}</div>
       </div>
     ) : (
       // If a note doesn't exist, show 'Add a note'
-      <div className="Notes__ViewMode" onClick={props.turnOnEditNote}>
+      <div className="Notes__NewViewMode" onClick={props.turnOnEditNote}>
         <FontAwesomeIcon
-          className="ViewMode__add"
+          className="NewViewMode__Add"
           icon="plus-circle"
         />
-        <span>Add a note</span>
+        <span> Add a note</span>
       </div>
     );
   }

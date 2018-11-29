@@ -7,24 +7,24 @@
   padding: 0.2rem;
   border: 1px solid tan;
 }
-.Note .Notes__ViewMode:hover {
+.Note .Notes__NewViewMode:hover {
   cursor: pointer;
   font-weight: bold;
 }
-.Note .Notes__ViewMode:hover .ViewMode__add {
+.Note .Notes__NewViewMode:hover .NewViewMode__Add {
   color: green;
 }
-.Note .Notes__ViewMode .ViewMode__add {
+.Note .Notes__NewViewMode .ViewMode__add {
   margin-right: 0.2rem;
 }
-.Note .Notes__ViewMode .ViewMode__edit {
-  position: relative;
-  right: 3px;
-  margin-right: 0.2rem;
-}
-.Note .Notes__ViewMode .ViewMode__edit:hover {
+.Note .Notes__ViewMode:hover {
   cursor: pointer;
-  color: blue;
+}
+.Note .Notes__ViewMode:hover .ViewMode__Notes {
+  font-weight: bold;
+}
+.Note .Notes__ViewMode .ViewMode__YourNote {
+  color: pink;
 }
 .Note .Notes__ViewMode .ViewMode__Notes {
   white-space: pre-wrap;

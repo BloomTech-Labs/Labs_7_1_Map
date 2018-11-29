@@ -6,12 +6,11 @@
   margin-bottom: 0.5rem;
   padding: 0.2rem;
   border: 1px solid tan;
-
-  .Notes__ViewMode {
+  .Notes__NewViewMode {
     &:hover {
       cursor: pointer;
       font-weight: bold;
-      .ViewMode__add {
+      .NewViewMode__Add {
         color: green;
       }
     }
@@ -19,15 +18,16 @@
       margin-right: 0.2rem;
       margin-right: 0.2rem;
     }
-
-    .ViewMode__edit {
-      position: relative;
-      right: 3px;
-      margin-right: 0.2rem;
+  }
+  .Notes__ViewMode {
       &:hover {
         cursor: pointer;
-        color: blue;
+        .ViewMode__Notes {
+          font-weight: bold;
+        }
       }
+    .ViewMode__YourNote {
+      color: pink;
     }
     .ViewMode__Notes {
       white-space: pre-wrap;      /* CSS3 */   
@@ -37,7 +37,6 @@
       word-wrap: break-word;      /* IE */
     }
   }
-
   .Notes__EditMode {
     .EditMode__save {
       position: absolute;
