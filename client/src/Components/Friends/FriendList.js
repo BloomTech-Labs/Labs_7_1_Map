@@ -11,16 +11,17 @@ const FriendList = props => {
     fontColor: `${props.fontColor}`,
     borderColor: `${props.borderColor}`
   };
-  // const sortedFriends = [props.userFriends].sort(function(a, b) {
-  //   if (a < b) {
-  //     return -1;
-  //   }
-  //   if (a > b) {
-  //     return 1;
-  //   }
-  //   return 0;
-  // });
-  // console.log([props.userFriends].sort());
+
+  // Check if props.userFriends exists first because it will be undefined
+  // if a country isn't being displayed or the country doesn't have friends
+  if (props.userFriends) {
+    console.log(props.userFriends);
+    const sortedFriends = props.userFriends.sort(
+      (a, b) => (a.status > b.status ? -1 : 1)
+    );
+    console.log(sortedFriends);
+  }
+
   return (
     <div className="FriendList" style={defaultColors}>
       <span className="FriendList__Title">Friends:</span>
