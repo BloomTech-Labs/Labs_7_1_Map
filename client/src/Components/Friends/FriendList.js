@@ -11,8 +11,14 @@ class FriendList extends React.Component {
   };
 
   render() {
+    let defaultColors = {
+      backgroundColor: `${this.props.background}`,
+      color: `${this.props.color}`,
+      fontColor: `${this.props.fontColor}`,
+      borderColor: `${this.props.borderColor}`
+    }
     return (
-      <div className="FriendList">
+      <div className="FriendList" style={defaultColors}>
         <span className="FriendList__Title">Friends:</span>
         <div className="FriendList__List">
           {this.props.userFriends

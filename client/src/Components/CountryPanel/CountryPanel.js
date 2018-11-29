@@ -62,9 +62,19 @@ const CountryPanel = () => {
                   handleUpdateNotes={value.handleUpdateNotes}
                   turnOnEditNote={value.turnOnEditNote}
                   currentCountryStatus={value.AppState.currentCountryStatus}
+                  background={themeColors.background[currentTheme]}
+                  color={themeColors.color[currentTheme]}
+                  fontColor={themeColors.fontColor[currentTheme]}
+                  borderColor={themeColors.borderColor[currentTheme]}
                 />
               ) : null}
-              <FriendList userFriends={value.AppState.currentCountry.friends} />
+              <FriendList 
+              userFriends={value.AppState.currentCountry.friends} 
+              background={themeColors.background[currentTheme]}
+              color={themeColors.color[currentTheme]}
+              fontColor={themeColors.fontColor[currentTheme]}
+              borderColor={themeColors.borderColor[currentTheme]}
+              />
             </div>
           </div>
         ) : null;

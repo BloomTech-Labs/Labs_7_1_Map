@@ -5,7 +5,7 @@
   flex-direction: column;
 }
 .FriendList .FriendList__Title {
-  border: 1px solid lightgray;
+  border: 1px solid;
   padding: 1px;
   text-align: center;
 }

@@ -5,29 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Note.css';
 
 const Note = props => {
-  let noteColor;
-  switch (props.currentCountryStatus) {
-    case 0:
-      noteColor = 'lightgrey';
-      break;
-    case 1:
-      noteColor = 'lavender';
-      break;
-    case 2:
-      noteColor = 'lightgreen';
-      break;
-    case 3:
-      noteColor = 'pink';
-      break;
-    case 4:
-      noteColor = 'lightblue';
-      break;
-    default:
-      noteColor = 'white';
-  };
-  const NoteColor = {
-    backgroundColor: noteColor
-  };
+  let defaultColors = {
+    backgroundColor: `${props.background}`,
+    color: `${props.color}`,
+    fontColor: `${props.fontColor}`,
+    borderColor: `${props.borderColor}`
+  }
   let display;
   // If a note is being edited, display input field
   if (props.country.editNoteMode) {
@@ -42,7 +25,6 @@ const Note = props => {
           name="notes"
           onChange={props.handleChangeNote}
           value={props.country.notes}
-          style={NoteColor}
         />
       </div>
     );
@@ -53,7 +35,7 @@ const Note = props => {
       // If a note already exists, display it
       <div className="Notes__NotesContainer">
         <div className="NotesContainer__Hover" onClick={props.turnOnEditNote}>Click to edit</div>
-        <div className="NotesContainer__ViewMode" onClick={props.turnOnEditNote} style={NoteColor}>
+        <div className="NotesContainer__ViewMode" onClick={props.turnOnEditNote}>
           <div className="ViewMode__YourNote">Note:</div>
           <div className="ViewMode__Notes">{props.country.notes}</div>
         </div>
@@ -67,7 +49,7 @@ const Note = props => {
     );
   }
 
-  return <div className="Note">{display}</div>;
+  return <div className="Note" style={defaultColors}>{display}</div>;
 };
 
 Note.propTypes = {
