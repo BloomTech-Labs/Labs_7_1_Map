@@ -61,6 +61,7 @@ const CountryPanel = () => {
                   handleChangeNote={value.handleChangeNote}
                   handleUpdateNotes={value.handleUpdateNotes}
                   turnOnEditNote={value.turnOnEditNote}
+                  currentCountryStatus={value.AppState.currentCountryStatus}
                 />
               ) : null}
 
