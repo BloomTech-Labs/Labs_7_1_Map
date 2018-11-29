@@ -23,7 +23,7 @@ const Nav = props => {
             <h1 className="Nav__title">MapScratcher</h1>
 
             <div className="Nav__Center">
-              {AppState.user.facebook ? (
+              {AppState.user.facebook && AppState.user.facebook.id ? (
                 <select
                   name="My Travels"
                   id=""
