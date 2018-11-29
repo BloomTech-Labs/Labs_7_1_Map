@@ -14,20 +14,22 @@ const FriendList = props => {
 
   // Check if props.userFriends exists first because it will be undefined
   // if a country isn't being displayed or the country doesn't have friends
+  // or if a user didn't signup with FB
+  let sortedFriends = [];
   if (props.userFriends) {
-    console.log(props.userFriends);
-    const sortedFriends = props.userFriends.sort(
+    // Sort the array of friends on a given country so they are grouped by status code
+    sortedFriends = props.userFriends.sort(
+      // compare function that sorts array in desecending order by status code
       (a, b) => (a.status > b.status ? -1 : 1)
     );
-    console.log(sortedFriends);
   }
 
   return (
     <div className="FriendList" style={defaultColors}>
       <span className="FriendList__Title">Friends:</span>
       <div className="FriendList__List">
-        {props.userFriends
-          ? props.userFriends.map((friend, i) => (
+        {props.userFriends && sortedFriends
+          ? sortedFriends.map((friend, i) => (
               <div key={i}>
                 {friend.name} - {labels[friend.status]}
               </div>

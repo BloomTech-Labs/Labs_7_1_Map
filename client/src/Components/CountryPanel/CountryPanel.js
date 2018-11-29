@@ -68,12 +68,12 @@ const CountryPanel = () => {
                   borderColor={themeColors.borderColor[currentTheme]}
                 />
               ) : null}
-              <FriendList 
-              userFriends={value.AppState.currentCountry.friends} 
-              background={themeColors.background[currentTheme]}
-              color={themeColors.color[currentTheme]}
-              fontColor={themeColors.fontColor[currentTheme]}
-              borderColor={themeColors.borderColor[currentTheme]}
+              <FriendList
+                userFriends={value.AppState.currentCountry.friends}
+                background={themeColors.background[currentTheme]}
+                color={themeColors.color[currentTheme]}
+                fontColor={themeColors.fontColor[currentTheme]}
+                borderColor={themeColors.borderColor[currentTheme]}
               />
             </div>
           </div>
