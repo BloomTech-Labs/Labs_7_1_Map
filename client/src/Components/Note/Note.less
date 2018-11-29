@@ -14,49 +14,67 @@
         color: green;
       }
     }
-    .ViewMode__add {
-      margin-right: 0.2rem;
-      margin-right: 0.2rem;
+  }
+  .NoteBrotha {
+    width: 100%;
+    border: 1px solid red;
+    &:hover {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      .Notes__ViewMode {
+        opacity: 0.3;
+      }
+      .Notes__Hover {
+        position: absolute;
+        display: block;
+      }
+    }
+    .Notes__Hover {
+      color: Grey;
+      display: none;
+    }
+    .Notes__ViewMode {
+      background-color: tan;
+      width: 100%;
+      .ViewMode__YourNote {
+        color: darkgreen;
+      }
+      .ViewMode__Notes {
+        white-space: pre-wrap; /* CSS3 */
+        white-space: -moz-pre-wrap; /* Firefox */
+        white-space: -pre-wrap; /* Opera <7 */
+        white-space: -o-pre-wrap; /* Opera 7 */
+        word-wrap: break-word; /* IE */
+      }
+      .ViewMode__add {
+        margin-right: 0.2rem;
+        margin-right: 0.2rem;
+      }
     }
   }
-  .Notes__ViewMode {
-      &:hover {
-        cursor: pointer;
-        .ViewMode__Notes {
-          font-weight: bold;
+    .Notes__EditMode {
+      .EditMode__save {
+        position: absolute;
+        right: 14px;
+        margin-top: 5px;
+        margin-right: 0.2rem;
+        &:hover {
+          cursor: pointer;
+          color: lightseagreen;
         }
       }
-    .ViewMode__YourNote {
-      color: pink;
-    }
-    .ViewMode__Notes {
-      white-space: pre-wrap;      /* CSS3 */   
-      white-space: -moz-pre-wrap; /* Firefox */    
-      white-space: -pre-wrap;     /* Opera <7 */   
-      white-space: -o-pre-wrap;   /* Opera 7 */    
-      word-wrap: break-word;      /* IE */
-    }
-  }
-  .Notes__EditMode {
-    .EditMode__save {
-      position: absolute;
-      right: 14px;
-      margin-top: 5px;
-      margin-right: 0.2rem;
-      &:hover {
-        cursor: pointer;
-        color: lightseagreen;
+
+      textarea {
+        border: 2px solid green;
+        width: 90%;
+        height: 100px;
+        padding: 5px;
+        resize: none;
+        font-size: 0.9rem;
+        border: none;
+        outline: none;
       }
     }
-
-    textarea {
-      width: 90%;
-      height: 100px;
-      padding: 5px;
-      resize: none;
-      font-size: 0.9rem;
-      border: none;
-      outline: none;
-    }
-  }
 }

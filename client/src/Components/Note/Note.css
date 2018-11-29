@@ -14,19 +14,35 @@
 .Note .Notes__NewViewMode:hover .NewViewMode__Add {
   color: green;
 }
-.Note .Notes__NewViewMode .ViewMode__add {
-  margin-right: 0.2rem;
+.Note .NoteBrotha {
+  width: 100%;
+  border: 1px solid red;
 }
-.Note .Notes__ViewMode:hover {
+.Note .NoteBrotha:hover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
 }
-.Note .Notes__ViewMode:hover .ViewMode__Notes {
-  font-weight: bold;
+.Note .NoteBrotha:hover .Notes__ViewMode {
+  opacity: 0.3;
 }
-.Note .Notes__ViewMode .ViewMode__YourNote {
-  color: pink;
+.Note .NoteBrotha:hover .Notes__Hover {
+  position: absolute;
+  display: block;
 }
-.Note .Notes__ViewMode .ViewMode__Notes {
+.Note .NoteBrotha .Notes__Hover {
+  color: Grey;
+  display: none;
+}
+.Note .NoteBrotha .Notes__ViewMode {
+  background-color: tan;
+  width: 100%;
+}
+.Note .NoteBrotha .Notes__ViewMode .ViewMode__YourNote {
+  color: darkgreen;
+}
+.Note .NoteBrotha .Notes__ViewMode .ViewMode__Notes {
   white-space: pre-wrap;
   /* CSS3 */
   white-space: -moz-pre-wrap;
@@ -37,6 +53,9 @@
   /* Opera 7 */
   word-wrap: break-word;
   /* IE */
+}
+.Note .NoteBrotha .Notes__ViewMode .ViewMode__add {
+  margin-right: 0.2rem;
 }
 .Note .Notes__EditMode .EditMode__save {
   position: absolute;
@@ -49,6 +68,7 @@
   color: lightseagreen;
 }
 .Note .Notes__EditMode textarea {
+  border: 2px solid green;
   width: 90%;
   height: 100px;
   padding: 5px;
