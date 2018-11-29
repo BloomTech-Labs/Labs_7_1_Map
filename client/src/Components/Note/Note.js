@@ -37,10 +37,9 @@ const Note = props => {
       </div>
     ) : (
       // If a note doesn't exist, show 'Add a note'
-      <div className="Notes__ViewMode">
+      <div className="Notes__ViewMode" onClick={props.turnOnEditNote}>
         <FontAwesomeIcon
           className="ViewMode__add"
-          onClick={props.turnOnEditNote}
           icon="plus-circle"
         />
         <span>Add a note</span>

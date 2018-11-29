@@ -1,17 +1,23 @@
 .Note {
   border: 1px solid #000000;
   max-width: 320px;
-  width: 90%;
+  width: 97%;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   padding: 0.2rem;
+  border: 1px solid tan;
+}
+.Note .Notes__ViewMode {
+  border: 1px solid red;
+}
+.Note .Notes__ViewMode:hover {
+  cursor: pointer;
+}
+.Note .Notes__ViewMode:hover .ViewMode__add {
+  color: green;
 }
 .Note .Notes__ViewMode .ViewMode__add {
   margin-right: 0.2rem;
-}
-.Note .Notes__ViewMode .ViewMode__add:hover {
-  cursor: pointer;
-  color: green;
 }
 .Note .Notes__ViewMode .ViewMode__edit {
   position: relative;
