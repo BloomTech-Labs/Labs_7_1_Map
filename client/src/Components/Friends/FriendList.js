@@ -9,7 +9,8 @@ const FriendList = props => {
     <AppContextConsumer>
       {value => (
         <div className="FriendList">
-          <div className="FriendList_List">
+        <span className="FriendList__Title">Friends:</span>
+          <div className="FriendList__List">
             {value.AppState.currentCountry.friends
               ? value.AppState.currentCountry.friends.map((friend, i) => (
                   <div key={i}>
