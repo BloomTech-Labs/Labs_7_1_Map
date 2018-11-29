@@ -146,8 +146,13 @@ export default class CountryBorder extends Component {
       width: canvasWidth,
       height: canvasHeight,
       image: travellingImg,
-      finishPercent: this.props.preferences.autoscratch ? 1 : 95
+      finishPercent: 90
     };
+
+    if (this.props.preferences)
+      scratchcardSettings.finishPercent = this.props.preferences.autoscratch
+        ? 1
+        : 90;
 
     return (
       <div className="CountryBorder">
