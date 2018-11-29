@@ -13,13 +13,6 @@ import travellingImg from '../../travelling.jpg';
 const canvasWidth = 300;
 const canvasHeight = 150;
 
-const scratchcardSettings = {
-  width: canvasWidth,
-  height: canvasHeight,
-  image: travellingImg,
-  finishPercent: 95
-};
-
 const draw = (context, canvasWidth, canvasHeight, bounds, geometry, color) => {
   context.fillStyle = color || '#333';
 
@@ -149,6 +142,13 @@ export default class CountryBorder extends Component {
   };
 
   render() {
+    const scratchcardSettings = {
+      width: canvasWidth,
+      height: canvasHeight,
+      image: travellingImg,
+      finishPercent: this.props.preferences.autoscratch ? 1 : 95
+    };
+
     return (
       <div className="CountryBorder">
         {this.props.scratched ? (
@@ -200,5 +200,6 @@ CountryBorder.propTypes = {
   handleSliderMove: PropTypes.func,
   handleScratched: PropTypes.func,
   currentCountryStatus: PropTypes.any,
-  scratched: PropTypes.bool
+  scratched: PropTypes.bool,
+  preferences: PropTypes.object
 };
