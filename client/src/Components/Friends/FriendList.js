@@ -6,10 +6,10 @@ import './FriendList.css';
 
 const FriendList = props => {
   let defaultColors = {
-    backgroundColor: `${props.background}`,
-    color: `${props.color}`,
-    fontColor: `${props.fontColor}`,
-    borderColor: `${props.borderColor}`
+    backgroundColor: props.background,
+    color: props.color,
+    fontColor: props.fontColor,
+    borderColor: props.borderColor
   };
 
   // Check if props.userFriends exists first because it will be undefined
@@ -41,7 +41,11 @@ const FriendList = props => {
 };
 
 FriendList.propTypes = {
-  userFriends: PropTypes.array
+  userFriends: PropTypes.array,
+  background: PropTypes.string,
+  color: PropTypes.string,
+  fontColor: PropTypes.string,
+  borderColor: PropTypes.string
 };
 
 export default FriendList;
