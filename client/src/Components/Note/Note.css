@@ -12,6 +12,7 @@
 }
 .Note .Notes__ViewMode:hover {
   cursor: pointer;
+  font-weight: bold;
 }
 .Note .Notes__ViewMode:hover .ViewMode__add {
   color: green;
