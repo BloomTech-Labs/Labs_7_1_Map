@@ -21,6 +21,9 @@ const Note = props => {
       break;
     case 4:
       noteColor = 'lightblue';
+      break;
+    default:
+      noteColor = 'white';
   };
   const NoteColor = {
     backgroundColor: noteColor
@@ -48,9 +51,9 @@ const Note = props => {
   else {
     display = props.country.notes ? (
       // If a note already exists, display it
-      <div className="NoteBrotha">
-        <div className="Notes__Hover" onClick={props.turnOnEditNote}>Click to edit</div>
-        <div className="Notes__ViewMode" onClick={props.turnOnEditNote} style={NoteColor}>
+      <div className="Notes__NotesContainer">
+        <div className="NotesContainer__Hover" onClick={props.turnOnEditNote}>Click to edit</div>
+        <div className="NotesContainer__ViewMode" onClick={props.turnOnEditNote} style={NoteColor}>
           <div className="ViewMode__YourNote">Note:</div>
           <div className="ViewMode__Notes">{props.country.notes}</div>
         </div>
@@ -71,7 +74,8 @@ Note.propTypes = {
   country: PropTypes.object,
   handleChangeNote: PropTypes.func,
   handleUpdateNote: PropTypes.func,
-  turnOnEditNote: PropTypes.func
+  turnOnEditNote: PropTypes.func,
+  currentCountryStatus: PropTypes.number
 };
 
 export default Note;

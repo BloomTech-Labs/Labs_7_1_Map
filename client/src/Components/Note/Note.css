@@ -12,37 +12,37 @@
 .Note .Notes__NewViewMode:hover .NewViewMode__Add {
   color: green;
 }
-.Note .NoteBrotha {
+.Note .Notes__NotesContainer {
   width: 100%;
 }
-.Note .NoteBrotha:hover {
+.Note .Notes__NotesContainer:hover {
   display: flex;
   justify-content: center;
   cursor: pointer;
 }
-.Note .NoteBrotha:hover .Notes__Hover {
+.Note .Notes__NotesContainer:hover .NotesContainer__Hover {
   display: block;
   position: absolute;
   z-index: 2;
 }
-.Note .NoteBrotha .Notes__Hover {
+.Note .Notes__NotesContainer .NotesContainer__Hover {
   color: white;
   display: none;
   margin-top: 9px;
 }
-.Note .NoteBrotha .Notes__ViewMode {
+.Note .Notes__NotesContainer .NotesContainer__ViewMode {
   width: 100%;
   max-height: 120px;
   overflow: auto;
 }
-.Note .NoteBrotha .Notes__ViewMode .ViewMode__YourNote {
+.Note .Notes__NotesContainer .NotesContainer__ViewMode .ViewMode__YourNote {
   color: #888888;
   margin-top: 10px;
   margin-bottom: 6px;
   padding-left: 6px;
   font-family: 'Pacifico', sans-serif;
 }
-.Note .NoteBrotha .Notes__ViewMode .ViewMode__Notes {
+.Note .Notes__NotesContainer .NotesContainer__ViewMode .ViewMode__Notes {
   white-space: pre-wrap;
   /* CSS3 */
   white-space: -moz-pre-wrap;
@@ -59,7 +59,7 @@
   padding-right: 10px;
   padding-bottom: 10px;
 }
-.Note .NoteBrotha .Notes__ViewMode .ViewMode__add {
+.Note .Notes__NotesContainer .NotesContainer__ViewMode .ViewMode__add {
   margin-right: 0.2rem;
 }
 .Note .Notes__EditMode .EditMode__save {
