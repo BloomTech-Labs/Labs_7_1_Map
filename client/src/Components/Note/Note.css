@@ -7,9 +7,6 @@
   padding: 0.2rem;
   border: 1px solid tan;
 }
-.Note .Notes__ViewMode {
-  border: 1px solid red;
-}
 .Note .Notes__ViewMode:hover {
   cursor: pointer;
   font-weight: bold;
@@ -29,19 +26,34 @@
   cursor: pointer;
   color: blue;
 }
+.Note .Notes__ViewMode .ViewMode__Notes {
+  white-space: pre-wrap;
+  /* CSS3 */
+  white-space: -moz-pre-wrap;
+  /* Firefox */
+  white-space: -pre-wrap;
+  /* Opera <7 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 */
+  word-wrap: break-word;
+  /* IE */
+}
 .Note .Notes__EditMode .EditMode__save {
   position: absolute;
-  right: 5px;
+  right: 14px;
+  margin-top: 5px;
   margin-right: 0.2rem;
 }
 .Note .Notes__EditMode .EditMode__save:hover {
   cursor: pointer;
-  color: blue;
+  color: lightseagreen;
 }
 .Note .Notes__EditMode textarea {
-  width: 100%;
+  width: 90%;
   height: 100px;
   padding: 5px;
   resize: none;
   font-size: 0.9rem;
+  border: none;
+  outline: none;
 }
