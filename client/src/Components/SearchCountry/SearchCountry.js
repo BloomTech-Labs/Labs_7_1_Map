@@ -8,20 +8,7 @@ import './SearchCountry.css';
 
 const countries = geojson.features;
 
-const onChange = country => {
-  alert(`you selected ${country.properties.name} - ${country.id}`);
-};
-
 class SearchCountry extends Component {
-  state = {
-    formValue: ''
-  };
-
-  handleSearchChange = e => {
-    e.preventDefault();
-    this.setState({ formValue: e.target.value });
-  };
-
   render() {
     return (
       <div className="SearchCountry">
@@ -66,25 +53,24 @@ class SearchCountry extends Component {
                     )
                     .map((country, index) => (
                       <div
-                        key={index}
-                        className="dropdown-item"
                         {...getItemProps({
                           key: country.properties.name,
+                          className: 'dropdown-item',
                           index,
-                          item: country
+                          item: country,
+                          style: {
+                            backgroundColor:
+                              highlightedIndex === index
+                                ? themeColors.fontColor[this.props.theme]
+                                : themeColors.background[this.props.theme],
+                            color:
+                              highlightedIndex === index
+                                ? themeColors.background[this.props.theme]
+                                : themeColors.fontColor[this.props.theme],
+                            fontWeight:
+                              selectedItem === country ? 'bold' : 'normal'
+                          }
                         })}
-                        style={{
-                          backgroundColor:
-                            highlightedIndex === index
-                              ? themeColors.fontColor[this.props.theme]
-                              : themeColors.background[this.props.theme],
-                          color:
-                            highlightedIndex === index
-                              ? themeColors.background[this.props.theme]
-                              : themeColors.fontColor[this.props.theme],
-                          fontWeight:
-                            selectedItem === country ? 'bold' : 'normal'
-                        }}
                       >
                         {country.properties.name}
                       </div>
@@ -93,37 +79,20 @@ class SearchCountry extends Component {
               ) : null}
               <input
                 {...getInputProps({
-                  placeholder: 'Search countries'
+                  className: 'SearchCountry__input',
+                  placeholder: 'Search countries',
+                  style: {
+                    backgroundColor: themeColors.background[this.props.theme],
+                    color: themeColors.fontColor[this.props.theme],
+                    border: `1px solid ${
+                      themeColors.borderColor[this.props.theme]
+                    }`
+                  }
                 })}
-                style={{
-                  backgroundColor: themeColors.background[this.props.theme],
-                  color: themeColors.fontColor[this.props.theme],
-                  border: `1px solid ${
-                    themeColors.borderColor[this.props.theme]
-                  }`
-                }}
               />
             </div>
           )}
         </Downshift>
-        {/* <form */}
-        {/*   className="SearchCountry" */}
-        {/*   onSubmit={this.props.handleSearchSubmit} */}
-        {/* > */}
-        {/*   <input */}
-        {/*     className="SearchCountry__input" */}
-        {/*     type="text" */}
-        {/*     name="search" */}
-        {/*     value={this.formValue} */}
-        {/*     placeholder="Search Countries..." */}
-        {/*     onChange={e => this.handleSearchChange(e)} */}
-        {/*     style={{ */}
-        {/*       backgroundColor: themeColors.background[this.props.theme], */}
-        {/*       color: themeColors.fontColor[this.props.theme], */}
-        {/*       border: `1px solid ${themeColors.borderColor[this.props.theme]}` */}
-        {/*     }} */}
-        {/*   /> */}
-        {/* </form> */}
       </div>
     );
   }
