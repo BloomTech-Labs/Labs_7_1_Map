@@ -6,7 +6,6 @@ import world from 'country-data';
 import {
   clearLocalstorage,
   getCountryInfoFromCode,
-  getCountryCodeFromName,
   getCountryShapeFromCode
 } from './utils.js';
 
