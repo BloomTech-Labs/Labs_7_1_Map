@@ -26,7 +26,7 @@ class SearchCountry extends Component {
     return (
       <div className="SearchCountry">
         <Downshift
-          onChange={onChange}
+          onChange={this.props.handleSearchSubmit}
           itemToString={country => (country ? country.properties.name : '')}
         >
           {({
@@ -47,20 +47,15 @@ class SearchCountry extends Component {
               {/*   Search for a country */}
               {/* </label>{' '} */}
               {/* <br /> */}
-              <input
-                {...getInputProps({
-                  placeholder: 'Search countries'
-                })}
-                style={{
-                  backgroundColor: themeColors.background[this.props.theme],
-                  color: themeColors.fontColor[this.props.theme],
-                  border: `1px solid ${
-                    themeColors.borderColor[this.props.theme]
-                  }`
-                }}
-              />
               {isOpen ? (
-                <div className="downshift-dropdown">
+                <div
+                  className="downshift-dropdown"
+                  style={{
+                    border: `1px solid ${
+                      themeColors.borderColor[this.props.theme]
+                    }`
+                  }}
+                >
                   {countries
                     .filter(
                       country =>
@@ -80,7 +75,13 @@ class SearchCountry extends Component {
                         })}
                         style={{
                           backgroundColor:
-                            highlightedIndex === index ? 'lightgray' : 'white',
+                            highlightedIndex === index
+                              ? themeColors.fontColor[this.props.theme]
+                              : themeColors.background[this.props.theme],
+                          color:
+                            highlightedIndex === index
+                              ? themeColors.background[this.props.theme]
+                              : themeColors.fontColor[this.props.theme],
                           fontWeight:
                             selectedItem === country ? 'bold' : 'normal'
                         }}
@@ -90,6 +91,18 @@ class SearchCountry extends Component {
                     ))}
                 </div>
               ) : null}
+              <input
+                {...getInputProps({
+                  placeholder: 'Search countries'
+                })}
+                style={{
+                  backgroundColor: themeColors.background[this.props.theme],
+                  color: themeColors.fontColor[this.props.theme],
+                  border: `1px solid ${
+                    themeColors.borderColor[this.props.theme]
+                  }`
+                }}
+              />
             </div>
           )}
         </Downshift>

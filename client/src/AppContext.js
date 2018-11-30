@@ -344,9 +344,9 @@ export class AppContextProvider extends Component {
     }
   }; // handleSliderMove
 
-  handleSearchSubmit = e => {
-    e.preventDefault();
-    const countryCode = getCountryCodeFromName(e.target.search.value);
+  handleSearchSubmit = country => {
+    // e.preventDefault();
+    const countryCode = country.id;
     const countryInfo = world.countries[countryCode];
     this.updateCurrentCountry(countryCode, countryInfo);
   };

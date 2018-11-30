@@ -7,6 +7,9 @@
   width: auto;
   font-family: Roboto, sans-serif;
 }
+.SearchCountry .dropdown-item {
+  padding: 5px;
+}
 .SearchCountry .SearchCountry__input {
   padding: 10px 20px;
   height: 30px;
