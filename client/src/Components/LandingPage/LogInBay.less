@@ -8,25 +8,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    .Container__DataInfo {
+    .Container__FacebookInfoLink {
       font-size: .8rem;
       margin-top: 18px;
-      cursor: pointer;
+      text-align: center;
       &:hover {
-        .DataInfo__PopUp {
-          visibility: visible;
-        }
-      }
-      .DataInfo__PopUp {
-        position: fixed;
-        width: 20%;
-        margin-top: 45px;
-        left: 8%;
-        bottom: 20vh;
-        visibility: visible;
-        border: white 1px solid;
-        border-radius: 1%;
-        padding: 5px;
+        cursor: pointer;
+        transform: scale(1.03);
       }
     }
     .Container__LogInForm {
@@ -129,5 +117,25 @@
   }
   input[type="submit"]:hover {
     background-color: #20c16b;
+  }
+}
+.FacebookModal__FBContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+  .FBContainer__Header {
+    display: flex;
+    justify-content: space-between;
+    h3 {
+      text-align: center;
+      margin-left: 16px;
+      color: rgb(60, 133, 158);
+      font-weight: bold;
+    }
+    .Header__Close {
+      color: lightcoral;
+      cursor: pointer;
+    }
   }
 }
