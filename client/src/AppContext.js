@@ -344,8 +344,9 @@ export class AppContextProvider extends Component {
     }
   }; // handleSliderMove
 
+  // Called in SearchCountry.js
+  // argument received should be a geojson feature
   handleSearchSubmit = country => {
-    // e.preventDefault();
     const countryCode = country.id;
     const countryInfo = world.countries[countryCode];
     this.updateCurrentCountry(countryCode, countryInfo);

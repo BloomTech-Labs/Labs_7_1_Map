@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import Downshift from 'downshift';
+import Downshift from 'downshift'; // used for the search autocompletion
 import PropTypes from 'prop-types';
 
 import geojson from '../Map/countries.geo.json';
 import themeColors from '../themeColors.js';
 import './SearchCountry.css';
 
+// Source for search autocompletion
 const countries = geojson.features;
 
 class SearchCountry extends Component {
@@ -22,9 +23,9 @@ class SearchCountry extends Component {
             isOpen,
             inputValue,
             highlightedIndex,
-            selectedItem,
-            highlightedItem,
-            getLabelProps
+            selectedItem
+            // highlightedItem,
+            // getLabelProps
           }) => (
             <div>
               {/* <label */}
@@ -52,7 +53,7 @@ class SearchCountry extends Component {
                           .includes(inputValue.toLowerCase())
                     )
                     .map((country, index) => (
-                      <div
+                      <div // eslint-disable-line
                         {...getItemProps({
                           key: country.properties.name,
                           className: 'dropdown-item',
@@ -99,7 +100,6 @@ class SearchCountry extends Component {
 }
 
 SearchCountry.propTypes = {
-  updateCurrentCountry: PropTypes.func,
   handleSearchSubmit: PropTypes.func,
   theme: PropTypes.string
 };
