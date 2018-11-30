@@ -269,6 +269,7 @@ class LogInBay extends React.Component {
               contentLabel="Example Text"
               onRequestClose={this.handleCloseFacebookTutorial}
               shouldCloseOnOverlayClick={true}
+              ariaHideApp={false}
             >
               <div className="FacebookModal__FBContainer">
                 <div className="FBContainer__Header">
