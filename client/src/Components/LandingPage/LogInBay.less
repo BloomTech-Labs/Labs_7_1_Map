@@ -1,6 +1,4 @@
 .LogInBay {
-  // background-color: rgba(100, 100, 100, 0.5);
-
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -10,6 +8,27 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    .Container__DataInfo {
+      font-size: .8rem;
+      margin-top: 18px;
+      cursor: pointer;
+      &:hover {
+        .DataInfo__PopUp {
+          visibility: visible;
+        }
+      }
+      .DataInfo__PopUp {
+        position: fixed;
+        width: 20%;
+        margin-top: 45px;
+        left: 8%;
+        bottom: 20vh;
+        visibility: visible;
+        border: white 1px solid;
+        border-radius: 1%;
+        padding: 5px;
+      }
+    }
     .Container__LogInForm {
       display: flex;
       flex-direction: column;

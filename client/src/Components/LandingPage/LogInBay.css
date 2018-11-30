@@ -10,6 +10,25 @@
   flex-direction: column;
   align-items: center;
 }
+.LogInBay .LogInBay__Container .Container__DataInfo {
+  font-size: .8rem;
+  margin-top: 18px;
+  cursor: pointer;
+}
+.LogInBay .LogInBay__Container .Container__DataInfo:hover .DataInfo__PopUp {
+  visibility: visible;
+}
+.LogInBay .LogInBay__Container .Container__DataInfo .DataInfo__PopUp {
+  position: fixed;
+  width: 20%;
+  margin-top: 45px;
+  left: 8%;
+  bottom: 20vh;
+  visibility: visible;
+  border: white 1px solid;
+  border-radius: 1%;
+  padding: 5px;
+}
 .LogInBay .LogInBay__Container .Container__LogInForm {
   display: flex;
   flex-direction: column;

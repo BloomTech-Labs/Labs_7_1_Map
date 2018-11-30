@@ -166,7 +166,12 @@ class LogInBay extends React.Component {
                   value="Login"
                 />
               </form>
-
+              <div className="Container__DataInfo">
+                <span>Learn about using MapScratcher with your FaceBook Friends</span>
+                <div className="DataInfo__PopUp">
+                MapScratcher is an app that lets you select countries, assign them a levels of interaction (i.e., visited, live-in etc..), and even write a note for each! Signing up and logging in through Facebook allows you connect with your Facebook friends on MapScratcher. You'll see where they've been and how they've interacted with countries around the globe!
+                </div>
+              </div>
               <a
                 href={`${BACKEND_URL}/facebook_login`}
                 className="Container__Button"
