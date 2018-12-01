@@ -30,8 +30,8 @@ const FacebookModalStyle = {
   content: {
     display: 'flex',
     flexFlow: 'column noWrap',
-    height: '220px',
-    width: '20%',
+    height: 'auto',
+    width: '25%',
     top: '50%',
     left: '40%',
     right: 'auto',
@@ -191,7 +191,10 @@ class LogInBay extends React.Component {
                   value="Login"
                 />
               </form>
-              <div onClick={this.handleOpenFacebookTutorial} className="Container__FacebookInfoLink">
+              <div
+                onClick={this.handleOpenFacebookTutorial}
+                className="Container__FacebookInfoLink"
+              >
                 Learn about using MapScratcher with your FaceBook Friends
               </div>
               <a
@@ -281,7 +284,17 @@ class LogInBay extends React.Component {
                   />
                 </div>
                 <div className="FBContainer__Words">
-                MapScratcher lets you select countries, assign them a level of interaction (visited, lived-in etc.), and leave a note for each! Signing up and logging in through Facebook allows you connect with your Facebook friends also using MapScratcher. You'll see where they've been and how they've interacted with countries around the globe!
+                  MapScratcher lets you select countries, assign them a level of
+                  interaction (visited, lived-in etc.), and leave a note for
+                  each!
+                  <br />
+                  <br />
+                  Signing up and logging in with Facebook allows you to connect
+                  with your Facebook friends also using MapScratcher.
+                  <br />
+                  <br />
+                  You'll see where they've been and how they've interacted with
+                  countries around the globe!
                 </div>
               </div>
             </ReactModal>
