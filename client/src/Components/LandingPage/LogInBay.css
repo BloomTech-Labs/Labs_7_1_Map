@@ -2,18 +2,21 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  width: 40%;
+  width: 100%;
+  border: 1px solid white;
 }
 .LogInBay .LogInBay__Container {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 1px solid white;
 }
 .LogInBay .LogInBay__Container .Container__FacebookInfoLink {
   font-size: .8rem;
   margin-top: 18px;
   text-align: center;
+  border: 1px solid white;
 }
 .LogInBay .LogInBay__Container .Container__FacebookInfoLink:hover {
   cursor: pointer;

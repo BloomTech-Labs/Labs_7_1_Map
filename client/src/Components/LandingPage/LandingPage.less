@@ -10,48 +10,62 @@
     background-color: #0099ff;
     background-position: center;
     background-size: cover;
+    border: 1px solid red;
+    justify-content: space-around;
     .Container__Header {
       display: flex;
       flex-direction: column;
       justify-content: center;
       width: 100%;
       height: 140px;
+      border: 1px solid purple;
       .Header__Title {
         font-size: 2rem;
         margin-left: 3%;
+        border: 1px solid red;
       }
     }
     .Container__Content {
       display: flex;
       width: 100%;
+      border: 1px solid purple;
+      margin-bottom: 5%;
+      justify-content: space-around;
       .Content__Left {
-        width: 50%;
+        width: 20%;
+        border: 1px solid red;
+        display: flex;
+        flex-direction: column;
+        margin-left: 20%;
+
         .Left__Tagline {
-          margin-top: 13vh;
-          height: 100px;
+          height: 20%;
+          border: 1px solid purple;
           display: flex;
-          justify-content: flex-end;
-          .Tagline__Phrase {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 40%;
-            p {
-              font-size: 1.3rem;
-              letter-spacing: 1.8px;
-              margin: 10px 0;
-            }
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          border: 1px solid red;
+          p {
+            font-size: 1.3rem;
+            letter-spacing: 1.8px;
+            margin: 10px 0;
+            border: 1px solid purple;
           }
         }
         .Left__LoginBayContainer {
           margin-top: 20px;
           display: flex;
           flex-direction: row-reverse;
+          border: 1px solid red;
+          width: 100%;
         }
       }
       .Content__Right {
-        width: 50%;
+        width: 30%;
+        border: 1px solid purple;
+        margin-right: 20%;
       }
     }
   }
