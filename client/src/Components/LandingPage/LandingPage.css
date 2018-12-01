@@ -27,7 +27,7 @@
 .LandingPage .LandingPage__Container .Container__Content {
   display: flex;
   width: 100%;
-  margin-bottom: 7%;
+  margin-bottom: 8%;
   justify-content: space-around;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Left {
