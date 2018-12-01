@@ -9,6 +9,7 @@
   animation-duration: 20s;
   border: 1px solid yellow;
   width: 100%;
+  margin-top: 10%;
 }
 .airplane_container .cloud1 {
   position: absolute;
@@ -31,7 +32,7 @@
 .airplane_container .cloud3 {
   position: absolute;
   animation-iteration-count: infinite;
-  margin-left: 19%;
+  margin-left: 23%;
   animation-name: cloud3;
   animation-duration: 60s;
   animation-timing-function: linear;
