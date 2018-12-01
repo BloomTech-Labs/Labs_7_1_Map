@@ -15,9 +15,9 @@ const SignUpModalStyles = {
     display: 'flex',
     flexFlow: 'column noWrap',
     height: '440px',
-    width: '20%',
+    width: '25%',
     top: '50%',
-    left: '40%',
+    left: '50%',
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
@@ -31,9 +31,9 @@ const FacebookModalStyle = {
     display: 'flex',
     flexFlow: 'column noWrap',
     height: '220px',
-    width: '20%',
+    width: '25%',
     top: '50%',
-    left: '40%',
+    left: '50%',
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
@@ -276,7 +276,7 @@ class LogInBay extends React.Component {
             >
               <div className="FacebookModal__FBContainer">
                 <div className="FBContainer__Header">
-                  <h3>Connect with Friends on MapScratcher!</h3>
+                  <h3>Connect with Facebook Friends on MapScratcher!</h3>
                   <FontAwesomeIcon
                     className="Header__Close"
                     onClick={this.handleCloseFacebookTutorial}

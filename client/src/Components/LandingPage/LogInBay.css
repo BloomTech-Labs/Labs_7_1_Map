@@ -3,19 +3,16 @@
   flex-direction: column;
   align-items: flex-end;
   width: 100%;
-  border: 1px solid white;
 }
 .LogInBay .LogInBay__Container {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid white;
 }
 .LogInBay .LogInBay__Container .Container__FacebookInfoLink {
   font-size: .8rem;
   text-align: center;
-  border: 1px solid white;
 }
 .LogInBay .LogInBay__Container .Container__FacebookInfoLink:hover {
   cursor: pointer;
@@ -143,4 +140,7 @@
 .FacebookModal__FBContainer .FBContainer__Header .Header__Close {
   color: lightcoral;
   cursor: pointer;
+}
+.FacebookModal__FBContainer .FBContainer__Words {
+  font-size: 0.85rem;
 }
