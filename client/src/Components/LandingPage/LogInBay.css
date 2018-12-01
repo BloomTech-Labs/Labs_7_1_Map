@@ -101,14 +101,17 @@
 .Modal__Form input[type="text"] {
   border: none;
   border-bottom: 1px solid grey;
+  height: 10px;
 }
 .Modal__Form input[type="email"] {
   border: none;
   border-bottom: 1px solid grey;
+  height: 10px;
 }
 .Modal__Form input[type="password"] {
   border: none;
   border-bottom: 1px solid grey;
+  height: 10px;
 }
 .Modal__Form input[type="submit"] {
   border: none;
