@@ -6,7 +6,8 @@ import './Preferences.css';
 
 class Preferences extends Component {
   state = {
-    autoscratch: false
+    autoscratch: false,
+    theme: 'standard'
   };
 
   handleChange = event => {
@@ -18,6 +19,14 @@ class Preferences extends Component {
       [name]: value
     });
   };
+
+  componentDidMount() {
+    if (this.props.user && this.props.user.preferences)
+      this.setState({
+        theme: this.props.user.preferences.theme,
+        autoscratch: this.props.user.preferences.autoscratch
+      });
+  }
 
   render() {
     const currentTheme =
@@ -68,6 +77,6 @@ class Preferences extends Component {
 Preferences.propTypes = {
   user: PropTypes.object,
   handleUpdatePreferences: PropTypes.any
-}
+};
 
 export default Preferences;
