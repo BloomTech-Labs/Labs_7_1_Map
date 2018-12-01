@@ -23,18 +23,10 @@ class SearchCountry extends Component {
             isOpen,
             inputValue,
             highlightedIndex,
-            selectedItem
-            // highlightedItem,
-            // getLabelProps
+            selectedItem,
+            clearSelection
           }) => (
             <div>
-              {/* <label */}
-              {/*   style={{ marginTop: '1rem', display: 'block' }} */}
-              {/*   {...getLabelProps()} */}
-              {/* > */}
-              {/*   Search for a country */}
-              {/* </label>{' '} */}
-              {/* <br /> */}
               {isOpen ? (
                 <div
                   className="downshift-dropdown"
@@ -82,6 +74,7 @@ class SearchCountry extends Component {
                 {...getInputProps({
                   className: 'SearchCountry__input',
                   placeholder: 'Search countries',
+                  onFocus: clearSelection,
                   style: {
                     backgroundColor: themeColors.background[this.props.theme],
                     color: themeColors.fontColor[this.props.theme],
