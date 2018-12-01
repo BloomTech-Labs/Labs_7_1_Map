@@ -222,21 +222,12 @@ module.exports = {
     }
   },
 
+  // Handle regular (non-FB) login using passport 'local' strategy
+  // Oly reaches here if authenticated
   login: async (req, res) => {
     try {
-      // we only reach here because we are authenticated
-      const { _id, username, email, countries, preferences } = req.user;
-      const user = {
-        _id,
-        username,
-        email,
-        countries,
-        preferences
-      }; // add the things you need to send
-
-      // Only attach the FB object to response if it contains valid data
-      const { id, accessToken, refreshToken, } = req.user.facebook;
-      if (id && accessToken && refreshToken) user.facebook = req.user.facebook;
+      const user = req.user.toObject(); // convert to a regular JS object
+      delete user.password // delete password field before sending back
 
       return res.status(200).json({ jwt_token: make_token(req.user), user });
     } catch (err) {
@@ -271,16 +262,10 @@ module.exports = {
         { new: true }
       );
 
-      const response = {
-        username: updatedUser.username,
-        email: updatedUser.email,
-        preferences: updatedUser.preferences,
-        countries: updatedUser.countries
-      };
+      const user = updatedUser.toObject();
+      delete user.password
 
-      if (updatedUser.facebook) response.facebook = updatedUser.facebook;
-
-      return res.status(200).json(response);
+      return res.status(200).json(user);
     } catch (err) {
       if (DEV) console.log(err);
       return res.status(500).send({ error: 'Internal server error!' });

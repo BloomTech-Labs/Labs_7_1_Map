@@ -10,6 +10,16 @@
   flex-direction: column;
   align-items: center;
 }
+.LogInBay .LogInBay__Container .Container__FacebookInfoLink {
+  font-size: 0.8rem;
+  margin-top: 18px;
+  text-align: center;
+  line-height: 1.3;
+}
+.LogInBay .LogInBay__Container .Container__FacebookInfoLink:hover {
+  cursor: pointer;
+  transform: scale(1.03);
+}
 .LogInBay .LogInBay__Container .Container__LogInForm {
   display: flex;
   flex-direction: column;
@@ -109,4 +119,24 @@
 }
 .Modal__Form input[type="submit"]:hover {
   background-color: #20c16b;
+}
+.FacebookModal__FBContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.FacebookModal__FBContainer .FBContainer__Header {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+}
+.FacebookModal__FBContainer .FBContainer__Header h3 {
+  text-align: center;
+  margin-left: 16px;
+  color: #3c859e;
+  font-weight: bold;
+}
+.FacebookModal__FBContainer .FBContainer__Header .Header__Close {
+  color: lightcoral;
+  cursor: pointer;
 }
