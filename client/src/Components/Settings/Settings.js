@@ -64,7 +64,7 @@ class Settings extends Component {
                 user={AppState.user}
                 handleUpdatePreferences={handleUpdatePreferences}
               />
-              {!AppState.user.facebook && (
+              {(!AppState.user.facebook || !AppState.user.facebook.id) && (
                 <React.Fragment>
                   <ChangeEmail
                     user={AppState.user}
