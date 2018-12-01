@@ -1,49 +1,86 @@
 .Note {
-  border: 1px solid rgba(0, 0, 0, 1);
   max-width: 320px;
-  width: 90%;
+  width: 97%;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   padding: 0.2rem;
-
-  .Notes__ViewMode {
-    .ViewMode__add {
-      margin-right: 0.2rem;
-      margin-right: 0.2rem;
-      &:hover {
-        cursor: pointer;
+  border: .5px solid;
+  .Notes__NewViewMode {
+    &:hover {
+      cursor: pointer;
+      font-weight: bold;
+      .NewViewMode__Add {
         color: green;
       }
     }
-
-    .ViewMode__edit {
-      position: relative;
-      right: 3px;
-      margin-right: 0.2rem;
-      &:hover {
-        cursor: pointer;
-        color: blue;
-      }
-    }
   }
-
-  .Notes__EditMode {
-    .EditMode__save {
-      position: absolute;
-      right: 5px;
-      margin-right: 0.2rem;
-      &:hover {
-        cursor: pointer;
-        color: blue;
+  .Notes__NotesContainer {
+    width: 100%;
+    &:hover {
+      display: flex;
+      justify-content: center;
+      cursor: pointer;
+      .NotesContainer__Hover {
+        display: block;
+        position: absolute;
+        z-index: 2;
       }
     }
-
-    textarea {
+    .NotesContainer__Hover {
+      color: grey;
+      font-size: 0.6rem;
+      display: none;
+      margin-top: 9px;
+    }
+    .NotesContainer__ViewMode {
       width: 100%;
-      height: 100px;
-      padding: 5px;
-      resize: none;
-      font-size: 0.9rem;
+      max-height: 120px;
+      overflow: auto;
+      .ViewMode__YourNote {
+        margin-top: 10px;
+        margin-bottom: 6px;
+        padding-left: 6px;
+        font-family: 'Pacifico', sans-serif;
+      }
+      .ViewMode__Notes {
+        white-space: pre-wrap; /* CSS3 */
+        white-space: -moz-pre-wrap; /* Firefox */
+        white-space: -pre-wrap; /* Opera <7 */
+        white-space: -o-pre-wrap; /* Opera 7 */
+        word-wrap: break-word; /* IE */
+        margin-bottom: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+      }
+      .ViewMode__add {
+        margin-right: 0.2rem;
+        margin-right: 0.2rem;
+      }
     }
   }
+    .Notes__EditMode {
+      .EditMode__save {
+        position: absolute;
+        right: 14px;
+        margin-top: 5px;
+        margin-right: 0.2rem;
+        &:hover {
+          cursor: pointer;
+          color: lightseagreen;
+        }
+      }
+
+      textarea {
+        border: 2px solid green;
+        width: 85%;
+        height: 97px;
+        padding: 10px;
+        resize: none;
+        font-size: 0.9rem;
+        border: none;
+        outline: none;
+        background-color: white;
+      }
+    }
 }
