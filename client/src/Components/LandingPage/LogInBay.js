@@ -196,7 +196,7 @@ class LogInBay extends React.Component {
                 className="Container__Button"
                 onClick={this.handleOpenModal}
               >
-                Sign Up for personal account (no friend feature)
+                Sign Up with email
               </button>
               <div className="Container__Or">or</div>
               <div

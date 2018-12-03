@@ -3,22 +3,31 @@
   flex-flow: column nowrap;
   align-items: center;
   padding: 20px;
+  button {
+    font-size: 13px;
+    cursor: pointer;
+    padding: 7px 10px;
+    margin-top: 10px;
+    outline: none;
+    &:hover {
+      font-weight: bold;
+      border: 1px solid orange;
+      color: orange;
+    }
+  }
 
   .Preferences__theme {
     margin: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-
+    select {
+      cursor: pointer;
+      outline: none;
+    }
     h5 {
       margin-right: 10px;
     }
-
-    // select {
-    //   -webkit-appearance: none;
-    //   -moz-appearance: none;
-    //   appearance: none; /* removes default arrow */
-    // }
   }
 
   .Preferences__autoscratch {
@@ -26,9 +35,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
     h5 {
       margin-right: 10px;
+    }
+    input[type="checkbox"] {
+      outline: none;
     }
   }
 }

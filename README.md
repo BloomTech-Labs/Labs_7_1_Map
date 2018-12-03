@@ -31,6 +31,7 @@ This project was built by Lambda School students for their capstone project. It 
 - Facebook friends that are using the app will show up in each country's 'card'
 - View a Facebook friends map.
 - Choice of different map tiles and matching UI themes.
+- Search for a country feature with autocompletion/suggestions
 
 <a name="contributers"></a>
 ### Contributers
@@ -99,6 +100,9 @@ Front End
 - react-leaflet
 - prop-types
 - axios
+- downshift
+- react-modal
+- react-scratchcard
 
 Back End
 
@@ -109,7 +113,6 @@ Back End
 - express
 - helmet
 - jsonwebtoken
-- mongodb-memory-server
 - mongoose
 - morgan
 - node-gyp
@@ -124,6 +127,7 @@ Dev Dependencies
 - eslint-config-prettier
 - eslint-plugin-react (client only)
 - eslint-plugin-node (server only)
+- mongodb-memory-server
 - prettier
 - jest
 - supertest

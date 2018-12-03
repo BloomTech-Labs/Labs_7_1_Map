@@ -9,14 +9,14 @@ const themeColors = {
   color: {
     light: '#808080',
     dark: '#AAA',
-    watercolor: '#000',
+    watercolor: '#000000',
     toner: '#808080',
     standard: '#808080'
   },
   fontColor: {
     light: '#808080',
     dark: '#AAA',
-    watercolor: '#000',
+    watercolor: '#000000',
     toner: '#808080',
     standard: '#808080'
   },

@@ -87,13 +87,13 @@ class ChangePassword extends Component {
             className="Settings__ChangePassword"
           >
             <div className="ChangePassword__currentPassword">
-              <div>Current Password</div>
+              <h5>Current Password</h5>
               <input
                 type="password"
                 name="currentPassword"
-                placeholder="Current password"
                 value={this.state.currentPassword}
                 onChange={e => this.handleChange(e)}
+                className="currentPassword__input"
               />
             </div>
 
@@ -102,9 +102,9 @@ class ChangePassword extends Component {
               <input
                 type="password"
                 name="newPassword"
-                placeholder="New password"
                 value={this.state.newPassword}
                 onChange={e => this.handleChange(e)}
+                className="newPassword__input"
               />
             </div>
 
@@ -113,9 +113,9 @@ class ChangePassword extends Component {
               <input
                 type="password"
                 name="confirmNewPassword"
-                placeholder="Confirm new password"
                 value={this.state.confirmNewPassword}
                 onChange={e => this.handleChange(e)}
+                className="confirmNewPassword__input"
               />
             </div>
             <input

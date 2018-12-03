@@ -6,7 +6,6 @@ import world from 'country-data';
 import {
   clearLocalstorage,
   getCountryInfoFromCode,
-  getCountryCodeFromName,
   getCountryShapeFromCode
 } from './utils.js';
 
@@ -344,11 +343,14 @@ export class AppContextProvider extends Component {
     }
   }; // handleSliderMove
 
-  handleSearchSubmit = e => {
-    e.preventDefault();
-    const countryCode = getCountryCodeFromName(e.target.search.value);
-    const countryInfo = world.countries[countryCode];
-    this.updateCurrentCountry(countryCode, countryInfo);
+  // Called in SearchCountry.js
+  // argument received should be a geojson feature
+  handleSearchSubmit = country => {
+    if (country && country.id) {
+      const countryCode = country.id;
+      const countryInfo = world.countries[countryCode];
+      this.updateCurrentCountry(countryCode, countryInfo);
+    }
   };
 
   handleUpdateNotes = async () => {
@@ -428,10 +430,10 @@ export class AppContextProvider extends Component {
       // Get the country code of the location clicked on, e.g. 'MEX'
       const countryCode = await wc([e.latlng.lng, e.latlng.lat]);
 
-      const countryInfo = getCountryInfoFromCode(countryCode);
+      const countryInfo = await getCountryInfoFromCode(countryCode);
 
       // Update AppContext with the info of the currently selected country
-      this.updateCurrentCountry(countryCode, countryInfo);
+      await this.updateCurrentCountry(countryCode, countryInfo);
     }
   };
 

@@ -35,7 +35,6 @@ class Dashboard extends Component {
                 <CountryPanel />
                 <Legend />
                 <SearchCountry
-                  updateCurrentCountry={value.updateCurrentCountry}
                   handleSearchSubmit={value.handleSearchSubmit}
                   theme={theme}
                 />

@@ -5,10 +5,11 @@ import ScratchCard from 'react-scratchcard';
 
 import { getBoundingBox } from '../../utils';
 import { colorPalette } from '../Map/countryStyles.js';
+import themeColors from '../themeColors.js';
 
 import './CountryBorder.css';
 import 'rc-slider/assets/index.css';
-import travellingImg from '../../travelling.jpg';
+import travellingImg from '../../scratchcard.jpg';
 
 const canvasWidth = 300;
 const canvasHeight = 150;
@@ -70,41 +71,36 @@ export default class CountryBorder extends Component {
     marks: {
       0: {
         style: {
-          color: 'gray',
-          fontWeight: 'bold',
-          textShadow: '1px 0px 0px black'
+          color: themeColors.fontColor[this.props.currentTheme],
+          fontWeight: 'bold'
         },
         label: 'None'
       },
       1: {
         style: {
-          color: 'purple',
-          fontWeight: 'bold',
-          textShadow: '1px 0px 0px black'
+          color: themeColors.fontColor[this.props.currentTheme],
+          fontWeight: 'bold'
         },
         label: 'Wishlist'
       },
       2: {
         style: {
-          color: colorPalette[2],
-          fontWeight: 'bold',
-          textShadow: '1px 0px 0px black'
+          color: themeColors.fontColor[this.props.currentTheme],
+          fontWeight: 'bold'
         },
         label: 'Transited'
       },
       3: {
         style: {
-          color: colorPalette[3],
-          fontWeight: 'bold',
-          textShadow: '1px 0px 0px black'
+          color: themeColors.fontColor[this.props.currentTheme],
+          fontWeight: 'bold'
         },
         label: 'Visited'
       },
       4: {
         style: {
-          color: colorPalette[4],
-          fontWeight: 'bold',
-          textShadow: '1px 0px 0px black'
+          color: themeColors.fontColor[this.props.currentTheme],
+          fontWeight: 'bold'
         },
         label: 'Lived'
       }
@@ -146,13 +142,13 @@ export default class CountryBorder extends Component {
       width: canvasWidth,
       height: canvasHeight,
       image: travellingImg,
-      finishPercent: 90
+      finishPercent: 95
     };
 
     if (this.props.preferences)
       scratchcardSettings.finishPercent = this.props.preferences.autoscratch
         ? 1
-        : 90;
+        : 95;
 
     return (
       <div className="CountryBorder">
@@ -206,5 +202,6 @@ CountryBorder.propTypes = {
   handleScratched: PropTypes.func,
   currentCountryStatus: PropTypes.any,
   scratched: PropTypes.bool,
-  preferences: PropTypes.object
+  preferences: PropTypes.object,
+  currentTheme: PropTypes.string
 };

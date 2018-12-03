@@ -71,9 +71,9 @@ class ChangeEmail extends Component {
               <input
                 type="text"
                 name="newEmail"
-                // placeholder="New Email"
                 value={this.state.newEmail}
                 onChange={e => this.handleChange(e)}
+                className="ChangeEmail__input"
               />
             </div>
 

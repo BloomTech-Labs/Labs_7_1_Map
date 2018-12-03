@@ -55,6 +55,7 @@ const CountryPanel = () => {
                 currentCountryStatus={value.AppState.currentCountryStatus}
                 scratched={value.AppState.currentCountry.scratched}
                 preferences={value.AppState.user.preferences}
+                currentTheme={currentTheme}
               />
               {value.AppState.currentCountry.scratched ? (
                 <Note
