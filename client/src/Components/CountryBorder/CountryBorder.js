@@ -9,7 +9,7 @@ import themeColors from '../themeColors.js';
 
 import './CountryBorder.css';
 import 'rc-slider/assets/index.css';
-import travellingImg from '../../travelling.jpg';
+import travellingImg from '../../scratchcard.jpg';
 
 const canvasWidth = 300;
 const canvasHeight = 150;
@@ -72,35 +72,35 @@ export default class CountryBorder extends Component {
       0: {
         style: {
           color: themeColors.fontColor[this.props.currentTheme],
-          fontWeight: 'bold',
+          fontWeight: 'bold'
         },
         label: 'None'
       },
       1: {
         style: {
           color: themeColors.fontColor[this.props.currentTheme],
-          fontWeight: 'bold',
+          fontWeight: 'bold'
         },
         label: 'Wishlist'
       },
       2: {
         style: {
           color: themeColors.fontColor[this.props.currentTheme],
-          fontWeight: 'bold',
+          fontWeight: 'bold'
         },
         label: 'Transited'
       },
       3: {
         style: {
           color: themeColors.fontColor[this.props.currentTheme],
-          fontWeight: 'bold',
+          fontWeight: 'bold'
         },
         label: 'Visited'
       },
       4: {
         style: {
           color: themeColors.fontColor[this.props.currentTheme],
-          fontWeight: 'bold',
+          fontWeight: 'bold'
         },
         label: 'Lived'
       }
@@ -148,7 +148,7 @@ export default class CountryBorder extends Component {
     if (this.props.preferences)
       scratchcardSettings.finishPercent = this.props.preferences.autoscratch
         ? 1
-        : 90;
+        : 95;
 
     return (
       <div className="CountryBorder">
