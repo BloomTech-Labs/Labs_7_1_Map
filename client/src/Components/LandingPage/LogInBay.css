@@ -11,14 +11,9 @@
   align-items: center;
 }
 .LogInBay .LogInBay__Container .Container__FacebookInfoLink {
-<<<<<<< HEAD
   font-size: .8rem;
-=======
-  font-size: 0.8rem;
-  margin-top: 18px;
->>>>>>> fec822e94744a8603b15de3981f7fe918fec3298
-  text-align: center;
   line-height: 1.3;
+  text-align: center;
 }
 .LogInBay .LogInBay__Container .Container__FacebookInfoLink:hover {
   cursor: pointer;

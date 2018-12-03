@@ -30,11 +30,7 @@ const FacebookModalStyle = {
   content: {
     display: 'flex',
     flexFlow: 'column noWrap',
-<<<<<<< HEAD
-    height: '220px',
-=======
     height: 'auto',
->>>>>>> fec822e94744a8603b15de3981f7fe918fec3298
     width: '25%',
     top: '50%',
     left: '50%',
@@ -202,10 +198,11 @@ class LogInBay extends React.Component {
               >
                 Sign Up for personal account (no friend feature)
               </button>
-              <div className="Container__Or">
-                or
-              </div>
-              <div onClick={this.handleOpenFacebookTutorial} className="Container__FacebookInfoLink">
+              <div className="Container__Or">or</div>
+              <div
+                onClick={this.handleOpenFacebookTutorial}
+                className="Container__FacebookInfoLink"
+              >
                 Learn about using MapScratcher with your FaceBook Friends!
               </div>
               <a
@@ -293,7 +290,7 @@ class LogInBay extends React.Component {
                   each!
                   <br />
                   <br />
-                  Signing up and logging in with Facebook allows you to connect
+                  Using Facebook to log in allows you to connect
                   with your Facebook friends also using MapScratcher.
                   <br />
                   <br />
