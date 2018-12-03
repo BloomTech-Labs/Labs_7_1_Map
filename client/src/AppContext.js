@@ -430,10 +430,10 @@ export class AppContextProvider extends Component {
       // Get the country code of the location clicked on, e.g. 'MEX'
       const countryCode = await wc([e.latlng.lng, e.latlng.lat]);
 
-      const countryInfo = getCountryInfoFromCode(countryCode);
+      const countryInfo = await getCountryInfoFromCode(countryCode);
 
       // Update AppContext with the info of the currently selected country
-      this.updateCurrentCountry(countryCode, countryInfo);
+      await this.updateCurrentCountry(countryCode, countryInfo);
     }
   };
 
