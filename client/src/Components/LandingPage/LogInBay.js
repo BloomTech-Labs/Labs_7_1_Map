@@ -15,9 +15,25 @@ const SignUpModalStyles = {
     display: 'flex',
     flexFlow: 'column noWrap',
     height: '440px',
-    width: '20%',
+    width: '25%',
     top: '50%',
-    left: '40%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    border: '1px solid white'
+  }
+};
+
+const FacebookModalStyle = {
+  content: {
+    display: 'flex',
+    flexFlow: 'column noWrap',
+    height: 'auto',
+    width: '25%',
+    top: '50%',
+    left: '50%',
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
@@ -31,17 +47,18 @@ ReactModal.setAppElement(document.getElementById('App'));
 class LogInBay extends React.Component {
   state = {
     showModal: false,
+    showFacebookTutorial: false,
     signupUsername: '',
     signupEmail: '',
     signupPassword1: '',
     signupPassword2: '',
-    signupErrorResponse: '',
+    signupErrorResponse: ''
   };
 
   componentDidUpdate = prevProps => {
     if (prevProps.failedSignUp !== this.props.failedSignUp) {
       this.setState({
-        signupErrorResponse: this.props.failedSignUpMessage,
+        signupErrorResponse: this.props.failedSignUpMessage
       });
     }
   };
@@ -55,6 +72,14 @@ class LogInBay extends React.Component {
   handleCloseModal = () => {
     this.setState({ showModal: false });
     this.resetFailedSignUp();
+  };
+
+  handleOpenFacebookTutorial = () => {
+    this.setState({ showFacebookTutorial: true });
+  };
+
+  handleCloseFacebookTutorial = () => {
+    this.setState({ showFacebookTutorial: false });
   };
 
   //These update state when signup fields are changed
@@ -94,7 +119,7 @@ class LogInBay extends React.Component {
       this.setState({
         signupErrorResponse: ''
       });
-    };
+    }
   };
 
   handleSignUpSubmit = async event => {
@@ -118,22 +143,22 @@ class LogInBay extends React.Component {
       !signupPassword2
     ) {
       return this.setState({
-        signupErrorResponse: 'Please fill all fields before submitting',
+        signupErrorResponse: 'Please fill all fields before submitting'
       });
     } else {
       if (signupPassword1 !== signupPassword2) {
         return this.setState({
-          signupErrorResponse: 'Passwords do not match',
+          signupErrorResponse: 'Passwords do not match'
         });
       }
       if (signupPassword1.length < 6) {
         return this.setState({
-          signupErrorResponse: 'Password must be a minimum of 6 characters',
+          signupErrorResponse: 'Password must be a minimum of 6 characters'
         });
       }
       if (signupUsername === signupPassword1) {
         return this.setState({
-          signupErrorResponse: 'Password cannot be the same as username!',
+          signupErrorResponse: 'Password cannot be the same as username!'
         });
       }
       this.props.handleSignUp(signupUsername, signupEmail, signupPassword1);
@@ -147,7 +172,7 @@ class LogInBay extends React.Component {
           <div className="LogInBay">
             <div className="LogInBay__Container">
               <form className="Container__LogInForm" onSubmit={handleSignIn}>
-                Login with your account:
+                Log into personal account:
                 <input
                   type="text"
                   placeholder="Username"
@@ -166,7 +191,20 @@ class LogInBay extends React.Component {
                   value="Login"
                 />
               </form>
-
+              <button
+                type="button"
+                className="Container__Button"
+                onClick={this.handleOpenModal}
+              >
+                Sign Up for personal account (no friend feature)
+              </button>
+              <div className="Container__Or">or</div>
+              <div
+                onClick={this.handleOpenFacebookTutorial}
+                className="Container__FacebookInfoLink"
+              >
+                Learn about using MapScratcher with your FaceBook Friends!
+              </div>
               <a
                 href={`${BACKEND_URL}/facebook_login`}
                 className="Container__Button"
@@ -177,13 +215,6 @@ class LogInBay extends React.Component {
                   style={{ width: '100%' }}
                 />
               </a>
-              <button
-                type="button"
-                className="Container__Button"
-                onClick={this.handleOpenModal}
-              >
-                Sign Up with email
-              </button>
             </div>
 
             <ReactModal
@@ -193,6 +224,7 @@ class LogInBay extends React.Component {
               contentLabel="Example Text"
               onRequestClose={this.handleCloseModal}
               shouldCloseOnOverlayClick={true}
+              ariaHideApp={false}
             >
               <div className="Modal__Header">
                 <h3>Sign Up</h3>
@@ -234,6 +266,39 @@ class LogInBay extends React.Component {
                 <FailedSignUpPopUp message={this.state.signupErrorResponse} />
                 <input type="submit" />
               </form>
+            </ReactModal>
+            <ReactModal
+              id="FacebookModal"
+              style={FacebookModalStyle}
+              isOpen={this.state.showFacebookTutorial}
+              contentLabel="Example Text"
+              onRequestClose={this.handleCloseFacebookTutorial}
+              shouldCloseOnOverlayClick={true}
+              ariaHideApp={false}
+            >
+              <div className="FacebookModal__FBContainer">
+                <div className="FBContainer__Header">
+                  <h3>Connect with Facebook Friends on MapScratcher!</h3>
+                  <FontAwesomeIcon
+                    className="Header__Close"
+                    onClick={this.handleCloseFacebookTutorial}
+                    icon="times"
+                  />
+                </div>
+                <div className="FBContainer__Words">
+                  MapScratcher lets you select countries, assign them a level of
+                  interaction (visited, lived-in etc.), and leave a note for
+                  each!
+                  <br />
+                  <br />
+                  Using Facebook to log in allows you to connect
+                  with your Facebook friends also using MapScratcher.
+                  <br />
+                  <br />
+                  You'll see where they've been and how they've interacted with
+                  countries around the globe!
+                </div>
+              </div>
             </ReactModal>
           </div>
         )}

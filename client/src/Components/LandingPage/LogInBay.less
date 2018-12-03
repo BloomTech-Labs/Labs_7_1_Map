@@ -1,15 +1,26 @@
 .LogInBay {
-  // background-color: rgba(100, 100, 100, 0.5);
-
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  width: 40%;
+  width: 100%;
   .LogInBay__Container {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    .Container__FacebookInfoLink {
+      font-size: .8rem;
+      line-height: 1.3;
+      text-align: center;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .Container__Or {
+      font-size: 2rem;
+      margin-top: 5%;
+      margin-bottom: 5%;
+    }
     .Container__LogInForm {
       display: flex;
       flex-direction: column;
@@ -20,7 +31,7 @@
         font-size: 1 rem;
         width: 95%;
         border: none;
-        height: 14px;
+        height: 10px;
         padding-left: 2%;
         background-color: #23ce6b;
       }
@@ -47,15 +58,14 @@
       }
     }
     .Container__Button {
-      background: none;
       color: inherit;
       border: none;
       padding: 0;
       font: inherit;
       cursor: pointer;
       outline: inherit;
-      font-size: 17px;
-      margin-top: 20px;
+      font-size: .6rem;
+      margin-top: 8px;
       &:hover {
         transform: scale(1.03);
       }
@@ -91,14 +101,17 @@
   input[type="text"] {
     border: none;
     border-bottom: 1px solid grey;
+    height: 10px;
   }
   input[type="email"] {
     border: none;
     border-bottom: 1px solid grey;
+    height: 10px;
   }
   input[type="password"] {
     border: none;
     border-bottom: 1px solid grey;
+    height: 10px;
   }
   input[type="submit"] {
     border: none;
@@ -110,5 +123,28 @@
   }
   input[type="submit"]:hover {
     background-color: #20c16b;
+  }
+}
+.FacebookModal__FBContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .FBContainer__Header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    h3 {
+      text-align: center;
+      margin-left: 16px;
+      color: rgb(60, 133, 158);
+      font-weight: bold;
+    }
+    .Header__Close {
+      color: lightcoral;
+      cursor: pointer;
+    }
+  }
+  .FBContainer__Words {
+    font-size: 0.85rem;
   }
 }
