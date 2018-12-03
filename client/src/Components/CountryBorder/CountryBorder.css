@@ -1,7 +1,6 @@
 .CountryBorder {
-  border: 1px solid;
   box-sizing: border-box;
-  padding-bottom: 30px;
+  padding-bottom: 10px;
 }
 .CountryBorder .ScratchCard__Container {
   cursor: url(coincursor.png), auto;

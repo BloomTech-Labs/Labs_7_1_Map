@@ -5,6 +5,7 @@ import ScratchCard from 'react-scratchcard';
 
 import { getBoundingBox } from '../../utils';
 import { colorPalette } from '../Map/countryStyles.js';
+import themeColors from '../themeColors.js';
 
 import './CountryBorder.css';
 import 'rc-slider/assets/index.css';
@@ -70,41 +71,36 @@ export default class CountryBorder extends Component {
     marks: {
       0: {
         style: {
-          color: 'gray',
+          color: themeColors.fontColor[this.props.currentTheme],
           fontWeight: 'bold',
-          textShadow: '1px 0px 0px black'
         },
         label: 'None'
       },
       1: {
         style: {
-          color: 'purple',
+          color: themeColors.fontColor[this.props.currentTheme],
           fontWeight: 'bold',
-          textShadow: '1px 0px 0px black'
         },
         label: 'Wishlist'
       },
       2: {
         style: {
-          color: colorPalette[2],
+          color: themeColors.fontColor[this.props.currentTheme],
           fontWeight: 'bold',
-          textShadow: '1px 0px 0px black'
         },
         label: 'Transited'
       },
       3: {
         style: {
-          color: colorPalette[3],
+          color: themeColors.fontColor[this.props.currentTheme],
           fontWeight: 'bold',
-          textShadow: '1px 0px 0px black'
         },
         label: 'Visited'
       },
       4: {
         style: {
-          color: colorPalette[4],
+          color: themeColors.fontColor[this.props.currentTheme],
           fontWeight: 'bold',
-          textShadow: '1px 0px 0px black'
         },
         label: 'Lived'
       }
@@ -206,5 +202,6 @@ CountryBorder.propTypes = {
   handleScratched: PropTypes.func,
   currentCountryStatus: PropTypes.any,
   scratched: PropTypes.bool,
-  preferences: PropTypes.object
+  preferences: PropTypes.object,
+  currentTheme: PropTypes.string
 };
