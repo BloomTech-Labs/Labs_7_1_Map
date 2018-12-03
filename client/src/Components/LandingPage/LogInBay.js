@@ -224,6 +224,7 @@ class LogInBay extends React.Component {
               contentLabel="Example Text"
               onRequestClose={this.handleCloseModal}
               shouldCloseOnOverlayClick={true}
+              ariaHideApp={false}
             >
               <div className="Modal__Header">
                 <h3>Sign Up</h3>
