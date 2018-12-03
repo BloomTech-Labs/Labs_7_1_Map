@@ -9,6 +9,7 @@
   cursor: pointer;
   padding: 7px 10px;
   margin-top: 10px;
+  outline: none;
 }
 .Settings__Preferences button:hover {
   font-weight: bold;

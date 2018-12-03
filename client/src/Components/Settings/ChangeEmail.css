@@ -14,7 +14,7 @@
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  padding: 20px;
+  padding: 15px;
 }
 .ChangeEmail .Settings__ChangeEmail div {
   margin: 10px;
@@ -25,8 +25,26 @@
 }
 .ChangeEmail .Settings__ChangeEmail #NewEmail__header {
   padding-bottom: 5px;
+  font-style: italic;
+}
+.ChangeEmail .Settings__ChangeEmail .ChangeEmail__input {
+  outline: none;
+  padding: 5px 8px;
+}
+.ChangeEmail .Settings__ChangeEmail .ChangeEmail__input:hover {
+  border: 1px solid orange;
+}
+.ChangeEmail .Settings__ChangeEmail .ChangeEmail__input:focus {
+  border: 1px solid orange;
 }
 .ChangeEmail .Settings__ChangeEmail .ChangeEmail__submit {
-  width: 100px;
   margin: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 7px 10px;
+}
+.ChangeEmail .Settings__ChangeEmail .ChangeEmail__submit:hover {
+  font-weight: bold;
+  color: orange;
+  border: 1px solid orange;
 }

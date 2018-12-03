@@ -13,7 +13,7 @@
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    padding: 20px;
+    padding: 15px;
 
     div {
       margin: 10px;
@@ -25,10 +25,28 @@
 
     #NewEmail__header {
       padding-bottom: 5px;
+      font-style: italic;
+    }
+    .ChangeEmail__input {
+      outline: none;
+      padding: 5px 8px;
+      &:hover {
+        border: 1px solid orange;
+      }
+      &:focus {
+        border: 1px solid orange;
+      }
     }
     .ChangeEmail__submit {
-      width: 100px;
       margin: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      padding: 7px 10px;
+      &:hover {
+        font-weight: bold;
+        color: orange;
+        border: 1px solid orange;
+      }
     }
   }
 }
