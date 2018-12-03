@@ -142,7 +142,7 @@ export default class CountryBorder extends Component {
       width: canvasWidth,
       height: canvasHeight,
       image: travellingImg,
-      finishPercent: 90
+      finishPercent: 95
     };
 
     if (this.props.preferences)
