@@ -15,9 +15,9 @@ const SignUpModalStyles = {
     display: 'flex',
     flexFlow: 'column noWrap',
     height: '440px',
-    width: '20%',
+    width: '25%',
     top: '50%',
-    left: '40%',
+    left: '50%',
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
@@ -33,7 +33,7 @@ const FacebookModalStyle = {
     height: 'auto',
     width: '25%',
     top: '50%',
-    left: '40%',
+    left: '50%',
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
@@ -172,7 +172,7 @@ class LogInBay extends React.Component {
           <div className="LogInBay">
             <div className="LogInBay__Container">
               <form className="Container__LogInForm" onSubmit={handleSignIn}>
-                Login with your account:
+                Log into personal account:
                 <input
                   type="text"
                   placeholder="Username"
@@ -191,11 +191,19 @@ class LogInBay extends React.Component {
                   value="Login"
                 />
               </form>
+              <button
+                type="button"
+                className="Container__Button"
+                onClick={this.handleOpenModal}
+              >
+                Sign Up for personal account (no friend feature)
+              </button>
+              <div className="Container__Or">or</div>
               <div
                 onClick={this.handleOpenFacebookTutorial}
                 className="Container__FacebookInfoLink"
               >
-                Learn about using MapScratcher with your FaceBook Friends
+                Learn about using MapScratcher with your FaceBook Friends!
               </div>
               <a
                 href={`${BACKEND_URL}/facebook_login`}
@@ -207,13 +215,6 @@ class LogInBay extends React.Component {
                   style={{ width: '100%' }}
                 />
               </a>
-              <button
-                type="button"
-                className="Container__Button"
-                onClick={this.handleOpenModal}
-              >
-                Sign Up with email
-              </button>
             </div>
 
             <ReactModal
@@ -223,6 +224,7 @@ class LogInBay extends React.Component {
               contentLabel="Example Text"
               onRequestClose={this.handleCloseModal}
               shouldCloseOnOverlayClick={true}
+              ariaHideApp={false}
             >
               <div className="Modal__Header">
                 <h3>Sign Up</h3>
@@ -276,7 +278,7 @@ class LogInBay extends React.Component {
             >
               <div className="FacebookModal__FBContainer">
                 <div className="FBContainer__Header">
-                  <h3>Connect with Friends on MapScratcher!</h3>
+                  <h3>Connect with Facebook Friends on MapScratcher!</h3>
                   <FontAwesomeIcon
                     className="Header__Close"
                     onClick={this.handleCloseFacebookTutorial}
@@ -289,7 +291,7 @@ class LogInBay extends React.Component {
                   each!
                   <br />
                   <br />
-                  Signing up and logging in with Facebook allows you to connect
+                  Using Facebook to log in allows you to connect
                   with your Facebook friends also using MapScratcher.
                   <br />
                   <br />

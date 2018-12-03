@@ -1,15 +1,13 @@
 .airplane_container {
-  height: 550px;
-  margin-left: 6%;
-  width: 60%;
-  margin-top: 26px;
+  height: 100%;
+  width: 100%;
 }
 .airplane_container .airplane_container__svg {
-  margin-left: 10%;
-  margin-top: 100px;
   animation-iteration-count: infinite;
   animation-name: inandout;
   animation-duration: 20s;
+  width: 100%;
+  margin-top: 10%;
 }
 .airplane_container .cloud1 {
   position: absolute;
@@ -22,9 +20,9 @@
 .airplane_container .cloud2 {
   position: absolute;
   animation-iteration-count: infinite;
-  margin-left: 40px;
+  margin-left: 2%;
   animation-name: cloud2;
-  animation-duration: 55s;
+  animation-duration: 45s;
   animation-timing-function: linear;
   opacity: .001;
   transform: scale(0.7);
@@ -32,7 +30,7 @@
 .airplane_container .cloud3 {
   position: absolute;
   animation-iteration-count: infinite;
-  margin-left: 300px;
+  margin-left: 21%;
   animation-name: cloud3;
   animation-duration: 60s;
   animation-timing-function: linear;
@@ -42,7 +40,7 @@
 .airplane_container .cloud4 {
   position: absolute;
   animation-iteration-count: infinite;
-  margin-left: 250px;
+  margin-left: 16%;
   animation-duration: 35s;
   animation-name: cloud4;
   animation-timing-function: linear;
@@ -79,7 +77,7 @@
     opacity: .9;
   }
   100% {
-    margin-top: 500px;
+    margin-top: 25%;
     opacity: 0.001;
   }
 }
@@ -91,7 +89,7 @@
     opacity: .9;
   }
   100% {
-    margin-top: 500px;
+    margin-top: 25%;
     opacity: 0.001;
   }
 }
@@ -103,7 +101,7 @@
     opacity: .9;
   }
   100% {
-    margin-top: 500px;
+    margin-top: 25%;
     opacity: 0.001;
   }
 }
@@ -115,7 +113,7 @@
     opacity: .9;
   }
   100% {
-    margin-top: 500px;
+    margin-top: 25%;
     opacity: 0.001;
   }
 }

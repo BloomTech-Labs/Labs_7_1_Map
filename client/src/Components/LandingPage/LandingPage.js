@@ -27,10 +27,8 @@ const LandingPage = props => {
         <div className="Container__Content">
           <div className="Content__Left">
             <h3 className="Left__Tagline">
-              <div className="Tagline__Phrase">
-                <p>Track where you've been.</p>
-                <p>Plan where you'll go.</p>
-              </div>
+                <p>Track where you've been,</p>
+                <p>Plan where you'll go!</p>
             </h3>
             <div className="Left__LoginBayContainer">
               <AppContextConsumer>
@@ -52,9 +50,7 @@ const LandingPage = props => {
             </div>
           </div>
           <div className="Content__Right">
-            <div className="Right__Animation">
               <Animation />
-            </div>
           </div>
         </div>
         <div className="Container__Footer">

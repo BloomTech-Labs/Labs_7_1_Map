@@ -11,6 +11,7 @@
   background-color: #0099ff;
   background-position: center;
   background-size: cover;
+  justify-content: space-around;
 }
 .LandingPage .LandingPage__Container .Container__Header {
   display: flex;
@@ -26,33 +27,36 @@
 .LandingPage .LandingPage__Container .Container__Content {
   display: flex;
   width: 100%;
+  margin-bottom: 8%;
+  justify-content: space-around;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Left {
-  width: 50%;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 23%;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__Tagline {
-  margin-top: 13vh;
-  height: 100px;
-  display: flex;
-  justify-content: flex-end;
-}
-.LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__Tagline .Tagline__Phrase {
+  height: 20%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 40%;
+  width: 100%;
 }
-.LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__Tagline .Tagline__Phrase p {
-  font-size: 1.3rem;
+.LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__Tagline p {
+  font-size: 1.1rem;
   letter-spacing: 1.8px;
-  margin: 10px 0;
+  margin: 2% 0;
+  text-align: center;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Left .Left__LoginBayContainer {
   margin-top: 20px;
   display: flex;
   flex-direction: row-reverse;
+  width: 100%;
 }
 .LandingPage .LandingPage__Container .Container__Content .Content__Right {
-  width: 50%;
+  width: 30%;
+  margin-right: 20%;
 }
