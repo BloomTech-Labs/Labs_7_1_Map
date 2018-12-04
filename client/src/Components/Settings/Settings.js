@@ -15,6 +15,10 @@ class Settings extends Component {
     showingChangePassword: false
   };
 
+  componentWillUpdate() {
+    this.setState({ showingChangePassword: false, showingChangeEmail: false });
+  }
+
   handleChangeEmailClick = () => {
     if (this.state.showingChangePassword)
       this.setState({
@@ -78,7 +82,9 @@ class Settings extends Component {
                   />
                 </React.Fragment>
               )}
-              <button onClick={handleResetMap}>Reset Map</button>
+              <button onClick={handleResetMap} className="Settings__ResetMap">
+                Reset Map
+              </button>
             </div>
           );
         }}
