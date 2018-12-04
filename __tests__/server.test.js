@@ -735,12 +735,31 @@ describe('User', () => {
       it('successfully removes all countries on user', async () => {
         const response = await request(server)
           .put('/api/reset_user_map')
-          .set('Authorization', `Bearer ${initialTestUser.body.jwt_token}`)
-          .send({})
+          .set('Authorization', `Bearer ${initialTestUser.body.jwt_token}`);
 
         expect(response.status).toBe(200);
         expect(response.body.username).toBe('initialTestUser');
         expect(response.body.countries).toEqual([]);
+        expect(response.body.password).toBeUndefined();
+      });
+
+      it('fails if no token is provided', async () => {
+        const response = await request(server).put('/api/reset_user_map');
+
+        expect(response.status).toBe(401);
+        expect(response.body.username).toBeUndefined();
+        expect(response.body.password).toBeUndefined();
+      });
+
+      it('fails if invalid token is provided', async () => {
+        const invalid_token = initialTestUser.body.jwt_token.slice(1);
+        const response = await request(server)
+          .put('/api/reset_user_map')
+          .set('Authorization', `Bearer ${invalid_token}`);
+
+        expect(response.status).toBe(401);
+        expect(response.body.username).toBeUndefined();
+        expect(response.body.password).toBeUndefined();
       });
     });
   }); // PUT routes
