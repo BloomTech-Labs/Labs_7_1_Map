@@ -236,6 +236,21 @@ module.exports = {
     }
   }, // login
 
+  // Clears the countries on a User
+  reset_user_map: async (req, res) => {
+    try {
+      const id = req.user.id
+      console.log(id)
+      const response = await User.findByIdAndUpdate(id, { countries: [] }, { new: true })
+      console.log(response)
+      const user = response.toObject();
+      delete user.password
+      res.status(200).json(response)
+    } catch (err) {
+      res.status(500).json({ error: 'Internal server error!' })
+    }
+  }, // reset_user_map
+
   update_preferences: async (req, res) => {
     try {
       // Error handling

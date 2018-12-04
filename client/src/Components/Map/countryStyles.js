@@ -29,7 +29,7 @@ const styleHover = {
   stroke: false,
   fill: true,
   fillColor: 'orange',
-  fillOpacity: 1
+  fillOpacity: 0.5
 };
 
 // Styles for country based on status_code
