@@ -1,13 +1,12 @@
 import React from 'react';
 import { AppContextConsumer } from '../../AppContext';
-import PropTypes from 'prop-types';
 import './Nav.css';
 import themeColors from '../themeColors.js';
 
-const Nav = props => {
+const Nav = () => {
   return (
     <AppContextConsumer>
-      {({ handleFriendsDropdown, handleSignOut, AppState }) => {
+      {({ AppState, handleFriendsDropdown, handleSignOut, toggleSettings }) => {
         const currentTheme = AppState.user.preferences
           ? AppState.user.preferences.theme
           : 'standard';
@@ -23,7 +22,9 @@ const Nav = props => {
             <h1 className="Nav__title">MapScratcher</h1>
 
             <div className="Nav__Center">
-              {AppState.user.facebook && AppState.user.facebook.id ? (
+              {AppState.user.facebook &&
+              AppState.user.facebook.id &&
+              AppState.friends.length > 0 ? (
                 <select
                   name="My Travels"
                   id=""
@@ -41,10 +42,11 @@ const Nav = props => {
                 <h1>My Travels</h1>
               )}
             </div>
+
             <div className="Nav__Right">
               <div
                 className="MenuItem Right__settings"
-                onClick={() => props.toggleSettings()}
+                onClick={toggleSettings}
               >
                 SETTINGS
               </div>
@@ -58,10 +60,6 @@ const Nav = props => {
       }}
     </AppContextConsumer>
   );
-};
-
-Nav.propTypes = {
-  toggleSettings: PropTypes.func
 };
 
 export default Nav;
