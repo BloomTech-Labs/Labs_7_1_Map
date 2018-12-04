@@ -236,7 +236,7 @@ module.exports = {
     }
   }, // login
 
-  // Clears the countries on a User
+  // Clears all of the user's countries
   reset_user_map: async (req, res) => {
     try {
       const id = req.user.id;
@@ -245,12 +245,12 @@ module.exports = {
         { countries: [] },
         { new: true }
       );
-      console.log(response)
       const user = response.toObject();
       delete user.password;
 
       return res.status(200).json(user);
     } catch (err) {
+      if (DEV) console.log(err);
       return res.status(500).json({ error: 'Internal server error!' });
     }
   }, // reset_user_map

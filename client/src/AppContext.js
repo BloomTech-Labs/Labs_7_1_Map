@@ -135,7 +135,7 @@ export class AppContextProvider extends Component {
         }
       });
     } catch (err) {
-      console.error(err);
+      console.error(err); // eslint-disable-line
     }
   };
 
@@ -206,7 +206,26 @@ export class AppContextProvider extends Component {
         else console.error('Failed to get that friends countries!'); //eslint-disable-line
       }
     } catch (err) {
-      return console.log(err); // eslint-disable-line
+      return console.error(err); // eslint-disable-line
+    }
+  };
+
+  handleResetMap = async () => {
+    try {
+      const options = {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      };
+
+      const response = await axios.put(
+        `${BACKEND_URL}/reset_user_map`,
+        {},
+        options
+      );
+
+      if (response.status === 200)
+        return this.setState({ user: response.data });
+    } catch (err) {
+      console.error('Error resetting users map!'); //eslint-disable-line
     }
   };
 
@@ -577,6 +596,7 @@ export class AppContextProvider extends Component {
           handleChangeNote: this.handleChangeNote,
           handleFriendsDropdown: this.handleFriendsDropdown,
           handleMapClick: this.handleMapClick,
+          handleResetMap: this.handleResetMap,
           handleScratched: this.handleScratched,
           handleSearchSubmit: this.handleSearchSubmit,
           handleSignIn: this.handleSignIn,

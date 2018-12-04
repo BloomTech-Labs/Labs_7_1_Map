@@ -42,7 +42,7 @@ class Settings extends Component {
   render() {
     return (
       <AppContextConsumer>
-        {({ AppState, handleUpdatePreferences }) => {
+        {({ AppState, handleUpdatePreferences, handleResetMap }) => {
           const currentTheme = AppState.user.preferences
             ? AppState.user.preferences.theme
             : 'standard';
@@ -78,6 +78,7 @@ class Settings extends Component {
                   />
                 </React.Fragment>
               )}
+              <button onClick={handleResetMap}>Reset Map</button>
             </div>
           );
         }}
