@@ -15,10 +15,6 @@ class Settings extends Component {
     showingChangePassword: false
   };
 
-  componentWillUpdate() {
-    this.setState({ showingChangePassword: false, showingChangeEmail: false });
-  }
-
   handleChangeEmailClick = () => {
     if (this.state.showingChangePassword)
       this.setState({
