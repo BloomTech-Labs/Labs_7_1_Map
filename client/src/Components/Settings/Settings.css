@@ -19,6 +19,16 @@
   font-size: 2em;
   font-family: Pacifico, serif;
 }
+.Settings .Settings__ResetMap {
+  margin-top: 30px;
+  outline: none;
+  cursor: pointer;
+}
+.Settings .Settings__ResetMap:hover {
+  font-weight: bold;
+  border: 1px solid orange;
+  color: orange;
+}
 .Settings-closed {
   visibility: hidden;
   opacity: 0;

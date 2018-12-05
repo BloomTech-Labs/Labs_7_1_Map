@@ -31,7 +31,7 @@ class Dashboard extends Component {
 
             return (
               <React.Fragment>
-                <Nav toggleSettings={value.toggleSettings} />
+                <Nav />
                 <CountryPanel />
                 <Legend />
                 <SearchCountry
@@ -42,7 +42,7 @@ class Dashboard extends Component {
                   userPosition={value.AppState.userPosition}
                   user={value.AppState.user}
                 />
-                <Settings showingSettings={value.AppState.showingSettings} />
+                <Settings />
               </React.Fragment>
             );
           }}

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import { AppContextConsumer } from '../../AppContext';
 import ChangeEmail from './ChangeEmail';
@@ -10,39 +9,11 @@ import './Settings.css';
 import themeColors from '../themeColors.js';
 
 class Settings extends Component {
-  state = {
-    showingChangeEmail: false,
-    showingChangePassword: false
-  };
-
-  handleChangeEmailClick = () => {
-    if (this.state.showingChangePassword)
-      this.setState({
-        showingChangePassword: false,
-        showingChangeEmail: !this.state.showingChangeEmail
-      });
-    else
-      this.setState({
-        showingChangeEmail: !this.state.showingChangeEmail
-      });
-  };
-
-  handleChangePasswordClick = () => {
-    if (this.state.showingChangeEmail)
-      this.setState({
-        showingChangeEmail: false,
-        showingChangePassword: !this.state.showingChangePassword
-      });
-    else
-      this.setState({
-        showingChangePassword: !this.state.showingChangePassword
-      });
-  };
 
   render() {
     return (
       <AppContextConsumer>
-        {({ AppState, handleUpdatePreferences }) => {
+        {({ AppState, handleUpdatePreferences, handleResetMap, handleChangeEmailClick, handleChangePasswordClick }) => {
           const currentTheme = AppState.user.preferences
             ? AppState.user.preferences.theme
             : 'standard';
@@ -68,16 +39,19 @@ class Settings extends Component {
                 <React.Fragment>
                   <ChangeEmail
                     user={AppState.user}
-                    handleChangeEmailClick={this.handleChangeEmailClick}
-                    showingChangeEmail={this.state.showingChangeEmail}
+                    handleChangeEmailClick={handleChangeEmailClick}
+                    showingChangeEmail={AppState.showingChangeEmail}
                   />
                   <ChangePassword
                     user={AppState.user}
-                    handleChangePasswordClick={this.handleChangePasswordClick}
-                    showingChangePassword={this.state.showingChangePassword}
+                    handleChangePasswordClick={handleChangePasswordClick}
+                    showingChangePassword={AppState.showingChangePassword}
                   />
                 </React.Fragment>
               )}
+              <button onClick={handleResetMap} className="Settings__ResetMap">
+                Reset Map
+              </button>
             </div>
           );
         }}
@@ -85,9 +59,5 @@ class Settings extends Component {
     );
   }
 }
-
-Settings.propTypes = {
-  showingSettings: PropTypes.bool
-};
 
 export default Settings;

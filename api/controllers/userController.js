@@ -227,7 +227,7 @@ module.exports = {
   login: async (req, res) => {
     try {
       const user = req.user.toObject(); // convert to a regular JS object
-      delete user.password // delete password field before sending back
+      delete user.password; // delete password field before sending back
 
       return res.status(200).json({ jwt_token: make_token(req.user), user });
     } catch (err) {
@@ -235,6 +235,25 @@ module.exports = {
       return res.status(500).json({ error: 'Internal server error!' });
     }
   }, // login
+
+  // Clears all of the user's countries
+  reset_user_map: async (req, res) => {
+    try {
+      const id = req.user.id;
+      const response = await User.findByIdAndUpdate(
+        id,
+        { countries: [] },
+        { new: true }
+      );
+      const user = response.toObject();
+      delete user.password;
+
+      return res.status(200).json(user);
+    } catch (err) {
+      if (DEV) console.log(err);
+      return res.status(500).json({ error: 'Internal server error!' });
+    }
+  }, // reset_user_map
 
   update_preferences: async (req, res) => {
     try {
@@ -263,7 +282,7 @@ module.exports = {
       );
 
       const user = updatedUser.toObject();
-      delete user.password
+      delete user.password;
 
       return res.status(200).json(user);
     } catch (err) {

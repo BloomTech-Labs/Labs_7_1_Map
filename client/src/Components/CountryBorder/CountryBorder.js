@@ -15,7 +15,7 @@ const canvasWidth = 300;
 const canvasHeight = 150;
 
 const draw = (context, canvasWidth, canvasHeight, bounds, geometry, color) => {
-  context.fillStyle = color || '#333';
+  context.fillStyle = color || '#333333';
 
   // determine the scale
   const xScale = canvasWidth / Math.abs(bounds.xMax - bounds.xMin);
@@ -120,7 +120,7 @@ export default class CountryBorder extends Component {
     // Check if this.props.currentCountryStatus exists to prevent any crashes
     const color = this.props.currentCountryStatus
       ? colorPalette[this.props.currentCountryStatus]
-      : 'black';
+      : '#333333';
     const canvas = this.refs.canvas; // TODO: Fix deprecation warning
     const context = canvas.getContext('2d');
     if (context) context.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -142,13 +142,13 @@ export default class CountryBorder extends Component {
       width: canvasWidth,
       height: canvasHeight,
       image: travellingImg,
-      finishPercent: 95
+      finishPercent: 98
     };
 
     if (this.props.preferences)
       scratchcardSettings.finishPercent = this.props.preferences.autoscratch
         ? 1
-        : 95;
+        : 98;
 
     return (
       <div className="CountryBorder">

@@ -55,6 +55,7 @@ describe('User', () => {
 
   //need to add tests to add checking for 0 character values
 
+  /* POST ROUTES*/
   describe('POST routes', () => {
     /* /api/register */
     describe('/register', () => {
@@ -170,8 +171,8 @@ describe('User', () => {
       });
     });
 
+    /* /api/login */
     describe('/login', () => {
-      /* /api/login */
       it('successfully logs in a user', async () => {
         const user = { username: 'initialTestUser', password: '123456' };
         const response = await request(server)
@@ -458,6 +459,7 @@ describe('User', () => {
     });
   });
 
+  /* GET ROUTES*/
   describe('GET routes', () => {
     describe('/get_user', () => {
       it('successfully gets a user', async () => {
@@ -531,6 +533,7 @@ describe('User', () => {
     });
   });
 
+  /* PUT ROUTES*/
   describe('PUT routes', () => {
     describe('/change_email', () => {
       const body = {
@@ -672,7 +675,7 @@ describe('User', () => {
 
       it('successfully updates preferences', async () => {
         const response = await request(server)
-          .put(`/api/update_preferences`)
+          .put('/api/update_preferences')
           .set('Authorization', `Bearer ${initialTestUser.body.jwt_token}`)
           .send(updatedPreferences);
 
@@ -685,7 +688,7 @@ describe('User', () => {
 
       it('fails if no token is provided', async () => {
         const response = await request(server)
-          .put(`/api/update_preferences`)
+          .put('/api/update_preferences')
           .send(updatedPreferences);
 
         expect(response.status).toBe(401);
@@ -696,7 +699,7 @@ describe('User', () => {
       it('fails if invalid token is provided', async () => {
         const invalid_token = initialTestUser.body.jwt_token.slice(1);
         const response = await request(server)
-          .put(`/api/update_preferences`)
+          .put('/api/update_preferences')
           .set('Authorization', `Bearer ${invalid_token}`)
           .send(updatedPreferences);
 
@@ -707,7 +710,7 @@ describe('User', () => {
 
       it('fails if preferences is not provided', async () => {
         const response = await request(server)
-          .put(`/api/update_preferences`)
+          .put('/api/update_preferences')
           .set('Authorization', `Bearer ${initialTestUser.body.jwt_token}`)
           .send({});
 
@@ -718,7 +721,7 @@ describe('User', () => {
 
       it('fails if preferences is not valid', async () => {
         const response = await request(server)
-          .put(`/api/update_preferences`)
+          .put('/api/update_preferences')
           .set('Authorization', `Bearer ${initialTestUser.body.jwt_token}`)
           .send({ preferences: { theme: 'light' } });
 
@@ -726,6 +729,38 @@ describe('User', () => {
         expect(response.body.username).toBeUndefined();
         expect(response.body.preferences).toBeUndefined();
       });
+    }); // update_preferences
+
+    describe('/reset_user_map', () => {
+      it('successfully removes all countries on user', async () => {
+        const response = await request(server)
+          .put('/api/reset_user_map')
+          .set('Authorization', `Bearer ${initialTestUser.body.jwt_token}`);
+
+        expect(response.status).toBe(200);
+        expect(response.body.username).toBe('initialTestUser');
+        expect(response.body.countries).toEqual([]);
+        expect(response.body.password).toBeUndefined();
+      });
+
+      it('fails if no token is provided', async () => {
+        const response = await request(server).put('/api/reset_user_map');
+
+        expect(response.status).toBe(401);
+        expect(response.body.username).toBeUndefined();
+        expect(response.body.password).toBeUndefined();
+      });
+
+      it('fails if invalid token is provided', async () => {
+        const invalid_token = initialTestUser.body.jwt_token.slice(1);
+        const response = await request(server)
+          .put('/api/reset_user_map')
+          .set('Authorization', `Bearer ${invalid_token}`);
+
+        expect(response.status).toBe(401);
+        expect(response.body.username).toBeUndefined();
+        expect(response.body.password).toBeUndefined();
+      });
     });
-  });
-});
+  }); // PUT routes
+}); // User

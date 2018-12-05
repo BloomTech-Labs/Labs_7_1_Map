@@ -12,15 +12,15 @@ const labels = {
   2: 'Transited',
   3: 'Visited',
   4: 'Lived'
-}
+};
 
 // Styles for the highlight of a clicked on country
 const styleSelected = {
   stroke: true,
-  color: 'gold',
+  color: 'orange',
   opacity: 1,
   fill: true,
-  fillColor: 'gold',
+  fillColor: 'orange',
   fillOpacity: 0
 };
 
@@ -28,8 +28,8 @@ const styleSelected = {
 const styleHover = {
   stroke: false,
   fill: true,
-  fillColor: 'gold',
-  fillOpacity: 0.3
+  fillColor: 'orange',
+  fillOpacity: 0.5
 };
 
 // Styles for country based on status_code

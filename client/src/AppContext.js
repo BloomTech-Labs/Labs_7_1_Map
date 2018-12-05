@@ -33,6 +33,8 @@ export class AppContextProvider extends Component {
     friends: [],
     friendBeingViewed: null,
     searchCountry: '',
+    showingChangePassword: false,
+    showingChangeEmail: false,
     showingSettings: false,
     showingCountryPanel: false,
     user: {},
@@ -135,7 +137,7 @@ export class AppContextProvider extends Component {
         }
       });
     } catch (err) {
-      console.error(err);
+      console.error(err); // eslint-disable-line
     }
   };
 
@@ -166,6 +168,30 @@ export class AppContextProvider extends Component {
     } catch (err) {
       console.error('Failed to get location using IP!', err); // eslint-disable-line
     }
+  };
+
+  handleChangeEmailClick = () => {
+    if (this.state.showingChangePassword)
+      this.setState({
+        showingChangePassword: false,
+        showingChangeEmail: !this.state.showingChangeEmail
+      });
+    else
+      this.setState({
+        showingChangeEmail: !this.state.showingChangeEmail
+      });
+  };
+
+  handleChangePasswordClick = () => {
+    if (this.state.showingChangeEmail)
+      this.setState({
+        showingChangeEmail: false,
+        showingChangePassword: !this.state.showingChangePassword
+      });
+    else
+      this.setState({
+        showingChangePassword: !this.state.showingChangePassword
+      });
   };
 
   handleChangeNote = e => {
@@ -206,7 +232,26 @@ export class AppContextProvider extends Component {
         else console.error('Failed to get that friends countries!'); //eslint-disable-line
       }
     } catch (err) {
-      return console.log(err); // eslint-disable-line
+      return console.error(err); // eslint-disable-line
+    }
+  };
+
+  handleResetMap = async () => {
+    try {
+      const options = {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      };
+
+      const response = await axios.put(
+        `${BACKEND_URL}/reset_user_map`,
+        {},
+        options
+      );
+
+      if (response.status === 200)
+        return this.setState({ user: response.data });
+    } catch (err) {
+      console.error('Error resetting users map!'); //eslint-disable-line
     }
   };
 
@@ -426,6 +471,19 @@ export class AppContextProvider extends Component {
 
   // Called in Map.js
   handleMapClick = async e => {
+    // Close Settings panel on click
+    this.setState({
+      showingSettings: false
+    });
+
+    // Close ChangeEmail/ChangePassword section after Settings panel has completed animation
+    setTimeout(() => {
+      this.setState({
+        showingChangePassword: false,
+        showingChangeEmail: false
+      });
+    }, 500); // THis value should be the same length as the transition in Settings.less
+
     if (this.state.friendBeingViewed === null) {
       // Get the country code of the location clicked on, e.g. 'MEX'
       const countryCode = await wc([e.latlng.lng, e.latlng.lat]);
@@ -574,9 +632,12 @@ export class AppContextProvider extends Component {
           currentCountryInfo: this.state.currentCountry.geoInfo,
           resetFailedLogin: this.resetFailedLogin,
           getCountryFriends: this.getCountryFriends,
+          handleChangePasswordClick: this.handleChangePasswordClick,
+          handleChangeEmailClick: this.handleChangeEmailClick,
           handleChangeNote: this.handleChangeNote,
           handleFriendsDropdown: this.handleFriendsDropdown,
           handleMapClick: this.handleMapClick,
+          handleResetMap: this.handleResetMap,
           handleScratched: this.handleScratched,
           handleSearchSubmit: this.handleSearchSubmit,
           handleSignIn: this.handleSignIn,

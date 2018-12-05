@@ -8,6 +8,7 @@ const {
   get_user,
   get_users,
   login,
+  reset_user_map,
   update_preferences
 } = require('./controllers/userController');
 
@@ -68,6 +69,8 @@ module.exports = server => {
   server
     .route('/api/country_scratched')
     .post(protected_route, handle_scratched);
+
+  server.route('/api/reset_user_map').put(protected_route, reset_user_map);
 
   // Update User settings routes
   server.route('/api/change_password').put(protected_route, change_password);
