@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AppContextConsumer } from '../../AppContext';
 import CountryBorder from '../CountryBorder/CountryBorder';
 import Note from '../Note/Note';
-import FriendList from '../Friends/FriendList';
+// import FriendList from '../Friends/FriendList';
 import './CountryPanel.css';
 import themeColors from '../themeColors.js';
 
@@ -70,16 +70,16 @@ const CountryPanel = () => {
                   borderColor={themeColors.borderColor[currentTheme]}
                 />
               ) : null}
-              {value.AppState.user.facebook &&
-              value.AppState.user.facebook.id ? (
-                <FriendList
-                  userFriends={value.AppState.currentCountry.friends}
-                  background={themeColors.background[currentTheme]}
-                  color={themeColors.color[currentTheme]}
-                  fontColor={themeColors.fontColor[currentTheme]}
-                  borderColor={themeColors.borderColor[currentTheme]}
-                />
-              ) : null}
+              {/* {value.AppState.user.facebook && */}
+              {/* value.AppState.user.facebook.id ? ( */}
+              {/*   <FriendList */}
+              {/*     userFriends={value.AppState.currentCountry.friends} */}
+              {/*     background={themeColors.background[currentTheme]} */}
+              {/*     color={themeColors.color[currentTheme]} */}
+              {/*     fontColor={themeColors.fontColor[currentTheme]} */}
+              {/*     borderColor={themeColors.borderColor[currentTheme]} */}
+              {/*   /> */}
+              {/* ) : null} */}
             </div>
           </div>
         ) : null;

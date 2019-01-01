@@ -199,12 +199,12 @@ class LogInBay extends React.Component {
                 Sign Up with email
               </button>
               <div className="Container__Or">or</div>
-              <div
-                onClick={this.handleOpenFacebookTutorial}
-                className="Container__FacebookInfoLink"
-              >
-                Learn about using MapScratcher with your FaceBook Friends!
-              </div>
+              {/* <div */}
+              {/*   onClick={this.handleOpenFacebookTutorial} */}
+              {/*   className="Container__FacebookInfoLink" */}
+              {/* > */}
+              {/*   Learn about using MapScratcher with your FaceBook Friends! */}
+              {/* </div> */}
               <a
                 href={`${BACKEND_URL}/facebook_login`}
                 className="Container__Button"
