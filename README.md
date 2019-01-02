@@ -1,6 +1,6 @@
 # MapScratcher
 
-- Live site: https://scratch-n-map.herokuapp.com/
+- Live site: https://www.mapscratcher.app
 
 - Wireframes: https://balsamiq.cloud/snv27r3/pdmo5as/rFFE9
 
