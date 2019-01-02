@@ -1,6 +1,6 @@
 # MapScratcher
 
-- Live site: https://scratch-n-map.herokuapp.com/
+- Live site: https://www.mapscratcher.app
 
 - Wireframes: https://balsamiq.cloud/snv27r3/pdmo5as/rFFE9
 
@@ -28,10 +28,11 @@ This project was built by Lambda School students for their capstone project. It 
 - 'Scratch card' feature that requires you to scratch off a card to save a country
 - Countries are color coded based on status ('Wishlist', 'Visited', 'Lived')
 - Save and display personal notes for each country
-- Facebook friends that are using the app will show up in each country's 'card'
-- View a Facebook friends map.
-- Choice of different map tiles and matching UI themes.
+- Choice of different map tiles and matching UI themes
 - Search for a country feature with autocompletion/suggestions
+
+- Facebook friends that are using the app will show up in each country's 'card' (coming soon)
+- View a Facebook friends map (coming soon)
 
 <a name="contributers"></a>
 ### Contributers
